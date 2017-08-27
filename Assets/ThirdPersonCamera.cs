@@ -9,8 +9,6 @@ public class ThirdPersonCamera : MonoBehaviour {
     private float distance = 10.0f;
     private float currentX = 0.0f;
     private float currentY = 0.0f;
-    private float sensitivityX = 4.0f;
-    private float sensitivityY = 1.0f;
 
     private void Start()
     {

@@ -9,16 +9,26 @@ public class PlayerInteractionController : MonoBehaviour {
     private GameObject player;
 
     private bool pickUp;
+    private bool placeFish;
 
     //Boolean to mark player holding object
     private bool isHolding;
+    public bool getIsHolding ()
+    {
+        return isHolding;
+    }
     private GameObject holdSlot;
+    private GameObject atObject;
     private GameObject heldObject;
+    public GameObject getHeldObject ()
+    {
+        return heldObject;
+    }
 
 	// Use this for initialization
 	void Start () {
         isHolding = false;
-        pickUp = false;
+        placeFish = pickUp = false;
 
         player = gameObject;
         holdSlot = player.transform.Find("HoldSlot").gameObject;
@@ -43,21 +53,37 @@ public class PlayerInteractionController : MonoBehaviour {
         else
         {
             //Do something to player holding thing.
+            if (other.tag == "StationObject")
+            {
+                if (Input.GetKeyDown(interactKey))
+                {
+                    Debug.Log("Depositing", other.gameObject);
+                    atObject = other.gameObject;
+                    placeFish = true;
+                }
+            }
         }
     }
 
     // Update is called once per frame
     void Update () {
-		if (isHolding)
+        //Eventually turn this into a state machine instead of this hackish nonsense.
+        if (isHolding)
         {
-            if (Input.GetKeyDown(interactKey))
+            if (placeFish)
             {
-                Debug.Log("Dropped");
-                isHolding = false;
-                if (heldObject != null)
+                placeFish = false;
+                IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
+                if (atObjectInteractableScript != null)
                 {
-                    setAttachObject(heldObject, false);
-                    heldObject = null;
+                    atObjectInteractableScript.interact(player);
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(interactKey))
+                {
+                    DropHeldObject();
                 }
             }
         }
@@ -66,7 +92,7 @@ public class PlayerInteractionController : MonoBehaviour {
         {
             PickUpObject();
         }
-	}
+    }
 
     private void setAttachObject (GameObject other, bool attach)
     {
@@ -87,7 +113,6 @@ public class PlayerInteractionController : MonoBehaviour {
             other.transform.SetParent(null);
         }
     }
-        
 
     private void PickUpObject ()
     {
@@ -96,6 +121,17 @@ public class PlayerInteractionController : MonoBehaviour {
             setAttachObject(heldObject, true);
             isHolding = true;
             pickUp = false;
+        }
+    }
+
+    public void DropHeldObject ()
+    {
+        Debug.Log("Dropped");
+        isHolding = false;
+        if (heldObject != null)
+        {
+            setAttachObject(heldObject, false);
+            heldObject = null;
         }
     }
 }

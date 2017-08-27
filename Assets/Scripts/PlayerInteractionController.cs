@@ -15,34 +15,14 @@ public class PlayerInteractionController : MonoBehaviour {
     private GameObject holdSlot;
     private GameObject heldObject;
 
-    //Boolean to mark player colliding with interactables.
-    private bool isColliding;
-
 	// Use this for initialization
 	void Start () {
         isHolding = false;
-        isColliding = false;
         pickUp = false;
 
         player = gameObject;
         holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "FishObject")
-        {
-            isColliding = true;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "FishObject")
-        {
-            isColliding = false;
-        }
     }
 
     void OnTriggerStay(Collider other)
@@ -90,10 +70,10 @@ public class PlayerInteractionController : MonoBehaviour {
 
     private void setAttachObject (GameObject other, bool attach)
     {
-        FishController fishControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
-        if (fishControllerScript != null)
+        IInteractable heldObjectInteractableScript = (IInteractable)heldObject.GetComponent(typeof(IInteractable));
+        if (heldObjectInteractableScript != null)
         {
-            fishControllerScript.ToggleRigidBody();
+            heldObjectInteractableScript.interact();
         }
 
         if (attach)

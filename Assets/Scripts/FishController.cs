@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishController : MonoBehaviour {
+public class FishController : MonoBehaviour, IInteractable
+{
 
     //Boolean flag to mark fish as held/unheld.
     private bool held;
@@ -47,5 +48,15 @@ public class FishController : MonoBehaviour {
             rigidBody.isKinematic = !rigidBody.isKinematic;
             rigidBody.detectCollisions = !rigidBody.detectCollisions;
         }
+    }
+
+    public void interact ()
+    {
+        ToggleRigidBody();
+    }
+
+    public void interact (GameObject otherActor)
+    {
+        ToggleRigidBody();
     }
 }

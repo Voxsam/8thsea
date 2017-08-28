@@ -7,7 +7,7 @@ using System.Linq;
 public class OxygenCountdown : MonoBehaviour {
     public float timeLeft;
     public float rate;
-    public bool isActivated;
+    public static bool isActivated;
     public Slider OxygenBar;
     public Text DebugText;
     public Image Fill;
@@ -25,21 +25,31 @@ public class OxygenCountdown : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        timeLeft -= rate*Time.deltaTime;
-        OxygenBar.value = timeLeft;
-        if (timeLeft < 5) {
-           if (Fill != null)
-           {
-                Fill.color = Color.red;
-           }
-        }
-
-        if (timeLeft < 0) {
-            if (Fill != null)
+        if (isActivated)
+        {
+            timeLeft -= rate * Time.deltaTime;
+            OxygenBar.value = timeLeft;
+            if (timeLeft < 5)
             {
-                Fill.color = Color.black;
+                if (Fill != null)
+                {
+                    Fill.color = Color.red;
+                }
             }
-            DebugText.text = "Game Over";
+
+            if (timeLeft < 0)
+            {
+                if (Fill != null)
+                {
+                    Fill.color = Color.black;
+                }
+                DebugText.text = "Game Over";
+            }
+        }
+        else {
+            timeLeft = OxygenBar.maxValue;
+            OxygenBar.value = timeLeft;
         }
 	}
+
 }

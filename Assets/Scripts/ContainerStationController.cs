@@ -22,7 +22,6 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
     public void interact () {
@@ -36,6 +35,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                 PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
                 if (playerControllerScript != null)
                 {
+                    //Get the object held by the player.
                     heldObject = playerControllerScript.getHeldObject();
                     if (heldObject != null)
                     {
@@ -58,6 +58,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                 PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
                 if (playerControllerScript != null)
                 {
+                    //Check that the player is not already holding on to something.
                     if (playerControllerScript.getHeldObject() == null)
                     {
                         if (heldObject != null)

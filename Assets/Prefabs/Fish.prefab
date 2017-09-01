@@ -109,6 +109,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41be8d64f4c301146a6bbb0179973d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 1537170203134468, guid: 90cc4b8b652d12d4ba67102fc110bf8e, type: 2}
+  fishDetails: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
+    type: 2}
 --- !u!135 &135259386065804110
 SphereCollider:
   m_ObjectHideFlags: 1

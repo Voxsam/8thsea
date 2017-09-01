@@ -16,16 +16,40 @@ public class FishController : MonoBehaviour, IInteractable {
     //Boolean flag to mark fish as within interactable range of a player.
     private Rigidbody rigidBody;
 
-	// Use this for initialization
-	void Start () {
+    private GameObject mainCamera;
+
+    private GameObject gameCanvas;
+    private RectTransform canvasRect;
+
+    //Static so only one instance is used.
+    private GameObject uiObject;
+
+    //Prefab to instantiate FishDetails
+    public GameObject fishDetails;
+
+    // Use this for initialization
+    void Start () {
         currentState = State.Idle;
         //Get own rigidbody component.
         rigidBody = this.GetComponent<Rigidbody>();
+
+        uiObject = null;
+
+        mainCamera = Camera.main.gameObject;
+        gameCanvas = mainCamera.gameObject.transform.Find("SuperImposedUI").gameObject;
+        canvasRect = gameCanvas.GetComponent<RectTransform>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if (uiObject != null)
+        {
+            if (uiObject.name == gameObject.ToString())
+            {
+                Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+                uiObject.GetComponent<RectTransform>().anchoredPosition = ViewportPosition;
+            }
+        }
 	}
 
     //Activates/deactivates RigidBody of prefab.
@@ -107,11 +131,26 @@ public class FishController : MonoBehaviour, IInteractable {
         {
             Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.red;
+
+            if (uiObject == null)
+            {
+                uiObject = (GameObject)Instantiate(fishDetails);
+                uiObject.transform.SetParent(gameCanvas.transform, false);
+                uiObject.name = gameObject.ToString();
+            }
         }
         else
         {
             Renderer rend = GetComponent<Renderer>();
             rend.material.color = Color.white;
+            if (uiObject != null)
+            {
+                if (uiObject.name == gameObject.ToString())
+                {
+                    Destroy(uiObject);
+                    uiObject = null;
+                }
+            }
         }
     }
 }

@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteractionController : MonoBehaviour {
+public class PlayerInteractionController : MonoBehaviour
+{
+    enum State
+    {
+        Idle,
+        Hold
+    };
+    enum SecondaryState
+    {
+        Idle,
+        View
+    };
+    State currentState;
+    SecondaryState currentSecondaryState;
 
     private const KeyCode interactKey = KeyCode.E;
 
     private GameObject player;
 
-    private bool pickUp;
-    private bool placeFish;
-
-    //Boolean to mark player holding object
-    private bool isHolding;
-    public bool getIsHolding ()
-    {
-        return isHolding;
-    }
     private GameObject holdSlot;
+
     private GameObject atObject;
     private GameObject heldObject;
     public GameObject getHeldObject ()
@@ -26,80 +31,111 @@ public class PlayerInteractionController : MonoBehaviour {
     }
 
 	// Use this for initialization
-	void Start () {
-        isHolding = false;
-        placeFish = pickUp = false;
+	void Start ()
+    {
+        currentState = State.Idle;
+        currentSecondaryState = SecondaryState.Idle;
 
         player = gameObject;
         holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerStay (Collider other)
     {
-        //Check if player is already holding on to an object
-        if (!isHolding)
+        if (currentSecondaryState != SecondaryState.View)
         {
-            if (other.tag == "FishObject")
+            if (other.tag == "FishObject" || other.tag == "StationObject")
             {
-                if (Input.GetKeyDown(interactKey))
-                {
-                    Debug.Log("Hello", other.gameObject);
-                    heldObject = other.gameObject;
-                    pickUp = true;
-                }
+                atObject = other.gameObject;
+                highlightObject(atObject, true);
+                currentSecondaryState = SecondaryState.View;
             }
         }
-        else
+    }
+
+    void OnTriggerExit (Collider other)
+    {
+        if (other.tag == "FishObject" || other.tag == "StationObject")
         {
-            //Do something to player holding thing.
-            if (other.tag == "StationObject")
+            if (other.gameObject == atObject)
             {
-                if (Input.GetKeyDown(interactKey))
-                {
-                    Debug.Log("Depositing", other.gameObject);
-                    atObject = other.gameObject;
-                    placeFish = true;
-                }
+                currentSecondaryState = SecondaryState.Idle;
+                highlightObject(atObject, false);
+                atObject = null;
             }
         }
     }
 
     // Update is called once per frame
-    void Update () {
-        //Eventually turn this into a state machine instead of this hackish nonsense.
-        if (isHolding)
+    void Update ()
+    {
+        switch (currentState)
         {
-            if (placeFish)
-            {
-                placeFish = false;
-                IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
-                if (atObjectInteractableScript != null)
-                {
-                    atObjectInteractableScript.interact(player);
-                }
-            }
-            else
-            {
+            case State.Idle:
+                break;
+
+            case State.Hold:
                 if (Input.GetKeyDown(interactKey))
                 {
-                    DropHeldObject();
+                    if (heldObject != null && currentSecondaryState == SecondaryState.Idle)
+                    {
+                        setAttachObject(heldObject, false);
+                        currentState = State.Idle;
+                    }
                 }
-            }
+                break;
+                
+            default:
+                break;
         }
 
-        if (pickUp)
+        switch (currentSecondaryState)
         {
-            PickUpObject();
+            case SecondaryState.Idle:
+                break;
+
+            case SecondaryState.View:
+                if (Input.GetKeyDown(interactKey))
+                {
+                    //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
+                    if (atObject.tag == "FishObject" && currentState != State.Hold)
+                    {
+                        pickUpObject (atObject);
+                        atObject = null;
+                    }
+                    else if (atObject.tag == "StationObject")
+                    {
+                        IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
+                        if (atObjectInteractableScript != null)
+                        {
+                            atObjectInteractableScript.interact(player);
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void highlightObject (GameObject other, bool highlight)
+    {
+        IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
+        if (otherInteractableScript != null)
+        {
+            otherInteractableScript.toggleHighlight(highlight);
         }
     }
 
     private void setAttachObject (GameObject other, bool attach)
     {
-        IInteractable heldObjectInteractableScript = (IInteractable)heldObject.GetComponent(typeof(IInteractable));
+        IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
         {
             heldObjectInteractableScript.interact();
+            heldObjectInteractableScript.toggleHighlight(false);
         }
 
         if (attach)
@@ -107,31 +143,27 @@ public class PlayerInteractionController : MonoBehaviour {
             other.transform.localPosition = Vector3.zero;
             other.transform.localScale = Vector3.one;
             other.transform.SetParent(holdSlot.transform, false);
+            heldObject = other;
         }
         else
         {
             other.transform.SetParent(null);
-        }
-    }
-
-    private void PickUpObject ()
-    {
-        if (heldObject != null && pickUp)
-        {
-            setAttachObject(heldObject, true);
-            isHolding = true;
-            pickUp = false;
-        }
-    }
-
-    public void DropHeldObject ()
-    {
-        Debug.Log("Dropped");
-        isHolding = false;
-        if (heldObject != null)
-        {
-            setAttachObject(heldObject, false);
             heldObject = null;
         }
+    }
+
+    public void pickUpObject (GameObject other)
+    {
+        setAttachObject(other, true);
+        currentSecondaryState = SecondaryState.Idle;
+        currentState = State.Hold;
+    }
+
+    public void dropObject ()
+    {
+        setAttachObject(heldObject, false);
+        heldObject = null;
+        currentSecondaryState = SecondaryState.Idle;
+        currentState = State.Idle;
     }
 }

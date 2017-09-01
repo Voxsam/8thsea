@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FishController : MonoBehaviour, IInteractable {
+    
+    //Enums for fish states
+    enum State
+    {
+        Idle,
+        Held,
+        Placed
+    };
+    State currentState;
 
-    //Boolean flag to mark fish as held/unheld.
-    private bool held;
     //Boolean flag to mark fish as within interactable range of a player.
     private Rigidbody rigidBody;
 
 	// Use this for initialization
 	void Start () {
-        held = false;
+        currentState = State.Idle;
         //Get own rigidbody component.
         rigidBody = this.GetComponent<Rigidbody>();
     }
@@ -20,24 +27,6 @@ public class FishController : MonoBehaviour, IInteractable {
 	void Update () {
 	
 	}
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.red;
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.white;
-        }
-    }
 
     //Activates/deactivates RigidBody of prefab.
     public void ToggleRigidBody ()
@@ -63,6 +52,7 @@ public class FishController : MonoBehaviour, IInteractable {
             rigidBody.isKinematic = true;
             rigidBody.detectCollisions = false;
         }
+        currentState = State.Held;
     }
 
     public void putDown ()
@@ -72,6 +62,7 @@ public class FishController : MonoBehaviour, IInteractable {
             rigidBody.isKinematic = false;
             rigidBody.detectCollisions = true;
         }
+        currentState = State.Idle;
     }
 
     public void putIn ()
@@ -79,25 +70,48 @@ public class FishController : MonoBehaviour, IInteractable {
         if (rigidBody)
         {
             rigidBody.isKinematic = true;
-            rigidBody.detectCollisions = true;
+            rigidBody.detectCollisions = false;
         }
+
+        currentState = State.Placed;
     }
 
     public void interact ()
     {
-        if (!held)
+        switch (currentState)
         {
-            held = true;
-            pickUp();
-        }
-        else
-        {
-            held = false;
-            putDown();
+            case State.Idle:
+                pickUp();
+                break;
+
+            case State.Held:
+                putDown();
+                break;
+
+            case State.Placed:
+                pickUp();
+                break;
+
+            default:
+                break;
         }
     }
 
     public void interact (GameObject otherActor)
     {
+    }
+
+    public void toggleHighlight(bool toggle = true)
+    {
+        if (toggle)
+        {
+            Renderer rend = GetComponent<Renderer>();
+            rend.material.color = Color.red;
+        }
+        else
+        {
+            Renderer rend = GetComponent<Renderer>();
+            rend.material.color = Color.white;
+        }
     }
 }

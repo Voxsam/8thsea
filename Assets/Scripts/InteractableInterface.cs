@@ -6,4 +6,6 @@ public interface IInteractable
 {
     void interact();
     void interact(GameObject otherActor);
+
+    void toggleHighlight(bool toggle = true);
 }

@@ -10,7 +10,7 @@ public class RopeTest2 : MonoBehaviour {
 		//if (anchor == null)
 			//return;
 		//gameObject.AddComponent<CharacterJoint>();
-		GetComponent<CharacterJoint>().connectedBody=transform.parent.GetComponent<Rigidbody>();
+		GetComponent<ConfigurableJoint>().connectedBody=transform.parent.GetComponent<Rigidbody>();
 
 	}
 	

@@ -14,11 +14,15 @@ public class sucStationController : MonoBehaviour {
 
 	}
 
-	void OnTriggerStay(Collider other){
+    void OnTriggerStay(Collider other){
 		if (other.gameObject.tag.Equals ("Player")) {
 			if (Input.GetKeyUp (KeyCode.Space)) {
-				controller.isActivated = !controller.isActivated;
+				controller.isActivated = true;
 			}
-		}
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                controller.isActivated = false;
+            }
+        }
 	}
 }

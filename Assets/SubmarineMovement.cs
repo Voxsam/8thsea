@@ -7,9 +7,10 @@ public class SubmarineMovement : MonoBehaviour {
     public float currentSpeed;
     public float maximumSpeed;
     public GameObject dockingPosition;
+    public OxygenCountdown oxygenCountdownScript;
 
-	// Use this for initialization
-	private void Start () {
+    // Use this for initialization
+    private void Start () {
         acceleration = 0.05f;
         currentSpeed = 0.2f;
         maximumSpeed = 10f;
@@ -36,7 +37,7 @@ public class SubmarineMovement : MonoBehaviour {
         if (other.tag.Equals("lab"))
         {
             //Debug.Log("lab found");
-            OxygenCountdown.isActivated = false;
+            oxygenCountdownScript.isActivated = false;
             transform.position = dockingPosition.transform.position;
         }
     }
@@ -45,7 +46,7 @@ public class SubmarineMovement : MonoBehaviour {
         if (other.tag.Equals("lab"))
         {
             //Debug.Log("exitting line");
-            OxygenCountdown.isActivated = true;
+            oxygenCountdownScript.isActivated = true;
         }
     }
 }

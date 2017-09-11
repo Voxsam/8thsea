@@ -7,7 +7,7 @@ using System.Linq;
 public class OxygenCountdown : MonoBehaviour {
     public float timeLeft;
     public float rate;
-    public static bool isActivated;
+    public bool isActivated;
     public Slider OxygenBar;
     public Text DebugText;
     public Image Fill;

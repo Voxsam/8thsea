@@ -5,36 +5,31 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-	public static GameController controller;
+	public static GameController Obj;
+    public const float PAYMENT_INTERVAL = 60f;
+    public const int PAYMENT_AMOUNT = 100;
 
-	public Text timeLeftText;
+    public Text timeLeftText;
 	public Text moneyText;
 
 	public int currentMoney;
 	public float timeTillNextPayment;
-	public float paymentInterval = 60f;
-	public int paymentAmount = 100;
 
 	void Start () {
+        if (Obj == null)
+        {
+            Obj = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 
-		controller = this;
-		timeTillNextPayment = paymentInterval;
+        // GameController object should not be destructable
+        DontDestroyOnLoad(this.gameObject);
 
+		timeTillNextPayment = PAYMENT_INTERVAL;
 	}
-
-	void Update () {
-
-		if (timeTillNextPayment == 0) {
-			RemoveMoney(paymentAmount);
-			timeTillNextPayment = paymentInterval;
-		}
-
-		timeTillNextPayment -= Time.deltaTime;
-
-		moneyText.text = "$" + currentMoney.ToString ();	
-		timeLeftText.text = "Time Left: " + (int) timeTillNextPayment + "s";
-	}
-
 
 	public void AddMoney(int amount) {
 		currentMoney += amount;
@@ -43,5 +38,18 @@ public class GameController : MonoBehaviour {
 	public void RemoveMoney(int amount) {
 		currentMoney -= amount;
 	}
-		
+
+    void Update()
+    {
+        if (timeTillNextPayment == 0)
+        {
+            RemoveMoney(PAYMENT_AMOUNT);
+            timeTillNextPayment = PAYMENT_INTERVAL;
+        }
+
+        timeTillNextPayment -= Time.deltaTime;
+
+        moneyText.text = "$" + currentMoney.ToString();
+        timeLeftText.text = "Time Left: " + (int)timeTillNextPayment + "s";
+    }
 }

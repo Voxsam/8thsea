@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class tubeController : MonoBehaviour {
 
-	public float rotationSpeed;
 	public float forwardSpeed;
 	public float attractionForce;
-	public bool easyMode;
 	public bool isActivated;
 	public float radius;
 	public GameObject anchorPoint;
@@ -27,40 +25,23 @@ public class tubeController : MonoBehaviour {
         {
             systemActivated = false;
         }
-            if (isActivated) {
-			if (!easyMode) {
-				float x = Input.GetAxis ("Horizontal") * Time.deltaTime * rotationSpeed;
-				float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
-				transform.Rotate (0, 0, -x);
-				Vector3 newLocation = transform.position+transform.TransformDirection(y,0,0); 
-				float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
-				if (distance > radius) {
-					Vector3 fromAnchorToObject = newLocation - anchorPoint.transform.position;
-					fromAnchorToObject *= radius / distance;
-					newLocation = anchorPoint.transform.position + fromAnchorToObject;
-					transform.position = newLocation;
-				} else {
-					transform.Translate (y, 0, 0);
-				}
-			
-			} else {
-				float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
-				float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
-				Vector3 newLocation = transform.position+transform.TransformDirection(x,y,0); 
-				float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
-				if (distance > radius) {
-					Vector3 fromAnchorToObject = newLocation - anchorPoint.transform.position;
-					fromAnchorToObject *= radius / distance;
-					newLocation = anchorPoint.transform.position + fromAnchorToObject;
-					transform.position = newLocation;
+        if (isActivated) {
+			float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
+			float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
+			Vector3 newLocation = transform.position+transform.TransformDirection(x,y,0); 
+			float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
+			if (distance > radius) {
+				Vector3 fromAnchorToObject = newLocation - anchorPoint.transform.position;
+				fromAnchorToObject *= radius / distance;
+				newLocation = anchorPoint.transform.position + fromAnchorToObject;
+				transform.position = newLocation;
 
-				} else {
-					transform.Translate (x, y, 0,Space.World);
-					/*if (x != 0) {
-						Vector3 lookatPos = new Vector3 (0, 0, x);
-						transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (lookatPos), 0.5f);
-					}*/
-				}
+			} else {
+				transform.Translate (x, y, 0,Space.World);
+				/*if (x != 0) {
+					Vector3 lookatPos = new Vector3 (0, 0, x);
+					transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (lookatPos), 0.5f);
+				}*/
 			}
 		}
 	}

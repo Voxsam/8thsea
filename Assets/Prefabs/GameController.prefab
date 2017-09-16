@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8938b2c48471341a1aa4068b08ffa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1Ref: {fileID: 0}
   timeLeftText: {fileID: 114339728110604226}
   moneyText: {fileID: 114931760321991384}
   currentMoney: 0

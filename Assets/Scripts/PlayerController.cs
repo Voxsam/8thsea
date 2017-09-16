@@ -51,9 +51,11 @@ public class PlayerController : MonoBehaviour {
 					Time.deltaTime * turnSpeed
 				);
 
-                transform.Translate(new Vector3(0, 0, movementSpeed / 100f));
-            }
-        }
+				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));		
+
+			}
+            
+		}
 	}
 
 }

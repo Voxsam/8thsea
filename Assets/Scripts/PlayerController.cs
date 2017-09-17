@@ -4,24 +4,47 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public float movementSpeed;
-	public float turnSpeed;
+	public float movementSpeed = 10;
+	public float turnSpeed = 5;
 
-	public bool canMove;
+    private GameController.ControlType controlMode;
 
-	private Rigidbody rb;
+	[SerializeField] private Rigidbody rb;
 
 	void Start () {
-		rb = this.GetComponent<Rigidbody> ();
-		canMove = true;
-	}
+        //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
+        ControlMode = GameController.ControlType.CHARACTER;
 
-	void Update () {
+    }
 
-		if (canMove) {
+    public GameController.ControlType ControlMode
+    {
+        get { return controlMode; }
+        private set { controlMode = value; }
+    }
+
+    #region Control handlers
+    /// <summary>
+    /// For other objects to request the player change its control to a certain object type.
+    /// </summary>
+    /// <param name="changeTo">The control type that the caller wishes the Player to change to</param>
+    public void RequestControlChange(GameController.ControlType changeTo)
+    {
+        // if there are no problems (aka insert checks here), change to that control type
+        ControlMode = changeTo;
+    }
+
+    public void ReturnControlToCharacter()
+    {
+        ControlMode = GameController.ControlType.CHARACTER;
+    }
+    #endregion
+
+    public void GameUpdate () {
+		if (ControlMode == GameController.ControlType.CHARACTER) {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
-
-			if (direction != Vector3.zero) {
+            
+            if (direction != Vector3.zero) {
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -31,9 +54,7 @@ public class PlayerController : MonoBehaviour {
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));		
 
 			}
-
-
-
+            
 		}
 	}
 

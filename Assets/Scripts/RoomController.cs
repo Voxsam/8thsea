@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LabController : MonoBehaviour {
+public class RoomController : MonoBehaviour {
+	
+	public static RoomController Obj;
 
-	public static LabController Obj;
-
-	public Camera labCamera;
-	public List<GameObject> playersInLab;
+	public Camera cam;
+	public List<GameObject> playersInRoom;
 
 
 	void Start ()
@@ -20,15 +20,14 @@ public class LabController : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag ("Player")) {
-			playersInLab.Add (other.gameObject);
+			playersInRoom.Add (other.gameObject);
 		}
 	}
 
 	void OnTriggerExit(Collider other) {
 
 		if (other.CompareTag ("Player")) {
-			playersInLab.Remove (other.gameObject);
+			playersInRoom.Remove (other.gameObject);
 		}
 	}
-
 }

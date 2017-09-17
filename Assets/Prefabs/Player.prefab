@@ -97,15 +97,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830913044983308}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -42.36, y: 11.95, z: -18.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4514290214352576}
   - {fileID: 4749388080088712}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23047753498455496
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -221,9 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3b5c5fd51d1409bf1b4d1eb3dc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 54897799338696168}
   movementSpeed: 10
   turnSpeed: 5
+  rb: {fileID: 54897799338696168}
 --- !u!135 &135282530913537786
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -231,8 +231,8 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830913044983308}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 1, y: -0.6, z: 0}

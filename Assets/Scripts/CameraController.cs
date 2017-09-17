@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+	public enum CameraType
+	{
+		LAB, SUB
+	};
+
+	public CameraType cameraType;
+
+	public BoxCollider collider;
+
 	public GameObject[] players;
 
 	public float yOffset;
@@ -24,7 +33,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
 
 		GetPlayerBounds ();
 
@@ -49,7 +58,6 @@ public class CameraController : MonoBehaviour {
 			minBounds = new Vector3 (Mathf.Min (minBounds.x, curr.x), Mathf.Min (minBounds.y, curr.y), Mathf.Min (minBounds.z, curr.z));
 		}
 			
-
 		cameraCenter = new Vector3 (minBounds.x + (maxBounds.x - minBounds.x)/2, minBounds.y + (maxBounds.y - minBounds.y)/2 + yOffset, minBounds.z + (maxBounds.z - minBounds.z)/2 + zOffset);
 
 	}

@@ -13,6 +13,8 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
 
     State currentState;
 
+    public string researchStationType;
+
     private GameObject holdSlot;
     private GameObject heldObject;
     private float maxProgress = 20f;
@@ -115,6 +117,11 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                     {
                         if (heldObject != null)
                         {
+                            FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
+                            if (heldObjectControllerScript.getCurrentResearchProtocol() == researchStationType)
+                            {
+                                heldObjectControllerScript.researchFish();
+                            }
                             playerControllerScript.pickUpObject(heldObject);
                             heldObject = null;
                             currentState = State.Empty;

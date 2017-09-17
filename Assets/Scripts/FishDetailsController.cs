@@ -11,6 +11,8 @@ public class FishDetailsController : MonoBehaviour {
 
     private GameObject anchorGameObject;
 
+    public GameObject researchProtocolTemplateObject;
+
     // Use this for initialization
     void Start () {
         fishTypeIndex = 0;
@@ -23,13 +25,23 @@ public class FishDetailsController : MonoBehaviour {
 
         fishTypeIndex = type;
         anchorGameObject = anchor;
-        fishName.text = GameLogicController.AllFishParameters[0].name;
+        fishName.text = GameLogicController.AllFishParameters[fishTypeIndex].name;
+        for (int i = 0; i < GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols.Length; i++)
+        {
+            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplateObject);
+            researchProtocolUIObject.transform.SetParent(gameObject.transform, false);
+            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((i * 100), 80);
+            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols[i].researchStation;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(anchorGameObject.transform.position);
-        ViewportPosition.x += 30;
-        rectTransform.anchoredPosition = ViewportPosition;
+        if (anchorGameObject != null)
+        {
+            Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(anchorGameObject.transform.position);
+            ViewportPosition.x += 30;
+            rectTransform.anchoredPosition = ViewportPosition;
+        }
     }
 }

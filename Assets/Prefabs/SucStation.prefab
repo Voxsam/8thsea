@@ -2240,9 +2240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fecaf3bc241514285555ae9167cb22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivated: 0
   forwardSpeed: 3
   attractionForce: 30
-  isActivated: 0
   radius: 10
   anchorPoint: {fileID: 1010943706609880}
 --- !u!114 &114517587770663370

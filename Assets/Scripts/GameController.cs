@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour {
     public enum ControlType
     {
         CHARACTER,
-        SUB,
+        SUBMARINE,
         STATION,
     };
 

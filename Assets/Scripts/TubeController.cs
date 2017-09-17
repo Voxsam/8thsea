@@ -1,18 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TubeController : MonoBehaviour {
+public class TubeController : StationControllerInterface {
 
 	public float forwardSpeed;
 	public float attractionForce;
-	public bool isActivated;
+	//public bool isActivated; // In parent
 	public float radius;
 	public GameObject anchorPoint;
     private bool systemActivated;
-	//public GameObject playerCharacter;
-	// Use this for initialization
-	void Start () {
+
+    public override GameController.ControlType ControlMode
+    {
+        get { return GameController.ControlType.STATION; }
+    }
+
+    //public GameObject playerCharacter;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -71,4 +78,9 @@ public class TubeController : MonoBehaviour {
                 
         }
 	}
+
+    public override bool SwitchCondition()
+    {
+        return true;
+    }
 }

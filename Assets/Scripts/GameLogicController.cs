@@ -35,7 +35,7 @@ public class GameLogicController : MonoBehaviour {
     public static FishParameters [] AllFishParameters;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         AllFishParameters = new FishParameters[2];
         AllFishParameters[0] = new FishParameters( "Clownfish", 40 );
         AllFishParameters[0].researchProtocols = new ResearchProtocol[2];

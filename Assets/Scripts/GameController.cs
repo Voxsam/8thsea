@@ -24,6 +24,9 @@ public class GameController : MonoBehaviour {
     // Fish management
     protected List<FishController> fishes;
 
+    // Camera management
+    [SerializeField] protected CameraController gameCamera;
+
     public Text timeLeftText;
 	public Text moneyText;
 
@@ -165,8 +168,10 @@ public class GameController : MonoBehaviour {
     protected void Setup()
     {
         timeTillNextPayment = PAYMENT_INTERVAL;
+        gameCamera = GetComponentInChildren<CameraController>();
         players = new List<PlayerController>();
         players.Add(Player1Ref);
+        Player1Ref.AssignCameraToPlayer(gameCamera);
     }
     #endregion
 

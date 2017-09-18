@@ -36,7 +36,8 @@ public class TubeController : StationControllerInterface {
         }
 
         if (isActivated) {
-			float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
+
+            float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
 			float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
 			Vector3 newLocation = transform.position+transform.TransformDirection(x,y,0); 
 			float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
@@ -56,7 +57,13 @@ public class TubeController : StationControllerInterface {
 		}
 	}
 
-	void OnCollisionEnter(Collision other) {
+    public override void SetPlayerToStation(PlayerController player)
+    {
+        base.SetPlayerToStation(player);
+        stationCamera.SetCameraToObject(gameObject);
+    }
+
+    void OnCollisionEnter(Collision other) {
 		if (isActivated & systemActivated) {
             if (GameController.Obj.GetFishFromCollider(other.collider) != null)
             {

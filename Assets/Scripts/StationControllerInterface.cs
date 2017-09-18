@@ -14,34 +14,41 @@ public abstract class StationControllerInterface : MonoBehaviour {
     /// </summary>
     public abstract bool SwitchCondition();
     public PlayerController playerInStation = null;
-    public CameraController stationCamera = null;
+    protected CameraController stationCamera = null;
 
     void Start()
     {
-        stationCamera.AssignCameraToObject(gameObject);
     }
 
     /// <summary>
     /// Swap the player's control to the station
     /// </summary>
     /// <param name="player"></param>
-    public void SetPlayerToStation(PlayerController player)
+    public virtual void SetPlayerToStation(PlayerController player)
     {
         playerInStation = player;
         playerInStation.RequestControlChange(ControlMode);
         isActivated = true;
+        SetStationCamera(playerInStation.cameraController);
     }
 
     /// <summary>
     /// Releasea the player from the station
     /// </summary>
-    public void ReleasePlayerFromStation()
+    public virtual void ReleasePlayerFromStation()
     {
         if (playerInStation != null)
         {
             playerInStation.ReturnControlToCharacter();
+            playerInStation.ReattachCameraToPlayer();
             playerInStation = null;
+            stationCamera = null;
             isActivated = false;
         }
+    }
+
+    public void SetStationCamera(CameraController cc)
+    {
+        stationCamera = cc;
     }
 }

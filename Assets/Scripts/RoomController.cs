@@ -18,7 +18,7 @@ public class RoomController : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag ("Player")) {
-            cameraController.AssignCameraToObject(other.gameObject);
+            cameraController.SetCameraToObject(other.gameObject);
 		}
 	}
 

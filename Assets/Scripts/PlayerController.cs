@@ -8,13 +8,15 @@ public class PlayerController : MonoBehaviour {
 	public float turnSpeed = 7;
 
     private GameController.ControlType controlMode;
+    private PlayerInteractionController interactionController;
+    public CameraController cameraController;
 
 	[SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameController.ControlType.CHARACTER;
-
+        interactionController = GetComponentInChildren<PlayerInteractionController>();
     }
 
     public GameController.ControlType ControlMode
@@ -38,6 +40,17 @@ public class PlayerController : MonoBehaviour {
     {
         ControlMode = GameController.ControlType.CHARACTER;
     }
+
+    public void AssignCameraToPlayer(CameraController cc)
+    {
+        cameraController = cc;
+        ReattachCameraToPlayer();
+    }
+
+    public void ReattachCameraToPlayer()
+    {
+        cameraController.SetCameraToObject(this.gameObject);
+    }
     #endregion
 
     public void GameUpdate () {
@@ -53,8 +66,7 @@ public class PlayerController : MonoBehaviour {
 					Time.deltaTime * turnSpeed
 				);
 
-				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));		
-
+				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
 			}
             
 		}

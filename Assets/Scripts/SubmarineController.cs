@@ -9,6 +9,7 @@ public class SubmarineController : StationControllerInterface {
     public float maximumSpeed;
     public GameObject dockingPosition;
     public OxygenCountdown oxygenCountdownScript;
+    public TubeController sucTube;
 
     private Vector3 playerStationPosition = Vector3.zero; // Stores the position of the player in the station when accessing the sub
     private GameObject playerGameObject = null;
@@ -57,6 +58,22 @@ public class SubmarineController : StationControllerInterface {
             {
                 currentSpeed = 0.2f;
             }
+
+            if (GameController.Obj.ButtonA_Down)
+            {
+                isActivated = false;
+                sucTube.isActivated = true;
+                stationCamera.SetCameraToObject(sucTube.gameObject);
+            }
+        }
+        else if (sucTube.isActivated)
+        {
+            if (GameController.Obj.ButtonB_Down)
+            {
+                isActivated = true;
+                sucTube.isActivated = false;
+                stationCamera.SetCameraToObject(this.gameObject);
+            }
         }
 
     }
@@ -70,7 +87,6 @@ public class SubmarineController : StationControllerInterface {
     {
         if (other.tag.Equals("lab"))
         {
-            Debug.Log("lab found");
             // Set to dock postition and deactivate the sub controls and UI
             oxygenCountdownScript.isActivated = false;
             transform.position = dockingPosition.transform.position;
@@ -94,7 +110,6 @@ public class SubmarineController : StationControllerInterface {
     {
         if (other.tag.Equals("lab"))
         {
-            Debug.Log("exitting line");
             oxygenCountdownScript.isActivated = true;
         }
     }

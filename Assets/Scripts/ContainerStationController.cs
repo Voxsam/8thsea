@@ -63,7 +63,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                     {
                         if (heldObject != null)
                         {
-                            playerControllerScript.pickUpObject(heldObject);
+                            playerControllerScript.PickUpObject(heldObject);
                             heldObject = null;
                             currentState = State.Empty;
                         }

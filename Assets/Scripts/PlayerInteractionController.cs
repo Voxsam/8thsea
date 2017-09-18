@@ -17,11 +17,9 @@ public class PlayerInteractionController : MonoBehaviour
     State currentState;
     SecondaryState currentSecondaryState;
 
-    private const KeyCode interactKey = KeyCode.E;
-
     private GameObject player;
 
-    private GameObject holdSlot;
+    [SerializeField] private GameObject holdSlot;
 
     private GameObject atObject;
     private GameObject heldObject;
@@ -37,7 +35,6 @@ public class PlayerInteractionController : MonoBehaviour
         currentSecondaryState = SecondaryState.Idle;
 
         player = gameObject;
-        holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
@@ -76,11 +73,11 @@ public class PlayerInteractionController : MonoBehaviour
                 break;
 
             case State.Hold:
-                if (Input.GetKeyDown(interactKey))
+                if (GameController.Obj.ButtonB_Down)
                 {
                     if (heldObject != null && currentSecondaryState == SecondaryState.Idle)
                     {
-                        setAttachObject(heldObject, false);
+                        SetAttachObject(heldObject, false);
                         currentState = State.Idle;
                     }
                 }
@@ -96,12 +93,12 @@ public class PlayerInteractionController : MonoBehaviour
                 break;
 
             case SecondaryState.View:
-                if (Input.GetKeyDown(interactKey))
+                if (GameController.Obj.ButtonA_Down)
                 {
                     //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
                     if (atObject.tag == "FishObject" && currentState != State.Hold)
                     {
-                        pickUpObject (atObject);
+                        PickUpObject (atObject);
                         atObject = null;
                     }
                     else if (atObject.tag == "StationObject")
@@ -129,7 +126,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    private void setAttachObject (GameObject other, bool attach)
+    private void SetAttachObject (GameObject other, bool attach)
     {
         IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
@@ -152,16 +149,16 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    public void pickUpObject (GameObject other)
+    public void PickUpObject (GameObject other)
     {
-        setAttachObject(other, true);
+        SetAttachObject(other, true);
         currentSecondaryState = SecondaryState.Idle;
         currentState = State.Hold;
     }
 
     public void dropObject ()
     {
-        setAttachObject(heldObject, false);
+        SetAttachObject(heldObject, false);
         heldObject = null;
         currentSecondaryState = SecondaryState.Idle;
         currentState = State.Idle;

@@ -152,7 +152,7 @@ public class GameController : MonoBehaviour {
         }//*/
 
         // Temp code
-        if (collider.gameObject.tag.Equals("Fish"))
+        if (collider.gameObject.tag.Equals("FishObject"))
         {
             return collider.GetComponent<FishController>();
         }

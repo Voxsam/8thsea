@@ -9,8 +9,9 @@ public class FishMovement : MonoBehaviour
  	
 	public Vector3 currentPosition;
 
-	public float newPositionX;
-	public float newPositionZ;
+    public float newPositionX;
+    public float newPositionZ;
+	public float newPositionY;
 	public Vector3 newPosition;
 	public Vector3 collidedPosition;
 
@@ -21,10 +22,10 @@ public class FishMovement : MonoBehaviour
 	void Start ()
 	{
 		currentPosition = transform.position;
-
-		newPositionX = currentPosition.x + Random.Range (-3.0f, 3.0f);
-		newPositionZ = currentPosition.z + Random.Range (-3.0f, 3.0f);
-		newPosition = new Vector3 (newPositionX, 1.0f, newPositionZ);
+        newPositionX = currentPosition.x + Random.Range(-3.0f, 3.0f);
+        newPositionZ = currentPosition.z + Random.Range (-3.0f, 3.0f);
+		newPositionY = currentPosition.y + Random.Range (-3.0f, 3.0f);
+		newPosition = new Vector3 (1.0f, newPositionY, newPositionZ);
 
 		StartCoroutine(moveToPosition(newPosition, time));
 	}
@@ -64,10 +65,15 @@ public class FishMovement : MonoBehaviour
 
 			currentPosition = transform.position;
 
-			newPositionX = currentPosition.x + Random.Range (-3.0f, 3.0f);
-			newPositionZ = currentPosition.z + Random.Range (-3.0f, 3.0f);
-			newPosition = new Vector3 (newPositionX, 1.0f, newPositionZ);
+			/*newPositionY = Mathf.Min(Mathf.Max(currentPosition.y + Random.Range (-3.0f, 3.0f),-6.0f), 3.0f);
+            newPositionZ = Mathf.Min(Mathf.Max(currentPosition.z + Random.Range(-3.0f, 3.0f),-6.0f),3.0f);
+            newPositionX = Mathf.Min(Mathf.Max(currentPosition.x + Random.Range(-3.0f, 3.0f),-6.0f),3.0f);*/
 
+            newPositionY =currentPosition.y + Random.Range(-3.0f, 3.0f);
+            newPositionZ = currentPosition.z + Random.Range(-3.0f, 3.0f);
+            newPositionX = currentPosition.x + Random.Range(-3.0f, 3.0f);
+            newPosition = new Vector3 (newPositionX, newPositionY, newPositionZ);
+            Debug.Log(newPosition);
 			while (elapsedTime < time)
 			{
 				if (obstacleCrash == false) 

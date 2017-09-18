@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 54598662816392232}
   - component: {fileID: 65047916469850098}
   - component: {fileID: 114822874331403048}
+  - component: {fileID: 114970765989498232}
   m_Layer: 0
   m_Name: Fish
   m_TagString: FishObject
@@ -96,7 +97,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 62
   m_CollisionDetection: 0
 --- !u!65 &65047916469850098
 BoxCollider:
@@ -123,3 +124,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishDetails: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
     type: 2}
+--- !u!114 &114970765989498232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1228797805051986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e124c27d99912064eadaeef02786f16b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stop: 0
+  time: 2
+  currentPosition: {x: 0, y: 0, z: 0}
+  newPositionX: 0
+  newPositionZ: 0
+  newPosition: {x: 0, y: 0, z: 0}
+  collidedPosition: {x: 0, y: 0, z: 0}
+  obstacleCrash: 0
+  timeLock: 0

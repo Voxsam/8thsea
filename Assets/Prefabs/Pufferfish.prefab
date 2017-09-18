@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65999164962607928}
   - component: {fileID: 114039594205563350}
   - component: {fileID: 33405177179768262}
+  - component: {fileID: 114019028491254844}
   m_Layer: 0
   m_Name: Pufferfish
   m_TagString: FishObject
@@ -96,7 +97,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 62
   m_CollisionDetection: 0
 --- !u!65 &65999164962607928
 BoxCollider:
@@ -110,6 +111,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.07795, y: 1.6820421, z: 0.9433002}
   m_Center: {x: 0, y: 0.034110155, z: 0.07165017}
+--- !u!114 &114019028491254844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1226009427648234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e124c27d99912064eadaeef02786f16b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stop: 0
+  time: 2
+  currentPosition: {x: 0, y: 0, z: 0}
+  newPositionX: 0
+  newPositionZ: 0
+  newPosition: {x: 0, y: 0, z: 0}
+  collidedPosition: {x: 0, y: 0, z: 0}
+  obstacleCrash: 0
+  timeLock: 0
 --- !u!114 &114039594205563350
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -8,12 +8,18 @@ public abstract class StationControllerInterface : MonoBehaviour {
     }
 
     public bool isActivated = false; // False by default
-
+    
     /// <summary>
     /// The switch condition that checks whether the player can return to the Character controller
     /// </summary>
     public abstract bool SwitchCondition();
     public PlayerController playerInStation = null;
+    public CameraController stationCamera = null;
+
+    void Start()
+    {
+        stationCamera.AssignCameraToObject(gameObject);
+    }
 
     /// <summary>
     /// Swap the player's control to the station

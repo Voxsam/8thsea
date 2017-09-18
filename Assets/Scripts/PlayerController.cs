@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
     private GameController.ControlType controlMode;
 
-	[SerializeField] private Rigidbody rb;
+	[SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor

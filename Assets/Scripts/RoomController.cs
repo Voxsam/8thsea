@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomController : MonoBehaviour {
-	
-	public static RoomController Obj;
+
+    public CameraController cameraController;
 
 	public Camera cam;
 	public List<GameObject> playersInRoom;
@@ -12,22 +12,21 @@ public class RoomController : MonoBehaviour {
 
 	void Start ()
 	{
-		if (Obj == null) {
-			Obj = this;
-		}
+        cameraController = GetComponentInChildren<CameraController>();
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.CompareTag ("Player")) {
-			playersInRoom.Add (other.gameObject);
+            cameraController.AssignCameraToObject(other.gameObject);
 		}
 	}
 
 	void OnTriggerExit(Collider other) {
 
-		if (other.CompareTag ("Player")) {
-			playersInRoom.Remove (other.gameObject);
-		}
+		if (other.CompareTag ("Player"))
+        {
+            cameraController.RemoveCameraFromObject(other.gameObject);
+        }
 	}
 }

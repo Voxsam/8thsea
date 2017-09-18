@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 23231101533884024}
   - component: {fileID: 114175434145567332}
   - component: {fileID: 65123034331966552}
+  - component: {fileID: 65172140171620680}
   m_Layer: 0
   m_Name: SucStation
   m_TagString: Untagged
@@ -621,7 +622,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387266356398382}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -8.6, y: 1.24, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -2071,6 +2072,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65172140171620680
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387266356398382}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65645584984167068
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2241,6 +2254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActivated: 0
+  playerInStation: {fileID: 0}
+  stationCamera: {fileID: 0}
   forwardSpeed: 3
   attractionForce: 30
   radius: 10

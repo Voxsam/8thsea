@@ -279,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActivated: 0
   playerInStation: {fileID: 0}
+  stationCamera: {fileID: 0}
   acceleration: 0
   currentSpeed: 0
   maximumSpeed: 0

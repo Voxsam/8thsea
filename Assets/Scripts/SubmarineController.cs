@@ -10,6 +10,9 @@ public class SubmarineController : StationControllerInterface {
     public GameObject dockingPosition;
     public OxygenCountdown oxygenCountdownScript;
 
+    private Vector3 playerStationPosition = Vector3.zero; // Stores the position of the player in the station when accessing the sub
+    private GameObject playerGameObject = null;
+
     public override GameController.ControlType ControlMode
     {
         get { return GameController.ControlType.SUBMARINE; }
@@ -27,6 +30,20 @@ public class SubmarineController : StationControllerInterface {
 	private void Update () {
         if (isActivated)
         {
+            if (playerGameObject == null)
+            {
+                // Store player's initial position
+                playerStationPosition = playerInStation.transform.position;
+
+                // Set player to be in 'center' of sub
+                playerInStation.transform.SetParent(transform);
+                playerInStation.transform.localPosition = Vector3.zero;
+
+                // Prevent the player from activating its rigidbody
+                playerGameObject = playerInStation.gameObject;
+                playerGameObject.SetActive(false);
+            }
+
             //Debug.Log(OxygenCountdown.isActivated);
             float horizontalControl = Input.GetAxis("Horizontal");
             float verticalControl = Input.GetAxis("Vertical");
@@ -58,8 +75,19 @@ public class SubmarineController : StationControllerInterface {
             oxygenCountdownScript.isActivated = false;
             transform.position = dockingPosition.transform.position;
 
-            // Then click the player out of the sub
-            ReleasePlayerFromStation();
+            if (playerGameObject != null)
+            {
+                // Reactivate the player
+                playerGameObject.SetActive(true);
+
+                // Reset the player Position
+                playerInStation.transform.position = playerStationPosition;
+                playerGameObject.transform.SetParent(null);
+                playerGameObject = null;
+
+                // Then click the player out of the sub
+                ReleasePlayerFromStation();
+            }
         }
     }
     void OnTriggerExit(Collider other)

@@ -24,10 +24,10 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
 	void Update () {
 	}
 
-    public void interact () {
+    public void Interact () {
     }
 
-    public void interact (GameObject otherActor) {
+    public void Interact (GameObject otherActor) {
         if (otherActor.tag == "Player")
         {
             if (currentState == State.Empty)
@@ -42,8 +42,8 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                         FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
                         if (heldObjectControllerScript != null)
                         {
-                            playerControllerScript.dropObject();
-                            heldObjectControllerScript.putIn();
+                            playerControllerScript.DropObject();
+                            heldObjectControllerScript.PutIn();
                         }
                         heldObject.transform.localPosition = Vector3.zero;
                         heldObject.transform.localScale = Vector3.one;
@@ -73,7 +73,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void toggleHighlight(bool toggle = true)
+    public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {

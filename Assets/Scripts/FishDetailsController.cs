@@ -39,7 +39,7 @@ public class FishDetailsController : MonoBehaviour {
 	void Update () {
         if (anchorGameObject != null)
         {
-            Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(anchorGameObject.transform.position);
+            Vector2 ViewportPosition = GameController.Obj.gameCamera.GetCamera.WorldToScreenPoint(anchorGameObject.transform.position);
             ViewportPosition.x += 30;
             rectTransform.anchoredPosition = ViewportPosition;
         }

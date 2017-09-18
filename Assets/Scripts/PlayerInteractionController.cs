@@ -16,10 +16,10 @@ public class PlayerInteractionController : MonoBehaviour
     };
     State currentState;
     SecondaryState currentSecondaryState;
-
+    
     private GameObject player;
 
-    [SerializeField] private GameObject holdSlot;
+    private GameObject holdSlot;
 
     private GameObject atObject;
     private GameObject heldObject;
@@ -35,6 +35,7 @@ public class PlayerInteractionController : MonoBehaviour
         currentSecondaryState = SecondaryState.Idle;
 
         player = gameObject;
+        holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
@@ -45,7 +46,7 @@ public class PlayerInteractionController : MonoBehaviour
             if (other.tag == "FishObject" || other.tag == "StationObject")
             {
                 atObject = other.gameObject;
-                highlightObject(atObject, true);
+                HighlightObject(atObject, true);
                 currentSecondaryState = SecondaryState.View;
             }
         }
@@ -58,7 +59,7 @@ public class PlayerInteractionController : MonoBehaviour
             if (other.gameObject == atObject)
             {
                 currentSecondaryState = SecondaryState.Idle;
-                highlightObject(atObject, false);
+                HighlightObject(atObject, false);
                 atObject = null;
             }
         }
@@ -69,10 +70,8 @@ public class PlayerInteractionController : MonoBehaviour
     {
         switch (currentState)
         {
-            case State.Idle:
-                break;
-
             case State.Hold:
+                // Discard
                 if (GameController.Obj.ButtonB_Down)
                 {
                     if (heldObject != null && currentSecondaryState == SecondaryState.Idle)
@@ -82,16 +81,14 @@ public class PlayerInteractionController : MonoBehaviour
                     }
                 }
                 break;
-                
+
+            case State.Idle:
             default:
                 break;
         }
 
         switch (currentSecondaryState)
         {
-            case SecondaryState.Idle:
-                break;
-
             case SecondaryState.View:
                 if (GameController.Obj.ButtonA_Down)
                 {
@@ -106,23 +103,24 @@ public class PlayerInteractionController : MonoBehaviour
                         IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
                         if (atObjectInteractableScript != null)
                         {
-                            atObjectInteractableScript.interact(player);
+                            atObjectInteractableScript.Interact(player);
                         }
                     }
                 }
                 break;
 
+            case SecondaryState.Idle:
             default:
                 break;
         }
     }
 
-    private void highlightObject (GameObject other, bool highlight)
+    private void HighlightObject (GameObject other, bool highlight)
     {
         IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (otherInteractableScript != null)
         {
-            otherInteractableScript.toggleHighlight(highlight);
+            otherInteractableScript.ToggleHighlight(highlight);
         }
     }
 
@@ -131,14 +129,13 @@ public class PlayerInteractionController : MonoBehaviour
         IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
         {
-            heldObjectInteractableScript.interact();
-            heldObjectInteractableScript.toggleHighlight(false);
+            heldObjectInteractableScript.Interact();
+            heldObjectInteractableScript.ToggleHighlight(false);
         }
 
         if (attach)
         {
             other.transform.localPosition = Vector3.zero;
-            other.transform.localScale = Vector3.one;
             other.transform.SetParent(holdSlot.transform, false);
             heldObject = other;
         }
@@ -156,7 +153,7 @@ public class PlayerInteractionController : MonoBehaviour
         currentState = State.Hold;
     }
 
-    public void dropObject ()
+    public void DropObject ()
     {
         SetAttachObject(heldObject, false);
         heldObject = null;

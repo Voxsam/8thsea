@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
     protected List<FishController> fishes;
 
     // Camera management
-    [SerializeField] protected CameraController gameCamera;
+    [SerializeField] public CameraController gameCamera;
 
     public Text timeLeftText;
 	public Text moneyText;
@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour {
 	public int currentMoney;
 	public float timeTillNextPayment;
 
-	void Start () {
+	void Awake() {
         if (Obj == null)
         {
             Obj = this;

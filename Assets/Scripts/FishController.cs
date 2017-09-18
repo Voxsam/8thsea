@@ -1,8 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FishController : MonoBehaviour, IInteractable {
+
+    private struct ResearchProtocol
+    {
+        public string researchStation;
+        public bool complete;
+
+        public ResearchProtocol ( string _researchStation )
+        {
+            researchStation = _researchStation;
+            complete = false;
+        }
+    };
 
     //Enums for fish states
     public enum State
@@ -11,54 +24,68 @@ public class FishController : MonoBehaviour, IInteractable {
         Held,
         Placed
     };
-    State currentState;
 
     //Enums for fish secondary states
     public enum SecondaryState
     {
         Idle,
+        Panic,
         Dead,
         Researched
     };
+
+    public int fishType;
+
+    State currentState;
     SecondaryState currentSecondaryState;
 
-    //Boolean flag to mark fish as within interactable range of a player.
     private Rigidbody rigidBody;
-
-    private GameObject mainCamera;
-
-    private GameObject gameCanvas;
-    private RectTransform canvasRect;
 
     private GameObject worldspaceCanvas;
     private GameObject panicBar;
     private RectTransform panicBarRect;
     private float panicTimer;
     private float panicBarWidth;
-    private GameObject fishDetailsUIObject;
+    private GameObject fishDetails;
+    private ResearchProtocol[] researchProtocols;
+    private int currentResearchProtocol;
+    private Color originalColor;
 
     //Prefab to instantiate FishDetails
-    public GameObject fishDetails;
+    public GameObject fishDetailsTemplate;
 
     // Use this for initialization
     void Start () {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
+        currentResearchProtocol = 0;
+
         //Get own rigidbody component.
         rigidBody = this.GetComponent<Rigidbody>();
 
-        fishDetailsUIObject = null;
+        fishDetails = null;
 
-        mainCamera = Camera.main.gameObject;
-        gameCanvas = mainCamera.gameObject.transform.Find("SuperImposedUI").gameObject;
-        canvasRect = gameCanvas.GetComponent<RectTransform>();
-
-        worldspaceCanvas = gameObject.transform.Find("WorldspaceCanvas").gameObject;
+        worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
         worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(false);
         panicBar = worldspaceCanvas.transform.Find("PanicBar").gameObject;
+        panicBar.SetActive(false);
         panicBarRect = panicBar.GetComponent<RectTransform>();
         panicBarWidth = panicBarRect.rect.width;
-        panicTimer = 10f;
+        panicTimer = GameLogicController.AllFishParameters[fishType].panicTimerLength;
+
+        fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
+        fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
+        fishDetails.name = gameObject.ToString();
+        fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
+        fishDetails.SetActive(false);
+
+        originalColor = GetComponentInChildren<Renderer>().material.color;
+
+        researchProtocols = new ResearchProtocol[GameLogicController.AllFishParameters[fishType].researchProtocols.Length];
+        for (int i = 0; i < GameLogicController.AllFishParameters[fishType].researchProtocols.Length; i++)
+        {
+            researchProtocols[i] = new ResearchProtocol (GameLogicController.AllFishParameters[fishType].researchProtocols[i].researchStation);
+        }
     }
 	
 	// Update is called once per frame
@@ -66,23 +93,26 @@ public class FishController : MonoBehaviour, IInteractable {
         switch (currentSecondaryState)
         {
             case SecondaryState.Idle:
-                panicTimer -= Time.deltaTime;
-
-                if (panicTimer <= 0)
-                {
-                    currentSecondaryState = SecondaryState.Dead;
-                    panicTimer = 0f;
-                    worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
-                }
-
-                panicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / 10f, panicBarRect.rect.height);
-
+                
                 break;
 
             case SecondaryState.Dead:
                 break;
 
             case SecondaryState.Researched:
+
+            case SecondaryState.Panic:
+                panicTimer -= Time.deltaTime;
+
+                if (panicTimer <= 0)
+                {
+                    currentSecondaryState = SecondaryState.Dead;
+                    panicTimer = 0f;
+                    worldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "d e d";
+                    worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
+                }
+
+                panicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameLogicController.AllFishParameters[fishType].panicTimerLength, panicBarRect.rect.height);
                 break;
 
             default:
@@ -93,7 +123,7 @@ public class FishController : MonoBehaviour, IInteractable {
     void LateUpdate()
     {
         worldspaceCanvas.transform.rotation = Quaternion.identity;
-        worldspaceCanvas.transform.position = transform.position + new Vector3 (0, 1, 0);
+        worldspaceCanvas.transform.position = transform.position;
     }
 
     //Activates/deactivates RigidBody of prefab.
@@ -113,7 +143,7 @@ public class FishController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void pickUp ()
+    public void PickUp ()
     {
         if (rigidBody)
         {
@@ -121,9 +151,14 @@ public class FishController : MonoBehaviour, IInteractable {
             rigidBody.detectCollisions = false;
         }
         currentState = State.Held;
+        if (currentSecondaryState == SecondaryState.Idle)
+        {
+            currentSecondaryState = SecondaryState.Panic;
+            panicBar.SetActive(true);
+        }
     }
 
-    public void putDown ()
+    public void PutDown ()
     {
         if (rigidBody)
         {
@@ -133,7 +168,7 @@ public class FishController : MonoBehaviour, IInteractable {
         currentState = State.Idle;
     }
 
-    public void putIn ()
+    public void PutIn ()
     {
         if (rigidBody)
         {
@@ -144,58 +179,62 @@ public class FishController : MonoBehaviour, IInteractable {
         currentState = State.Placed;
     }
 
-    public void interact ()
+    public void Interact ()
     {
         switch (currentState)
         {
             case State.Idle:
-                pickUp();
-                break;
-
-            case State.Held:
-                putDown();
-                break;
-
             case State.Placed:
-                pickUp();
+                PickUp();
                 break;
-
+            case State.Held:
+                PutDown();
+                break;
             default:
                 break;
         }
     }
 
-    public void interact (GameObject otherActor)
+    public void Interact (GameObject otherActor)
     {
     }
 
-    public void toggleHighlight(bool toggle = true)
+    public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {
-            Renderer rend = GetComponent<Renderer>();
+            Renderer rend = GetComponentInChildren<Renderer>();
             rend.material.color = Color.red;
-
-            if (fishDetailsUIObject == null)
-            {
-                fishDetailsUIObject = (GameObject)Instantiate(fishDetails);
-                fishDetailsUIObject.transform.SetParent(gameCanvas.transform, false);
-                fishDetailsUIObject.name = gameObject.ToString();
-                fishDetailsUIObject.GetComponent<FishDetailsController>().Init(0, gameObject);
-            }
+            fishDetails.SetActive (true);
         }
         else
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.white;
-            if (fishDetailsUIObject != null)
+            Renderer rend = GetComponentInChildren<Renderer>();
+            rend.material.color = originalColor;
+            if (fishDetails.activeSelf)
             {
-                if (fishDetailsUIObject.name == gameObject.ToString())
-                {
-                    Destroy(fishDetailsUIObject);
-                    fishDetailsUIObject = null;
-                }
+                fishDetails.SetActive(false);
             }
+        }
+    }
+
+    public string GetCurrentResearchProtocol ()
+    {
+        if (currentResearchProtocol < researchProtocols.Length)
+            return researchProtocols[currentResearchProtocol].researchStation;
+        else
+            return "Done";
+    }
+
+    public void ResearchFish ()
+    {
+        currentResearchProtocol++;
+        if ( currentResearchProtocol >= researchProtocols.Length )
+        {
+            currentResearchProtocol = researchProtocols.Length;
+            currentSecondaryState = SecondaryState.Researched;
+            worldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "Researched";
+            worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
         }
     }
 }

@@ -21,7 +21,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     private GameObject player;
 
-    private GameObject holdSlot;
+    [SerializeField] private GameObject holdSlot;
 
     private GameObject atObject;
     private GameObject heldObject;
@@ -37,7 +37,6 @@ public class PlayerInteractionController : MonoBehaviour
         currentSecondaryState = SecondaryState.Idle;
 
         player = gameObject;
-        holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 

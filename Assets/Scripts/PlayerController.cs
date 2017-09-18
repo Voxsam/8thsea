@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public float movementSpeed = 10;
-	public float turnSpeed = 5;
+	public float turnSpeed = 7;
 
     private GameController.ControlType controlMode;
 
@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     public void GameUpdate () {
+
+		
 		if (ControlMode == GameController.ControlType.CHARACTER) {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             

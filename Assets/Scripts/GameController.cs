@@ -176,7 +176,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        if (timeTillNextPayment == 0)
+        if (timeTillNextPayment <= 0)
         {
             RemoveMoney(PAYMENT_AMOUNT);
             timeTillNextPayment = PAYMENT_INTERVAL;
@@ -190,10 +190,9 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        GameUpdate();
-
         // Handle the update loops for the others too
-        Player1.GameUpdate();
+
+		Player1.GameUpdate();
     }
     #endregion
 }

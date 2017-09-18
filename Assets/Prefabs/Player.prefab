@@ -292,8 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3b5c5fd51d1409bf1b4d1eb3dc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 7
-  turnSpeed: 3
+  movementSpeed: 10
+  turnSpeed: 5
   rb: {fileID: 54897799338696168}
 --- !u!135 &135282530913537786
 SphereCollider:
@@ -302,8 +302,8 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830913044983308}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.3
   m_Center: {x: 0, y: -1, z: 0.82}

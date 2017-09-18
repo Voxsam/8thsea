@@ -36,8 +36,8 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
         heldObject = null;
         uiObject = null;
 
-        mainCamera = Camera.main.gameObject;
-        gameCanvas = mainCamera.gameObject.transform.Find("SuperImposedUI").gameObject;
+        mainCamera = GameController.Obj.gameCamera.GetCamera.gameObject;
+        gameCanvas = GameController.Obj.gameCamera.GetCanvas.gameObject;
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
 
             if (uiObject.name == gameObject.ToString())
             {
-                Vector2 ViewportPosition = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+                Vector2 ViewportPosition = GameController.Obj.gameCamera.GetCamera.WorldToScreenPoint(gameObject.transform.position);
                 uiObject.GetComponent<RectTransform>().anchoredPosition = ViewportPosition;
 
             }
@@ -79,9 +79,8 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
                         }
+                        heldObject.transform.SetParent(holdSlot.transform);
                         heldObject.transform.localPosition = Vector3.zero;
-                        heldObject.transform.localScale = Vector3.one;
-                        heldObject.transform.SetParent(holdSlot.transform, false);
 
                         currentState = State.Holding;
                     }

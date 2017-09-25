@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class FishDetailsController : MonoBehaviour {
 
-    private int fishTypeIndex;
-    private Text fishName;
-    private RectTransform rectTransform;
+    private GameController.FishType fishTypeIndex;
+    [SerializeField] private Text fishName;
+    [SerializeField] private RectTransform rectTransform;
 
     private GameObject anchorGameObject;
 
@@ -18,20 +18,20 @@ public class FishDetailsController : MonoBehaviour {
         fishTypeIndex = 0;
     }
 
-    public void Init ( int type, GameObject anchor )
+    public void Init (GameController.FishType type, GameObject anchor )
     {
-        fishName = transform.Find("FishName").GetComponent<Text>();
-        rectTransform = gameObject.GetComponent<RectTransform>();
+        //fishName = transform.Find("FishName").GetComponent<Text>();
+        //rectTransform = gameObject.GetComponent<RectTransform>();
 
         fishTypeIndex = type;
         anchorGameObject = anchor;
-        fishName.text = GameLogicController.AllFishParameters[fishTypeIndex].name;
-        for (int i = 0; i < GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols.Length; i++)
+        fishName.text = GameController.GetFishParameter(fishTypeIndex).name;
+        for (int i = 0; i < GameController.GetFishParameter(fishTypeIndex).researchProtocols.Length; i++)
         {
             GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplateObject);
             researchProtocolUIObject.transform.SetParent(gameObject.transform, false);
             researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((i * 100), 80);
-            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols[i].researchStation;
+            researchProtocolUIObject.GetComponentInChildren<Text>().text = GameController.GetFishParameter(fishTypeIndex).researchProtocols[i].researchStation;
         }
     }
 	

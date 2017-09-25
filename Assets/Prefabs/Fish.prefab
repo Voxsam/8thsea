@@ -286,6 +286,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishType: 0
+  fishRenderer: {fileID: 23576500097082968}
+  DeadText: {fileID: 114492728205327948}
+  PanicBarRect: {fileID: 224384499388235106}
+  WorldspaceCanvas: {fileID: 1557064350480070}
   fishDetailsTemplate: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
     type: 2}
 --- !u!114 &114988691687629378

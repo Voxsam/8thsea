@@ -36,7 +36,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                 if (playerControllerScript != null)
                 {
                     //Get the object held by the player.
-                    heldObject = playerControllerScript.getHeldObject();
+                    heldObject = playerControllerScript.GetHeldObject();
                     if (heldObject != null)
                     {
                         FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
@@ -59,7 +59,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                 if (playerControllerScript != null)
                 {
                     //Check that the player is not already holding on to something.
-                    if (playerControllerScript.getHeldObject() == null)
+                    if (playerControllerScript.GetHeldObject() == null)
                     {
                         if (heldObject != null)
                         {

@@ -7,12 +7,46 @@ public class GameController : MonoBehaviour {
 
 	public static GameController Obj;
 
+    #region Structures
+    public struct ResearchProtocol
+    {
+        public string researchStation;
+
+        public ResearchProtocol(string _researchStation)
+        {
+            researchStation = _researchStation;
+        }
+    };
+
+    //Fish details.
+    public class FishParameters
+    {
+        public string name;
+        public ResearchProtocol[] researchProtocols;
+        public float panicTimerLength;
+        public int currentResearchProtocol;
+
+        public FishParameters(string _name, float _panicTimerLength)
+        {
+            name = _name;
+            panicTimerLength = _panicTimerLength;
+            currentResearchProtocol = 0;
+        }
+    };
+    #endregion
+
     public enum ControlType
     {
         CHARACTER,
         SUBMARINE,
         STATION,
     };
+
+    public enum FishType
+    {
+        ClownFish = 0,
+        PufferFish
+    }
 
     public const float PAYMENT_INTERVAL = 60f;
     public const int PAYMENT_AMOUNT = 100;
@@ -22,6 +56,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] protected PlayerController Player1Ref;
 
     // Fish management
+    private static FishParameters[] AllFishParameters; // Contains details on all variants of fishes
     protected List<FishController> fishes;
 
     // Camera management
@@ -109,6 +144,11 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+
+    public static FishParameters GetFishParameter(FishType fish)
+    {
+        return AllFishParameters[(int)fish];
+    }
     #endregion
 
     #region Helper functions
@@ -172,6 +212,21 @@ public class GameController : MonoBehaviour {
         players = new List<PlayerController>();
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
+
+        InitialiseFishParameters();
+    }
+
+    protected void InitialiseFishParameters()
+    {
+        AllFishParameters = new FishParameters[2];
+        AllFishParameters[(int)FishType.ClownFish] = new FishParameters("Clownfish", 40);
+        AllFishParameters[(int)FishType.ClownFish].researchProtocols = new ResearchProtocol[2];
+        AllFishParameters[(int)FishType.ClownFish].researchProtocols[0] = new ResearchProtocol("A");
+        AllFishParameters[(int)FishType.ClownFish].researchProtocols[1] = new ResearchProtocol("B");
+        AllFishParameters[(int)FishType.PufferFish] = new FishParameters("Pufferfish", 50);
+        AllFishParameters[(int)FishType.PufferFish].researchProtocols = new ResearchProtocol[2];
+        AllFishParameters[(int)FishType.PufferFish].researchProtocols[0] = new ResearchProtocol("B");
+        AllFishParameters[(int)FishType.PufferFish].researchProtocols[1] = new ResearchProtocol("A");
     }
     #endregion
 

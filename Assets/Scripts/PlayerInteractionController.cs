@@ -23,7 +23,7 @@ public class PlayerInteractionController : MonoBehaviour
 
     private GameObject atObject;
     private GameObject heldObject;
-    public GameObject getHeldObject ()
+    public GameObject GetHeldObject ()
     {
         return heldObject;
     }

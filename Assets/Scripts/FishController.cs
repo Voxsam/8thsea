@@ -34,22 +34,27 @@ public class FishController : MonoBehaviour, IInteractable {
         Researched
     };
 
-    public int fishType;
+    public GameController.FishType fishType;
 
     State currentState;
     SecondaryState currentSecondaryState;
 
     private Rigidbody rigidBody;
 
-    private GameObject worldspaceCanvas;
-    private GameObject panicBar;
-    private RectTransform panicBarRect;
+    
     private float panicTimer;
     private float panicBarWidth;
-    private GameObject fishDetails;
     private ResearchProtocol[] researchProtocols;
     private int currentResearchProtocol;
     private Color originalColor;
+    
+    // GameObjects used by this class
+
+    [SerializeField] private MeshRenderer fishRenderer;
+    [SerializeField] private GameObject WorldspaceCanvas;
+    [SerializeField] private Text DeadText;
+    [SerializeField] private RectTransform PanicBarRect;
+    private GameObject fishDetails;
 
     //Prefab to instantiate FishDetails
     public GameObject fishDetailsTemplate;
@@ -65,13 +70,10 @@ public class FishController : MonoBehaviour, IInteractable {
 
         fishDetails = null;
 
-        worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
-        worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(false);
-        panicBar = worldspaceCanvas.transform.Find("PanicBar").gameObject;
-        panicBar.SetActive(false);
-        panicBarRect = panicBar.GetComponent<RectTransform>();
-        panicBarWidth = panicBarRect.rect.width;
-        panicTimer = GameLogicController.AllFishParameters[fishType].panicTimerLength;
+        DeadText.gameObject.SetActive(false);
+        PanicBarRect.gameObject.SetActive(false);
+        panicBarWidth = PanicBarRect.rect.width;
+        panicTimer = GameController.GetFishParameter(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
         fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
@@ -79,12 +81,12 @@ public class FishController : MonoBehaviour, IInteractable {
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);
 
-        originalColor = GetComponentInChildren<Renderer>().material.color;
+        originalColor = fishRenderer.material.color;
 
-        researchProtocols = new ResearchProtocol[GameLogicController.AllFishParameters[fishType].researchProtocols.Length];
-        for (int i = 0; i < GameLogicController.AllFishParameters[fishType].researchProtocols.Length; i++)
+        researchProtocols = new ResearchProtocol[GameController.GetFishParameter(fishType).researchProtocols.Length];
+        for (int i = 0; i < GameController.GetFishParameter(fishType).researchProtocols.Length; i++)
         {
-            researchProtocols[i] = new ResearchProtocol (GameLogicController.AllFishParameters[fishType].researchProtocols[i].researchStation);
+            researchProtocols[i] = new ResearchProtocol (GameController.GetFishParameter(fishType).researchProtocols[i].researchStation);
         }
     }
 	
@@ -108,11 +110,11 @@ public class FishController : MonoBehaviour, IInteractable {
                 {
                     currentSecondaryState = SecondaryState.Dead;
                     panicTimer = 0f;
-                    worldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "d e d";
-                    worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
+                    DeadText.text = "d e d";
+                    DeadText.gameObject.SetActive(true);
                 }
 
-                panicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameLogicController.AllFishParameters[fishType].panicTimerLength, panicBarRect.rect.height);
+                PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameController.GetFishParameter(fishType).panicTimerLength, PanicBarRect.rect.height);
                 break;
 
             default:
@@ -122,8 +124,8 @@ public class FishController : MonoBehaviour, IInteractable {
 
     void LateUpdate()
     {
-        worldspaceCanvas.transform.rotation = Quaternion.identity;
-        worldspaceCanvas.transform.position = transform.position;
+        WorldspaceCanvas.transform.rotation = Quaternion.identity;
+        WorldspaceCanvas.transform.position = transform.position;
     }
 
     //Activates/deactivates RigidBody of prefab.
@@ -154,7 +156,7 @@ public class FishController : MonoBehaviour, IInteractable {
         if (currentSecondaryState == SecondaryState.Idle)
         {
             currentSecondaryState = SecondaryState.Panic;
-            panicBar.SetActive(true);
+            PanicBarRect.gameObject.SetActive(true);
         }
     }
 
@@ -233,8 +235,8 @@ public class FishController : MonoBehaviour, IInteractable {
         {
             currentResearchProtocol = researchProtocols.Length;
             currentSecondaryState = SecondaryState.Researched;
-            worldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "Researched";
-            worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
+            WorldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "Researched";
+            WorldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
         }
     }
 }

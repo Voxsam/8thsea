@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResearchStationController : MonoBehaviour, IInteractable {
+public class ResearchStationController : StationControllerInterface, IInteractable {
 
     enum State {
         Empty,
@@ -15,7 +16,6 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
 
     public string researchStationType;
 
-    private GameObject holdSlot;
     private GameObject heldObject;
     private float maxProgress = 20f;
     private float progressMade = 0f;
@@ -28,11 +28,20 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
 
     //Prefab to instantiate progress ui
     public GameObject progressUI;
+    [SerializeField] private GameObject holdSlot;
+
+    public override GameController.ControlType ControlMode
+    {
+        get
+        {
+            return GameController.ControlType.STATION;
+        }
+    }
 
     // Use this for initialization
     void Start () {
         currentState = State.Empty;
-        holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
+        //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
         uiObject = null;
 
@@ -70,7 +79,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                 if (playerControllerScript != null)
                 {
                     //Get the object held by the player.
-                    heldObject = playerControllerScript.getHeldObject();
+                    heldObject = playerControllerScript.GetHeldObject();
                     if (heldObject != null)
                     {
                         FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
@@ -92,7 +101,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                 if (playerControllerScript != null)
                 {
                     //Check that the player is not already holding on to something.
-                    if (playerControllerScript.getHeldObject() == null)
+                    if (playerControllerScript.GetHeldObject() == null)
                     {
                         if (heldObject != null)
                         {
@@ -112,7 +121,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                         print(progressMade);
                     }
                     //Check that the player is not already holding on to something.
-                    else if (playerControllerScript.getHeldObject() == null)
+                    else if (playerControllerScript.GetHeldObject() == null)
                     {
                         if (heldObject != null)
                         {
@@ -162,4 +171,8 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
         }
     }
 
+    public override bool SwitchCondition()
+    {
+        return true;
+    }
 }

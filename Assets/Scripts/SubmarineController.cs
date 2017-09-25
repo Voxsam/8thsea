@@ -14,9 +14,9 @@ public class SubmarineController : StationControllerInterface {
     private Vector3 playerStationPosition = Vector3.zero; // Stores the position of the player in the station when accessing the sub
     private GameObject playerGameObject = null;
 
-    public override GameController.ControlType ControlMode
+    public override GameData.ControlType ControlMode
     {
-        get { return GameController.ControlType.SUBMARINE; }
+        get { return GameData.ControlType.SUBMARINE; }
     }
 
     // Use this for initialization

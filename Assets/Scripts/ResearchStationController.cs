@@ -14,7 +14,7 @@ public class ResearchStationController : StationControllerInterface, IInteractab
 
     State currentState;
 
-    public string researchStationType;
+    public GameData.StationType researchStationType;
 
     private GameObject heldObject;
     private float maxProgress = 20f;
@@ -22,6 +22,7 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     private float progressPerInteraction = 1f;
     private GameObject mainCamera;
     private GameObject gameCanvas;
+    private Color originalColor;
 
     //Static so only one instance is used.
     private GameObject uiObject;
@@ -29,12 +30,13 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     //Prefab to instantiate progress ui
     public GameObject progressUI;
     [SerializeField] private GameObject holdSlot;
+    [SerializeField] private MeshRenderer meshRenderer;
 
-    public override GameController.ControlType ControlMode
+    public override GameData.ControlType ControlMode
     {
         get
         {
-            return GameController.ControlType.STATION;
+            return GameData.ControlType.STATION;
         }
     }
 
@@ -47,6 +49,7 @@ public class ResearchStationController : StationControllerInterface, IInteractab
 
         mainCamera = GameController.Obj.gameCamera.GetCamera.gameObject;
         gameCanvas = GameController.Obj.gameCamera.GetCanvas.gameObject;
+        originalColor = meshRenderer.material.color;
     }
 
     // Update is called once per frame
@@ -75,14 +78,14 @@ public class ResearchStationController : StationControllerInterface, IInteractab
         {
             if (currentState == State.Empty)
             {
-                PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
+                PlayerInteractionController playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
                     //Get the object held by the player.
                     heldObject = playerControllerScript.GetHeldObject();
                     if (heldObject != null)
                     {
-                        FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
+                        FishController heldObjectControllerScript = heldObject.GetComponent<FishController>();
                         if (heldObjectControllerScript != null)
                         {
                             playerControllerScript.DropObject();
@@ -118,7 +121,6 @@ public class ResearchStationController : StationControllerInterface, IInteractab
                     if (progressMade < maxProgress)
                     {
                         progressMade += progressPerInteraction;
-                        print(progressMade);
                     }
                     //Check that the player is not already holding on to something.
                     else if (playerControllerScript.GetHeldObject() == null)
@@ -144,8 +146,7 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     {
         if (toggle)
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.blue;
+            //meshRenderer.material.color = Color.blue;
             if (uiObject == null)
             {
                 uiObject = (GameObject)Instantiate(progressUI);
@@ -157,8 +158,7 @@ public class ResearchStationController : StationControllerInterface, IInteractab
         }
         else
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.white;
+            //meshRenderer.material.color = originalColor;
             if (uiObject != null)
             {
                 if (uiObject.name == gameObject.ToString())

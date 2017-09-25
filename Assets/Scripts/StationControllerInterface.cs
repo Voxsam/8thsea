@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StationControllerInterface : MonoBehaviour {
-    public abstract GameController.ControlType ControlMode {
+    public abstract GameData.ControlType ControlMode {
         get;
     }
 

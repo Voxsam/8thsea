@@ -12,9 +12,9 @@ public class TubeController : StationControllerInterface {
 	public GameObject anchorPoint;
     private bool systemActivated;
 
-    public override GameController.ControlType ControlMode
+    public override GameData.ControlType ControlMode
     {
-        get { return GameController.ControlType.STATION; }
+        get { return GameData.ControlType.STATION; }
     }
 
     //public GameObject playerCharacter;

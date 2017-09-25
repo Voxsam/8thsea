@@ -23,7 +23,7 @@ public class StationController : MonoBehaviour
             if (player != null)
             {
                 // If the player is in Character control mode
-                if (player.ControlMode == GameController.ControlType.CHARACTER &&
+                if (player.ControlMode == GameData.ControlType.CHARACTER &&
                     GameController.Obj.ButtonA_Up)
                 {
                     controller.SetPlayerToStation(player);
@@ -33,7 +33,7 @@ public class StationController : MonoBehaviour
         else
         {
             // Free the character from the station if the conditions are met
-            if (controller.playerInStation.ControlMode != GameController.ControlType.CHARACTER &&
+            if (controller.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
                 controller.SwitchCondition() && GameController.Obj.ButtonB_Up)
             {
                 controller.ReleasePlayerFromStation();

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float movementSpeed = 10;
 	public float turnSpeed = 7;
 
-    private GameController.ControlType controlMode;
+    private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
     public CameraController cameraController;
 
@@ -15,11 +15,11 @@ public class PlayerController : MonoBehaviour {
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
-        ControlMode = GameController.ControlType.CHARACTER;
+        ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
     }
 
-    public GameController.ControlType ControlMode
+    public GameData.ControlType ControlMode
     {
         get { return controlMode; }
         private set { controlMode = value; }
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     /// For other objects to request the player change its control to a certain object type.
     /// </summary>
     /// <param name="changeTo">The control type that the caller wishes the Player to change to</param>
-    public void RequestControlChange(GameController.ControlType changeTo)
+    public void RequestControlChange(GameData.ControlType changeTo)
     {
         // if there are no problems (aka insert checks here), change to that control type
         ControlMode = changeTo;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 
     public void ReturnControlToCharacter()
     {
-        ControlMode = GameController.ControlType.CHARACTER;
+        ControlMode = GameData.ControlType.CHARACTER;
     }
 
     public void AssignCameraToPlayer(CameraController cc)
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
     public void GameUpdate () {
 
 		
-		if (ControlMode == GameController.ControlType.CHARACTER) {
+		if (ControlMode == GameData.ControlType.CHARACTER) {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {

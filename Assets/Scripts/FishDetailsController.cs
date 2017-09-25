@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FishDetailsController : MonoBehaviour {
 
-    private GameController.FishType fishTypeIndex;
+    private GameData.FishType fishTypeIndex;
     [SerializeField] private Text fishName;
     [SerializeField] private RectTransform rectTransform;
 
@@ -18,20 +18,20 @@ public class FishDetailsController : MonoBehaviour {
         fishTypeIndex = 0;
     }
 
-    public void Init (GameController.FishType type, GameObject anchor )
+    public void Init (GameData.FishType type, GameObject anchor )
     {
         //fishName = transform.Find("FishName").GetComponent<Text>();
         //rectTransform = gameObject.GetComponent<RectTransform>();
 
         fishTypeIndex = type;
         anchorGameObject = anchor;
-        fishName.text = GameController.GetFishParameter(fishTypeIndex).name;
-        for (int i = 0; i < GameController.GetFishParameter(fishTypeIndex).researchProtocols.Length; i++)
+        fishName.text = GameData.GetFishParameter(fishTypeIndex).Name;
+        for (int i = 0; i < GameData.GetFishParameter(fishTypeIndex).ResearchProtocols.Length; i++)
         {
             GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplateObject);
             researchProtocolUIObject.transform.SetParent(gameObject.transform, false);
             researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((i * 100), 80);
-            researchProtocolUIObject.GetComponentInChildren<Text>().text = GameController.GetFishParameter(fishTypeIndex).researchProtocols[i].researchStation;
+            researchProtocolUIObject.GetComponentInChildren<Text>().text = GameData.GetFishParameter(fishTypeIndex).ResearchProtocols[i].ToString();
         }
     }
 	

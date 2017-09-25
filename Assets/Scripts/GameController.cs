@@ -6,58 +6,13 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
 	public static GameController Obj;
-
-    #region Structures
-    public struct ResearchProtocol
-    {
-        public string researchStation;
-
-        public ResearchProtocol(string _researchStation)
-        {
-            researchStation = _researchStation;
-        }
-    };
-
-    //Fish details.
-    public class FishParameters
-    {
-        public string name;
-        public ResearchProtocol[] researchProtocols;
-        public float panicTimerLength;
-        public int currentResearchProtocol;
-
-        public FishParameters(string _name, float _panicTimerLength)
-        {
-            name = _name;
-            panicTimerLength = _panicTimerLength;
-            currentResearchProtocol = 0;
-        }
-    };
-    #endregion
-
-    public enum ControlType
-    {
-        CHARACTER,
-        SUBMARINE,
-        STATION,
-    };
-
-    public enum FishType
-    {
-        ClownFish = 0,
-        PufferFish
-    }
-
-    public const float PAYMENT_INTERVAL = 60f;
-    public const int PAYMENT_AMOUNT = 100;
-    
     // Player management
     protected List<PlayerController> players;
     [SerializeField] protected PlayerController Player1Ref;
 
     // Fish management
-    private static FishParameters[] AllFishParameters; // Contains details on all variants of fishes
     protected List<FishController> fishes;
+    [SerializeField] protected Transform FishHolder;
 
     // Camera management
     [SerializeField] public CameraController gameCamera;
@@ -145,9 +100,10 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public static FishParameters GetFishParameter(FishType fish)
+    public void AddFish(FishController fish)
     {
-        return AllFishParameters[(int)fish];
+        fishes.Add(fish);
+        fish.transform.SetParent(FishHolder);
     }
     #endregion
 
@@ -207,26 +163,12 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
-        timeTillNextPayment = PAYMENT_INTERVAL;
+        timeTillNextPayment = GameData.PAYMENT_INTERVAL;
         gameCamera = GetComponentInChildren<CameraController>();
         players = new List<PlayerController>();
+        fishes = new List<FishController>();
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
-
-        InitialiseFishParameters();
-    }
-
-    protected void InitialiseFishParameters()
-    {
-        AllFishParameters = new FishParameters[2];
-        AllFishParameters[(int)FishType.ClownFish] = new FishParameters("Clownfish", 40);
-        AllFishParameters[(int)FishType.ClownFish].researchProtocols = new ResearchProtocol[2];
-        AllFishParameters[(int)FishType.ClownFish].researchProtocols[0] = new ResearchProtocol("A");
-        AllFishParameters[(int)FishType.ClownFish].researchProtocols[1] = new ResearchProtocol("B");
-        AllFishParameters[(int)FishType.PufferFish] = new FishParameters("Pufferfish", 50);
-        AllFishParameters[(int)FishType.PufferFish].researchProtocols = new ResearchProtocol[2];
-        AllFishParameters[(int)FishType.PufferFish].researchProtocols[0] = new ResearchProtocol("B");
-        AllFishParameters[(int)FishType.PufferFish].researchProtocols[1] = new ResearchProtocol("A");
     }
     #endregion
 
@@ -238,8 +180,8 @@ public class GameController : MonoBehaviour {
     {
         if (timeTillNextPayment <= 0)
         {
-            RemoveMoney(PAYMENT_AMOUNT);
-            timeTillNextPayment = PAYMENT_INTERVAL;
+            RemoveMoney(GameData.PAYMENT_AMOUNT);
+            timeTillNextPayment = GameData.PAYMENT_INTERVAL;
         }
 
         timeTillNextPayment -= Time.deltaTime;

@@ -7,7 +7,6 @@ public class Spawner : MonoBehaviour {
 	public GameObject[] fishes;
     public int maxNumberFish;
 	public Vector3 spawnValues;
-    public Transform FishHolder;
 
 	public float spawnWait;
 	public float spawnMostWait; // Time Increments
@@ -43,6 +42,10 @@ public class Spawner : MonoBehaviour {
 			Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), Random.Range(-spawnValues.y, spawnValues.y), 0);
 			FishController fish = Instantiate (fishes [randEnemy], spawnPosition + transform.TransformPoint(0, 0, 0), transform.rotation).GetComponent<FishController>();
             fish.GetComponent<Rigidbody>().useGravity = false;
+
+            // Add the fish to GameController so that it can manage it
+            GameController.Obj.AddFish(fish);
+
             count++;
 			yield return new WaitForSeconds (spawnWait);
 		}

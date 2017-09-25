@@ -39,7 +39,7 @@ public class FishController : MonoBehaviour, IInteractable {
     State currentState;
     SecondaryState currentSecondaryState;
 
-    private Rigidbody rigidBody;
+    private Rigidbody rb;
 
     
     private float panicTimer;
@@ -66,7 +66,7 @@ public class FishController : MonoBehaviour, IInteractable {
         currentResearchProtocol = 0;
 
         //Get own rigidbody component.
-        rigidBody = this.GetComponent<Rigidbody>();
+        rb = this.GetComponent<Rigidbody>();
 
         fishDetails = null;
 
@@ -131,26 +131,26 @@ public class FishController : MonoBehaviour, IInteractable {
     //Activates/deactivates RigidBody of prefab.
     public void ToggleRigidBody ()
     {
-        if (rigidBody)
+        if (rb)
         {
-            rigidBody.isKinematic = !rigidBody.isKinematic;
+            rb.isKinematic = !rb.isKinematic;
         }
     }
 
     public void ToggleDetectCollisions()
     {
-        if (rigidBody)
+        if (rb)
         {
-            rigidBody.detectCollisions = !rigidBody.detectCollisions;
+            rb.detectCollisions = !rb.detectCollisions;
         }
     }
 
     public void PickUp ()
     {
-        if (rigidBody)
+        if (rb)
         {
-            rigidBody.isKinematic = true;
-            rigidBody.detectCollisions = false;
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
         }
         currentState = State.Held;
         if (currentSecondaryState == SecondaryState.Idle)
@@ -162,20 +162,20 @@ public class FishController : MonoBehaviour, IInteractable {
 
     public void PutDown ()
     {
-        if (rigidBody)
+        if (rb)
         {
-            rigidBody.isKinematic = false;
-            rigidBody.detectCollisions = true;
+            rb.isKinematic = false;
+            rb.detectCollisions = true;
         }
         currentState = State.Idle;
     }
 
     public void PutIn ()
     {
-        if (rigidBody)
+        if (rb)
         {
-            rigidBody.isKinematic = true;
-            rigidBody.detectCollisions = false;
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
         }
 
         currentState = State.Placed;

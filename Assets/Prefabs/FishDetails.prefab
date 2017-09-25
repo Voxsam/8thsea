@@ -92,6 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decb7e5b0ca5143409e1ddf115b22a4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishName: {fileID: 114167934382112506}
+  rectTransform: {fileID: 224522870403071596}
   researchProtocolTemplateObject: {fileID: 1311639297951886, guid: e3b13ed0c3b4b0b42b125cfaa5e2925c,
     type: 2}
 --- !u!114 &114956018918761498

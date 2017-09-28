@@ -17,6 +17,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
 
     private GameObject holdSlot;
     private GameObject heldObject;
+    private Renderer meshRenderer;
     private float maxProgress = 20f;
     private float progressMade = 0f;
     private float progressPerInteraction = 1f;
@@ -33,6 +34,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
     void Start () {
         currentState = State.Empty;
         holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
+        meshRenderer = gameObject.transform.Find("Mesh").GetComponent<Renderer>();
         heldObject = null;
         uiObject = null;
 
@@ -79,9 +81,10 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
                         }
+                        Vector3 originalScale = heldObject.transform.localScale;
                         heldObject.transform.SetParent(holdSlot.transform);
                         heldObject.transform.localPosition = Vector3.zero;
-
+                        heldObject.transform.localScale = originalScale;
                         currentState = State.Holding;
                     }
                 }
@@ -135,8 +138,8 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
     {
         if (toggle)
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.blue;
+
+            meshRenderer.material.color = Color.blue;
             if (uiObject == null)
             {
                 uiObject = (GameObject)Instantiate(progressUI);
@@ -148,8 +151,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable {
         }
         else
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.white;
+            meshRenderer.material.color = Color.white;
             if (uiObject != null)
             {
                 if (uiObject.name == gameObject.ToString())

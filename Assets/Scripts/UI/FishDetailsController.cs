@@ -11,8 +11,6 @@ public class FishDetailsController : MonoBehaviour {
 
     private GameObject anchorGameObject;
 
-    public GameObject researchProtocolTemplateObject;
-
     // Use this for initialization
     void Start () {
         fishTypeIndex = 0;
@@ -20,19 +18,12 @@ public class FishDetailsController : MonoBehaviour {
 
     public void Init ( int type, GameObject anchor )
     {
+        fishTypeIndex = type;
+        anchorGameObject = anchor;
         fishName = transform.Find("FishName").GetComponent<Text>();
         rectTransform = gameObject.GetComponent<RectTransform>();
 
-        fishTypeIndex = type;
-        anchorGameObject = anchor;
         fishName.text = GameLogicController.AllFishParameters[fishTypeIndex].name;
-        for (int i = 0; i < GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols.Length; i++)
-        {
-            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplateObject);
-            researchProtocolUIObject.transform.SetParent(gameObject.transform, false);
-            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((i * 100), 80);
-            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = GameLogicController.AllFishParameters[fishTypeIndex].researchProtocols[i].researchStation;
-        }
     }
 	
 	// Update is called once per frame

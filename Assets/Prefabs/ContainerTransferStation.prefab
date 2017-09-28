@@ -9,36 +9,36 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1525527494155308}
+  m_RootGameObject: {fileID: 1186758811078712}
   m_IsPrefabParent: 1
---- !u!1 &1525527494155308
+--- !u!1 &1186758811078712
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4818021481855832}
-  - component: {fileID: 114545035437550164}
-  - component: {fileID: 65646688980953416}
+  - component: {fileID: 4640598454168450}
+  - component: {fileID: 114046655455598976}
+  - component: {fileID: 65690512574126484}
   m_Layer: 0
-  m_Name: ResearchStation
+  m_Name: ContainerTransferStation
   m_TagString: StationObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1602392388570762
+--- !u!1 &1593588612870490
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4985157030744366}
-  - component: {fileID: 33985964044262508}
-  - component: {fileID: 23252876303074272}
-  - component: {fileID: 65809421663610116}
+  - component: {fileID: 4193776266236622}
+  - component: {fileID: 33921811671377406}
+  - component: {fileID: 65114620175709512}
+  - component: {fileID: 23524907754244924}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -46,68 +46,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1684555224011648
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4508120169736384}
-  m_Layer: 0
-  m_Name: HoldSlot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4508120169736384
+--- !u!4 &4193776266236622
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1684555224011648}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 1593588612870490}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 2.5, z: 1.5}
   m_Children: []
-  m_Father: {fileID: 4818021481855832}
+  m_Father: {fileID: 4640598454168450}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4818021481855832
+--- !u!4 &4640598454168450
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1525527494155308}
+  m_GameObject: {fileID: 1186758811078712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.85, y: 0.92, z: 4.06}
+  m_LocalPosition: {x: 13.11, y: 1.36, z: -3.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4508120169736384}
-  - {fileID: 4985157030744366}
+  - {fileID: 4193776266236622}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4985157030744366
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1602392388570762}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.890708, y: 1.5, z: 3.328182}
-  m_Children: []
-  m_Father: {fileID: 4818021481855832}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23252876303074272
+--- !u!23 &23524907754244924
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1602392388570762}
+  m_GameObject: {fileID: 1593588612870490}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -134,47 +105,50 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33985964044262508
+--- !u!33 &33921811671377406
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1602392388570762}
+  m_GameObject: {fileID: 1593588612870490}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65646688980953416
+--- !u!65 &65114620175709512
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1525527494155308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 1.5, z: 3.3}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65809421663610116
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1602392388570762}
+  m_GameObject: {fileID: 1593588612870490}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114545035437550164
+--- !u!65 &65690512574126484
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186758811078712}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114046655455598976
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1525527494155308}
+  m_GameObject: {fileID: 1186758811078712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f08a37bbbf8e541ace01c551385a72, type: 3}
+  m_Script: {fileID: 11500000, guid: 06de0fa1ee22ede4aa593f0b2d704b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  researchStationType: B
-  progressUI: {fileID: 1504460152230116, guid: 07e95eca903ff6a429aa2d0f8df603b7, type: 2}
+  outlineShader: {fileID: 4800000, guid: eeefbe4845aae6443bf968cecff61fcb, type: 3}
+  containersSource:
+  - {fileID: 0}
+  - {fileID: 0}
+  containersDestination: []

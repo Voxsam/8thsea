@@ -9,10 +9,12 @@ public class FishController : MonoBehaviour, IInteractable {
     {
         public string researchStation;
         public bool complete;
+        public GameObject researchProtocolObject;
 
-        public ResearchProtocol ( string _researchStation )
+        public ResearchProtocol ( string _researchStation, GameObject _researchProtocolObject )
         {
             researchStation = _researchStation;
+            researchProtocolObject = _researchProtocolObject;
             complete = false;
         }
     };
@@ -53,13 +55,10 @@ public class FishController : MonoBehaviour, IInteractable {
 
     //Prefab to instantiate FishDetails
     public GameObject fishDetailsTemplate;
+    public GameObject researchProtocolTemplate;
 
-    // Use this for initialization
-    void Start () {
-        currentState = State.Idle;
-        currentSecondaryState = SecondaryState.Idle;
-        currentResearchProtocol = 0;
-
+    void Awake()
+    {
         //Get own rigidbody component.
         rigidBody = this.GetComponent<Rigidbody>();
 
@@ -68,8 +67,17 @@ public class FishController : MonoBehaviour, IInteractable {
         worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
         worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(false);
         panicBar = worldspaceCanvas.transform.Find("PanicBar").gameObject;
-        panicBar.SetActive(false);
         panicBarRect = panicBar.GetComponent<RectTransform>();
+    }
+
+    // Use this for initialization
+    void Start () {
+        currentState = State.Idle;
+        currentSecondaryState = SecondaryState.Idle;
+        currentResearchProtocol = 0;
+
+        
+        panicBar.SetActive(false);
         panicBarWidth = panicBarRect.rect.width;
         panicTimer = GameLogicController.AllFishParameters[fishType].panicTimerLength;
 
@@ -84,7 +92,12 @@ public class FishController : MonoBehaviour, IInteractable {
         researchProtocols = new ResearchProtocol[GameLogicController.AllFishParameters[fishType].researchProtocols.Length];
         for (int i = 0; i < GameLogicController.AllFishParameters[fishType].researchProtocols.Length; i++)
         {
-            researchProtocols[i] = new ResearchProtocol (GameLogicController.AllFishParameters[fishType].researchProtocols[i].researchStation);
+            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
+            researchProtocolUIObject.transform.SetParent(worldspaceCanvas.transform, false);
+            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 550);
+            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = GameLogicController.AllFishParameters[fishType].researchProtocols[i].researchStation;
+            researchProtocolUIObject.SetActive(false);
+            researchProtocols[i] = new ResearchProtocol (GameLogicController.AllFishParameters[fishType].researchProtocols[i].researchStation, researchProtocolUIObject);
         }
     }
 	
@@ -155,6 +168,10 @@ public class FishController : MonoBehaviour, IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             panicBar.SetActive(true);
+            foreach (ResearchProtocol researchProtocol in researchProtocols)
+            {
+                researchProtocol.researchProtocolObject.SetActive(true);
+            }
         }
     }
 
@@ -177,6 +194,30 @@ public class FishController : MonoBehaviour, IInteractable {
         }
 
         currentState = State.Placed;
+    }
+
+    public void SetEnabled (bool enable)
+    {
+        if (!enable)
+        {
+            if (rigidBody)
+            {
+                rigidBody.isKinematic = true;
+                rigidBody.useGravity = false;
+            }
+            worldspaceCanvas.SetActive(false);
+            this.enabled = false;
+        }
+        else
+        {
+            if (rigidBody)
+            {
+                rigidBody.isKinematic = false;
+                rigidBody.useGravity = true;
+            }
+            worldspaceCanvas.SetActive(true);
+            this.enabled = true;
+        }
     }
 
     public void Interact ()
@@ -228,6 +269,7 @@ public class FishController : MonoBehaviour, IInteractable {
 
     public void ResearchFish ()
     {
+        researchProtocols[currentResearchProtocol].researchProtocolObject.GetComponent<Image>().color = Color.green;
         currentResearchProtocol++;
         if ( currentResearchProtocol >= researchProtocols.Length )
         {
@@ -235,6 +277,10 @@ public class FishController : MonoBehaviour, IInteractable {
             currentSecondaryState = SecondaryState.Researched;
             worldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "Researched";
             worldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
+            if (GameLogicController.AllFishParameters[fishType].totalResearched < GameLogicController.AllFishParameters[fishType].totalToResearch)
+            {
+                GameLogicController.AllFishParameters[fishType].totalResearched++;
+            }
         }
     }
 }

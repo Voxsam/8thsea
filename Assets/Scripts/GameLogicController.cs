@@ -23,12 +23,36 @@ public class GameLogicController : MonoBehaviour {
         public ResearchProtocol[] researchProtocols;
         public float panicTimerLength;
         public int currentResearchProtocol;
+        public int totalResearched;
+        public int totalToResearch;
 
-        public FishParameters ( string _name, float _panicTimerLength )
+        public float minSpeed;
+        public float maxSpeed;
+        public float minRotationSpeed;
+        public float maxRotationSpeed;
+        public float minNeighbourDistance;
+
+        public int minSchoolSize;
+        public int maxSchoolSize;
+
+        public FishParameters(string _name, float _panicTimerLength, int _totalToResearch,
+                                float _minSpeed = 1f, float _maxSpeed = 3f,
+                                float _minRotationSpeed = 1.0f, float _maxRotationSpeed = 4.0f,
+                                int _minSchoolSize = 5, int _maxSchoolSize = 15,
+                                float _minNeighbourDistance = 30.0f )
         {
             name = _name;
             panicTimerLength = _panicTimerLength;
-            currentResearchProtocol = 0;
+            currentResearchProtocol = totalResearched = 0;
+            totalToResearch = _totalToResearch;
+
+            minSpeed = _minSpeed;
+            maxSpeed = _maxSpeed;
+            minRotationSpeed = _minRotationSpeed;
+            maxRotationSpeed = _maxRotationSpeed;
+            minNeighbourDistance = _minNeighbourDistance;
+            minSchoolSize = _minSchoolSize;
+            maxSchoolSize = _maxSchoolSize;
         }
     };
 
@@ -37,11 +61,11 @@ public class GameLogicController : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         AllFishParameters = new FishParameters[2];
-        AllFishParameters[0] = new FishParameters( "Clownfish", 40 );
+        AllFishParameters[0] = new FishParameters( "Clownfish", 40, 1 );
         AllFishParameters[0].researchProtocols = new ResearchProtocol[2];
         AllFishParameters[0].researchProtocols[0] = new ResearchProtocol("A");
         AllFishParameters[0].researchProtocols[1] = new ResearchProtocol("B");
-        AllFishParameters[1] = new FishParameters( "Pufferfish", 50 );
+        AllFishParameters[1] = new FishParameters( "Pufferfish", 50, 1 );
         AllFishParameters[1].researchProtocols = new ResearchProtocol[2];
         AllFishParameters[1].researchProtocols[0] = new ResearchProtocol("B");
         AllFishParameters[1].researchProtocols[1] = new ResearchProtocol("A");

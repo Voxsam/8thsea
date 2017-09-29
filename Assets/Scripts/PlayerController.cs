@@ -10,13 +10,17 @@ public class PlayerController : MonoBehaviour {
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
     public CameraController cameraController;
+ 
 
-	[SerializeField] public Rigidbody rb;
+
+    [SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
+
+
     }
 
     public GameData.ControlType ControlMode
@@ -57,9 +61,11 @@ public class PlayerController : MonoBehaviour {
 
 		
 		if (ControlMode == GameData.ControlType.CHARACTER) {
+
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {
+                
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),

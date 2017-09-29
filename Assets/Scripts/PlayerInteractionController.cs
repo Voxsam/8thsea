@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    enum State
+    public enum State
     {
         Idle,
         Hold
     };
-    enum SecondaryState
+    public enum SecondaryState
     {
         Idle,
         View
@@ -18,6 +18,7 @@ public class PlayerInteractionController : MonoBehaviour
     SecondaryState currentSecondaryState;
     
     private GameObject player;
+ 
 
     private GameObject holdSlot;
 
@@ -26,6 +27,10 @@ public class PlayerInteractionController : MonoBehaviour
     public GameObject GetHeldObject ()
     {
         return heldObject;
+    }
+    public State getCurrentState()
+    {
+        return currentState;
     }
 
 	// Use this for initialization

@@ -10,8 +10,14 @@ public class PlayerController : MonoBehaviour {
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
     public CameraController cameraController;
- 
 
+
+    private bool isMoving = false;
+
+    public bool isPlayerMoving()
+    {
+        return isMoving;
+    }
 
     [SerializeField] public Rigidbody rb;
 
@@ -65,7 +71,7 @@ public class PlayerController : MonoBehaviour {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {
-                
+                isMoving = true;
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -73,7 +79,10 @@ public class PlayerController : MonoBehaviour {
 				);
 
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
-			}
+			} else
+            {
+                isMoving = false;
+            }
             
 		}
 	}

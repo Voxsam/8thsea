@@ -18,7 +18,7 @@ public class PlayerInteractionController : MonoBehaviour
     SecondaryState currentSecondaryState;
     
     private GameObject player;
- 
+    private Animator anim;
 
     private GameObject holdSlot;
 
@@ -38,7 +38,7 @@ public class PlayerInteractionController : MonoBehaviour
     {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
-
+        anim = GetComponentInChildren<Animator>();
         player = gameObject;
         holdSlot = player.transform.Find("HoldSlot").gameObject;
         heldObject = null;
@@ -140,12 +140,14 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
+            anim.SetTrigger("pickUp");
             other.transform.localPosition = Vector3.zero;
             other.transform.SetParent(holdSlot.transform, false);
             heldObject = other;
         }
         else
         {
+            anim.SetTrigger("drop");
             other.transform.SetParent(null);
             heldObject = null;
         }

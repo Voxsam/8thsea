@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    enum State
+    public enum State
     {
         Idle,
         Hold
@@ -20,19 +20,23 @@ public class PlayerInteractionController : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private GameObject holdSlot;
 
+    private Animator anim;
     private GameObject atObject;
     private GameObject heldObject;
     public GameObject GetHeldObject()
     {
         return heldObject;
     }
-
+    public State GetCurrentState()
+    {
+        return currentState;
+    }
     // Use this for initialization
     void Start()
     {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
-
+        anim = GetComponentInChildren<Animator>();
         // Set in the editor
         //player = gameObject;
         //player = FindComponent<PlayerController>();
@@ -136,12 +140,14 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
+            anim.SetTrigger("pickUp");
             other.transform.SetParent(holdSlot.transform, true);
             other.transform.localPosition = Vector3.zero;
             heldObject = other;
         }
         else
         {
+            anim.SetTrigger("drop");
             other.transform.SetParent(player.LocationRef, true);
             heldObject = null;
         }

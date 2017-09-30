@@ -17,9 +17,8 @@ public class PlayerInteractionController : MonoBehaviour
     State currentState;
     SecondaryState currentSecondaryState;
     
-    private GameObject player;
-
-    private GameObject holdSlot;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private GameObject holdSlot;
 
     private GameObject atObject;
     private GameObject heldObject;
@@ -34,8 +33,10 @@ public class PlayerInteractionController : MonoBehaviour
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
 
-        player = gameObject;
-        holdSlot = player.transform.Find("HoldSlot").gameObject;
+        // Set in the editor
+        //player = gameObject;
+        //player = FindComponent<PlayerController>();
+        //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
@@ -103,7 +104,7 @@ public class PlayerInteractionController : MonoBehaviour
                         IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
                         if (atObjectInteractableScript != null)
                         {
-                            atObjectInteractableScript.Interact(player);
+                            atObjectInteractableScript.Interact(player.gameObject);
                         }
                     }
                 }
@@ -135,13 +136,13 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
+            other.transform.SetParent(holdSlot.transform, true);
             other.transform.localPosition = Vector3.zero;
-            other.transform.SetParent(holdSlot.transform, false);
             heldObject = other;
         }
         else
         {
-            other.transform.SetParent(null);
+            other.transform.SetParent(player.LocationRef, true);
             heldObject = null;
         }
     }

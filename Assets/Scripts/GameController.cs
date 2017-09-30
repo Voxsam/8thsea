@@ -4,11 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
-
 	public static GameController Obj;
+
+    // Submarine Management
+    public static SubmarineController SubmarineRef
+    {
+        get { return SubmarineController.Obj; }
+    }
+
     // Player management
     protected List<PlayerController> players;
     [SerializeField] protected PlayerController Player1Ref;
+    
+    public Transform Player1Location
+    {
+        get { return Player1Ref.transform.parent; }
+    }
 
     // Fish management
     protected List<FishController> fishes;
@@ -16,6 +27,9 @@ public class GameController : MonoBehaviour {
 
     // Camera management
     [SerializeField] public CameraController gameCamera;
+
+    // Randomisation
+    public static System.Random RNG;
 
     public Text timeLeftText;
 	public Text moneyText;
@@ -165,10 +179,14 @@ public class GameController : MonoBehaviour {
     {
         timeTillNextPayment = GameData.PAYMENT_INTERVAL;
         gameCamera = GetComponentInChildren<CameraController>();
+
         players = new List<PlayerController>();
         fishes = new List<FishController>();
+        
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
+
+        RNG = new System.Random();
     }
     #endregion
 

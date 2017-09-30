@@ -175,4 +175,12 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     {
         return true;
     }
+
+    public override void WhenActivated()
+    {
+    }
+
+    public override void WhenDeactivated()
+    {
+    }
 }

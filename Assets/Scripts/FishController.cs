@@ -230,4 +230,10 @@ public class FishController : MonoBehaviour, IInteractable {
             WorldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
         }
     }
+
+    // If the player isn't holding it, attach it to its appropriate location
+    public void DropFish()
+    {
+
+    }
 }

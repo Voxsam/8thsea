@@ -27,6 +27,8 @@ public class StationController : MonoBehaviour
                     GameController.Obj.ButtonA_Up)
                 {
                     controller.SetPlayerToStation(player);
+                    controller.IsActivated = true;
+                    controller.WhenActivated();
                 }
             }
         }
@@ -36,6 +38,8 @@ public class StationController : MonoBehaviour
             if (controller.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
                 controller.SwitchCondition() && GameController.Obj.ButtonB_Up)
             {
+                controller.IsActivated = false;
+                controller.WhenDeactivated();
                 controller.ReleasePlayerFromStation();
             }
         }

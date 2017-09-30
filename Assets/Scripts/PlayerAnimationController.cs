@@ -18,7 +18,7 @@ public class PlayerAnimationController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         bool isMoving = controller.isPlayerMoving();
-        bool isHolding = (interactionController.getCurrentState() == PlayerInteractionController.State.Hold);
+        bool isHolding = true; // (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold);
         if (isMoving && isHolding)
         {
             anim.SetBool("isHoldingWalk", true);

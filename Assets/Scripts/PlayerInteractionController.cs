@@ -4,47 +4,43 @@ using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    public enum State
+    enum State
     {
         Idle,
         Hold
     };
-    public enum SecondaryState
+    enum SecondaryState
     {
         Idle,
         View
     };
     State currentState;
     SecondaryState currentSecondaryState;
-    
-    private GameObject player;
-    private Animator anim;
 
-    private GameObject holdSlot;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private GameObject holdSlot;
 
     private GameObject atObject;
     private GameObject heldObject;
-    public GameObject GetHeldObject ()
+    public GameObject GetHeldObject()
     {
         return heldObject;
     }
-    public State getCurrentState()
-    {
-        return currentState;
-    }
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
-        anim = GetComponentInChildren<Animator>();
-        player = gameObject;
-        holdSlot = player.transform.Find("HoldSlot").gameObject;
+
+        // Set in the editor
+        //player = gameObject;
+        //player = FindComponent<PlayerController>();
+        //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
-    void OnTriggerStay (Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (currentSecondaryState != SecondaryState.View)
         {
@@ -57,7 +53,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit (Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.tag == "FishObject" || other.tag == "StationObject")
         {
@@ -71,7 +67,7 @@ public class PlayerInteractionController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         switch (currentState)
         {
@@ -100,7 +96,7 @@ public class PlayerInteractionController : MonoBehaviour
                     //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
                     if (atObject.tag == "FishObject" && currentState != State.Hold)
                     {
-                        PickUpObject (atObject);
+                        PickUpObject(atObject);
                         atObject = null;
                     }
                     else if (atObject.tag == "StationObject")
@@ -108,7 +104,7 @@ public class PlayerInteractionController : MonoBehaviour
                         IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
                         if (atObjectInteractableScript != null)
                         {
-                            atObjectInteractableScript.Interact(player);
+                            atObjectInteractableScript.Interact(player.gameObject);
                         }
                     }
                 }
@@ -120,7 +116,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    private void HighlightObject (GameObject other, bool highlight)
+    private void HighlightObject(GameObject other, bool highlight)
     {
         IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (otherInteractableScript != null)
@@ -129,7 +125,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    private void SetAttachObject (GameObject other, bool attach)
+    private void SetAttachObject(GameObject other, bool attach)
     {
         IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
@@ -140,27 +136,25 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
-            anim.SetTrigger("pickUp");
+            other.transform.SetParent(holdSlot.transform, true);
             other.transform.localPosition = Vector3.zero;
-            other.transform.SetParent(holdSlot.transform, false);
             heldObject = other;
         }
         else
         {
-            anim.SetTrigger("drop");
-            other.transform.SetParent(null);
+            other.transform.SetParent(player.LocationRef, true);
             heldObject = null;
         }
     }
 
-    public void PickUpObject (GameObject other)
+    public void PickUpObject(GameObject other)
     {
         SetAttachObject(other, true);
         currentSecondaryState = SecondaryState.Idle;
         currentState = State.Hold;
     }
 
-    public void DropObject ()
+    public void DropObject()
     {
         SetAttachObject(heldObject, false);
         heldObject = null;

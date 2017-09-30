@@ -35,6 +35,15 @@ public class PlayerController : MonoBehaviour {
         private set { controlMode = value; }
     }
 
+    /// <summary>
+    /// Returns the location where the player is in
+    /// </summary>
+    public Transform LocationRef
+    {
+        // Since the player will always be a child of its location, return the parent of the player as its location
+        get { return this.transform.parent; }
+    }
+
     #region Control handlers
     /// <summary>
     /// For other objects to request the player change its control to a certain object type.

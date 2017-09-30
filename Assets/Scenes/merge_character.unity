@@ -2244,6 +2244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9417d3d2f12c04a89a252c26d6a0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  holdSlot: {fileID: 0}
 --- !u!135 &2122180877
 SphereCollider:
   m_ObjectHideFlags: 0

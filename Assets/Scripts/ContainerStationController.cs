@@ -10,13 +10,12 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
     };
     State currentState;
 
-    private GameObject holdSlot;
+    [SerializeField] private GameObject holdSlot;
     private GameObject heldObject;
 
     // Use this for initialization
     void Start () {
         currentState = State.Empty;
-        holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 	

@@ -296,6 +296,7 @@ MonoBehaviour:
   turnSpeed: 5
   cameraController: {fileID: 0}
   cam: {fileID: 0}
+  model: {fileID: 1811127324918640}
   rb: {fileID: 54897799338696168}
 --- !u!135 &135282530913537786
 SphereCollider:

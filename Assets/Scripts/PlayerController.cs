@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour {
     public CameraController cameraController;
 	public Camera cam;
 
+	public GameObject model;
+
 
 	// Controls
 	private KeyCode fire1Button;
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour {
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
 
-		SetControls();
+		SetControls ();
     }
 
     public GameData.ControlType ControlMode
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour {
 			Vector3 direction = new Vector3 (Input.GetAxis (horizontalAxis), 0, Input.GetAxis (verticalAxis));
             
             if (direction != Vector3.zero) {
+
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour {
 			}
             
 		}
+			
 	}
 		
 

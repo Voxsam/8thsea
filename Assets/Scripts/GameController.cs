@@ -195,6 +195,8 @@ public class GameController : MonoBehaviour {
         // Handle the update loops for the others too
 
 		Player1.GameUpdate();
+
+
     }
     #endregion
 }

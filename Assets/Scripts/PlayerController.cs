@@ -14,12 +14,21 @@ public class PlayerController : MonoBehaviour {
     public CameraController cameraController;
 	public Camera cam;
 
+
+	// Controls
+	private KeyCode fire1Button;
+	private string horizontalAxis;
+	private string verticalAxis;
+
+
 	[SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
+
+		SetControls();
     }
 
     public GameData.ControlType ControlMode
@@ -60,7 +69,7 @@ public class PlayerController : MonoBehaviour {
 
 		
 		if (ControlMode == GameData.ControlType.CHARACTER) {
-			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal_"+playerName), 0, Input.GetAxis ("Vertical_"+playerName));
+			Vector3 direction = new Vector3 (Input.GetAxis (horizontalAxis), 0, Input.GetAxis (verticalAxis));
             
             if (direction != Vector3.zero) {
 				transform.rotation = Quaternion.Slerp (
@@ -72,6 +81,34 @@ public class PlayerController : MonoBehaviour {
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
 			}
             
+		}
+	}
+		
+
+	#region Button handlers
+	public bool Fire1Down() {
+		return Input.GetKeyDown (fire1Button);
+	}
+	public bool Fire1Up() {
+		return Input.GetKeyUp (fire1Button);
+	}
+	public bool Fire1Hold() {
+		return Input.GetKey (fire1Button);
+	}
+	#endregion
+
+
+
+	// Sets the appropriate controls for P1/P2 in a very stupid way, WILL BE CHANGED
+	void SetControls() {
+		if (playerName == "P1") {
+			horizontalAxis = "Horizontal_P1";
+			verticalAxis = "Vertical_P1";
+			fire1Button = KeyCode.Space;
+		} else {
+			horizontalAxis = "Horizontal_P2";
+			verticalAxis = "Vertical_P2";
+			fire1Button = KeyCode.E;
 		}
 	}
 

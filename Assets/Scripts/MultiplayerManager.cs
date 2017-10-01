@@ -6,6 +6,20 @@ public class MultiplayerManager : MonoBehaviour {
 
 	public PlayerController[] playerList;
 
+	/**
+	 * 
+	 * TEMPORARY CONTROL SCHEME (KEYBOARD ONLY, NO GAMEPAD)
+	 * 
+	 * PLAYER 1
+	 * ARROW KEYS + SPACE
+	 * 
+	 * PLAYER 2
+	 * WSAD + E
+	 * 
+	 * 
+	**/
+
+
 	void Start () {
 
 		// Set up split screen for multiple players

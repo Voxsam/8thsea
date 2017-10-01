@@ -16,7 +16,7 @@ public class tutorialController : MonoBehaviour {
 
     void Update()
     {
-        if(currentTutorialStep == 0)
+        if(currentTutorialStep == 1)
         {
             if (mainPlayer.transform.position.x > 0f)
             {

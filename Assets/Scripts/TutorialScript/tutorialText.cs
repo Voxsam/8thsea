@@ -9,8 +9,9 @@ public class tutorialText : MonoBehaviour {
     private Text TextObject;
     public static bool isScriptActivated = false;
     private static string[] conversations = new string[] {
-        "Hi, welcome to tutorial. Use A, W, D, S OR\nleft, up, right, down keys to move around.\nTry to move out of this room.",
-        "Well done."
+        "Step 1\nHi, welcome to tutorial. Type 't'\nto toggle tutorial screen to read what you need to do.",
+        "Step 2\nGood job. Use A, W, D, S OR\nleft, up, right, down keys to move around.\nType space to get in the submarine.",
+        "Step 3\nWell done."
     };
 
 	// Use this for initialization

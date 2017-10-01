@@ -6,6 +6,7 @@ public class tutorialGuideMovements : MonoBehaviour {
 
     private static Vector3[] positions = new Vector3[] {
         new Vector3(-17.28f,4.6f,1.35f),
+        new Vector3(-17.28f,4.6f,1.35f), // stay put
         new Vector3(0.261f,4.6f,1.35f)
     };
     public static bool isTutorialGuideRunning;
@@ -26,14 +27,17 @@ public class tutorialGuideMovements : MonoBehaviour {
                     isTutorialGuideRunning = false;
                     tutorialText.turnOnScript();
                     tutorialController.isNext = true;
-                    tutorialController.isPlay = true;
                 }
                 else if (tutorialController.currentTutorialStep == 1)
                 {
-
+                    tutorialController.isPlay = true;
                 }
             } else {
-                moveToLocation(transform.position, positions[tutorialController.currentTutorialStep], 1f);
+                if (tutorialController.currentTutorialStep == 0) {
+                    moveToLocation(transform.position, positions[tutorialController.currentTutorialStep], 1f);
+                } else {
+                    //
+                }
             }
         }
 	}

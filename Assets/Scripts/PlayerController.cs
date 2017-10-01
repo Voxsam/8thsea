@@ -63,7 +63,15 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     public void GameUpdate () {
+        if (Input.GetKeyUp(KeyCode.T)) {
+            tutorialText.isScriptActivated = tutorialText.isScriptActivated ? false : true;
 
+            if (tutorialController.currentTutorialStep == 0) {
+                tutorialController.isNext = false;
+                tutorialGuideMovements.isTutorialGuideRunning = true;
+                tutorialController.next();
+            }
+        }
         if (tutorialController.isPlay)
         {
             if (ControlMode == GameData.ControlType.CHARACTER)

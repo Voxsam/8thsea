@@ -96,6 +96,10 @@ public class PlayerInteractionController : MonoBehaviour
                     //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
                     if (atObject.tag == "FishObject" && currentState != State.Hold)
                     {
+                        if (tutorialController.currentTutorialStep == 0)
+                        {
+                            print("YAY");
+                        }
                         PickUpObject (atObject);
                         atObject = null;
                     }

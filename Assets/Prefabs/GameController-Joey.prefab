@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4925263530030136}
   - component: {fileID: 114624562645073898}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: GameController-Joey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -302,6 +302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8938b2c48471341a1aa4068b08ffa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player1Ref: {fileID: 0}
+  FishHolder: {fileID: 0}
+  gameCamera: {fileID: 0}
   timeLeftText: {fileID: 114339728110604226}
   moneyText: {fileID: 114931760321991384}
   currentMoney: 0

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+	public int PlayerNumber;
+
 	public float movementSpeed = 10;
 	public float turnSpeed = 7;
 
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
     public CameraController cameraController;
+	public Camera cam;
 
 	[SerializeField] public Rigidbody rb;
 

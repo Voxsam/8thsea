@@ -24,6 +24,9 @@ public class SubmarineController : StationControllerInterface {
     public TeleportDoor teleportToSubFromToLabDoor;
     public TeleportDoor teleportToLabFromToSubDoor;
 
+    private Animator anim;
+    private bool facingLeft; //false = facingRight
+
     public override GameData.ControlType ControlMode
     {
         get { return GameData.ControlType.SUBMARINE; }
@@ -75,14 +78,46 @@ public class SubmarineController : StationControllerInterface {
         // Only allow teleport if it is docked
         teleportToLabFromToSubDoor.Initialise(IsDocked);
         teleportToSubFromToLabDoor.Initialise(IsDocked);
+
+        // find animator
+        anim = GetComponentInChildren<Animator>();
     }
 	
 	// Update is called once per frame
 	private void Update () {
+        if (IsDocked())
+        {
+            anim.SetBool("moveLeft", false); anim.SetBool("moveRight", false); anim.SetBool("docked", true);
+        } else
+        {
+            anim.SetBool("docked", false);
+        }
+        anim.SetBool("docked", IsDocked());
         if (IsActivated)
         {
             float horizontalControl = Input.GetAxis("Horizontal");
             float verticalControl = Input.GetAxis("Vertical");
+
+            if (horizontalControl > 0) //going right 
+            {
+                anim.SetBool("moveRight", true);
+                if (facingLeft)
+                {
+                    anim.SetBool("moveLeft", false);
+                    anim.SetTrigger("turnRight");
+                    facingLeft = false;
+                }          
+            } else if (horizontalControl < 0) //going left
+            {
+                anim.SetBool("moveLeft", true);
+                if (!facingLeft)
+                {
+                    anim.SetBool("moveRight", false);
+                    anim.SetTrigger("turnLeft");
+                    facingLeft = true;
+                }
+            }
+
             transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
             currentSpeed += acceleration;
             if (currentSpeed > maximumSpeed)
@@ -96,6 +131,7 @@ public class SubmarineController : StationControllerInterface {
 
             if (GameController.Obj.ButtonA_Down && IsActivated)
             {
+                // Return to docking position 
                 transform.position = dockingPosition.position;
             }
         }
@@ -103,5 +139,5 @@ public class SubmarineController : StationControllerInterface {
     public override bool SwitchCondition()
     {
         return true; // Always allow the switch
-    }
+    } 
 }

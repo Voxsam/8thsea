@@ -156,7 +156,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830913044983308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.91, y: 2.43, z: -0.948308}
+  m_LocalPosition: {x: -12.81, y: 2.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4165231019425630}
@@ -291,10 +291,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3b5c5fd51d1409bf1b4d1eb3dc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNumber: 0
+  playerName: P1
   movementSpeed: 10
   turnSpeed: 5
   cameraController: {fileID: 0}
+  cam: {fileID: 0}
   rb: {fileID: 54897799338696168}
 --- !u!135 &135282530913537786
 SphereCollider:

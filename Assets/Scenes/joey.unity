@@ -327,6 +327,11 @@ Prefab:
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 753167422}
+    - target: {fileID: 114415848117960206, guid: efcfa15146533eb47b1d3cfb86f3c80c,
+        type: 2}
+      propertyPath: playerName
+      value: P1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efcfa15146533eb47b1d3cfb86f3c80c, type: 2}
   m_IsPrefabParent: 0
@@ -351,7 +356,7 @@ GameObject:
   - component: {fileID: 1444751802}
   - component: {fileID: 1444751801}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MultiplayerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,7 +375,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerList:
   - {fileID: 1328972388}
-  - {fileID: 0}
+  - {fileID: 1328972388}
+  - {fileID: 1328972388}
+  - {fileID: 1328972388}
 --- !u!4 &1444751802
 Transform:
   m_ObjectHideFlags: 0

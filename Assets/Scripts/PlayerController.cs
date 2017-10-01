@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public int PlayerNumber;
+	public string playerName;
 
 	public float movementSpeed = 10;
 	public float turnSpeed = 7;
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 
 		
 		if (ControlMode == GameData.ControlType.CHARACTER) {
-			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal_"+playerName), 0, Input.GetAxis ("Vertical_"+playerName));
             
             if (direction != Vector3.zero) {
 				transform.rotation = Quaternion.Slerp (

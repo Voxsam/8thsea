@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TubeController : StationControllerInterface {
 
-    public const int SPAWN_LOCATION_OFFSET = 1; // Spawn at SpawnPoint with a randomised offset of this float
+    public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
 	public float forwardSpeed;
 	public float attractionForce;
 	//public bool isActivated; // In parent

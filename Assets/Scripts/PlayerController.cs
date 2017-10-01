@@ -9,15 +9,23 @@ public class PlayerController : MonoBehaviour {
 
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
+    private PlayerAnimationController animationController;
     public CameraController cameraController;
 
-
     private bool isMoving = false;
+    private bool isPlayerAllowedToMove = true;
 
-    public bool isPlayerMoving()
+    public bool IsPlayerMoving
     {
-        return isMoving;
+        get { return isMoving; }
+        set { isMoving = value; }
     }
+    public bool IsPlayerAllowedToMove
+    {
+        get { return isPlayerAllowedToMove; }
+        set { isPlayerAllowedToMove = value; }
+    }
+
 
     [SerializeField] public Rigidbody rb;
 
@@ -25,6 +33,7 @@ public class PlayerController : MonoBehaviour {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
+        animationController = GetComponentInChildren<PlayerAnimationController>();
 
 
     }
@@ -72,11 +81,13 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    public void GameUpdate () {
+    public void GameUpdate ()
+    {
+        interactionController.GameUpdate();
 
-		
-		if (ControlMode == GameData.ControlType.CHARACTER) {
-
+        isMoving = false;
+        if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
+        {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {
@@ -88,12 +99,10 @@ public class PlayerController : MonoBehaviour {
 				);
 
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
-			} else
-            {
-                isMoving = false;
-            }
-            
+			}
 		}
+
+        animationController.GameUpdate();
 	}
 
 }

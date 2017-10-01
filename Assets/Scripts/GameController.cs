@@ -122,6 +122,85 @@ public class GameController : MonoBehaviour {
     #endregion
 
     #region Helper functions
+    #region Coroutine functions
+    protected void ActivateCallbackAfterDelay(float delay, System.Action callback)
+    {
+        StartCoroutine(ActivateCallbackAfterDelayCoroutine(delay, callback));
+    }
+
+    public static IEnumerator ActivateCallbackAfterDelayCoroutine(float delay, System.Action callback)
+    {
+        float timeToWaitUntil = Time.time + delay;
+        while(Time.time < timeToWaitUntil)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (callback != null)
+        {
+            callback();
+        }
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// Uses a Coroutine to move an Object from point A to point B over a given time. Can activate a callback after if necesary
+    /// </summary>
+    /// <param name="obj">Object to be mvoed</param>
+    /// <param name="travelTime">Time required to reach destination</param>
+    /// <param name="destination">The destination location. This must be in either local space or world space depending on the 'useLocalPosition' variable. By default, this expects a local space coordinate.</param>
+    /// <param name="useLocalPosition">Whether the destination variable is using local or world coordinates</param>
+    /// <param name="callback">The callback to activate when this movement is complete</param>
+    protected void MoveGameObjectToLocationInGivenTimeAndActivateCallback(Transform obj, float travelTime, Vector3 destination, bool useLocalPosition = true, System.Action callback = null)
+    {
+        MoveGameObjectAndActivateCallbackCoroutine(obj, travelTime, destination, useLocalPosition, callback);
+    }
+
+    public static IEnumerator MoveGameObjectAndActivateCallbackCoroutine(Transform obj, float travelTime, Vector3 destination, bool useLocalPosition = true, System.Action callback = null)
+    {
+        float timeStarted = Time.time;
+        float timeToWaitUntil = timeStarted + travelTime;
+        float timeTaken = 0f;
+
+        Vector3 location = (useLocalPosition) ? obj.localPosition : obj.position;
+
+        while (Time.time < timeToWaitUntil)
+        {
+            timeTaken = Time.time - timeStarted;
+            location = Vector3.Lerp(location, destination, timeTaken/travelTime);
+            if (useLocalPosition)
+            {
+                obj.localPosition = location;
+            }
+            else
+            {
+                obj.position = location;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Final allocation in case it was incomplete
+        if (useLocalPosition)
+        {
+            obj.localPosition = destination;
+        }
+        else
+        {
+            obj.position = destination;
+        }
+
+        // Use callback if exists
+        if (callback != null)
+        {
+            callback();
+        }
+
+        yield return null;
+    }
+    #endregion
+
     public void AddMoney(int amount) {
 		currentMoney += amount;
 	}

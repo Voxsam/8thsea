@@ -310,8 +310,8 @@ GameObject:
   - component: {fileID: 135282530913537786}
   - component: {fileID: 114415848117960206}
   - component: {fileID: 114250352071523016}
-  - component: {fileID: 65616046404933960}
   - component: {fileID: 114301973835697708}
+  - component: {fileID: 65361502792327706}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -538,8 +538,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459905433677176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.29, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -2.08, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4572512343470002}
   - {fileID: 4374826286981850}
@@ -735,7 +735,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830913044983308}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.36, y: 2.41, z: 1.35}
+  m_LocalPosition: {x: -6.85, y: 2.41, z: 1.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4335464781132178}
@@ -787,7 +787,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &65616046404933960
+--- !u!65 &65361502792327706
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -797,8 +797,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 3.75109, z: 2.4954195}
-  m_Center: {x: -0.20000005, y: -0.33184242, z: -0.24770975}
+  m_Size: {x: 2, y: 3.6872048, z: 2.4954195}
+  m_Center: {x: -0.20000005, y: -0.29989982, z: -0.24770975}
 --- !u!95 &95078821836415750
 Animator:
   serializedVersion: 3
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3b5c5fd51d1409bf1b4d1eb3dc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 8
   turnSpeed: 5
   cameraController: {fileID: 0}
   rb: {fileID: 54897799338696168}

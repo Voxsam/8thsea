@@ -16,9 +16,18 @@ public class PlayerAnimationController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        bool isMoving = controller.isPlayerMoving();
-        bool isHolding = (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold);
+	public void GameUpdate () {
+        bool isMoving = controller.IsPlayerMoving;
+        bool isHolding = (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold || interactionController.GetCurrentState() == PlayerInteractionController.State.PickingUp);
+
+        Debug.Log("isMoving  = " + isMoving);
+        Debug.Log("isHolding = " + isHolding);
+        
+        anim.SetBool("isHoldingWalk", isMoving && isHolding);
+        anim.SetBool("isHoldingIdle", !isMoving && isHolding);
+        anim.SetBool("isWalking", isMoving && !isHolding);
+        anim.SetBool("isIdle", !isMoving && !isHolding);
+        /*
         if (isMoving && isHolding)
         {
             anim.SetBool("isHoldingWalk", true);
@@ -33,11 +42,12 @@ public class PlayerAnimationController : MonoBehaviour {
         {
             anim.SetBool("isHoldingIdle", true);
             anim.SetBool("isHoldingWalk", false);
-        } else
+        }
+        else
         {
             anim.SetBool("isIdle", true);
             anim.SetBool("isWalking", false);
-        }
+        }//*/
     }
 }/*
 f (interactionController.getCurrentState() == PlayerInteractionController.State.Hold)

@@ -7,13 +7,27 @@ public class PlayerInteractionController : MonoBehaviour
     public enum State
     {
         Idle,
+        PickingUp,
         Hold
     };
     enum SecondaryState
     {
         Idle,
+        Picking_up,
         View
     };
+
+    public const string PICK_UP = "pickUp";
+    public const string DROP = "drop";
+
+    //public const float PICK_UP_ANIMATION_TOTAL_TIME_TAKEN = 0.729f;
+    public const float PICK_UP_ANIMATION_START_DELAY = 0.3f;
+    public const float PICK_UP_ANIMATION_TIME = 0.5f;
+
+    public const float DROP_ANIMATION_START_DELAY = 0.1f;
+    public const float DROP_ANIMATION_TIME = 0.5f;
+
+
     State currentState;
     SecondaryState currentSecondaryState;
 
@@ -71,7 +85,7 @@ public class PlayerInteractionController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void GameUpdate()
     {
         switch (currentState)
         {
@@ -86,7 +100,7 @@ public class PlayerInteractionController : MonoBehaviour
                     }
                 }
                 break;
-
+            case State.PickingUp:
             case State.Idle:
             default:
                 break;
@@ -140,31 +154,66 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
-            anim.SetTrigger("pickUp");
-            other.transform.SetParent(holdSlot.transform, true);
-            other.transform.localPosition = Vector3.zero;
-            heldObject = other;
+            // The prereq to activate Pick up Trigger
+            player.IsPlayerAllowedToMove = false;
+            player.IsPlayerMoving = false;
+
+            StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(Time.deltaTime, () =>
+            {
+                // Wait one frame before allowing the pick up
+                anim.SetTrigger(PICK_UP);
+                currentState = State.PickingUp;
+                other.transform.SetParent(holdSlot.transform, true);
+
+                StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(PICK_UP_ANIMATION_START_DELAY, () =>
+                {
+                    StartCoroutine(GameController.MoveGameObjectAndActivateCallbackCoroutine(other.transform, PICK_UP_ANIMATION_TIME, Vector3.zero, true, () =>
+                    {
+                        // Activate the pick up after the animation is complete
+                        currentState = State.Hold;
+                        heldObject = other;
+                        player.IsPlayerAllowedToMove = true;
+                    }));
+                }));
+            }));
         }
         else
         {
-            anim.SetTrigger("drop");
-            other.transform.SetParent(player.LocationRef, true);
-            heldObject = null;
+            // The prereq to drop (since after drop it moves straight to idle animation)
+            player.IsPlayerAllowedToMove = false;
+            player.IsPlayerMoving = false;
+            StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(Time.deltaTime, () =>
+            {
+                anim.SetTrigger(DROP);
+                other.transform.SetParent(player.LocationRef, true);
+                heldObject = null;
+                
+                // Delay again for the animation to finish before letting the player move again
+                StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(DROP_ANIMATION_TIME, () =>
+                {
+                    currentState = State.Idle;
+                    player.IsPlayerAllowedToMove = true;
+                }));
+            }));
         }
     }
 
     public void PickUpObject(GameObject other)
     {
-        SetAttachObject(other, true);
-        currentSecondaryState = SecondaryState.Idle;
-        currentState = State.Hold;
+        if (GetCurrentState() != State.PickingUp )
+        {
+            SetAttachObject(other, true);
+            currentSecondaryState = SecondaryState.Idle;
+        }
     }
 
     public void DropObject()
     {
-        SetAttachObject(heldObject, false);
-        heldObject = null;
-        currentSecondaryState = SecondaryState.Idle;
-        currentState = State.Idle;
+        if (GetCurrentState() != State.PickingUp)
+        {
+            SetAttachObject(heldObject, false);
+            heldObject = null;
+            currentSecondaryState = SecondaryState.Idle;
+        }
     }
 }

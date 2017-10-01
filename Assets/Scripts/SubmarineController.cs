@@ -12,7 +12,7 @@ public class SubmarineController : StationControllerInterface {
     public float maximumSpeed;
 
     // Camera things
-    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 40f;
+    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 30f;
     protected float cameraOriginalFov;
 
     public Transform UIPrefab;

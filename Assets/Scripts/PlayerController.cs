@@ -9,14 +9,33 @@ public class PlayerController : MonoBehaviour {
 
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
+    private PlayerAnimationController animationController;
     public CameraController cameraController;
 
-	[SerializeField] public Rigidbody rb;
+    private bool isMoving = false;
+    private bool isPlayerAllowedToMove = true;
+
+    public bool IsPlayerMoving
+    {
+        get { return isMoving; }
+        set { isMoving = value; }
+    }
+    public bool IsPlayerAllowedToMove
+    {
+        get { return isPlayerAllowedToMove; }
+        set { isPlayerAllowedToMove = value; }
+    }
+
+
+    [SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
+        animationController = GetComponentInChildren<PlayerAnimationController>();
+
+
     }
 
     public GameData.ControlType ControlMode
@@ -62,13 +81,17 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    public void GameUpdate () {
+    public void GameUpdate ()
+    {
+        interactionController.GameUpdate();
 
-		
-		if (ControlMode == GameData.ControlType.CHARACTER) {
+        isMoving = false;
+        if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
+        {
 			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {
+                isMoving = true;
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -77,8 +100,9 @@ public class PlayerController : MonoBehaviour {
 
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
 			}
-            
 		}
+
+        animationController.GameUpdate();
 	}
 
 }

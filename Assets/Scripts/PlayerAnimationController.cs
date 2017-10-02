@@ -19,9 +19,6 @@ public class PlayerAnimationController : MonoBehaviour {
 	public void GameUpdate () {
         bool isMoving = controller.IsPlayerMoving;
         bool isHolding = (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold || interactionController.GetCurrentState() == PlayerInteractionController.State.PickingUp);
-
-        Debug.Log("isMoving  = " + isMoving);
-        Debug.Log("isHolding = " + isHolding);
         
         anim.SetBool("isHoldingWalk", isMoving && isHolding);
         anim.SetBool("isHoldingIdle", !isMoving && isHolding);

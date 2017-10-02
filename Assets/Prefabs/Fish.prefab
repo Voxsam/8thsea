@@ -75,6 +75,8 @@ GameObject:
   - component: {fileID: 114682979882652678}
   - component: {fileID: 65155660304846444}
   - component: {fileID: 135210608874139048}
+  - component: {fileID: 114851763642998746}
+  - component: {fileID: 135217801413386010}
   m_Layer: 0
   m_Name: Fish
   m_TagString: FishObject
@@ -106,7 +108,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780913504088970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.04, y: 2.05, z: -3.79}
+  m_LocalPosition: {x: -3.1, y: 1.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224088055315140762}
@@ -120,13 +122,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1213974660353288}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4091083189849716}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!23 &23576500097082968
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -286,12 +288,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishType: 0
+  fishMovementController: {fileID: 114851763642998746}
+  rb: {fileID: 0}
   fishRenderer: {fileID: 23576500097082968}
+  WorldspaceCanvas: {fileID: 1557064350480070}
   DeadText: {fileID: 114492728205327948}
   PanicBarRect: {fileID: 224384499388235106}
-  WorldspaceCanvas: {fileID: 1557064350480070}
   fishDetailsTemplate: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
     type: 2}
+--- !u!114 &114851763642998746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780913504088970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3f6b41fe8fc06946b40907a30fc8ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114988691687629378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,6 +335,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.33
   m_Center: {x: 0, y: 0.05039096, z: -0.44}
+--- !u!135 &135217801413386010
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1780913504088970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &222736443054206048
 CanvasRenderer:
   m_ObjectHideFlags: 1

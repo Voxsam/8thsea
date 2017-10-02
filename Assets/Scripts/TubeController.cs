@@ -83,7 +83,9 @@ public class TubeController : StationControllerInterface {
                     GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
                     GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
                 );
-                fish.GetComponent<Rigidbody>().useGravity = true;
+                fish.SetRigidbody(true);
+                fish.fishMovementController.SetEnabled(false);
+                //fish.GetComponent<Rigidbody>().useGravity = true;
                 fish.transform.SetParent(SpawnPoint);
             }
 		}
@@ -96,8 +98,27 @@ public class TubeController : StationControllerInterface {
             if (fish != null && other.attachedRigidbody)
             {
                 Vector3 dir = transform.position - other.transform.position;
-                dir = dir.normalized;
-                other.attachedRigidbody.AddForce((dir) * attractionForce);
+                //dir = dir.normalized;
+                //other.attachedRigidbody.AddForce((dir) * attractionForce);
+
+                if (Vector3.Distance(transform.position, other.transform.position) < 1)
+                {
+                   fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
+                    fish.transform.position = SpawnPoint.position + new Vector3(
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
+                    );
+                    fish.fishMovementController.SetEnabled(false);
+                    fish.SetRigidbody(true);
+                    fish.rb.velocity = Vector3.zero;
+                    fish.transform.SetParent(SpawnPoint);
+                }
+                else
+                {
+                    dir = dir.normalized;
+                    other.gameObject.transform.Translate((dir) * attractionForce);
+                }
             }
                 
         }

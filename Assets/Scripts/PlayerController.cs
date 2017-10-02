@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour {
         set { isPlayerAllowedToMove = value; }
     }
 
-
     [SerializeField] public Rigidbody rb;
 
 	void Start () {

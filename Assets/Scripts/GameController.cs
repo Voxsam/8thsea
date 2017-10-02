@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 	public static GameController Obj;
 
+    KeyCode BUTTON_A_KEYBOARD = KeyCode.Space;
+    KeyCode BUTTON_B_KEYBOARD = KeyCode.E;
+
+    KeyCode BUTTON_A_JOYSTICK = KeyCode.JoystickButton0;
+    KeyCode BUTTON_B_JOYSTICK = KeyCode.JoystickButton1;
+    
     // Submarine Management
     public static SubmarineController SubmarineRef
     {
@@ -58,34 +64,24 @@ public class GameController : MonoBehaviour {
     #region Button A handler
     public bool ButtonA_Down
     {
-        get { return Input.GetKeyDown(KeyCode.Space); }
-    }
-
-    public bool ButtonA_Up
-    {
-        get { return Input.GetKeyUp(KeyCode.Space); }
+        get { return Input.GetKeyDown(BUTTON_A_KEYBOARD) || Input.GetKeyDown(BUTTON_A_JOYSTICK); }
     }
 
     public bool ButtonA_Hold
     {
-        get { return Input.GetKey(KeyCode.Space); }
+        get { return Input.GetKey(BUTTON_A_KEYBOARD) || Input.GetKey(BUTTON_A_JOYSTICK); }
     }
     #endregion
 
     #region Button B handler
     public bool ButtonB_Down
     {
-        get { return Input.GetKeyDown(KeyCode.E); }
-    }
-
-    public bool ButtonB_Up
-    {
-        get { return Input.GetKeyUp(KeyCode.E); }
+        get { return Input.GetKeyDown(BUTTON_B_KEYBOARD) || Input.GetKeyDown(BUTTON_B_JOYSTICK); }
     }
 
     public bool ButtonB_Hold
     {
-        get { return Input.GetKey(KeyCode.E); }
+        get { return Input.GetKey(BUTTON_B_KEYBOARD) || Input.GetKey(BUTTON_B_JOYSTICK); }
     }
     #endregion
     #endregion

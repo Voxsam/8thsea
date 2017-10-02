@@ -43,7 +43,7 @@ public class TeleportDoor : MonoBehaviour
         {
             // If the player is in Character control mode
             if (player.ControlMode == GameData.ControlType.CHARACTER &&
-                GameController.Obj.ButtonA_Up)
+                GameController.Obj.ButtonA_Down)
             {
                 player.transform.position = teleportPoint.transform.position;
                 if (PlayerLocationRef != null)

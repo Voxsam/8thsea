@@ -10,12 +10,18 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
     };
     State currentState;
 
-    [SerializeField] private GameObject holdSlot;
+    private GameObject holdSlot;
     private GameObject heldObject;
+    private Renderer meshRenderer;
+    public Shader outlineShader;
+    private Shader originalShader;
 
     // Use this for initialization
     void Start () {
         currentState = State.Empty;
+        holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
+        meshRenderer = gameObject.transform.Find("Mesh").GetComponent<Renderer>();
+        originalShader = meshRenderer.material.shader;
         heldObject = null;
     }
 	
@@ -35,20 +41,16 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                 if (playerControllerScript != null)
                 {
                     //Get the object held by the player.
-                    heldObject = playerControllerScript.GetHeldObject();
-                    if (heldObject != null)
+                    GameObject objectToHold = playerControllerScript.GetHeldObject();
+                    if (objectToHold != null)
                     {
-                        FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));
+                        FishController heldObjectControllerScript = (FishController)objectToHold.GetComponent(typeof(FishController));
                         if (heldObjectControllerScript != null)
                         {
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
                         }
-                        heldObject.transform.localPosition = Vector3.zero;
-                        heldObject.transform.localScale = Vector3.one;
-                        heldObject.transform.SetParent(holdSlot.transform, false);
-
-                        currentState = State.Holding;
+                        holdObject(objectToHold);
                     }
                 }
             }
@@ -63,8 +65,7 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
                         if (heldObject != null)
                         {
                             playerControllerScript.PickUpObject(heldObject);
-                            heldObject = null;
-                            currentState = State.Empty;
+                            removeHeldObject();
                         }
                     }
                 }
@@ -72,17 +73,43 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
         }
     }
 
+    public GameObject removeHeldObject ()
+    {
+        GameObject objectToReturn = heldObject;
+        heldObject = null;
+        currentState = State.Empty;
+
+        return objectToReturn;
+    }
+
+    public bool holdObject ( GameObject objectToHold )
+    {
+        if (currentState == State.Empty)
+        {
+            heldObject = objectToHold;
+            Vector3 originalScale = heldObject.transform.localScale;
+            heldObject.transform.SetParent(holdSlot.transform);
+            heldObject.transform.localPosition = Vector3.zero;
+            heldObject.transform.localScale = originalScale;
+
+            currentState = State.Holding;
+            return true;
+        }
+        return false;
+    }
+
     public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.red;
+            if (outlineShader != null)
+            {
+                meshRenderer.material.shader = outlineShader;
+            }
         }
         else
         {
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.color = Color.white;
+            meshRenderer.material.shader = originalShader;
         }
     }
 }

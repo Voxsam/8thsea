@@ -12,17 +12,41 @@ public class GameData : MonoBehaviour
         private FishType type;
         public StationType[] ResearchProtocols {// The order of Stations to follow
             get; private set;
-        } 
-        public float panicTimerLength
-        {
-            get; private set;
         }
 
-        public FishParameters(FishType _type, float _panicTimerLength, StationType[] _researchProtocol)
+        public float panicTimerLength;
+        public int currentResearchProtocol;
+        public int totalResearched;
+        public int totalToResearch;
+
+        public float minSpeed;
+        public float maxSpeed;
+        public float minRotationSpeed;
+        public float maxRotationSpeed;
+        public float minNeighbourDistance;
+
+        public int minSchoolSize;
+        public int maxSchoolSize;
+        public FishParameters(FishType _type, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
+                                float _minSpeed = 1f, float _maxSpeed = 3f,
+                                float _minRotationSpeed = 1.0f, float _maxRotationSpeed = 4.0f,
+                                int _minSchoolSize = 5, int _maxSchoolSize = 15,
+                                float _minNeighbourDistance = 30.0f)
         {
             type = _type;
             panicTimerLength = _panicTimerLength;
+
             ResearchProtocols = _researchProtocol;
+            currentResearchProtocol = totalResearched = 0;
+            totalToResearch = _totalToResearch;
+
+            minSpeed = _minSpeed;
+            maxSpeed = _maxSpeed;
+            minRotationSpeed = _minRotationSpeed;
+            maxRotationSpeed = _maxRotationSpeed;
+            minNeighbourDistance = _minNeighbourDistance;
+            minSchoolSize = _minSchoolSize;
+            maxSchoolSize = _maxSchoolSize;
         }
 
         // Getters
@@ -55,6 +79,7 @@ public class GameData : MonoBehaviour
         STATION,
     };
 
+    public const int TOTAL_NUMBER_OF_FISHTYPES = 2;
     public enum FishType
     {
         ClownFish = 0,
@@ -74,17 +99,17 @@ public class GameData : MonoBehaviour
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
     {
-        new FishParameters(FishType.ClownFish, 40, new StationType[] {
+        new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
             StationType.Clean, StationType.Massage
         }),
-        new FishParameters(FishType.PufferFish, 50, new StationType[] {
+        new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
             StationType.Massage, StationType.Clean
         }),
     };
 
     #region Getter and setters
 
-    public static FishParameters GetFishParameter(FishType fish)
+    public static FishParameters GetFishParameters(FishType fish)
     {
         return AllFishParameters[(int)fish];
     }

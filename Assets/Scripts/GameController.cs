@@ -6,6 +6,12 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 	public static GameController Obj;
 
+    KeyCode BUTTON_A_KEYBOARD = KeyCode.Space;
+    KeyCode BUTTON_B_KEYBOARD = KeyCode.E;
+
+    KeyCode BUTTON_A_JOYSTICK = KeyCode.JoystickButton0;
+    KeyCode BUTTON_B_JOYSTICK = KeyCode.JoystickButton1;
+    
     // Submarine Management
     public static SubmarineController SubmarineRef
     {
@@ -58,34 +64,24 @@ public class GameController : MonoBehaviour {
     #region Button A handler
     public bool ButtonA_Down
     {
-        get { return Input.GetKeyDown(KeyCode.Space); }
-    }
-
-    public bool ButtonA_Up
-    {
-        get { return Input.GetKeyUp(KeyCode.Space); }
+        get { return Input.GetKeyDown(BUTTON_A_KEYBOARD) || Input.GetKeyDown(BUTTON_A_JOYSTICK); }
     }
 
     public bool ButtonA_Hold
     {
-        get { return Input.GetKey(KeyCode.Space); }
+        get { return Input.GetKey(BUTTON_A_KEYBOARD) || Input.GetKey(BUTTON_A_JOYSTICK); }
     }
     #endregion
 
     #region Button B handler
     public bool ButtonB_Down
     {
-        get { return Input.GetKeyDown(KeyCode.E); }
-    }
-
-    public bool ButtonB_Up
-    {
-        get { return Input.GetKeyUp(KeyCode.E); }
+        get { return Input.GetKeyDown(BUTTON_B_KEYBOARD) || Input.GetKeyDown(BUTTON_B_JOYSTICK); }
     }
 
     public bool ButtonB_Hold
     {
-        get { return Input.GetKey(KeyCode.E); }
+        get { return Input.GetKey(BUTTON_B_KEYBOARD) || Input.GetKey(BUTTON_B_JOYSTICK); }
     }
     #endregion
     #endregion
@@ -122,6 +118,85 @@ public class GameController : MonoBehaviour {
     #endregion
 
     #region Helper functions
+    #region Coroutine functions
+    protected void ActivateCallbackAfterDelay(float delay, System.Action callback)
+    {
+        StartCoroutine(ActivateCallbackAfterDelayCoroutine(delay, callback));
+    }
+
+    public static IEnumerator ActivateCallbackAfterDelayCoroutine(float delay, System.Action callback)
+    {
+        float timeToWaitUntil = Time.time + delay;
+        while(Time.time < timeToWaitUntil)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (callback != null)
+        {
+            callback();
+        }
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// Uses a Coroutine to move an Object from point A to point B over a given time. Can activate a callback after if necesary
+    /// </summary>
+    /// <param name="obj">Object to be mvoed</param>
+    /// <param name="travelTime">Time required to reach destination</param>
+    /// <param name="destination">The destination location. This must be in either local space or world space depending on the 'useLocalPosition' variable. By default, this expects a local space coordinate.</param>
+    /// <param name="useLocalPosition">Whether the destination variable is using local or world coordinates</param>
+    /// <param name="callback">The callback to activate when this movement is complete</param>
+    protected void MoveGameObjectToLocationInGivenTimeAndActivateCallback(Transform obj, float travelTime, Vector3 destination, bool useLocalPosition = true, System.Action callback = null)
+    {
+        MoveGameObjectAndActivateCallbackCoroutine(obj, travelTime, destination, useLocalPosition, callback);
+    }
+
+    public static IEnumerator MoveGameObjectAndActivateCallbackCoroutine(Transform obj, float travelTime, Vector3 destination, bool useLocalPosition = true, System.Action callback = null)
+    {
+        float timeStarted = Time.time;
+        float timeToWaitUntil = timeStarted + travelTime;
+        float timeTaken = 0f;
+
+        Vector3 location = (useLocalPosition) ? obj.localPosition : obj.position;
+
+        while (Time.time < timeToWaitUntil)
+        {
+            timeTaken = Time.time - timeStarted;
+            location = Vector3.Lerp(location, destination, timeTaken/travelTime);
+            if (useLocalPosition)
+            {
+                obj.localPosition = location;
+            }
+            else
+            {
+                obj.position = location;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        // Final allocation in case it was incomplete
+        if (useLocalPosition)
+        {
+            obj.localPosition = destination;
+        }
+        else
+        {
+            obj.position = destination;
+        }
+
+        // Use callback if exists
+        if (callback != null)
+        {
+            callback();
+        }
+
+        yield return null;
+    }
+    #endregion
+
     public void AddMoney(int amount) {
 		currentMoney += amount;
 	}

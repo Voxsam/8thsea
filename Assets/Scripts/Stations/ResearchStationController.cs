@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResearchStationController : StationControllerInterface, IInteractable {
+public class ResearchStationController : StationControllerInterface, IInteractable
+{
 
-    enum State {
+    enum State
+    {
         Empty,
         Holding,
         Working
@@ -29,8 +31,10 @@ public class ResearchStationController : StationControllerInterface, IInteractab
 
     //Prefab to instantiate progress ui
     public GameObject progressUI;
-    [SerializeField] private GameObject holdSlot;
-    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField]
+    private GameObject holdSlot;
+    [SerializeField]
+    private MeshRenderer meshRenderer;
 
     public override GameData.ControlType ControlMode
     {
@@ -41,7 +45,8 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         currentState = State.Empty;
         //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
@@ -53,7 +58,8 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         if (uiObject != null)
         {
             GameObject words = uiObject.transform.GetChild(0).gameObject;

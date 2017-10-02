@@ -7497,7 +7497,7 @@ MonoBehaviour:
   playerInStation: {fileID: 0}
   forwardSpeed: 5
   attractionForce: 0.2
-  radius: 10
+  radius: 30
   anchorPoint: {fileID: 1596273310597334}
   SpawnPoint: {fileID: 4430814938334210}
 --- !u!114 &114295270462086466
@@ -8345,7 +8345,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135887040835390980
 SphereCollider:

@@ -12,6 +12,8 @@ public class ZoneController : MonoBehaviour {
 
     [SerializeField] public GameData.FishType[] fishTypes;
 
+    [SerializeField] public Transform Sea;
+
     [SerializeField] public int maxSchools = 10;
     [SerializeField] public int minSchools = 20;
     [SerializeField] public float fishSchoolSpawnDelay = 5f;
@@ -55,6 +57,8 @@ public class ZoneController : MonoBehaviour {
         zoneBoundaryZPos.transform.localPosition = new Vector3(0, 0, zoneLength);
         zoneBoundaryZNeg.transform.localPosition = new Vector3(0, 0, -zoneLength);
 
+        // Set Zone as a child of Sea
+        this.transform.SetParent(Sea);
 
         fishSchools = new Dictionary<GameData.FishType, List<GameObject>>();
         foreach (GameData.FishType fishType in fishTypes)

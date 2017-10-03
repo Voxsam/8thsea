@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
 
     // Player management
     protected List<PlayerController> players;
+    [SerializeField] protected Transform PlayerHolder;
     [SerializeField] protected PlayerController Player1Ref;
     
     public Transform Player1Location
@@ -32,7 +33,12 @@ public class GameController : MonoBehaviour {
     [SerializeField] protected Transform FishHolder;
 
     // Camera management
-    [SerializeField] public CameraController gameCamera;
+    public CameraController gameCamera;
+
+    // GameObjects
+    [SerializeField] protected Canvas mainCanvas;
+    [SerializeField] protected Transform Sea;
+    [SerializeField] protected Transform Lab;
 
     // Randomisation
     public static System.Random RNG;
@@ -260,6 +266,11 @@ public class GameController : MonoBehaviour {
         
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
+        Player1Ref.transform.SetParent(PlayerHolder);
+
+        mainCanvas.transform.SetParent(this.transform);
+        Sea.transform.SetParent(this.transform);
+        Lab.transform.SetParent(this.transform);
 
         RNG = new System.Random();
     }

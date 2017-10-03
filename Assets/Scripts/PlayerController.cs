@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour {
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
         animationController = GetComponentInChildren<PlayerAnimationController>();
-
-
     }
 
     public GameData.ControlType ControlMode

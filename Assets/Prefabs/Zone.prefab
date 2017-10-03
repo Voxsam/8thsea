@@ -480,6 +480,7 @@ MonoBehaviour:
   zoneHeight: 3000
   zoneLength: 30
   fishTypes: 0000000001000000
+  Sea: {fileID: 0}
   maxSchools: 100
   minSchools: 10
   fishSchoolSpawnDelay: 5

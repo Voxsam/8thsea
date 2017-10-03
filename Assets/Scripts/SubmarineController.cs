@@ -72,6 +72,9 @@ public class SubmarineController : StationControllerInterface {
         maximumSpeed = 10f;
         oxygenCountdownScript.isActivated = false;
 
+        // Ensure that this submarine is a child of DockingPosition
+        this.transform.SetParent(dockingPosition);
+
         // Only allow teleport if it is docked
         teleportToLabFromToSubDoor.Initialise(IsDocked);
         teleportToSubFromToLabDoor.Initialise(IsDocked);

@@ -74,6 +74,7 @@ public class SubmarineController : StationControllerInterface {
 
         // Ensure that this submarine is a child of DockingPosition
         this.transform.SetParent(dockingPosition);
+        this.transform.localPosition = Vector3.zero;
 
         // Only allow teleport if it is docked
         teleportToLabFromToSubDoor.Initialise(IsDocked);

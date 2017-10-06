@@ -25,6 +25,7 @@ public class FishController : MonoBehaviour, IInteractable {
     SecondaryState currentSecondaryState;
     
     public GameData.FishType fishType;
+    public FishMovementController fishMovementController;
 
     private float panicTimer;
     private float panicBarWidth;
@@ -32,7 +33,7 @@ public class FishController : MonoBehaviour, IInteractable {
     private Color originalColor;
 
     // GameObjects used by this class
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     [SerializeField] private MeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
@@ -52,12 +53,15 @@ public class FishController : MonoBehaviour, IInteractable {
         //Get own rigidbody component.
         rb = this.GetComponent<Rigidbody>();
 
+        // Get own movement controller
+        fishMovementController = GetComponent<FishMovementController>();
+
         fishDetails = null;
 
-        DeadText.gameObject.SetActive(false);
+        DeadText.enabled = false;
         PanicBarRect.gameObject.SetActive(false);
         panicBarWidth = PanicBarRect.rect.width;
-        panicTimer = GameData.GetFishParameter(fishType).panicTimerLength;
+        panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
         fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
@@ -96,10 +100,10 @@ public class FishController : MonoBehaviour, IInteractable {
                     currentSecondaryState = SecondaryState.Dead;
                     panicTimer = 0f;
                     DeadText.text = "d e d";
-                    DeadText.gameObject.SetActive(true);
+                    DeadText.enabled = true;
                 }
 
-                PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameter(fishType).panicTimerLength, PanicBarRect.rect.height);
+                PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameters(fishType).panicTimerLength, PanicBarRect.rect.height);
                 break;
 
             default:
@@ -165,6 +169,21 @@ public class FishController : MonoBehaviour, IInteractable {
 
         currentState = State.Placed;
     }
+    public void SetEnabled(bool enabled)
+{
+        SetRigidbody(enabled);
+        WorldspaceCanvas.SetActive(enabled);
+        this.enabled = enabled;
+    }
+
+    public void SetRigidbody(bool enabled)
+    {
+        if (rb)
+        {
+            rb.isKinematic = !enabled;
+            rb.useGravity = enabled;
+        }
+    }
 
     public void Interact ()
     {
@@ -211,7 +230,7 @@ public class FishController : MonoBehaviour, IInteractable {
     /// <returns></returns>
     public GameData.StationType GetCurrentResearchProtocol ()
     {
-        GameData.StationType[] researchProtocols = GameData.GetFishParameter(fishType).ResearchProtocols;
+        GameData.StationType[] researchProtocols = GameData.GetFishParameters(fishType).ResearchProtocols;
         if (currentResearchProtocol < researchProtocols.Length)
             return researchProtocols[currentResearchProtocol];
         else
@@ -221,13 +240,19 @@ public class FishController : MonoBehaviour, IInteractable {
     public void ResearchFish ()
     {
         currentResearchProtocol++;
-        GameData.StationType[] researchProtocols = GameData.GetFishParameter(fishType).ResearchProtocols;
+        GameData.StationType[] researchProtocols = GameData.GetFishParameters(fishType).ResearchProtocols;
         if ( currentResearchProtocol >= researchProtocols.Length )
         {
             currentResearchProtocol = researchProtocols.Length;
             currentSecondaryState = SecondaryState.Researched;
-            WorldspaceCanvas.transform.Find("DeadText").gameObject.GetComponent<Text>().text = "Researched";
-            WorldspaceCanvas.transform.Find("DeadText").gameObject.SetActive(true);
+            DeadText.text = "Researched";
+            DeadText.enabled = true;
         }
+    }
+
+    // If the player isn't holding it, attach it to its appropriate location
+    public void DropFish()
+    {
+
     }
 }

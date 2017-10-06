@@ -7,14 +7,30 @@ public abstract class StationControllerInterface : MonoBehaviour {
         get;
     }
 
-    public bool isActivated = false; // False by default
+    private bool isActivated = false; // False by default
+    public virtual bool IsActivated
+    {
+        get { return isActivated; }
+        set { isActivated = value; }
+    }
+    
+    public PlayerController playerInStation = null;
+    protected CameraController stationCamera = null;
     
     /// <summary>
     /// The switch condition that checks whether the player can return to the Character controller
     /// </summary>
     public abstract bool SwitchCondition();
-    public PlayerController playerInStation = null;
-    protected CameraController stationCamera = null;
+
+    /// <summary>
+    /// A function that the StationController will call after activating the station
+    /// </summary>
+    public abstract void WhenActivated();
+
+    /// <summary>
+    /// A function that the StationController will call after deactivating the station
+    /// </summary>
+    public abstract void WhenDeactivated();
 
     void Start()
     {
@@ -39,11 +55,11 @@ public abstract class StationControllerInterface : MonoBehaviour {
     {
         if (playerInStation != null)
         {
+            isActivated = false;
             playerInStation.ReturnControlToCharacter();
             playerInStation.ReattachCameraToPlayer();
             playerInStation = null;
             stationCamera = null;
-            isActivated = false;
         }
     }
 

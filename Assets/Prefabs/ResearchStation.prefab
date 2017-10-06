@@ -64,8 +64,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1525527494155308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.75, y: 1.258, z: 0.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.74, y: -9.53, z: -3.85}
   m_LocalScale: {x: 2.890708, y: 1.5, z: 3.3281822}
   m_Children:
   - {fileID: 4508120169736384}
@@ -134,9 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03f08a37bbbf8e541ace01c551385a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActivated: 0
   playerInStation: {fileID: 0}
-  researchStationType: 0
+  researchStationType: 1
   progressUI: {fileID: 1504460152230116, guid: 07e95eca903ff6a429aa2d0f8df603b7, type: 2}
   holdSlot: {fileID: 1684555224011648}
   meshRenderer: {fileID: 23275894880918460}

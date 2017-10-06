@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class TubeController : StationControllerInterface {
 
+    public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
 	public float forwardSpeed;
 	public float attractionForce;
 	//public bool isActivated; // In parent
 	public float radius;
 	public GameObject anchorPoint;
     private bool systemActivated;
+
+    public Transform SpawnPoint; // Put the fishes here after they have been sucked up
 
     public override GameData.ControlType ControlMode
     {
@@ -20,11 +23,18 @@ public class TubeController : StationControllerInterface {
     //public GameObject playerCharacter;
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    }
+    public override void WhenActivated()
+    {
+    }
+
+    public override void WhenDeactivated()
+    {
+    }
+
+    // Update is called once per frame
+    void Update () {
         // While the A button is held down, activate the system
         if (GameController.Obj.ButtonA_Hold)
         {
@@ -35,7 +45,7 @@ public class TubeController : StationControllerInterface {
             systemActivated = false;
         }
 
-        if (isActivated) {
+        if (IsActivated) {
 
             float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
 			float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
@@ -64,23 +74,51 @@ public class TubeController : StationControllerInterface {
     }
 
     void OnCollisionEnter(Collision other) {
-		if (isActivated & systemActivated) {
-            if (GameController.Obj.GetFishFromCollider(other.collider) != null)
+		if (IsActivated & systemActivated) {
+            FishController fish = GameController.Obj.GetFishFromCollider(other.collider);
+            if (fish != null)
             {
-                Destroy(other.gameObject);
+                fish.transform.position = SpawnPoint.position + new Vector3(
+                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
+                );
+                fish.SetRigidbody(true);
+                fish.fishMovementController.SetEnabled(false);
+                //fish.GetComponent<Rigidbody>().useGravity = true;
+                fish.transform.SetParent(SpawnPoint);
             }
 		}
 	}
 
 	void OnTriggerStay (Collider other) {
-        if (isActivated && systemActivated)
+        if (IsActivated && systemActivated)
         {
             FishController fish = GameController.Obj.GetFishFromCollider(other);
             if (fish != null && other.attachedRigidbody)
             {
                 Vector3 dir = transform.position - other.transform.position;
-                dir = dir.normalized;
-                other.attachedRigidbody.AddForce((dir) * attractionForce);
+                //dir = dir.normalized;
+                //other.attachedRigidbody.AddForce((dir) * attractionForce);
+
+                if (Vector3.Distance(transform.position, other.transform.position) < 1)
+                {
+                   fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
+                    fish.transform.position = SpawnPoint.position + new Vector3(
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
+                    );
+                    fish.fishMovementController.SetEnabled(false);
+                    fish.SetRigidbody(true);
+                    fish.rb.velocity = Vector3.zero;
+                    fish.transform.SetParent(SpawnPoint);
+                }
+                else
+                {
+                    dir = dir.normalized;
+                    other.gameObject.transform.Translate((dir) * attractionForce);
+                }
             }
                 
         }

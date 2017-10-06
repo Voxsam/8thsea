@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4989824128242174}
   - component: {fileID: 33863883376889606}
   - component: {fileID: 65526834382025722}
-  - component: {fileID: 114759704911805440}
+  - component: {fileID: 114804239042363444}
   m_Layer: 0
   m_Name: Zone I
   m_TagString: Zone
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 4499155759272126}
   - component: {fileID: 33314593059847824}
   - component: {fileID: 65587044093842970}
-  - component: {fileID: 114576668931907090}
+  - component: {fileID: 114716339176938942}
   m_Layer: 0
   m_Name: Zone II
   m_TagString: Zone
@@ -195,7 +195,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4159467625623214}
-  - component: {fileID: 114645383724885220}
   m_Layer: 0
   m_Name: Sea
   m_TagString: Untagged
@@ -225,8 +224,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992951514993728}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 19.2, z: 17.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 52.35, z: 24.2}
+  m_LocalScale: {x: 2, y: 1, z: 3}
   m_Children:
   - {fileID: 4758161452337812}
   - {fileID: 4834873466859908}
@@ -267,7 +266,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1127362409550838}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.22, y: 4.14, z: 4.51}
+  m_LocalPosition: {x: 0.22, y: 2.13, z: 4.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4834873466859908}
@@ -344,8 +343,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1518829588370544}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.9, y: -0, z: -14.2}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 4886875628830446}
@@ -358,7 +357,7 @@ Transform:
   - {fileID: 4499155759272126}
   m_Father: {fileID: 4159467625623214}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4886875628830446
 Transform:
   m_ObjectHideFlags: 1
@@ -751,7 +750,7 @@ BoxCollider:
   m_GameObject: {fileID: 1047723016867254}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -763,11 +762,11 @@ BoxCollider:
   m_GameObject: {fileID: 1550405114653592}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114576668931907090
+--- !u!114 &114716339176938942
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -775,33 +774,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1550405114653592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42239bb40545fdc4bb7a7c39938f59b6, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114645383724885220
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1992951514993728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7858d911f240714fa404cdb9ecdc6f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishes:
-  - {fileID: 1780913504088970, guid: b9862c8be34611f4ab58c35e3a5d560c, type: 2}
-  - {fileID: 1226009427648234, guid: 84d8f9895b0366f4a9d58415966dbb04, type: 2}
-  maxNumberFish: 50
-  spawnValues: {x: 20, y: 50, z: 1}
-  FishHolder: {fileID: 4630693432082872}
-  spawnWait: 0
-  spawnMostWait: 2
-  spawnLeastWait: 0.5
-  startWait: 1
-  stop: 0
-  count: 0
---- !u!114 &114759704911805440
+--- !u!114 &114804239042363444
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -809,7 +785,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1047723016867254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42239bb40545fdc4bb7a7c39938f59b6, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &136550711193875420

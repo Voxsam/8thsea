@@ -4,42 +4,61 @@ using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    enum State
+    public enum State
     {
         Idle,
+        PickingUp,
         Hold
     };
     enum SecondaryState
     {
         Idle,
+        Picking_up,
         View
     };
+
+    public const string PICK_UP = "pickUp";
+    public const string DROP = "drop";
+
+    //public const float PICK_UP_ANIMATION_TOTAL_TIME_TAKEN = 0.729f;
+    public const float PICK_UP_ANIMATION_START_DELAY = 0.3f;
+    public const float PICK_UP_ANIMATION_TIME = 0.5f;
+
+    public const float DROP_ANIMATION_START_DELAY = 0.1f;
+    public const float DROP_ANIMATION_TIME = 0.5f;
+
+
     State currentState;
     SecondaryState currentSecondaryState;
-    
-    private GameObject player;
 
-    private GameObject holdSlot;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private GameObject holdSlot;
 
+    private Animator anim;
     private GameObject atObject;
     private GameObject heldObject;
-    public GameObject GetHeldObject ()
+    public GameObject GetHeldObject()
     {
         return heldObject;
     }
-
-	// Use this for initialization
-	void Start ()
+    public State GetCurrentState()
+    {
+        return currentState;
+    }
+    // Use this for initialization
+    void Start()
     {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
-
-        player = gameObject;
-        holdSlot = player.transform.Find("HoldSlot").gameObject;
+        anim = GetComponentInChildren<Animator>();
+        // Set in the editor
+        //player = gameObject;
+        //player = FindComponent<PlayerController>();
+        //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
     }
 
-    void OnTriggerStay (Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (currentSecondaryState != SecondaryState.View)
         {
@@ -52,7 +71,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit (Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.tag == "FishObject" || other.tag == "StationObject")
         {
@@ -66,7 +85,7 @@ public class PlayerInteractionController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    public void GameUpdate()
     {
         switch (currentState)
         {
@@ -81,7 +100,7 @@ public class PlayerInteractionController : MonoBehaviour
                     }
                 }
                 break;
-
+            case State.PickingUp:
             case State.Idle:
             default:
                 break;
@@ -95,7 +114,7 @@ public class PlayerInteractionController : MonoBehaviour
                     //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
                     if (atObject.tag == "FishObject" && currentState != State.Hold)
                     {
-                        PickUpObject (atObject);
+                        PickUpObject(atObject);
                         atObject = null;
                     }
                     else if (atObject.tag == "StationObject")
@@ -103,7 +122,7 @@ public class PlayerInteractionController : MonoBehaviour
                         IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
                         if (atObjectInteractableScript != null)
                         {
-                            atObjectInteractableScript.Interact(player);
+                            atObjectInteractableScript.Interact(player.gameObject);
                         }
                     }
                 }
@@ -115,7 +134,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    private void HighlightObject (GameObject other, bool highlight)
+    private void HighlightObject(GameObject other, bool highlight)
     {
         IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (otherInteractableScript != null)
@@ -124,7 +143,7 @@ public class PlayerInteractionController : MonoBehaviour
         }
     }
 
-    private void SetAttachObject (GameObject other, bool attach)
+    private void SetAttachObject(GameObject other, bool attach)
     {
         IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
@@ -135,29 +154,66 @@ public class PlayerInteractionController : MonoBehaviour
 
         if (attach)
         {
-            other.transform.localPosition = Vector3.zero;
-            other.transform.SetParent(holdSlot.transform, false);
-            heldObject = other;
+            // The prereq to activate Pick up Trigger
+            player.IsPlayerAllowedToMove = false;
+            player.IsPlayerMoving = false;
+
+            StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(Time.deltaTime, () =>
+            {
+                // Wait one frame before allowing the pick up
+                anim.SetTrigger(PICK_UP);
+                currentState = State.PickingUp;
+                other.transform.SetParent(holdSlot.transform, true);
+
+                StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(PICK_UP_ANIMATION_START_DELAY, () =>
+                {
+                    StartCoroutine(GameController.MoveGameObjectAndActivateCallbackCoroutine(other.transform, PICK_UP_ANIMATION_TIME, Vector3.zero, true, () =>
+                    {
+                        // Activate the pick up after the animation is complete
+                        currentState = State.Hold;
+                        heldObject = other;
+                        player.IsPlayerAllowedToMove = true;
+                    }));
+                }));
+            }));
         }
         else
         {
-            other.transform.SetParent(null);
-            heldObject = null;
+            // The prereq to drop (since after drop it moves straight to idle animation)
+            player.IsPlayerAllowedToMove = false;
+            player.IsPlayerMoving = false;
+            StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(Time.deltaTime, () =>
+            {
+                anim.SetTrigger(DROP);
+                other.transform.SetParent(player.LocationRef, true);
+                heldObject = null;
+                
+                // Delay again for the animation to finish before letting the player move again
+                StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(DROP_ANIMATION_TIME, () =>
+                {
+                    currentState = State.Idle;
+                    player.IsPlayerAllowedToMove = true;
+                }));
+            }));
         }
     }
 
-    public void PickUpObject (GameObject other)
+    public void PickUpObject(GameObject other)
     {
-        SetAttachObject(other, true);
-        currentSecondaryState = SecondaryState.Idle;
-        currentState = State.Hold;
+        if (GetCurrentState() != State.PickingUp )
+        {
+            SetAttachObject(other, true);
+            currentSecondaryState = SecondaryState.Idle;
+        }
     }
 
-    public void DropObject ()
+    public void DropObject()
     {
-        SetAttachObject(heldObject, false);
-        heldObject = null;
-        currentSecondaryState = SecondaryState.Idle;
-        currentState = State.Idle;
+        if (GetCurrentState() != State.PickingUp)
+        {
+            SetAttachObject(heldObject, false);
+            heldObject = null;
+            currentSecondaryState = SecondaryState.Idle;
+        }
     }
 }

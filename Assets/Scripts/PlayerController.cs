@@ -4,39 +4,50 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public string playerName;
-
 	public float movementSpeed = 10;
 	public float turnSpeed = 7;
 
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
+    private PlayerAnimationController animationController;
     public CameraController cameraController;
-	public Camera cam;
 
-	public GameObject model;
+    private bool isMoving = false;
+    private bool isPlayerAllowedToMove = true;
 
+    public bool IsPlayerMoving
+    {
+        get { return isMoving; }
+        set { isMoving = value; }
+    }
+    public bool IsPlayerAllowedToMove
+    {
+        get { return isPlayerAllowedToMove; }
+        set { isPlayerAllowedToMove = value; }
+    }
 
-	// Controls
-	private KeyCode fire1Button;
-	private string horizontalAxis;
-	private string verticalAxis;
-
-
-	[SerializeField] public Rigidbody rb;
+    [SerializeField] public Rigidbody rb;
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
-
-		SetControls ();
+        animationController = GetComponentInChildren<PlayerAnimationController>();
     }
 
     public GameData.ControlType ControlMode
     {
         get { return controlMode; }
         private set { controlMode = value; }
+    }
+
+    /// <summary>
+    /// Returns the location where the player is in
+    /// </summary>
+    public Transform LocationRef
+    {
+        // Since the player will always be a child of its location, return the parent of the player as its location
+        get { return this.transform.parent; }
     }
 
     #region Control handlers
@@ -67,14 +78,17 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    public void GameUpdate () {
+    public void GameUpdate ()
+    {
+        interactionController.GameUpdate();
 
-		
-		if (ControlMode == GameData.ControlType.CHARACTER) {
-			Vector3 direction = new Vector3 (Input.GetAxis (horizontalAxis), 0, Input.GetAxis (verticalAxis));
+        isMoving = false;
+        if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
+        {
+			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
             
             if (direction != Vector3.zero) {
-
+                isMoving = true;
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -83,37 +97,9 @@ public class PlayerController : MonoBehaviour {
 
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
 			}
-            
 		}
-			
-	}
-		
 
-	#region Button handlers
-	public bool Fire1Down() {
-		return Input.GetKeyDown (fire1Button);
-	}
-	public bool Fire1Up() {
-		return Input.GetKeyUp (fire1Button);
-	}
-	public bool Fire1Hold() {
-		return Input.GetKey (fire1Button);
-	}
-	#endregion
-
-
-
-	// Sets the appropriate controls for P1/P2 in a very stupid way, WILL BE CHANGED
-	void SetControls() {
-		if (playerName == "P1") {
-			horizontalAxis = "Horizontal_P1";
-			verticalAxis = "Vertical_P1";
-			fire1Button = KeyCode.Space;
-		} else {
-			horizontalAxis = "Horizontal_P2";
-			verticalAxis = "Vertical_P2";
-			fire1Button = KeyCode.E;
-		}
+        animationController.GameUpdate();
 	}
 
 }

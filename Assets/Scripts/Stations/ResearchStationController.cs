@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResearchStationController : StationControllerInterface, IInteractable
+public class ResearchStationController : MonoBehaviour, IInteractable
 {
 
     enum State
@@ -35,14 +35,6 @@ public class ResearchStationController : StationControllerInterface, IInteractab
     private GameObject holdSlot;
     [SerializeField]
     private MeshRenderer meshRenderer;
-
-    public override GameData.ControlType ControlMode
-    {
-        get
-        {
-            return GameData.ControlType.STATION;
-        }
-    }
 
     // Use this for initialization
     void Start()
@@ -175,18 +167,5 @@ public class ResearchStationController : StationControllerInterface, IInteractab
                 }
             }
         }
-    }
-
-    public override bool SwitchCondition()
-    {
-        return true;
-    }
-
-    public override void WhenActivated()
-    {
-    }
-
-    public override void WhenDeactivated()
-    {
     }
 }

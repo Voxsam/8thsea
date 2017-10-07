@@ -759,7 +759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06b21601242b6b4d991a0461b632ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineShader: {fileID: 4800000, guid: eeefbe4845aae6443bf968cecff61fcb, type: 3}
+  playerInStation: {fileID: 0}
+  outlineShader: {fileID: 4800000, guid: e86efb166888e7742a7e06f4a7f3e8e7, type: 3}
   fishSchool: {fileID: 1949260165033306, guid: a5ee19f4056b85c4c873e07530215c9f, type: 2}
   fishResearchRequirementsTemplate: {fileID: 1133702719505684, guid: e0ba2ff93b220814ab86f488df7e0d63,
     type: 2}

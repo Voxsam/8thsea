@@ -3,17 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TubeController : StationControllerInterface {
+public class TubeController : StationControllerInterface, IInteractable {
 
     public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
-	public float forwardSpeed;
-	public float attractionForce;
-	//public bool isActivated; // In parent
-	public float radius;
-	public GameObject anchorPoint;
+    public float forwardSpeed;
+    public float attractionForce;
+    //public bool isActivated; // In parent
+    public float radius;
+    public GameObject anchorPoint;
     private bool systemActivated;
+    public bool SystemActivated
+    {
+        get
+        {
+            return systemActivated;
+        }
+    }
 
     public Transform SpawnPoint; // Put the fishes here after they have been sucked up
+
+    //The object with which the player interacts with.
+    public GameObject interactionStation;
+    public Shader outlineShader;
+
+    //Used for highlighting the object the player may interact with.
+    private Shader originalShader;
+    private Renderer interactionStationMeshRenderer;
+
+    //The head of the suction tube.
+    public GameObject tubeHeadGameObject;
 
     public override GameData.ControlType ControlMode
     {
@@ -23,7 +41,8 @@ public class TubeController : StationControllerInterface {
     //public GameObject playerCharacter;
     // Use this for initialization
     void Start () {
-
+        interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
+        originalShader = interactionStationMeshRenderer.material.shader;
     }
     public override void WhenActivated()
     {
@@ -46,86 +65,101 @@ public class TubeController : StationControllerInterface {
         }
 
         if (IsActivated) {
-
             float x = Input.GetAxis ("Horizontal") * Time.deltaTime * forwardSpeed;
 			float y = Input.GetAxis ("Vertical") * Time.deltaTime * forwardSpeed;
-			Vector3 newLocation = transform.position+transform.TransformDirection(x,y,0); 
+			Vector3 newLocation = tubeHeadGameObject.transform.position + tubeHeadGameObject.transform.TransformDirection(x,y,0); 
 			float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
 			if (distance > radius) {
 				Vector3 fromAnchorToObject = newLocation - anchorPoint.transform.position;
 				fromAnchorToObject *= radius / distance;
 				newLocation = anchorPoint.transform.position + fromAnchorToObject;
-				transform.position = newLocation;
+                tubeHeadGameObject.transform.position = newLocation;
 
 			} else {
-				transform.Translate (x, y, 0,Space.World);
+                tubeHeadGameObject.transform.Translate (x, y, 0,Space.World);
 				/*if (x != 0) {
 					Vector3 lookatPos = new Vector3 (0, 0, x);
 					transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (lookatPos), 0.5f);
 				}*/
 			}
-		}
+
+            // Free the character from the station if the conditions are met
+            if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
+                this.SwitchCondition() && GameController.Obj.ButtonB_Down)
+            {
+                this.IsActivated = false;
+                this.WhenDeactivated();
+                this.ReleasePlayerFromStation();
+            }
+        }
 	}
 
     public override void SetPlayerToStation(PlayerController player)
     {
         base.SetPlayerToStation(player);
-        stationCamera.SetCameraToObject(gameObject);
+        stationCamera.SetCameraToObject(tubeHeadGameObject);
     }
-
-    void OnCollisionEnter(Collision other) {
-		if (IsActivated & systemActivated) {
-            FishController fish = GameController.Obj.GetFishFromCollider(other.collider);
-            if (fish != null)
-            {
-                fish.transform.position = SpawnPoint.position + new Vector3(
-                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
-                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
-                    GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
-                );
-                fish.SetRigidbody(true);
-                fish.fishMovementController.SetEnabled(false);
-                //fish.GetComponent<Rigidbody>().useGravity = true;
-                fish.transform.SetParent(SpawnPoint);
-            }
-		}
-	}
-
-	void OnTriggerStay (Collider other) {
-        if (IsActivated && systemActivated)
-        {
-            FishController fish = GameController.Obj.GetFishFromCollider(other);
-            if (fish != null && other.attachedRigidbody)
-            {
-                Vector3 dir = transform.position - other.transform.position;
-                //dir = dir.normalized;
-                //other.attachedRigidbody.AddForce((dir) * attractionForce);
-
-                if (Vector3.Distance(transform.position, other.transform.position) < 1)
-                {
-                   fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
-                    fish.transform.position = SpawnPoint.position + new Vector3(
-                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
-                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
-                        GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
-                    );
-                    fish.fishMovementController.SetEnabled(false);
-                    fish.SetRigidbody(true);
-                    fish.rb.velocity = Vector3.zero;
-                    fish.transform.SetParent(SpawnPoint);
-                }
-                else
-                {
-                    dir = dir.normalized;
-                    other.gameObject.transform.Translate((dir) * attractionForce);
-                }
-            }
-                
-        }
-	}
 
     public override bool SwitchCondition()
     {
         return true;
+    }
+
+    public void ExtractFish ( FishController fish, GameObject other )
+    {
+        fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
+        fish.transform.position = SpawnPoint.position + new Vector3(
+            GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+            GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
+            GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
+        );
+        fish.fishMovementController.SetEnabled(false);
+        fish.SetRigidbody(true);
+        fish.rb.velocity = Vector3.zero;
+        fish.transform.SetParent(SpawnPoint);
+    }
+
+    public void MoveFish (Vector3 dir, GameObject other)
+    {
+        dir = dir.normalized;
+        other.transform.Translate((dir) * attractionForce);
+    }
+
+    //Functions from Interface IInteractables
+    public void Interact()
+    {
+    }
+
+    public void Interact(GameObject otherActor)
+    {
+        if (this.playerInStation == null)
+        {
+            PlayerController player = otherActor.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                // If the player is in Character control mode
+                if (player.ControlMode == GameData.ControlType.CHARACTER)
+                {
+                    this.SetPlayerToStation(player);
+                    this.IsActivated = true;
+                    this.WhenActivated();
+                }
+            }
+        }
+    }
+
+    public void ToggleHighlight(bool toggle = true)
+    {
+        if (toggle)
+        {
+            if (outlineShader != null)
+            {
+                interactionStationMeshRenderer.material.shader = outlineShader;
+            }
+        }
+        else
+        {
+            interactionStationMeshRenderer.material.shader = originalShader;
+        }
     }
 }

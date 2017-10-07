@@ -296,6 +296,8 @@ MonoBehaviour:
   PanicBarRect: {fileID: 224384499388235106}
   fishDetailsTemplate: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
     type: 2}
+  researchProtocolTemplate: {fileID: 1311639297951886, guid: e3b13ed0c3b4b0b42b125cfaa5e2925c,
+    type: 2}
 --- !u!114 &114851763642998746
 MonoBehaviour:
   m_ObjectHideFlags: 1

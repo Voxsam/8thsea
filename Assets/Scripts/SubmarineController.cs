@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SubmarineController : StationControllerInterface {
+public class SubmarineController : StationControllerInterface, IInteractable {
     public static SubmarineController Obj;
 
     public float acceleration;
@@ -23,6 +23,13 @@ public class SubmarineController : StationControllerInterface {
 
     public TeleportDoor teleportToSubFromToLabDoor;
     public TeleportDoor teleportToLabFromToSubDoor;
+    //The object with which the player interacts with.
+    public GameObject interactionStation;
+    public Shader outlineShader;
+
+    //Used for highlighting the object the player may interact with.
+    private Shader originalShader;
+    private Renderer interactionStationMeshRenderer;
 
     public override GameData.ControlType ControlMode
     {
@@ -79,6 +86,9 @@ public class SubmarineController : StationControllerInterface {
         // Only allow teleport if it is docked
         teleportToLabFromToSubDoor.Initialise(IsDocked);
         teleportToSubFromToLabDoor.Initialise(IsDocked);
+
+        interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
+        originalShader = interactionStationMeshRenderer.material.shader;
     }
 	
 	// Update is called once per frame
@@ -102,10 +112,57 @@ public class SubmarineController : StationControllerInterface {
             {
                 transform.position = dockingPosition.position;
             }
+            
+            // Free the character from the station if the conditions are met
+            if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
+                this.SwitchCondition() && GameController.Obj.ButtonB_Down)
+            {
+                this.IsActivated = false;
+                this.WhenDeactivated();
+                this.ReleasePlayerFromStation();
+            }
         }
     }
     public override bool SwitchCondition()
     {
         return true; // Always allow the switch
+    }
+
+    //Functions from Interface IInteractables
+    public void Interact()
+    {
+    }
+
+    public void Interact(GameObject otherActor)
+    {
+        if (this.playerInStation == null)
+        {
+            PlayerController player = otherActor.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                // If the player is in Character control mode
+                if (player.ControlMode == GameData.ControlType.CHARACTER)
+                {
+                    this.SetPlayerToStation(player);
+                    this.IsActivated = true;
+                    this.WhenActivated();
+                }
+            }
+        }
+    }
+
+    public void ToggleHighlight(bool toggle = true)
+    {
+        if (toggle)
+        {
+            if (outlineShader != null)
+            {
+                interactionStationMeshRenderer.material.shader = outlineShader;
+            }
+        }
+        else
+        {
+            interactionStationMeshRenderer.material.shader = originalShader;
+        }
     }
 }

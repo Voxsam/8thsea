@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FishController : MonoBehaviour, IInteractable {
+    private struct ResearchProtocol
+    {
+        public GameData.StationType researchStation;
+        public bool complete;
+        public GameObject researchProtocolObject;
+
+        public ResearchProtocol(GameData.StationType _researchStation, GameObject _researchProtocolObject)
+        {
+            researchStation = _researchStation;
+            researchProtocolObject = _researchProtocolObject;
+            complete = false;
+        }
+    };
+
     //Enums for fish states
     public enum State
     {
@@ -27,6 +41,9 @@ public class FishController : MonoBehaviour, IInteractable {
     public GameData.FishType fishType;
     public FishMovementController fishMovementController;
 
+    //ResearchProtocols to display to user and to show research progress for fish.
+    private ResearchProtocol[] researchProtocols;
+
     private float panicTimer;
     private float panicBarWidth;
     private int currentResearchProtocol;
@@ -43,6 +60,8 @@ public class FishController : MonoBehaviour, IInteractable {
 
     //Prefab to instantiate FishDetails
     public GameObject fishDetailsTemplate;
+    //Prefab to instantiate researchProtocols.
+    public GameObject researchProtocolTemplate;
 
     // Use this for initialization
     void Start () {
@@ -71,6 +90,17 @@ public class FishController : MonoBehaviour, IInteractable {
 
         originalColor = fishRenderer.material.color;
 
+        researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
+        for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
+        {
+            GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
+            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
+            researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
+            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 550);
+            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
+            researchProtocolUIObject.SetActive(false);
+            researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
+        }
         // Use the FishParameters for this
         //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
         //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
@@ -146,6 +176,10 @@ public class FishController : MonoBehaviour, IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             PanicBarRect.gameObject.SetActive(true);
+            foreach (ResearchProtocol researchProtocol in researchProtocols)
+            {
+                researchProtocol.researchProtocolObject.SetActive(true);
+            }
         }
     }
 
@@ -230,23 +264,24 @@ public class FishController : MonoBehaviour, IInteractable {
     /// <returns></returns>
     public GameData.StationType GetCurrentResearchProtocol ()
     {
-        GameData.StationType[] researchProtocols = GameData.GetFishParameters(fishType).ResearchProtocols;
         if (currentResearchProtocol < researchProtocols.Length)
-            return researchProtocols[currentResearchProtocol];
+            return researchProtocols[currentResearchProtocol].researchStation;
         else
             return GameData.StationType.None; // Means Done
     }
 
     public void ResearchFish ()
     {
+        //Eventually move this color change thing to a ResearchProtocolController.
+        researchProtocols[currentResearchProtocol].researchProtocolObject.GetComponent<Image>().color = Color.green;
         currentResearchProtocol++;
-        GameData.StationType[] researchProtocols = GameData.GetFishParameters(fishType).ResearchProtocols;
         if ( currentResearchProtocol >= researchProtocols.Length )
         {
             currentResearchProtocol = researchProtocols.Length;
             currentSecondaryState = SecondaryState.Researched;
             DeadText.text = "Researched";
             DeadText.enabled = true;
+            GameData.AddResearchedFish(fishType);
         }
     }
 

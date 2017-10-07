@@ -70,6 +70,23 @@ public class GameData : MonoBehaviour
             }
         }
     };
+
+    public struct ResearchStationParameters
+    {
+        public GameData.StationType researchStation;
+        public string Name
+        {
+            get
+            {
+                return researchStation.ToString();
+            }
+        }
+
+        public ResearchStationParameters(GameData.StationType _researchStation)
+        {
+            researchStation = _researchStation;
+        }
+    };
     #endregion
 
     public enum ControlType
@@ -107,11 +124,32 @@ public class GameData : MonoBehaviour
         }),
     };
 
+    // Research Station management
+    private static ResearchStationParameters[] AllResearchStationParameters = // Contains details on all variants of research stations
+    {
+        new ResearchStationParameters(StationType.Massage),
+        new ResearchStationParameters(StationType.Clean)
+    };
+
     #region Getter and setters
 
     public static FishParameters GetFishParameters(FishType fish)
     {
         return AllFishParameters[(int)fish];
+    }
+
+    public static ResearchStationParameters GetResearchStationParameters(StationType station)
+    {
+        return AllResearchStationParameters[(int)station];
+    }
+
+    public static void AddResearchedFish (FishType fish)
+    {
+
+        if (AllFishParameters[(int)fish].totalResearched < AllFishParameters[(int)fish].totalToResearch)
+        {
+            AllFishParameters[(int)fish].totalResearched++;
+        }
     }
     #endregion
 }

@@ -31,6 +31,9 @@ public class SubmarineController : StationControllerInterface, IInteractable {
     private Shader originalShader;
     private Renderer interactionStationMeshRenderer;
 
+    private Animator anim;
+    private bool facingLeft; //false = facingRight
+
     public override GameData.ControlType ControlMode
     {
         get { return GameData.ControlType.SUBMARINE; }
@@ -89,14 +92,42 @@ public class SubmarineController : StationControllerInterface, IInteractable {
 
         interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
         originalShader = interactionStationMeshRenderer.material.shader;
+
+        // find animator
+        anim = GetComponentInChildren<Animator>();
+
     }
-	
-	// Update is called once per frame
-	private void Update () {
+
+    // Update is called once per frame
+    private void Update () {
+        anim.SetBool("docked", IsDocked());
         if (IsActivated)
         {
             float horizontalControl = Input.GetAxis("Horizontal");
             float verticalControl = Input.GetAxis("Vertical");
+
+            // ANIMATION STUFF 
+            if (horizontalControl > 0) //going right 
+            {
+                anim.SetBool("moveRight", true);
+                if (facingLeft)
+                {
+                    anim.SetBool("moveLeft", false);
+                    anim.SetTrigger("turnRight");
+                    facingLeft = false;
+                }
+            }
+            else if (horizontalControl < 0) //going left
+            {
+                anim.SetBool("moveLeft", true);
+                if (!facingLeft)
+                {
+                    anim.SetBool("moveRight", false);
+                    anim.SetTrigger("turnLeft");
+                    facingLeft = true;
+                }
+            } // end of animation stuff
+
             transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
             currentSpeed += acceleration;
             if (currentSpeed > maximumSpeed)
@@ -107,10 +138,14 @@ public class SubmarineController : StationControllerInterface, IInteractable {
             {
                 currentSpeed = 0.2f;
             }
-
+            
+            // docking 
             if (GameController.Obj.ButtonA_Down && IsActivated)
             {
                 transform.position = dockingPosition.position;
+                anim.SetBool("docked", true);
+                anim.SetBool("moveLeft", false);
+                anim.SetBool("moveRight", false);
             }
             
             // Free the character from the station if the conditions are met

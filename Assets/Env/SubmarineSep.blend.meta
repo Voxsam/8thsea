@@ -59,6 +59,9 @@ ModelImporter:
     7400006: OpenDoor
     7400008: TurningL2R
     7400010: TurningR2L
+    7400012: DoorOpened
+    7400014: DoorClosed
+    7400016: CloseDoor
     9500000: //RootNode
     13700000: Moving_Parts
     13700002: Moving_Parts_001
@@ -391,6 +394,186 @@ ModelImporter:
       takeName: TurningR2L
       firstFrame: 0
       lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature_001
+        weight: 1
+      - path: Armature_001/Bone
+        weight: 1
+      - path: Armature_001/Bone/Bone_001
+        weight: 1
+      - path: Armature_001/Bone_002
+        weight: 1
+      - path: Armature_001/Bone_002/Bone_003
+        weight: 1
+      - path: Armature_001/Bone_006
+        weight: 1
+      - path: Armature_001/Bone_006/Bone_007
+        weight: 1
+      - path: Armature_001/Bone_008
+        weight: 1
+      - path: Armature_001/Bone_008/Bone_009
+        weight: 1
+      - path: Armature_001/Bone_010
+        weight: 1
+      - path: Armature_001/Bone_010/Bone_011
+        weight: 1
+      - path: Floor
+        weight: 1
+      - path: Glass
+        weight: 1
+      - path: Moving_Parts
+        weight: 1
+      - path: Yellow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: DoorOpened
+      takeName: DoorOpened
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature_001
+        weight: 1
+      - path: Armature_001/Bone
+        weight: 1
+      - path: Armature_001/Bone/Bone_001
+        weight: 1
+      - path: Armature_001/Bone_002
+        weight: 1
+      - path: Armature_001/Bone_002/Bone_003
+        weight: 1
+      - path: Armature_001/Bone_006
+        weight: 1
+      - path: Armature_001/Bone_006/Bone_007
+        weight: 1
+      - path: Armature_001/Bone_008
+        weight: 1
+      - path: Armature_001/Bone_008/Bone_009
+        weight: 1
+      - path: Armature_001/Bone_010
+        weight: 1
+      - path: Armature_001/Bone_010/Bone_011
+        weight: 1
+      - path: Floor
+        weight: 1
+      - path: Glass
+        weight: 1
+      - path: Moving_Parts
+        weight: 1
+      - path: Yellow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: DoorClosed
+      takeName: DoorClosed
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature_001
+        weight: 1
+      - path: Armature_001/Bone
+        weight: 1
+      - path: Armature_001/Bone/Bone_001
+        weight: 1
+      - path: Armature_001/Bone_002
+        weight: 1
+      - path: Armature_001/Bone_002/Bone_003
+        weight: 1
+      - path: Armature_001/Bone_006
+        weight: 1
+      - path: Armature_001/Bone_006/Bone_007
+        weight: 1
+      - path: Armature_001/Bone_008
+        weight: 1
+      - path: Armature_001/Bone_008/Bone_009
+        weight: 1
+      - path: Armature_001/Bone_010
+        weight: 1
+      - path: Armature_001/Bone_010/Bone_011
+        weight: 1
+      - path: Floor
+        weight: 1
+      - path: Glass
+        weight: 1
+      - path: Moving_Parts
+        weight: 1
+      - path: Yellow
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: CloseDoor
+      takeName: CloseDoor
+      firstFrame: 0
+      lastFrame: 16
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

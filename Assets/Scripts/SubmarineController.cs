@@ -200,4 +200,15 @@ public class SubmarineController : StationControllerInterface, IInteractable {
             interactionStationMeshRenderer.material.shader = originalShader;
         }
     }
+
+    public void OpenDoorAnim()
+    {
+        anim.SetTrigger("openDoor");
+        anim.SetBool("doorOpen", true);
+    }
+    public void CloseDoorAnim()
+    {
+        anim.SetTrigger("closeDoor");
+        anim.SetBool("doorOpen", false);
+    }
 }

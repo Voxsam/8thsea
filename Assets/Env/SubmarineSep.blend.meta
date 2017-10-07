@@ -21,6 +21,7 @@ ModelImporter:
     100026: Moving_Parts
     100028: //RootNode
     100030: Yellow
+    100032: Moving_Parts_001
     400000: Armature_001
     400002: Bone
     400004: Bone_001
@@ -37,6 +38,7 @@ ModelImporter:
     400026: Moving_Parts
     400028: //RootNode
     400030: Yellow
+    400032: Moving_Parts_001
     2300000: Floor
     2300002: Glass
     2300004: Yellow
@@ -47,6 +49,7 @@ ModelImporter:
     4300002: Glass
     4300004: Yellow
     4300006: Floor
+    4300008: Moving_Parts_001
     6400000: Floor
     6400002: Glass
     6400004: Yellow
@@ -58,6 +61,8 @@ ModelImporter:
     7400010: TurningR2L
     9500000: //RootNode
     13700000: Moving_Parts
+    13700002: Moving_Parts_001
+    13700004: Floor
   materials:
     importMaterials: 1
     materialName: 0

@@ -111,18 +111,21 @@ public class PlayerInteractionController : MonoBehaviour
             case SecondaryState.View:
                 if (GameController.Obj.ButtonA_Down)
                 {
-                    //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
-                    if (atObject.tag == "FishObject" && currentState != State.Hold)
+                    if (atObject != null)
                     {
-                        PickUpObject(atObject);
-                        atObject = null;
-                    }
-                    else if (atObject.tag == "StationObject")
-                    {
-                        IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
-                        if (atObjectInteractableScript != null)
+                        //Make sure the other object is a FishObject and the player is not currently holding something before picking up new object.
+                        if (atObject.tag == "FishObject" && currentState != State.Hold)
                         {
-                            atObjectInteractableScript.Interact(player.gameObject);
+                            PickUpObject(atObject);
+                            atObject = null;
+                        }
+                        else if (atObject.tag == "StationObject")
+                        {
+                            IInteractable atObjectInteractableScript = (IInteractable)atObject.GetComponent(typeof(IInteractable));
+                            if (atObjectInteractableScript != null)
+                            {
+                                atObjectInteractableScript.Interact(player.gameObject);
+                            }
                         }
                     }
                 }

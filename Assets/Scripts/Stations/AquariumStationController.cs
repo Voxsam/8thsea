@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AquariumStationController : MonoBehaviour, IInteractable
+public class AquariumStationController : StationControllerInterface, IInteractable
 {
-    public GameData.ControlType ControlMode
+    public override GameData.ControlType ControlMode
     {
         get { return GameData.ControlType.STATION; }
     }
-    private bool isPlayerControlled;
-    private GameObject playerGameObject;
-    private Vector3 playerStationPosition;
 
     [SerializeField]
     public Shader outlineShader;
@@ -28,9 +25,9 @@ public class AquariumStationController : MonoBehaviour, IInteractable
     private GameObject warningText;
     private float warningTextLifespan = 0;
 
-    private List<GameObject> fishSchools;
-    private List<GameObject> fishResearchRequirements;
-    private int selectedResearchRequirementIndex = 0;
+    private Dictionary<GameData.FishType, GameObject> fishSchools;
+    private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
+    private GameData.FishType selectedResearchRequirementIndex = GameData.FishType.ClownFish;
 
     // Use this for initialization
     void Start()
@@ -43,32 +40,24 @@ public class AquariumStationController : MonoBehaviour, IInteractable
         warningText.SetActive(false);
         playerAnchor = gameObject.transform.Find("PlayerAnchor").transform;
 
-        fishSchools = new List<GameObject>();
-        fishResearchRequirements = new List<GameObject>();
+        fishSchools = new Dictionary<GameData.FishType, GameObject>();
+        fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
 
-        int fishIndex = 0;
-        for (int i = 0; i < GameData.TOTAL_NUMBER_OF_FISHTYPES; i++)
+        for (GameData.FishType fishType = GameData.FishType.ClownFish; (int)fishType < GameData.TOTAL_NUMBER_OF_FISHTYPES; fishType++)
         {
-            GameData.FishParameters fish = GameData.GetFishParameters((GameData.FishType)i);
-            if (fish == null)
-            {
-                continue;
-            }
             GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
             newFishSchool.transform.position = holdSlot.transform.position;
             FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
             fishSchoolController.zoneWidth = 10;
             fishSchoolController.zoneLength = 5;
             fishSchoolController.zoneHeight = 10;
-            fishSchools.Add(newFishSchool);
+            fishSchools.Add(fishType, newFishSchool);
 
             GameObject newFishResearchRequirements = (GameObject)Instantiate(fishResearchRequirementsTemplate);
             newFishResearchRequirements.transform.SetParent(worldspaceCanvas.transform, false);
-            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init((GameData.FishType) fishIndex);
-            newFishResearchRequirements.GetComponent<RectTransform>().anchoredPosition = new Vector2((fishIndex * 500), 500);
-            fishResearchRequirements.Add(newFishResearchRequirements);
-
-            fishIndex++;
+            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init(fishType);
+            newFishResearchRequirements.GetComponent<RectTransform>().anchoredPosition = new Vector2(((int)fishType * 500), 500);
+            fishResearchRequirements.Add(fishType, newFishResearchRequirements);
         }
     }
 
@@ -88,20 +77,20 @@ public class AquariumStationController : MonoBehaviour, IInteractable
             }
         }
 
-        if (isPlayerControlled)
+        if (this.IsActivated)
         {
-            if (Input.GetAxis("Horizontal") > 0.1)
+            if (Input.GetAxis("Horizontal") > 0.2)
             {
-                if (selectedResearchRequirementIndex < (fishResearchRequirements.Count - 1))
+                if ((int)selectedResearchRequirementIndex < (GameData.TOTAL_NUMBER_OF_FISHTYPES - 1))
                 {
                     fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
                     selectedResearchRequirementIndex++;
                     fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
                 }
             }
-            else if (Input.GetAxis("Horizontal") < -0.1)
+            else if (Input.GetAxis("Horizontal") < -0.2)
             {
-                if (selectedResearchRequirementIndex > 0)
+                if ((int)selectedResearchRequirementIndex > 0)
                 {
                     fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
                     selectedResearchRequirementIndex--;
@@ -111,7 +100,7 @@ public class AquariumStationController : MonoBehaviour, IInteractable
 
             if (GameController.Obj.ButtonB_Down)
             {
-                PlayerController playerControllerScript = playerGameObject.GetComponent<PlayerController>();
+                PlayerController playerControllerScript = this.playerInStation.GetComponent<PlayerController>();
                 if (playerControllerScript != null)
                 {
                     DisengagePlayer();
@@ -119,10 +108,10 @@ public class AquariumStationController : MonoBehaviour, IInteractable
             }
             else if (GameController.Obj.ButtonA_Down)
             {
-                PlayerInteractionController playerControllerScript = playerGameObject.GetComponent<PlayerInteractionController>();
+                PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
-                    if (removeFish(playerControllerScript, selectedResearchRequirementIndex))
+                    if (RemoveFish(playerControllerScript, selectedResearchRequirementIndex))
                     {
                         DisengagePlayer();
                     }
@@ -133,13 +122,9 @@ public class AquariumStationController : MonoBehaviour, IInteractable
                 }
             }
         }
-        
-        if (playerGameObject != null)
-        {
-            isPlayerControlled = true;
-        }
     }
 
+    #region Inherited from IInteractables interface
     public void Interact()
     {
     }
@@ -149,7 +134,7 @@ public class AquariumStationController : MonoBehaviour, IInteractable
         if (otherActor.tag == "Player")
         {
             //Make sure the station is not currently controlled by another player.
-            if (!isPlayerControlled)
+            if (!this.IsActivated)
             {
                 PlayerInteractionController playerInteractionControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerInteractionControllerScript != null)
@@ -184,59 +169,6 @@ public class AquariumStationController : MonoBehaviour, IInteractable
         }
     }
 
-    public void StoreFish ( GameObject fishToStore, GameData.FishType fishType )
-    {
-        if (fishToStore != null)
-        {
-            FishSchoolController schoolController = fishSchools[(int)fishType].GetComponent<FishSchoolController>();
-            if (schoolController != null)
-            {
-                FishController fishController = fishToStore.GetComponent<FishController>();
-                if (fishController != null)
-                {
-                    fishController.SetRigidbody(false);
-                    FishMovementController fishMovementController = fishToStore.GetComponent<FishMovementController>();
-                    if (fishMovementController != null)
-                    {
-                        fishMovementController.SetEnabled(true);
-                        fishMovementController.Initialise();
-                        schoolController.AddFishToSchool(fishToStore);
-                        fishToStore.transform.SetParent(null);
-                        fishToStore.transform.position = holdSlot.transform.position;
-                    }
-                }
-            }
-        }
-    }
-
-    public bool removeFish ( PlayerInteractionController playerControllerScript, int fishType )
-    {
-        if (fishType >= 0 && fishType < fishSchools.Count)
-        {
-            FishSchoolController schoolController = fishSchools[fishType].GetComponent<FishSchoolController>();
-            if (schoolController != null)
-            {
-                if (schoolController.FishInSchool.Count > 0)
-                { 
-                    GameObject fishToRemove = schoolController.RemoveFishFromSchool(0);
-                    FishMovementController fishMovementController = fishToRemove.GetComponent<FishMovementController>();
-                    if (fishMovementController != null)
-                    {
-                        fishMovementController.SetEnabled(false);
-                        FishController fishController = fishToRemove.GetComponent<FishController>();
-                        if (fishController != null)
-                        {
-                            fishController.SetRigidbody(true);
-                            playerControllerScript.PickUpObject(fishToRemove);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
@@ -251,63 +183,123 @@ public class AquariumStationController : MonoBehaviour, IInteractable
             meshRenderer.material.shader = originalShader;
         }
     }
+    #endregion
+    public override void SetPlayerToStation(PlayerController player)
+    {
+        base.SetPlayerToStation(player);
+        stationCamera.SetCameraToObject(holdSlot);
+    }
 
-    private void ShowWarningText (string text)
+    public override void WhenActivated()
+    {
+        selectedResearchRequirementIndex = GameData.FishType.ClownFish;
+        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
+    }
+
+    public override void WhenDeactivated()
+    {
+        foreach (KeyValuePair<GameData.FishType, GameObject> researchRequirement in fishResearchRequirements)
+        {
+            researchRequirement.Value.GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
+        }
+    }
+
+    public override bool SwitchCondition()
+    {
+        return true;
+    }
+
+    #region Main Functions
+    private void ShowWarningText(string text)
     {
         warningText.GetComponent<Text>().text = text;
         warningText.SetActive(true);
         warningTextLifespan = 0;
     }
 
-    private bool EngagePlayer (GameObject player)
+    private bool EngagePlayer(GameObject player)
     {
-        playerGameObject = player;
-        PlayerController playerControllerScript = player.GetComponent<PlayerController>();
-        if (playerControllerScript != null)
+        if (this.playerInStation == null)
         {
-            playerControllerScript.RequestControlChange(ControlMode);
-
-            // Store player's initial position
-            playerStationPosition = playerGameObject.transform.position;
-
-            // Set player to be in a specific position.
-            playerGameObject.transform.SetParent(playerAnchor);
-            playerGameObject.transform.localPosition = Vector3.zero;
-
-            // Prevent the player from activating its rigidbody
-            playerGameObject.SetActive(false);
-
-            selectedResearchRequirementIndex = 0;
-            fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
-
-            return true;
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                // If the player is in Character control mode
+                if (playerController.ControlMode == GameData.ControlType.CHARACTER)
+                {
+                    this.SetPlayerToStation(playerController);
+                    this.WhenActivated();
+                    return true;
+                }
+            }
         }
         return false;
     }
 
     private bool DisengagePlayer()
     {
-        PlayerController playerControllerScript = playerGameObject.GetComponent<PlayerController>();
+        PlayerController playerControllerScript = this.playerInStation.GetComponent<PlayerController>();
         if (playerControllerScript != null)
         {
-            isPlayerControlled = false;
-
-            playerControllerScript.ReturnControlToCharacter();
-
-            // Reactivate the player
-            playerGameObject.SetActive(true);
-
-            // Reset the player Position
-            playerGameObject.transform.position = playerStationPosition;
-            playerGameObject.transform.SetParent(null);
-            playerGameObject = null;
-
-            foreach (GameObject researchRequirement in fishResearchRequirements)
-            {
-                researchRequirement.GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
-            }
+            this.IsActivated = false;
+            this.WhenDeactivated();
+            this.ReleasePlayerFromStation();
             return true;
         }
         return false;
     }
+
+    public void StoreFish(GameObject fishToStore, GameData.FishType fishType)
+    {
+        if (fishToStore != null)
+        {
+            FishSchoolController schoolController = fishSchools[fishType].GetComponent<FishSchoolController>();
+            if (schoolController != null)
+            {
+                FishController fishController = fishToStore.GetComponent<FishController>();
+                if (fishController != null)
+                {
+                    fishController.SetEnabled(false);
+                    FishMovementController fishMovementController = fishToStore.GetComponent<FishMovementController>();
+                    if (fishMovementController != null)
+                    {
+                        fishMovementController.SetEnabled(true);
+                        fishMovementController.Initialise();
+                        schoolController.AddFishToSchool(fishToStore);
+                        fishToStore.transform.SetParent(null);
+                        fishToStore.transform.position = holdSlot.transform.position;
+                    }
+                }
+            }
+        }
+    }
+
+    public bool RemoveFish(PlayerInteractionController playerControllerScript, GameData.FishType fishType)
+    {
+        if (fishSchools.ContainsKey(fishType))
+        {
+            FishSchoolController schoolController = fishSchools[fishType].GetComponent<FishSchoolController>();
+            if (schoolController != null)
+            {
+                if (schoolController.FishInSchool.Count > 0)
+                {
+                    GameObject fishToRemove = schoolController.RemoveFishFromSchool(0);
+                    FishMovementController fishMovementController = fishToRemove.GetComponent<FishMovementController>();
+                    if (fishMovementController != null)
+                    {
+                        fishMovementController.SetEnabled(false);
+                        FishController fishController = fishToRemove.GetComponent<FishController>();
+                        if (fishController != null)
+                        {
+                            fishController.SetEnabled(true);
+                            playerControllerScript.PickUpObject(fishToRemove);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    #endregion
 }

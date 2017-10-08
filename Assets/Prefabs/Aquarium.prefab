@@ -282,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1442229939490476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.94, y: 1.11, z: 15.1}
+  m_LocalPosition: {x: -22.7, y: 16.7, z: 10.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4032174874409726}
@@ -318,7 +318,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219636005224026}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.3900003, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 25, y: 1, z: 15}
   m_Children: []
   m_Father: {fileID: 4188646612958086}
@@ -581,8 +581,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.6768656, z: 1}
+  m_Center: {x: 0, y: 0.16156721, z: 0}
 --- !u!65 &65237075107454862
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -593,8 +593,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.69599193, z: 1}
+  m_Center: {x: 0, y: 0.15200405, z: 0}
 --- !u!65 &65368891418528250
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -605,8 +605,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.6940584, z: 1}
+  m_Center: {x: 0, y: 0.15297079, z: 0}
 --- !u!65 &65410398106566142
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -617,8 +617,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.6602085, z: 1}
+  m_Center: {x: 0, y: 0.16989575, z: 0}
 --- !u!65 &65660151173147134
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -759,7 +759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06b21601242b6b4d991a0461b632ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineShader: {fileID: 4800000, guid: eeefbe4845aae6443bf968cecff61fcb, type: 3}
+  playerInStation: {fileID: 0}
+  outlineShader: {fileID: 4800000, guid: e86efb166888e7742a7e06f4a7f3e8e7, type: 3}
   fishSchool: {fileID: 1949260165033306, guid: a5ee19f4056b85c4c873e07530215c9f, type: 2}
   fishResearchRequirementsTemplate: {fileID: 1133702719505684, guid: e0ba2ff93b220814ab86f488df7e0d63,
     type: 2}

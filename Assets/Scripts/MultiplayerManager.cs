@@ -23,6 +23,7 @@ public class MultiplayerManager : MonoBehaviour {
 	void Start () {
 
 		// Set up split screen for multiple players
+		/*
 		if (playerList.Length == 2) {
 			playerList [0].cam.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 1.0f));
 			playerList [1].cam.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 1.0f));
@@ -38,6 +39,7 @@ public class MultiplayerManager : MonoBehaviour {
 		} else {
 			playerList [0].cam.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
 		}
+		*/
 
 	}
 	

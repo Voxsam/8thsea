@@ -594,11 +594,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 964179534}
   m_Script: {fileID: 11500000, guid: df8938b2c48471341a1aa4068b08ffa0, type: 3}
---- !u!4 &964179538 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778,
-    type: 2}
-  m_PrefabInternal: {fileID: 964179534}
 --- !u!4 &964179539 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4879191974553088, guid: 88e4b4de75c2d4740846a554e9aeb778,
@@ -1154,14 +1149,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114321535867953624, guid: 372bf4bf91b77a94ba9f97625e931ddb,
-        type: 2}
-      propertyPath: PlayerLocationRef
-      value: 
-      objectReference: {fileID: 964179538}
     - target: {fileID: 1630097948574128, guid: 372bf4bf91b77a94ba9f97625e931ddb, type: 2}
       propertyPath: m_TagString
-      value: lab
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 372bf4bf91b77a94ba9f97625e931ddb, type: 2}

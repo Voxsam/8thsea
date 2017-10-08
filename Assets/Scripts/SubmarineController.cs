@@ -18,6 +18,7 @@ public class SubmarineController : StationControllerInterface, IInteractable {
     public Transform UIPrefab;
     public Transform dockingPosition;
     public Text FishCounter;
+    private SphereCollider interiorCollider;
 
     public OxygenCountdown oxygenCountdownScript;
 
@@ -60,7 +61,7 @@ public class SubmarineController : StationControllerInterface, IInteractable {
 
     public bool IsDocked()
     {
-        return this.transform.position == dockingPosition.position;
+        return transform.position == dockingPosition.position;
     }
 
     void Awake()
@@ -82,25 +83,26 @@ public class SubmarineController : StationControllerInterface, IInteractable {
         maximumSpeed = 10f;
         oxygenCountdownScript.isActivated = false;
 
+        interiorCollider = GetComponent<SphereCollider>();
         // Ensure that this submarine is a child of DockingPosition
         this.transform.SetParent(dockingPosition);
         this.transform.localPosition = Vector3.zero;
 
         // Only allow teleport if it is docked
-        teleportToLabFromToSubDoor.Initialise(IsDocked);
-        teleportToSubFromToLabDoor.Initialise(IsDocked);
+        //teleportToLabFromToSubDoor.Initialise(IsDocked);
+        //teleportToSubFromToLabDoor.Initialise(IsDocked);
 
         interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
         originalShader = interactionStationMeshRenderer.material.shader;
 
         // find animator
         anim = GetComponentInChildren<Animator>();
-
+        anim.SetBool("docked", true);
     }
 
     // Update is called once per frame
     private void Update () {
-        anim.SetBool("docked", IsDocked());
+        //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
         if (IsActivated)
         {
             float horizontalControl = Input.GetAxis("Horizontal");
@@ -206,6 +208,7 @@ public class SubmarineController : StationControllerInterface, IInteractable {
         anim.SetTrigger("openDoor");
         anim.SetBool("doorOpen", true);
     }
+
     public void CloseDoorAnim()
     {
         anim.SetTrigger("closeDoor");

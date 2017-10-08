@@ -20,12 +20,8 @@ public class SubDoorScript : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        
-    }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         PlayerController player = GameController.Obj.GetPlayerFromCollider(other);
         if (player != null)
@@ -34,9 +30,14 @@ public class SubDoorScript : MonoBehaviour {
             doorCollider.enabled = false;
         }
     }
+   
     private void OnTriggerExit(Collider other)
     {
-        subCtrl.CloseDoorAnim();
-        doorCollider.enabled = true;
+        PlayerController player = GameController.Obj.GetPlayerFromCollider(other);
+        if (player != null)
+        {
+            subCtrl.CloseDoorAnim();
+            doorCollider.enabled = true;
+        }
     }
 }

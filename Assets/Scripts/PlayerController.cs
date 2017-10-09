@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour {
     private PlayerAnimationController animationController;
     public CameraController cameraController;
 
-
-	public MultiplayerManager.PlayerNumber playerNumber;
+	// Multiplayer-related
+	public int playerNumber;
+	public ControlScheme controls;
 
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;
@@ -89,7 +90,9 @@ public class PlayerController : MonoBehaviour {
         isMoving = false;
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
-			Vector3 direction = new Vector3 (Input.GetAxis ("Horizontal"), 0, Input.GetAxis ("Vertical"));
+			Vector3 direction = new Vector3 (controls.GetHorizontalAxis(), 0.0f, controls.GetVerticalAxis());
+
+			print (direction.z.ToString("n10"));
             
             if (direction != Vector3.zero) {
                 isMoving = true;

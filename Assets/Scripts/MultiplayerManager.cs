@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MultiplayerManager : MonoBehaviour {
 
+	public static MultiplayerManager Obj;
+
 	public PlayerController[] playerList;
 
-	public enum PlayerNumber {
-		PlayerOne, PlayerTwo, PlayerThree, PlayerFour
-	}
+
 
 	/**
 	 * 
@@ -20,15 +20,31 @@ public class MultiplayerManager : MonoBehaviour {
 	 * PLAYER 2
 	 * WSAD + E
 	 * 
-	 * 
-	**/
+	 **/
+
+	void Awake () {
+		
+		if (Obj == null)
+		{
+			Obj = this;
+		}
+		else
+		{
+			Destroy(this.gameObject);
+		}
+
+		DontDestroyOnLoad(this.gameObject);
+
+		Setup ();
+
+	}
 
 	void Start () {
 
 
 
 		// Set up split screen for multiple players
-		/*
+		/**
 		if (playerList.Length == 2) {
 			playerList [0].cam.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 1.0f));
 			playerList [1].cam.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 1.0f));
@@ -47,53 +63,25 @@ public class MultiplayerManager : MonoBehaviour {
 		*/
 
 	}
+		
 
 
-	// Adds a player to the list of currently active players.
-	public void AddPlayer(PlayerController player) {
+	private void Setup () {
 
-		switch (playerList.Length) {
+		for (int i = 0; i < playerList.Length; i++) {
 
-		case 1:
-			player.playerNumber = PlayerNumber.PlayerTwo;
-
-		case 2:
-			player.playerNumber = PlayerNumber.PlayerThree;
-
-		case 3:
-			player.playerNumber = PlayerNumber.PlayerFour;
-
-		default:
-			player.playerNumber = PlayerNumber.PlayerOne;
+			PlayerController player = playerList [i];
+			player.playerNumber = i + 1;
+			player.controls = new ControlScheme ("Horizontal_P" + (i+1), "Vertical_P" + (i+1));
 
 		}
 
 	}
 
-	// Called once when a player is added.
-	public ControlScheme getControlScheme(PlayerNumber playerNum) {
+	void Update () {
 
-		switch (playerNum) {
-
-		case PlayerNumber.PlayerOne:
-			return new ControlScheme ("Horizontal_P1", "Vertical_P1");
-
-		case PlayerNumber.PlayerTwo:
-			return new ControlScheme ("Horizontal_P2", "Vertical_P2");
-
-		case PlayerNumber.PlayerThree:
-			return new ControlScheme ("Horizontal_P3", "Vertical_P3");
-
-		case PlayerNumber.PlayerFour:
-			return new ControlScheme ("Horizontal_P4", "Vertical_P4");
-
-		default:
-			return new ControlScheme ("Horizontal_P1", "Vertical_P1");
-
-		}
 
 	}
-
 
 
 }

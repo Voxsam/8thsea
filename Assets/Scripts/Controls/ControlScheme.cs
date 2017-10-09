@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class ControlScheme {
 
+	public bool isKeyboard;
+
 	public string horzAxis;
 	public string vertAxis;
 
 
 
-	public ControlScheme() {
+
+	public ControlScheme(string horz, string vert) {
+
+		isKeyboard = false;
+		horzAxis = horz;
+		vertAxis = vert;
+
 	}
+
+
+
 
 }

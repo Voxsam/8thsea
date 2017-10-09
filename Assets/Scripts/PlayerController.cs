@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour {
     private PlayerAnimationController animationController;
     public CameraController cameraController;
 
+
+	public MultiplayerManager.PlayerNumber playerNumber;
+
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;
 
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour {
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
         animationController = GetComponentInChildren<PlayerAnimationController>();
+
     }
 
     public GameData.ControlType ControlMode

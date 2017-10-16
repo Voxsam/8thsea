@@ -91,8 +91,6 @@ public class PlayerController : MonoBehaviour {
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
 			Vector3 direction = new Vector3 (controls.GetHorizontalAxis(), 0.0f, controls.GetVerticalAxis());
-
-			print (direction.z.ToString("n10"));
             
             if (direction != Vector3.zero) {
                 isMoving = true;

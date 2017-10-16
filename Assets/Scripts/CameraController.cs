@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     private GameObject objectToFocusCameraOn = null;
     private Canvas gameCanvas;
 
+
     void Awake() {
         cam = GetComponentInChildren<Camera>();
         gameCanvas = GetComponentInChildren<Canvas>();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SubmarineController : StationControllerInterface, IInteractable {
+public class SubmarineController : StationControllerInterface {
     public static SubmarineController Obj;
 
     public float acceleration;
@@ -24,13 +24,6 @@ public class SubmarineController : StationControllerInterface, IInteractable {
 
     public TeleportDoor teleportToSubFromToLabDoor;
     public TeleportDoor teleportToLabFromToSubDoor;
-    //The object with which the player interacts with.
-    public GameObject interactionStation;
-    public Shader outlineShader;
-
-    //Used for highlighting the object the player may interact with.
-    private Shader originalShader;
-    private Renderer interactionStationMeshRenderer;
 
     private Animator anim;
     private bool facingLeft; //false = facingRight
@@ -91,9 +84,6 @@ public class SubmarineController : StationControllerInterface, IInteractable {
         // Only allow teleport if it is docked
         //teleportToLabFromToSubDoor.Initialise(IsDocked);
         //teleportToSubFromToLabDoor.Initialise(IsDocked);
-
-        interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
-        originalShader = interactionStationMeshRenderer.material.shader;
 
         // find animator
         anim = GetComponentInChildren<Animator>();
@@ -166,11 +156,11 @@ public class SubmarineController : StationControllerInterface, IInteractable {
     }
 
     //Functions from Interface IInteractables
-    public void Interact()
+    override public void Interact()
     {
     }
 
-    public void Interact(GameObject otherActor)
+    override public void Interact(GameObject otherActor)
     {
         if (this.playerInStation == null)
         {
@@ -188,19 +178,8 @@ public class SubmarineController : StationControllerInterface, IInteractable {
         }
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
-        if (toggle)
-        {
-            if (outlineShader != null)
-            {
-                interactionStationMeshRenderer.material.shader = outlineShader;
-            }
-        }
-        else
-        {
-            interactionStationMeshRenderer.material.shader = originalShader;
-        }
     }
 
     public void OpenDoorAnim()

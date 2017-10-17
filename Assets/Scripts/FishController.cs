@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishController : MonoBehaviour, IInteractable {
+public class FishController : IInteractable {
     private struct ResearchProtocol
     {
         public GameData.StationType researchStation;
@@ -219,7 +219,7 @@ public class FishController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void Interact ()
+    override public void Interact ()
     {
         switch (currentState)
         {
@@ -235,11 +235,11 @@ public class FishController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void Interact (GameObject otherActor)
+    override public void Interact (GameObject otherActor)
     {
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {

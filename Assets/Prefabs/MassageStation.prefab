@@ -36,6 +36,9 @@ GameObject:
   - component: {fileID: 4933694240183734}
   - component: {fileID: 33680765490434008}
   - component: {fileID: 23437883610037404}
+  - component: {fileID: 114284755601416408}
+  - component: {fileID: 65799838123278328}
+  - component: {fileID: 64033491375050486}
   m_Layer: 0
   m_Name: MassageStationMesh
   m_TagString: Untagged
@@ -53,7 +56,6 @@ GameObject:
   - component: {fileID: 4929925826148488}
   - component: {fileID: 33214819303407046}
   - component: {fileID: 114335622358738688}
-  - component: {fileID: 65128061774586740}
   m_Layer: 0
   m_Name: MassageStation
   m_TagString: StationObject
@@ -95,13 +97,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241423789013216}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 99.99997, z: 99.99997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4929925826148488}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!23 &23437883610037404
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -148,18 +150,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241423789013216}
   m_Mesh: {fileID: 4300000, guid: 42e61f6c3a06cfe4582ea712ea22494a, type: 3}
---- !u!65 &65128061774586740
-BoxCollider:
+--- !u!64 &64033491375050486
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1304514410746106}
+  m_GameObject: {fileID: 1241423789013216}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8442297, y: 1.2091379, z: 2.0885112}
-  m_Center: {x: -0.37008715, y: 0.10456896, z: 0.008011222}
+  m_Convex: 0
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 42e61f6c3a06cfe4582ea712ea22494a, type: 3}
+--- !u!65 &65799838123278328
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241423789013216}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114284755601416408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241423789013216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66008aa7a757f4d43898489b214f5fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 114335622358738688}
+  outlineShader: {fileID: 4800000, guid: e86efb166888e7742a7e06f4a7f3e8e7, type: 3}
 --- !u!114 &114335622358738688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -174,4 +203,3 @@ MonoBehaviour:
   researchStationType: 0
   progressUI: {fileID: 1504460152230116, guid: 07e95eca903ff6a429aa2d0f8df603b7, type: 2}
   holdSlot: {fileID: 1050003647322386}
-  meshRenderer: {fileID: 23437883610037404}

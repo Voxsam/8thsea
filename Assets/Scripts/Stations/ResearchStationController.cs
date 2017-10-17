@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResearchStationController : MonoBehaviour, IInteractable
+public class ResearchStationController : IInteractable
 {
-
     enum State
     {
         Empty,
@@ -24,7 +23,6 @@ public class ResearchStationController : MonoBehaviour, IInteractable
     private float progressPerInteraction = 1f;
     private GameObject mainCamera;
     private GameObject gameCanvas;
-    private Color originalColor;
 
     //Static so only one instance is used.
     private GameObject uiObject;
@@ -33,8 +31,6 @@ public class ResearchStationController : MonoBehaviour, IInteractable
     public GameObject progressUI;
     [SerializeField]
     private GameObject holdSlot;
-    [SerializeField]
-    private MeshRenderer meshRenderer;
 
     // Use this for initialization
     void Start()
@@ -46,7 +42,6 @@ public class ResearchStationController : MonoBehaviour, IInteractable
 
         mainCamera = GameController.Obj.gameCamera.GetCamera.gameObject;
         gameCanvas = GameController.Obj.gameCamera.GetCanvas.gameObject;
-        originalColor = meshRenderer.material.color;
     }
 
     // Update is called once per frame
@@ -66,11 +61,11 @@ public class ResearchStationController : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interact()
+    override public void Interact()
     {
     }
 
-    public void Interact(GameObject otherActor)
+    override public void Interact(GameObject otherActor)
     {
         if (otherActor.tag == "Player")
         {
@@ -140,7 +135,7 @@ public class ResearchStationController : MonoBehaviour, IInteractable
         }
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {

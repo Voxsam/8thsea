@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AquariumStationController : StationControllerInterface, IInteractable
+public class AquariumStationController : StationControllerInterface
 {
     public override GameData.ControlType ControlMode
     {
@@ -11,16 +11,12 @@ public class AquariumStationController : StationControllerInterface, IInteractab
     }
 
     [SerializeField]
-    public Shader outlineShader;
-    [SerializeField]
     public GameObject fishSchool;
     [SerializeField]
     public GameObject fishResearchRequirementsTemplate;
 
     private GameObject holdSlot;
-    private Renderer meshRenderer;
     private GameObject worldspaceCanvas;
-    private Shader originalShader;
     private Transform playerAnchor;
     private GameObject warningText;
     private float warningTextLifespan = 0;
@@ -33,8 +29,6 @@ public class AquariumStationController : StationControllerInterface, IInteractab
     void Start()
     {
         holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
-        meshRenderer = gameObject.transform.Find("Mesh").GetComponent<Renderer>();
-        originalShader = meshRenderer.material.shader;
         worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
         warningText = worldspaceCanvas.transform.Find("Feedback").gameObject;
         warningText.SetActive(false);
@@ -125,11 +119,11 @@ public class AquariumStationController : StationControllerInterface, IInteractab
     }
 
     #region Inherited from IInteractables interface
-    public void Interact()
+    override public void Interact()
     {
     }
 
-    public void Interact(GameObject otherActor)
+    override public void Interact(GameObject otherActor)
     {
         if (otherActor.tag == "Player")
         {
@@ -169,19 +163,8 @@ public class AquariumStationController : StationControllerInterface, IInteractab
         }
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
-        if (toggle)
-        {
-            if (outlineShader != null)
-            {
-                meshRenderer.material.shader = outlineShader;
-            }
-        }
-        else
-        {
-            meshRenderer.material.shader = originalShader;
-        }
     }
     #endregion
     public override void SetPlayerToStation(PlayerController player)

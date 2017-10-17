@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4640598454168450}
   - component: {fileID: 114046655455598976}
-  - component: {fileID: 65690512574126484}
   m_Layer: 0
   m_Name: ContainerTransferStation
   m_TagString: StationObject
@@ -39,6 +38,8 @@ GameObject:
   - component: {fileID: 33921811671377406}
   - component: {fileID: 65114620175709512}
   - component: {fileID: 23524907754244924}
+  - component: {fileID: 114322773398313318}
+  - component: {fileID: 65101862968337810}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -112,7 +113,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1593588612870490}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65114620175709512
+--- !u!65 &65101862968337810
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -124,17 +125,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65690512574126484
+--- !u!65 &65114620175709512
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1186758811078712}
+  m_GameObject: {fileID: 1593588612870490}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114046655455598976
 MonoBehaviour:
@@ -147,6 +148,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06de0fa1ee22ede4aa593f0b2d704b56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineShader: {fileID: 4800000, guid: e86efb166888e7742a7e06f4a7f3e8e7, type: 3}
   containersSource: []
   containersDestination: []
+--- !u!114 &114322773398313318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1593588612870490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66008aa7a757f4d43898489b214f5fc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 114046655455598976}
+  outlineShader: {fileID: 4800000, guid: e86efb166888e7742a7e06f4a7f3e8e7, type: 3}

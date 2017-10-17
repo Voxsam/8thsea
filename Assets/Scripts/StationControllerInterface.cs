@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StationControllerInterface : MonoBehaviour {
+public abstract class StationControllerInterface : IInteractable {
     public abstract GameData.ControlType ControlMode {
         get;
     }

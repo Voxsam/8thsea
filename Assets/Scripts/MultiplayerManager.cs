@@ -6,16 +6,24 @@ public class MultiplayerManager : MonoBehaviour {
 
 	public static MultiplayerManager Obj;
 
-	// The list of players, which SHOULD be determined in a previous screen before the game starts and
-	// SHOULDNT change at any point during the game.
-	public PlayerController[] playerList;
+	// The list of players, which SHOULDN'T change at any point during the game.
+	public List<Player> playerList;
+
+	// The player prefab that should have a PlayerController component attached to it.
+	public GameObject playerPrefab;
 
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
 
+	// The first 2 should be lab spawn points, and the last 2 should be sub spawn points.
+	public GameObject[] spawnPoints;
 
 	void Awake () {
-		
+
+		if (playerList == null) {
+			playerList = new List<Player> ();
+		}
+
 		if (Obj == null)
 		{
 			Obj = this;
@@ -39,6 +47,15 @@ public class MultiplayerManager : MonoBehaviour {
 
 	public void Setup () {
 
+		int i = 0;
+		foreach (Player player in playerList) {
+
+			GameObject newPlayer = Instantiate (playerPrefab);
+			newPlayer.transform.position = new Vector3 (-6.8f + 2f * (float) i, 3.15f, 0f);
+			i++;
+		}
+
+		/*
 		for (int i = 0; i < playerList.Length; i++) {
 
 			PlayerController player = playerList [i];
@@ -46,11 +63,15 @@ public class MultiplayerManager : MonoBehaviour {
 			player.controls = new ControlScheme (player.joystickNumber);	
 
 		}
+		*/
 
 		// SetCameras ();
 
 	}
 
+
+
+	/*
 	private void SetCameras() {
 
 		switch (playerList.Length) {
@@ -85,17 +106,11 @@ public class MultiplayerManager : MonoBehaviour {
 			
 
 	}
+	*/
 
-	void Update ()
+	public void AddPlayer (Player p)
 	{
-		/*
-		print ("J1: " + Input.GetAxis ("Horizontal_J1"));
-		print ("J2: " + Input.GetAxis ("Horizontal_J2"));
-		print ("J3: " + Input.GetAxis ("Horizontal_J3"));
-		print ("J4: " + Input.GetAxis ("Horizontal_J4"));
-		*/
-		print ("J1: " + Input.GetAxis ("Horizontal_J1"));
-		print ("J2: " + Input.GetAxis ("Horizontal_J2"));
+		playerList.Add (p);
 	}
 
 

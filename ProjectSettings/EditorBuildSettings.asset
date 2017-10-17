@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/characterSelect.unity
+    guid: 13cd6eed8eb525b4784c8157451b817b
+  - enabled: 1
+    path: Assets/Scenes/merged_multiplayer.unity
+    guid: 57286b4d4de7a904f8a556d21f9d7254

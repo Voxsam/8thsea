@@ -64,7 +64,8 @@ public class FishController : IInteractable {
     public GameObject researchProtocolTemplate;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
         currentResearchProtocol = 0;
@@ -88,6 +89,21 @@ public class FishController : IInteractable {
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);
 
+        if (fishType != GameData.FishType.None)
+        {
+            fishRenderer = GetComponentInChildren<MeshRenderer>();
+            Setup();
+        }
+    }
+
+    public void Setup(GameData.FishType type, MeshRenderer mesh) {
+        fishType = type;
+        fishRenderer = mesh;
+
+        Setup();
+    }
+
+    private void Setup() {
         originalColor = fishRenderer.material.color;
 
         researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];

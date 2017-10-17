@@ -5,6 +5,16 @@ using UnityEngine.UI;
 
 public class GameData : MonoBehaviour
 {
+    public static GameData Obj;
+
+    void Awake()
+    {
+        if (Obj == null)
+        {
+            Obj = this;
+        }
+    }
+
     #region Structures
     //Fish details.
     public class FishParameters
@@ -99,6 +109,7 @@ public class GameData : MonoBehaviour
     public const int TOTAL_NUMBER_OF_FISHTYPES = 2;
     public enum FishType
     {
+        None = -1, // Default value
         ClownFish = 0,
         PufferFish
     };
@@ -112,6 +123,9 @@ public class GameData : MonoBehaviour
 
     public const float PAYMENT_INTERVAL = 60f;
     public const int PAYMENT_AMOUNT = 100;
+    
+    [SerializeField] private Transform DefaultEmptyFishPrefab;
+    [SerializeField] private Transform OrangeFishPrefab;
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -150,6 +164,35 @@ public class GameData : MonoBehaviour
         {
             AllFishParameters[(int)fish].totalResearched++;
         }
+    }
+
+    public static FishController CreateNewFish(FishType type, Vector3 locationToSpawn)
+    {
+        FishController fish = null;
+        try
+        {
+            fish = Instantiate(Obj.DefaultEmptyFishPrefab).GetComponent<FishController>();
+        }
+        catch
+        {
+            Debug.Log("Error instantiating fish");
+            return null;
+        }
+
+        if (fish != null)
+        {
+            try
+            {
+                Transform model = Instantiate(Obj.OrangeFishPrefab, fish.transform);
+                fish.Setup(type, model.GetComponentInChildren<MeshRenderer>());
+            }
+            catch
+            {
+                Debug.Log("Error instantiating fish mesh");
+            }
+        }
+
+        return fish;
     }
     #endregion
 }

@@ -8,9 +8,16 @@ public class PlayerCameraController : MonoBehaviour {
 	public PlayerController player;
 	public Vector3 initialOffset;
 
-	void Update () {
+	void Start()
+	{
+	}
+
+	void Update ()
+	{
 		this.transform.position = player.transform.position + initialOffset;
 	}
+
+
 
 
 }

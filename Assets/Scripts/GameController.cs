@@ -35,6 +35,8 @@ public class GameController : MonoBehaviour {
     // Camera management
     public CameraController gameCamera;
 
+	public MultiplayerManager multiplayerManager;
+
     // GameObjects
     [SerializeField] protected Canvas mainCanvas;
     [SerializeField] protected Transform Sea;
@@ -92,6 +94,7 @@ public class GameController : MonoBehaviour {
     #endregion
     #endregion
 
+	/*
     public PlayerController Player1
     {
         get
@@ -115,6 +118,7 @@ public class GameController : MonoBehaviour {
             }
         }
     }
+    */
 
     public void AddFish(FishController fish)
     {
@@ -272,6 +276,9 @@ public class GameController : MonoBehaviour {
         Sea.transform.SetParent(this.transform);
         Lab.transform.SetParent(this.transform);
 
+		// Set up multiplayer before updating players.
+		multiplayerManager.Setup ();
+
         RNG = new System.Random();
     }
     #endregion
@@ -298,7 +305,12 @@ public class GameController : MonoBehaviour {
     {
         // Handle the update loops for the others too
 
-		Player1.GameUpdate();
+		//Player1.GameUpdate();
+
+		// Handle update loop for all players
+		foreach (PlayerController player in multiplayerManager.playerList) {
+			player.GameUpdate ();
+		}
 
 
     }

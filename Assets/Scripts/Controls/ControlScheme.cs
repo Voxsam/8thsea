@@ -6,24 +6,21 @@ public class ControlScheme {
 
 	public bool isKeyboard;
 
-	public string horzAxis;
-	public string vertAxis;
+	public int joystickNumber;
 
-	public ControlScheme(string horz, string vert) {
+	public ControlScheme(int joystickNumber) {
 
 		isKeyboard = false;
-		horzAxis = horz;
-		vertAxis = vert;
 
 	}
 
 	public float GetHorizontalAxis() {
-		return Input.GetAxis(horzAxis);
+		return Input.GetAxis("Horizontal_J" + joystickNumber);
 	}
 
 
 	public float GetVerticalAxis() {
-		return Input.GetAxis(vertAxis);
+		return Input.GetAxis("Vertical_J" + joystickNumber);
 	}
 
 }

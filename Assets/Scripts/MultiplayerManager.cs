@@ -10,6 +10,9 @@ public class MultiplayerManager : MonoBehaviour {
 	// SHOULDNT change at any point during the game.
 	public PlayerController[] playerList;
 
+	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
+	public GameObject playerCameraPrefab;
+
 
 	void Awake () {
 		
@@ -24,21 +27,27 @@ public class MultiplayerManager : MonoBehaviour {
 
 		DontDestroyOnLoad(this.gameObject);
 
-		Setup ();
+		print (Input.GetJoystickNames ().Length + " joysticks connected: ");
+		foreach (string joystick in Input.GetJoystickNames()) {
+			print (joystick + " is connected");
+		}
+
+
 
 	}
 
 
-	private void Setup () {
+	public void Setup () {
 
 		for (int i = 0; i < playerList.Length; i++) {
 
 			PlayerController player = playerList [i];
 			player.playerNumber = i + 1;
-			player.controls = new ControlScheme ("Horizontal_P" + (i+1), "Vertical_P" + (i+1));	
+			player.controls = new ControlScheme (player.joystickNumber);	
+
 		}
 
-		SetCameras ();
+		// SetCameras ();
 
 	}
 
@@ -76,6 +85,19 @@ public class MultiplayerManager : MonoBehaviour {
 			
 
 	}
+
+	void Update ()
+	{
+		/*
+		print ("J1: " + Input.GetAxis ("Horizontal_J1"));
+		print ("J2: " + Input.GetAxis ("Horizontal_J2"));
+		print ("J3: " + Input.GetAxis ("Horizontal_J3"));
+		print ("J4: " + Input.GetAxis ("Horizontal_J4"));
+		*/
+		print ("J1: " + Input.GetAxis ("Horizontal_J1"));
+		print ("J2: " + Input.GetAxis ("Horizontal_J2"));
+	}
+
 
 
 }

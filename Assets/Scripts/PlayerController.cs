@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Multiplayer-related
 	public int playerNumber;
+	public int joystickNumber;
 	public ControlScheme controls;
 
     private bool isMoving = false;
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour {
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
         animationController = GetComponentInChildren<PlayerAnimationController>();
+
+		isMoving = false;
 
     }
 
@@ -85,15 +88,16 @@ public class PlayerController : MonoBehaviour {
 
     public void GameUpdate ()
     {
+
         interactionController.GameUpdate();
 
-        isMoving = false;
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
+			
 			Vector3 direction = new Vector3 (controls.GetHorizontalAxis(), 0.0f, controls.GetVerticalAxis());
             
-            if (direction != Vector3.zero) {
-                isMoving = true;
+			if (direction != Vector3.zero) {
+				isMoving = true;
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (direction),
@@ -101,6 +105,11 @@ public class PlayerController : MonoBehaviour {
 				);
 
 				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
+
+			} else {
+
+				isMoving = false;
+
 			}
 		}
 

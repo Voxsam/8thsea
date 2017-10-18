@@ -63,6 +63,8 @@ public class GameController : MonoBehaviour {
 
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
+
+		multiplayerManager.Setup ();
         Setup();
 	}
 
@@ -265,19 +267,19 @@ public class GameController : MonoBehaviour {
         timeTillNextPayment = GameData.PAYMENT_INTERVAL;
         gameCamera = GetComponentInChildren<CameraController>();
 
-        players = new List<PlayerController>();
+		players = multiplayerManager.playerControllerList;
         fishes = new List<FishController>();
         
+		/*
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
         Player1Ref.transform.SetParent(PlayerHolder);
+        */
 
         mainCanvas.transform.SetParent(this.transform);
         Sea.transform.SetParent(this.transform);
         Lab.transform.SetParent(this.transform);
 
-		// Set up multiplayer before updating players.
-		multiplayerManager.Setup ();
 
         RNG = new System.Random();
     }
@@ -304,6 +306,9 @@ public class GameController : MonoBehaviour {
     void Update()
     {
         // Handle the update loops for the others too
+		foreach (PlayerController player in players) {
+			player.GameUpdate ();
+		}
 
 		//Player1.GameUpdate();
 

@@ -7,7 +7,7 @@ public class MultiplayerManager : MonoBehaviour {
 	public static MultiplayerManager Obj;
 
 	// The list of players, which SHOULDN'T change at any point during the game.
-	public List<Player> playerList;
+	public List<PlayerController> playerControllerList;
 
 	// The player prefab that should have a PlayerController component attached to it.
 	public GameObject playerPrefab;
@@ -15,45 +15,39 @@ public class MultiplayerManager : MonoBehaviour {
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
 
-	// The first 2 should be lab spawn points, and the last 2 should be sub spawn points.
+	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;
 
-	void Awake () {
-
-		if (playerList == null) {
-			playerList = new List<Player> ();
-		}
+	void Awake ()
+	{
 
 		if (Obj == null)
 		{
 			Obj = this;
+			playerControllerList = new List<PlayerController> ();
 		}
 		else
 		{
 			Destroy(this.gameObject);
 		}
-
+	
 		DontDestroyOnLoad(this.gameObject);
-
-		print (Input.GetJoystickNames ().Length + " joysticks connected: ");
-		foreach (string joystick in Input.GetJoystickNames()) {
-			print (joystick + " is connected");
-		}
-
-
 
 	}
 
 
 	public void Setup () {
 
-		int i = 0;
-		foreach (Player player in playerList) {
+		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
-			GameObject newPlayer = Instantiate (playerPrefab);
-			newPlayer.transform.position = new Vector3 (-6.8f + 2f * (float) i, 3.15f, 0f);
-			i++;
+			GameObject player = Instantiate (playerPrefab);
+			player.transform.position = spawnPoints [i].transform.position;
+			player.GetComponent<PlayerController> ().player = PlayerList.Obj.playerList [i];
+			playerControllerList.Add (player.GetComponent<PlayerController> ());
+
 		}
+
+
 
 		/*
 		for (int i = 0; i < playerList.Length; i++) {
@@ -107,11 +101,6 @@ public class MultiplayerManager : MonoBehaviour {
 
 	}
 	*/
-
-	public void AddPlayer (Player p)
-	{
-		playerList.Add (p);
-	}
 
 
 

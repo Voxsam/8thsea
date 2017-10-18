@@ -10,6 +10,7 @@ public class ControlScheme {
 
 	public ControlScheme(int joystickNumber) {
 
+		this.joystickNumber = joystickNumber;
 		isKeyboard = false;
 
 	}

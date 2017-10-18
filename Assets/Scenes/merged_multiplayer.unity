@@ -870,9 +870,9 @@ MonoBehaviour:
     type: 2}
   spawnPoints:
   - {fileID: 71887907}
-  - {fileID: 1992164653}
   - {fileID: 1946462505}
   - {fileID: 1824303307}
+  - {fileID: 1992164653}
 --- !u!4 &1065542449
 Transform:
   m_ObjectHideFlags: 0

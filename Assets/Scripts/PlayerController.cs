@@ -12,10 +12,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerAnimationController animationController;
     public CameraController cameraController;
 
-	// Multiplayer-related
-	public int playerNumber;
-	public int joystickNumber;
-	public ControlScheme controls;
+	public Player player;
 
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;
@@ -32,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     [SerializeField] public Rigidbody rb;
+
+
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
@@ -94,7 +93,7 @@ public class PlayerController : MonoBehaviour {
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
 			
-			Vector3 direction = new Vector3 (controls.GetHorizontalAxis(), 0.0f, controls.GetVerticalAxis());
+			Vector3 direction = new Vector3 (player.controls.GetHorizontalAxis(), 0.0f, player.controls.GetVerticalAxis());
             
 			if (direction != Vector3.zero) {
 				isMoving = true;

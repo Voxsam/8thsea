@@ -10,9 +10,19 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 	public int numPlayers = 0;
 
-	public MultiplayerManager mm;
+	public PlayerList pList;
 
 	private List<int> usedJoysticks = new List<int> ();
+
+	void Start ()
+	{
+		int i = 1;
+		print (Input.GetJoystickNames ().Length + " joysticks connected: ");
+		foreach (string joystick in Input.GetJoystickNames()) {
+			print (joystick + " is connected as Joystick " + i + ".");
+			i++;
+		}
+	}
 
 	void Update ()
 	{
@@ -20,8 +30,8 @@ public class PlayerSelectMenuController : MonoBehaviour {
 		for (int i = 1; i < 5; i++) {
 			// If the button is down but has not already been used
 			if (Input.GetKeyDown ("joystick " + i + " button 2") && !usedJoysticks.Contains(i)) {
-				mm.AddPlayer (new Player (new ControlScheme (i)));
-				print (mm.playerList.Count);
+				pList.AddPlayer (new Player (new ControlScheme (i), numPlayers + 1));
+				usedJoysticks.Add (i);
 				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + i + "."; 
 				numPlayers++;
 			}

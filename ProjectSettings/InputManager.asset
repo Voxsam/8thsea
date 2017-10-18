@@ -14,7 +14,7 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
@@ -30,7 +30,7 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 1
@@ -41,33 +41,33 @@ InputManager:
     m_Name: Horizontal_J2
     descriptiveName:
     descriptiveNegativeName:
-    negativeButton: a
-    positiveButton: d
+    negativeButton:
+    positiveButton:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
+    type: 2
     axis: 0
     joyNum: 2
   - serializedVersion: 3
     m_Name: Vertical_J2
     descriptiveName:
     descriptiveNegativeName:
-    negativeButton: s
-    positiveButton: w
+    negativeButton:
+    positiveButton:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
-    axis: 0
+    type: 2
+    axis: 1
     joyNum: 2
   - serializedVersion: 3
     m_Name: Horizontal_J3
@@ -78,11 +78,11 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
+    type: 2
     axis: 0
     joyNum: 3
   - serializedVersion: 3
@@ -94,12 +94,12 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
-    axis: 0
+    type: 2
+    axis: 1
     joyNum: 3
   - serializedVersion: 3
     m_Name: Horizontal_J4
@@ -110,11 +110,11 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
+    type: 2
     axis: 0
     joyNum: 4
   - serializedVersion: 3
@@ -126,12 +126,12 @@ InputManager:
     altNegativeButton:
     altPositiveButton:
     gravity: 3
-    dead: 0.016
+    dead: 0.02
     sensitivity: 3
     snap: 1
     invert: 0
-    type: 0
-    axis: 0
+    type: 2
+    axis: 1
     joyNum: 4
   - serializedVersion: 3
     m_Name: Fire3

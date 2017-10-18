@@ -305,6 +305,7 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
+
         // Handle the update loops for the others too
 		foreach (PlayerController player in players) {
 			player.GameUpdate ();

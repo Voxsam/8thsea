@@ -41,11 +41,25 @@ public class SubmarineController : StationControllerInterface {
     {
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = SUBMARINE_CAMERA_FIELD_OF_VIEW;
+        if (tutorialController.currentTutorialStep == 2)
+        {
+            tutorialController.isNext = false;
+            tutorialController.next();
+        }
+        else if (tutorialController.currentTutorialStep == 6) {
+            tutorialController.isNext = false;
+            tutorialController.next();
+        }
     }
 
     public override void WhenDeactivated()
     {
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
+        if (tutorialController.currentTutorialStep == 3)
+        {
+            tutorialController.isNext = false;
+            tutorialController.next();
+        }
     }
 
     public bool IsDocked()

@@ -8,6 +8,8 @@ public class tutorialController : MonoBehaviour {
     public static int currentTutorialStep = 0;
     public static bool isNext = false;
     public GameObject mainPlayer;
+    public GameObject submarine;
+    public GameObject tutorialGuide;
 
     void Start()
     {
@@ -16,7 +18,7 @@ public class tutorialController : MonoBehaviour {
 
     void Update()
     {
-        if(currentTutorialStep == 1)
+        if (currentTutorialStep == 1)
         {
             if (mainPlayer.transform.position.x > 0f)
             {

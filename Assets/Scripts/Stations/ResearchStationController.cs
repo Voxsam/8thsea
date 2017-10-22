@@ -141,6 +141,11 @@ public class ResearchStationController : StationControllerInterface, IInteractab
                             playerControllerScript.PickUpObject(heldObject);
                             heldObject = null;
                             currentState = State.Empty;
+                            if (tutorialController.currentTutorialStep == 8 || tutorialController.currentTutorialStep == 9)
+                            {
+                                tutorialController.isNext = false;
+                                tutorialController.next();
+                            }
                         }
                     }
                 }

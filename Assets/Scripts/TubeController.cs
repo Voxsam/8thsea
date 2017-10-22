@@ -27,6 +27,11 @@ public class TubeController : StationControllerInterface {
     }
     public override void WhenActivated()
     {
+        if (tutorialController.currentTutorialStep == 4)
+        {
+            tutorialController.isNext = false;
+            tutorialController.next();
+        }
     }
 
     public override void WhenDeactivated()
@@ -113,6 +118,11 @@ public class TubeController : StationControllerInterface {
                     fish.SetRigidbody(true);
                     fish.rb.velocity = Vector3.zero;
                     fish.transform.SetParent(SpawnPoint);
+                    if (tutorialController.currentTutorialStep == 5)
+                    {
+                        tutorialController.isNext = false;
+                        tutorialController.next();
+                    }
                 }
                 else
                 {

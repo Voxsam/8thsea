@@ -48,7 +48,9 @@ public class FishController : IInteractable {
     private float panicBarWidth;
     private int currentResearchProtocol;
     private Color originalColor;
-
+    private Vector3 caughtPosition;
+    private FishSchoolController fishSchoolController;
+    
     // GameObjects used by this class
     public Rigidbody rb;
 
@@ -101,6 +103,8 @@ public class FishController : IInteractable {
             researchProtocolUIObject.SetActive(false);
             researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
         }
+
+        SetEnabled(false);
         // Use the FishParameters for this
         //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
         //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
@@ -290,4 +294,38 @@ public class FishController : IInteractable {
     {
 
     }
+
+    #region Getters/Settrs
+    public Vector3 CaughtPosition
+    {
+        get
+        {
+            return caughtPosition;
+        }
+        set
+        {
+            caughtPosition = value;
+        }
+    }
+
+    public FishSchoolController FishSchoolController
+    {
+        get
+        {
+            return fishSchoolController;
+        }
+        set
+        {
+            fishSchoolController = value;
+        }
+    }
+
+    public SecondaryState CurrentSecondaryState
+    {
+        get
+        {
+            return currentSecondaryState;
+        }
+    }
+    #endregion
 }

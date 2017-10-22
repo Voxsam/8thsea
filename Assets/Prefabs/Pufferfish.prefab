@@ -206,14 +206,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41be8d64f4c301146a6bbb0179973d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishType: 0
+  fishType: 1
   fishMovementController: {fileID: 114807371085498854}
+  rb: {fileID: 0}
   fishRenderer: {fileID: 23132816184479646}
   WorldspaceCanvas: {fileID: 1478629354346802}
   DeadText: {fileID: 114111192215128292}
   PanicBarRect: {fileID: 224670509498618400}
   fishDetailsTemplate: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
     type: 2}
+  researchProtocolTemplate: {fileID: 0}
 --- !u!114 &114111192215128292
 MonoBehaviour:
   m_ObjectHideFlags: 1

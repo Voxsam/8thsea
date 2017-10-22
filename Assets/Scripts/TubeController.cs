@@ -97,12 +97,17 @@ public class TubeController : StationControllerInterface {
 
     public void ExtractFish ( FishController fish, GameObject other )
     {
+        //Store the location the fish was caught at and the fish school it belonged to.
+        //This is for releasing the fish.
+        fish.CaughtPosition = fish.transform.position;
+        fish.FishSchoolController = fish.fishMovementController.FishSchoolController;
         fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
         fish.transform.position = SpawnPoint.position + new Vector3(
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
         );
+        fish.SetEnabled(true);
         fish.fishMovementController.SetEnabled(false);
         fish.SetRigidbody(true);
         fish.rb.velocity = Vector3.zero;
@@ -112,7 +117,7 @@ public class TubeController : StationControllerInterface {
     public void MoveFish (Vector3 dir, GameObject other)
     {
         dir = dir.normalized;
-        other.transform.Translate((dir) * attractionForce);
+        other.transform.Translate((dir) * attractionForce * Time.deltaTime);
     }
 
     //Functions from Interface IInteractables

@@ -5,23 +5,30 @@ using UnityEngine;
 public class ControlScheme {
 
 	public bool isKeyboard;
-
+	public int playerNumber;
 	public int joystickNumber;
 
-	public ControlScheme(int joystickNumber) {
+	public ControlScheme(int joystickNumber, bool isKeyboard) {
 
 		this.joystickNumber = joystickNumber;
-		isKeyboard = false;
-
+		this.isKeyboard = isKeyboard;
 	}
 
 	public float GetHorizontalAxis() {
-		return Input.GetAxis("Horizontal_J" + joystickNumber);
+		if (!isKeyboard) {
+			return Input.GetAxis ("Horizontal_J" + joystickNumber);
+		} else {
+			return Input.GetAxis ("Horizontal_K" + joystickNumber);
+		}
 	}
 
 
 	public float GetVerticalAxis() {
-		return Input.GetAxis("Vertical_J" + joystickNumber);
+		if (!isKeyboard) {
+			return Input.GetAxis ("Vertical_J" + joystickNumber);
+		} else {
+			return Input.GetAxis ("Vertical_K" + joystickNumber);
+		}
 	}
 
 }

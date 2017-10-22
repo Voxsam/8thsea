@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿	using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +13,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	public PlayerList pList;
 
 	private List<int> usedJoysticks = new List<int> ();
+	private List<KeyCode> keys = new List<KeyCode> ();
 
 	void Start ()
 	{
@@ -22,6 +23,9 @@ public class PlayerSelectMenuController : MonoBehaviour {
 			print (joystick + " is connected as Joystick " + i + ".");
 			i++;
 		}
+
+		keys.Add (KeyCode.UpArrow, KeyCode.W);
+
 	}
 
 	void Update ()
@@ -30,11 +34,24 @@ public class PlayerSelectMenuController : MonoBehaviour {
 		for (int i = 1; i < 5; i++) {
 			// If the button is down but has not already been used
 			if (Input.GetKeyDown ("joystick " + i + " button 2") && !usedJoysticks.Contains(i)) {
-				pList.AddPlayer (new Player (new ControlScheme (i), numPlayers + 1));
+				pList.AddPlayer (new Player (new ControlScheme (i, false), numPlayers + 1));
 				usedJoysticks.Add (i);
 				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + i + "."; 
 				numPlayers++;
 			}
+		}
+
+		foreach (KeyCode key in keys) {
+			if (Input.GetKeyDown (key)) {
+			}
+		}
+
+		// Check keyboard "Up" keys (W and Up Arrow for 2 players)
+		if (Input.GetKeyDown (KeyCode.W)) {
+			pList.AddPlayer (new Player (new ControlScheme (1, true), numPlayers + 1));
+		}
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			pList.AddPlayer (new Player (new ControlScheme (2, true), numPlayers + 1));
 		}
 	}
 

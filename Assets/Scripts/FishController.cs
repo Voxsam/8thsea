@@ -48,6 +48,8 @@ public class FishController : IInteractable {
     private float panicBarWidth;
     private int currentResearchProtocol;
     private Color originalColor;
+    private Vector3 caughtPosition;
+    private FishSchoolController fishSchoolController;
 
     // GameObjects used by this class
     public Rigidbody rb;
@@ -94,6 +96,8 @@ public class FishController : IInteractable {
             fishRenderer = GetComponentInChildren<MeshRenderer>();
             Setup();
         }
+
+        SetEnabled(false);
     }
 
     public void Setup(GameData.FishType type, MeshRenderer mesh) {
@@ -306,4 +310,38 @@ public class FishController : IInteractable {
     {
 
     }
+
+    #region Getters/Settrs
+    public Vector3 CaughtPosition
+    {
+        get
+        {
+            return caughtPosition;
+        }
+        set
+        {
+            caughtPosition = value;
+        }
+    }
+
+    public FishSchoolController FishSchoolController
+    {
+        get
+        {
+            return fishSchoolController;
+        }
+        set
+        {
+            fishSchoolController = value;
+        }
+    }
+
+    public SecondaryState CurrentSecondaryState
+    {
+        get
+        {
+            return currentSecondaryState;
+        }
+    }
+    #endregion
 }

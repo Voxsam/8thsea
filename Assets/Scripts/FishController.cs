@@ -121,6 +121,8 @@ public class FishController : IInteractable {
             researchProtocolUIObject.SetActive(false);
             researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
         }
+
+        SetEnabled(false);
         // Use the FishParameters for this
         //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
         //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)

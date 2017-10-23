@@ -13,6 +13,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	public PlayerList pList;
 
 	private List<int> usedJoysticks = new List<int> ();
+	private List<int> joysticks = new List<int> ();
 	private List<KeyCode> keys = new List<KeyCode> ();
 
 	void Start ()
@@ -24,35 +25,33 @@ public class PlayerSelectMenuController : MonoBehaviour {
 			i++;
 		}
 
-		keys.Add (KeyCode.UpArrow, KeyCode.W);
+		joysticks.AddRange(new int[] {1, 2, 3, 4});
+		keys.AddRange (new KeyCode[] {KeyCode.W, KeyCode.UpArrow});
 
 	}
 
 	void Update ()
 	{
 		// Iterate through all 4 joysticks
-		for (int i = 1; i < 5; i++) {
-			// If the button is down but has not already been used
-			if (Input.GetKeyDown ("joystick " + i + " button 2") && !usedJoysticks.Contains(i)) {
-				pList.AddPlayer (new Player (new ControlScheme (i, false), numPlayers + 1));
-				usedJoysticks.Add (i);
-				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + i + "."; 
+		foreach (int j in joysticks) {
+			if (Input.GetKeyDown ("joystick " + j + " button 2")) {
+				pList.AddPlayer (new Player(new ControlScheme(j, false, KeyCode.A), numPlayers + 1));
+				joysticks.Remove (j);
+				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + j + "."; 
 				numPlayers++;
 			}
 		}
 
+		// Iterate through all key configurations
 		foreach (KeyCode key in keys) {
 			if (Input.GetKeyDown (key)) {
+				pList.AddPlayer (new Player (new ControlScheme(0, true, key), numPlayers + 1));
+				keys.Remove (key);
+				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using " + key.ToString() + ".";
+				numPlayers++;
 			}
 		}
 
-		// Check keyboard "Up" keys (W and Up Arrow for 2 players)
-		if (Input.GetKeyDown (KeyCode.W)) {
-			pList.AddPlayer (new Player (new ControlScheme (1, true), numPlayers + 1));
-		}
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			pList.AddPlayer (new Player (new ControlScheme (2, true), numPlayers + 1));
-		}
 	}
 
 	public void AdvanceToGame ()

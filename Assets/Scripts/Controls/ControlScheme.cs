@@ -8,10 +8,33 @@ public class ControlScheme {
 	public int playerNumber;
 	public int joystickNumber;
 
-	public ControlScheme(int joystickNumber, bool isKeyboard) {
+	public ControlScheme(int joystickNumber, bool isKeyboard, KeyCode upKey) {
 
-		this.joystickNumber = joystickNumber;
 		this.isKeyboard = isKeyboard;
+
+		if (!isKeyboard) {
+			
+			this.joystickNumber = joystickNumber;
+		
+		} else {
+			
+			switch (upKey) {
+				
+			case KeyCode.W:
+				this.joystickNumber = 1;
+				break;
+
+			case KeyCode.UpArrow:
+				this.joystickNumber = 2;
+				break;
+
+			default: 
+				this.joystickNumber = 1;
+				break;
+
+			}
+		}
+
 	}
 
 	public float GetHorizontalAxis() {

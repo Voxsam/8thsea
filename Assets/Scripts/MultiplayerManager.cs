@@ -41,9 +41,12 @@ public class MultiplayerManager : MonoBehaviour {
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
 			GameObject player = Instantiate (playerPrefab);
+			GameObject camera = Instantiate (playerCameraPrefab);
 			player.transform.position = spawnPoints [i].transform.position;
-			player.GetComponent<PlayerController> ().player = PlayerList.Obj.playerList [i];
-			playerControllerList.Add (player.GetComponent<PlayerController> ());
+			PlayerController pCtrl = player.GetComponent<PlayerController> ();
+			pCtrl.player = PlayerList.Obj.playerList [i];
+			pCtrl.cameraController = camera.GetComponent<CameraController> ();
+			playerControllerList.Add (pCtrl);
 
 		}
 

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	public PlayerCameraController pCameraController;
 
 	public Player player;
+	public ControlScheme controls;
 
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;
@@ -114,6 +115,11 @@ public class PlayerController : MonoBehaviour {
 		}
 
         animationController.GameUpdate();
+	}
+
+	public ControlScheme GetPlayerControls
+	{
+		get { return player.controls; }
 	}
 
 }

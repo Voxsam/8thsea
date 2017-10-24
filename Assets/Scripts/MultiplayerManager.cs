@@ -51,18 +51,6 @@ public class MultiplayerManager : MonoBehaviour {
 
 		}
 
-
-
-		/*
-		for (int i = 0; i < playerList.Length; i++) {
-
-			PlayerController player = playerList [i];
-			player.playerNumber = i + 1;
-			player.controls = new ControlScheme (player.joystickNumber);	
-
-		}
-		*/
-
 		SetCameras ();
 
 	}

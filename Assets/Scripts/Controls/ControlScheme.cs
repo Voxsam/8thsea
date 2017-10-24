@@ -54,4 +54,12 @@ public class ControlScheme {
 		}
 	}
 
+	// Action on joystick = A button
+	public bool GetActionKeyDown() {
+		if (!isKeyboard) {
+			return Input.GetKeyDown ("joystick " + joystickNumber + " button 0");
+		} else {
+			return (Input.GetAxis ("Action_K" + joystickNumber) == 1.0f);
+		}
+	}
 }

@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4663279046719336}
   - component: {fileID: 33538686253460134}
   - component: {fileID: 23576500097082968}
+  - component: {fileID: 95006045267039496}
   m_Layer: 0
   m_Name: FishMesh
   m_TagString: Untagged
@@ -196,6 +197,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6725135, y: 0.60796547, z: 0.7377393}
   m_Center: {x: 0, y: 0.05039096, z: -0.13113034}
+--- !u!95 &95006045267039496
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1213974660353288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e4aaace7ea3b3af4ab2452a7a1de0ed8, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5c02eadb6d3d8d04486b659d6e0fdf7a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95618934516460416
 Animator:
   serializedVersion: 3

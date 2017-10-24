@@ -22,9 +22,6 @@ public class SubmarineController : StationControllerInterface {
 
     public OxygenCountdown oxygenCountdownScript;
 
-    public TeleportDoor teleportToSubFromToLabDoor;
-    public TeleportDoor teleportToLabFromToSubDoor;
-
     private Animator anim;
     private bool facingLeft; //false = facingRight
 
@@ -81,10 +78,6 @@ public class SubmarineController : StationControllerInterface {
         this.transform.SetParent(dockingPosition);
         this.transform.localPosition = Vector3.zero;
 
-        // Only allow teleport if it is docked
-        //teleportToLabFromToSubDoor.Initialise(IsDocked);
-        //teleportToSubFromToLabDoor.Initialise(IsDocked);
-
         // find animator
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("docked", true);
@@ -121,6 +114,7 @@ public class SubmarineController : StationControllerInterface {
             } // end of animation stuff
 
             transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
+            
             currentSpeed += acceleration;
             if (currentSpeed > maximumSpeed)
             {
@@ -192,5 +186,10 @@ public class SubmarineController : StationControllerInterface {
     {
         anim.SetTrigger("closeDoor");
         anim.SetBool("doorOpen", false);
+    }
+
+    public void MoveInDirection (Vector3 direction)
+    {
+        transform.Translate(currentSpeed * Time.deltaTime * direction.x, currentSpeed * Time.deltaTime * direction.y, 0);
     }
 }

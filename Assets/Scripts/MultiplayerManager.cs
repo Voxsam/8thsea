@@ -45,7 +45,8 @@ public class MultiplayerManager : MonoBehaviour {
 			player.transform.position = spawnPoints [i].transform.position;
 			PlayerController pCtrl = player.GetComponent<PlayerController> ();
 			pCtrl.player = PlayerList.Obj.playerList [i];
-			pCtrl.cameraController = camera.GetComponent<CameraController> ();
+			pCtrl.pCameraController = camera.GetComponent<PlayerCameraController> ();
+			pCtrl.pCameraController.player = pCtrl;
 			playerControllerList.Add (pCtrl);
 
 		}
@@ -62,48 +63,48 @@ public class MultiplayerManager : MonoBehaviour {
 		}
 		*/
 
-		// SetCameras ();
+		SetCameras ();
 
 	}
 
 
 
-	/*
+
 	private void SetCameras() {
 
-		switch (playerList.Length) {
+		switch (playerControllerList.Count) {
 
 		case 1:
-			playerList [0].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
+			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
 			break;
 
 		case 2:
-			playerList [0].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 1.0f));
-			playerList [1].cameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 1.0f));
+			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 1.0f));
+			playerControllerList [1].pCameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 1.0f));
 			break;
 
 		case 3: 
-			playerList [0].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.333f, 1.0f));
-			playerList [1].cameraController.GetCamera.rect = new Rect (new Vector2 (0.333f, 0f), new Vector2 (0.333f, 1.0f));
-			playerList [2].cameraController.GetCamera.rect = new Rect (new Vector2 (0.333f, 0f), new Vector2 (0.333f, 1.0f));
+			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.333f, 1.0f));
+			playerControllerList [1].pCameraController.GetCamera.rect = new Rect (new Vector2 (0.333f, 0f), new Vector2 (0.333f, 1.0f));
+			playerControllerList [2].pCameraController.GetCamera.rect = new Rect (new Vector2 (0.333f, 0f), new Vector2 (0.333f, 1.0f));
 			break;
 
 		case 4:
-			playerList [0].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 0.5f));
-			playerList [1].cameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 0.5f));
-			playerList [2].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0.5f), new Vector2 (0.5f, 0.5f));
-			playerList [3].cameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0.5f), new Vector2 (0.5f, 0.5f));
+			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (0.5f, 0.5f));
+			playerControllerList [1].pCameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0f), new Vector2 (0.5f, 0.5f));
+			playerControllerList [2].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0.5f), new Vector2 (0.5f, 0.5f));
+			playerControllerList [3].pCameraController.GetCamera.rect = new Rect (new Vector2 (0.5f, 0.5f), new Vector2 (0.5f, 0.5f));
 			break;
 
 		default:
-			playerList [0].cameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
+			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
 			break;
 
 		}
 			
 
 	}
-	*/
+
 
 
 

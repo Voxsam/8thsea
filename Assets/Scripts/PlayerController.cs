@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerInteractionController interactionController;
     private PlayerAnimationController animationController;
     public CameraController cameraController;
+	public PlayerCameraController pCameraController;
 
 	public Player player;
 
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour {
     {
         ControlMode = GameData.ControlType.CHARACTER;
     }
-
+		
     public void AssignCameraToPlayer(CameraController cc)
     {
         cameraController = cc;

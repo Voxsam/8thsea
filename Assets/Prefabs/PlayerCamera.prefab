@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  camera: {fileID: 20256981299879934}
   initialOffset: {x: 0, y: 0, z: -20}
 --- !u!124 &124294594219374606
 Behaviour:

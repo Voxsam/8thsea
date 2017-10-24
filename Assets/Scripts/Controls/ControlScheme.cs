@@ -55,11 +55,38 @@ public class ControlScheme {
 	}
 
 	// Action on joystick = A button
+	// For WASD = E button
+	// For arrow keys = Enter key
 	public bool GetActionKeyDown() {
 		if (!isKeyboard) {
 			return Input.GetKeyDown ("joystick " + joystickNumber + " button 0");
 		} else {
-			return (Input.GetAxis ("Action_K" + joystickNumber) == 1.0f);
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKeyDown (KeyCode.E);
+			case 2:
+				return Input.GetKeyDown (KeyCode.Return);
+			default:
+				return Input.GetKeyDown (KeyCode.E);
+			}
+		}
+	}
+
+	// Cancel = B button
+	// For WASD = R
+	// For arrow keys = right shift
+	public bool GetCancelKeyDown() {
+		if (!isKeyboard) {
+			return Input.GetKeyDown ("joystick " + joystickNumber + " button 1");
+		} else {
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKeyDown (KeyCode.R);
+			case 2:
+				return Input.GetKeyDown (KeyCode.RightShift);
+			default:
+				return Input.GetKeyDown (KeyCode.R);
+			}
 		}
 	}
 }

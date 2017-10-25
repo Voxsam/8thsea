@@ -12,9 +12,12 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 	public PlayerList pList;
 
-	private List<int> usedJoysticks = new List<int> ();
+
 	private List<int> joysticks = new List<int> ();
 	private List<KeyCode> keys = new List<KeyCode> ();
+
+	private List<int> usedJoysticks = new List<int> ();
+	private List<KeyCode> usedKeys = new List<KeyCode> ();
 
 	void Start ()
 	{
@@ -25,18 +28,18 @@ public class PlayerSelectMenuController : MonoBehaviour {
 			i++;
 		}
 
-		joysticks.AddRange(new int[] {1, 2, 3, 4});
-		keys.AddRange (new KeyCode[] {KeyCode.W, KeyCode.UpArrow});
+		joysticks.AddRange(new int[] { 1, 2, 3, 4 });
+		keys.AddRange (new KeyCode[] { KeyCode.W, KeyCode.UpArrow });
 
 	}
 
-	void Update ()
+	void LateUpdate ()
 	{
 		// Iterate through all 4 joysticks
 		foreach (int j in joysticks) {
-			if (Input.GetKeyDown ("joystick " + j + " button 2")) {
+			if (!usedJoysticks.Contains(j) && Input.GetKeyDown ("joystick " + j + " button 2")) {
 				pList.AddPlayer (new Player(new ControlScheme(j, false, KeyCode.A), numPlayers + 1));
-				joysticks.Remove (j);
+				usedJoysticks.Add (j);
 				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + j + "."; 
 				numPlayers++;
 			}
@@ -44,9 +47,9 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 		// Iterate through all key configurations
 		foreach (KeyCode key in keys) {
-			if (Input.GetKeyDown (key)) {
+			if (!usedKeys.Contains(key) && Input.GetKeyDown (key)) {
 				pList.AddPlayer (new Player (new ControlScheme(0, true, key), numPlayers + 1));
-				keys.Remove (key);
+				usedKeys.Add (key);
 				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using " + key.ToString() + ".";
 				numPlayers++;
 			}

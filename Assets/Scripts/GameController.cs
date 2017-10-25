@@ -311,16 +311,13 @@ public class GameController : MonoBehaviour {
 			player.GameUpdate ();
 		}
 
-		//Player1.GameUpdate();
-
-		// Handle update loop for all players
-		/*
-		foreach (PlayerController player in multiplayerManager.playerList) {
-			player.GameUpdate ();
-		}
-		*/
 
 
     }
     #endregion
+
+
+	public void SetPlayers (List<PlayerController> pList) {
+		players = pList;
+	}
 }

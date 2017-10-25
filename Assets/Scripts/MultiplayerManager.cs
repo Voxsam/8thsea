@@ -40,6 +40,8 @@ public class MultiplayerManager : MonoBehaviour {
 
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
+			print ("test");
+
 			GameObject player = Instantiate (playerPrefab);
 			GameObject camera = Instantiate (playerCameraPrefab);
 			player.transform.position = spawnPoints [i].transform.position;
@@ -50,6 +52,8 @@ public class MultiplayerManager : MonoBehaviour {
 			playerControllerList.Add (pCtrl);
 
 		}
+
+		GameController.Obj.SetPlayers (playerControllerList);
 
 		SetCameras ();
 

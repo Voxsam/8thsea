@@ -91,7 +91,7 @@ public class PlayerInteractionController : MonoBehaviour
         {
             case State.Hold:
                 // Discard
-                if (GameController.Obj.ButtonB_Down)
+                if (player.controls.GetCancelKeyDown())
                 {
                     if (heldObject != null && currentSecondaryState == SecondaryState.Idle)
                     {
@@ -109,7 +109,7 @@ public class PlayerInteractionController : MonoBehaviour
         switch (currentSecondaryState)
         {
             case SecondaryState.View:
-                if (GameController.Obj.ButtonA_Down)
+                if (player.controls.GetActionKeyDown())
                 {
                     if (atObject != null)
                     {

@@ -12,8 +12,11 @@ public class SubmarineController : StationControllerInterface {
     public float maximumSpeed;
 
     // Camera things
-    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 30f;
+    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 60f;
     protected float cameraOriginalFov;
+
+    public Vector3 SUBMARINE_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, -50f);
+    protected Vector3 cameraOriginalDistance;
 
     public Transform UIPrefab;
     public Transform dockingPosition;
@@ -42,11 +45,15 @@ public class SubmarineController : StationControllerInterface {
     {
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = SUBMARINE_CAMERA_FIELD_OF_VIEW;
+
+        cameraOriginalDistance = stationCamera.initialOffset;
+        stationCamera.initialOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
     }
 
     public override void WhenDeactivated()
     {
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
+        stationCamera.initialOffset = cameraOriginalDistance;
     }
 
     public bool IsDocked()
@@ -71,7 +78,7 @@ public class SubmarineController : StationControllerInterface {
         acceleration = 0.05f;
         currentSpeed = 0.2f;
         maximumSpeed = 10f;
-        oxygenCountdownScript.isActivated = false;
+        //oxygenCountdownScript.isActivated = false;
 
         interiorCollider = GetComponent<SphereCollider>();
         // Ensure that this submarine is a child of DockingPosition
@@ -86,10 +93,10 @@ public class SubmarineController : StationControllerInterface {
     // Update is called once per frame
     private void Update () {
         //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
-        if (IsActivated)
+        if (IsActivated && playerInStation != null)
         {
-            float horizontalControl = Input.GetAxis("Horizontal");
-            float verticalControl = Input.GetAxis("Vertical");
+            float horizontalControl = playerInStation.controls.GetHorizontalAxis();
+            float verticalControl = playerInStation.controls.GetVerticalAxis();
 
             // ANIMATION STUFF 
             if (horizontalControl > 0) //going right 
@@ -126,7 +133,7 @@ public class SubmarineController : StationControllerInterface {
             }
             
             // docking 
-            if (GameController.Obj.ButtonA_Down && IsActivated)
+            if (playerInStation.controls.GetActionKeyDown() && IsActivated)
             {
                 transform.position = dockingPosition.position;
                 anim.SetBool("docked", true);
@@ -136,7 +143,7 @@ public class SubmarineController : StationControllerInterface {
             
             // Free the character from the station if the conditions are met
             if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
-                this.SwitchCondition() && GameController.Obj.ButtonB_Down)
+                this.SwitchCondition() && playerInStation.controls.GetCancelKeyDown())
             {
                 this.IsActivated = false;
                 this.WhenDeactivated();

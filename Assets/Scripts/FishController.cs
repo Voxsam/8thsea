@@ -86,7 +86,7 @@ public class FishController : IInteractable {
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
-        fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
+        //fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
         fishDetails.name = gameObject.ToString();
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);

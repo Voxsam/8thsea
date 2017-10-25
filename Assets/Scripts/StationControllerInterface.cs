@@ -15,7 +15,7 @@ public abstract class StationControllerInterface : IInteractable {
     }
     
     public PlayerController playerInStation = null;
-    protected CameraController stationCamera = null;
+    protected PlayerCameraController stationCamera = null;
     
     /// <summary>
     /// The switch condition that checks whether the player can return to the Character controller
@@ -45,7 +45,7 @@ public abstract class StationControllerInterface : IInteractable {
         playerInStation = player;
         playerInStation.RequestControlChange(ControlMode);
         isActivated = true;
-        SetStationCamera(playerInStation.cameraController);
+        SetStationCamera(playerInStation.pCameraController);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public abstract class StationControllerInterface : IInteractable {
         }
     }
 
-    public void SetStationCamera(CameraController cc)
+    public void SetStationCamera(PlayerCameraController cc)
     {
         stationCamera = cc;
     }

@@ -9,6 +9,9 @@ TagManager:
   - lab
   - SubCamera
   - LabCamera
+  - Obstacle
+  - Zone
+  - SuccHead
   layers:
   - Default
   - TransparentFX

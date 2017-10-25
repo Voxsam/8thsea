@@ -153,6 +153,11 @@ public class FishController : IInteractable {
                     panicTimer = 0f;
                     DeadText.text = "d e d";
                     DeadText.enabled = true;
+
+                    foreach (ResearchProtocol researchProtocol in researchProtocols)
+                    {
+                        researchProtocol.researchProtocolObject.SetActive(false);
+                    }
                 }
 
                 PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameters(fishType).panicTimerLength, PanicBarRect.rect.height);
@@ -198,10 +203,10 @@ public class FishController : IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             PanicBarRect.gameObject.SetActive(true);
-            foreach (ResearchProtocol researchProtocol in researchProtocols)
-            {
-                researchProtocol.researchProtocolObject.SetActive(true);
-            }
+        }
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(true);
         }
     }
 
@@ -213,6 +218,11 @@ public class FishController : IInteractable {
             rb.detectCollisions = true;
         }
         currentState = State.Idle;
+
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(false);
+        }
     }
 
     public void PutIn ()
@@ -224,6 +234,11 @@ public class FishController : IInteractable {
         }
 
         currentState = State.Placed;
+
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(true);
+        }
     }
     public void SetEnabled(bool enabled)
 {

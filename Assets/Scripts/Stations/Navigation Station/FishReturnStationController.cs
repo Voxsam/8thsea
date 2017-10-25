@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FishReturnStationController : IInteractable
 {
-    public SubNavigationStationController subPingStationController;
+    public SubNavigationStationController subNavStationController;
     public float minReturnDistance;
 
     public enum State
@@ -95,7 +95,7 @@ public class FishReturnStationController : IInteractable
                     fishController.fishMovementController.Initialise();
 
                     fishController.FishSchoolController.AddFishToSchool(fishController.gameObject);
-                    GameObject fishObject = subPingStationController.removeHeldObject();
+                    GameObject fishObject = subNavStationController.removeHeldObject();
                     fishObject.transform.position = releaseSlot.transform.position;
                     fishObject.transform.SetParent(null);
                     fishController = null;

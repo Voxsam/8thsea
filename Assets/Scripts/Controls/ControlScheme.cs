@@ -57,7 +57,7 @@ public class ControlScheme {
 	// Action on joystick = A button
 	// For WASD = E button
 	// For arrow keys = Enter key
-	public bool GetActionKeyDown() {
+	public bool GetActionKeyDown () {
 		if (!isKeyboard) {
 			return Input.GetKeyDown ("joystick " + joystickNumber + " button 0");
 		} else {
@@ -72,10 +72,40 @@ public class ControlScheme {
 		}
 	}
 
+	public bool GetActionKey () {
+		if (!isKeyboard) {
+			return Input.GetKey ("joystick " + joystickNumber + " button 0");
+		} else {
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKey (KeyCode.E);
+			case 2:
+				return Input.GetKey (KeyCode.Return);
+			default:
+				return Input.GetKey (KeyCode.E);
+			}
+		}
+	}
+
+	public bool GetActionKeyUp () {
+		if (!isKeyboard) {
+			return Input.GetKeyUp ("joystick " + joystickNumber + " button 0");
+		} else {
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKeyUp (KeyCode.E);
+			case 2:
+				return Input.GetKeyUp (KeyCode.Return);
+			default:
+				return Input.GetKeyUp (KeyCode.E);
+			}
+		}
+	}
+
 	// Cancel = B button
 	// For WASD = R
 	// For arrow keys = right shift
-	public bool GetCancelKeyDown() {
+	public bool GetCancelKeyDown () {
 		if (!isKeyboard) {
 			return Input.GetKeyDown ("joystick " + joystickNumber + " button 1");
 		} else {
@@ -86,6 +116,36 @@ public class ControlScheme {
 				return Input.GetKeyDown (KeyCode.RightShift);
 			default:
 				return Input.GetKeyDown (KeyCode.R);
+			}
+		}
+	}
+
+	public bool GetCancelKey () {
+		if (!isKeyboard) {
+			return Input.GetKey ("joystick " + joystickNumber + " button 1");
+		} else {
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKey (KeyCode.R);
+			case 2:
+				return Input.GetKey (KeyCode.RightShift);
+			default:
+				return Input.GetKey (KeyCode.R);
+			}
+		}
+	}
+
+	public bool GetCancelKeyUp () {
+		if (!isKeyboard) {
+			return Input.GetKeyUp ("joystick " + joystickNumber + " button 1");
+		} else {
+			switch (joystickNumber) {
+			case 1:
+				return Input.GetKeyUp (KeyCode.R);
+			case 2:
+				return Input.GetKeyUp (KeyCode.RightShift);
+			default:
+				return Input.GetKeyUp (KeyCode.R);
 			}
 		}
 	}

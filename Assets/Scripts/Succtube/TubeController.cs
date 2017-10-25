@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TubeController : StationControllerInterface, IInteractable {
+public class TubeController : StationControllerInterface {
 
     public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
     public float forwardSpeed;
@@ -22,14 +22,6 @@ public class TubeController : StationControllerInterface, IInteractable {
 
     public Transform SpawnPoint; // Put the fishes here after they have been sucked up
 
-    //The object with which the player interacts with.
-    public GameObject interactionStation;
-    public Shader outlineShader;
-
-    //Used for highlighting the object the player may interact with.
-    private Shader originalShader;
-    private Renderer interactionStationMeshRenderer;
-
     //The head of the suction tube.
     public GameObject tubeHeadGameObject;
 
@@ -41,8 +33,6 @@ public class TubeController : StationControllerInterface, IInteractable {
     //public GameObject playerCharacter;
     // Use this for initialization
     void Start () {
-        interactionStationMeshRenderer = interactionStation.transform.GetComponent<Renderer>();
-        originalShader = interactionStationMeshRenderer.material.shader;
     }
     public override void WhenActivated()
     {
@@ -107,12 +97,17 @@ public class TubeController : StationControllerInterface, IInteractable {
 
     public void ExtractFish ( FishController fish, GameObject other )
     {
+        //Store the location the fish was caught at and the fish school it belonged to.
+        //This is for releasing the fish.
+        fish.CaughtPosition = fish.transform.position;
+        fish.FishSchoolController = fish.fishMovementController.FishSchoolController;
         fish.fishMovementController.FishSchoolController.RemoveFishFromSchool(other.gameObject);
         fish.transform.position = SpawnPoint.position + new Vector3(
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
             GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET)
         );
+        fish.SetEnabled(true);
         fish.fishMovementController.SetEnabled(false);
         fish.SetRigidbody(true);
         fish.rb.velocity = Vector3.zero;
@@ -122,15 +117,15 @@ public class TubeController : StationControllerInterface, IInteractable {
     public void MoveFish (Vector3 dir, GameObject other)
     {
         dir = dir.normalized;
-        other.transform.Translate((dir) * attractionForce);
+        other.transform.Translate((dir) * attractionForce * Time.deltaTime);
     }
 
     //Functions from Interface IInteractables
-    public void Interact()
+    override public void Interact()
     {
     }
 
-    public void Interact(GameObject otherActor)
+    override public void Interact(GameObject otherActor)
     {
         if (this.playerInStation == null)
         {
@@ -148,18 +143,7 @@ public class TubeController : StationControllerInterface, IInteractable {
         }
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
-        if (toggle)
-        {
-            if (outlineShader != null)
-            {
-                interactionStationMeshRenderer.material.shader = outlineShader;
-            }
-        }
-        else
-        {
-            interactionStationMeshRenderer.material.shader = originalShader;
-        }
     }
 }

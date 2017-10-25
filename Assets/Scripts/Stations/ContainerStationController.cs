@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerStationController : MonoBehaviour, IInteractable {
+public class ContainerStationController : IInteractable {
     
     enum State {
         Empty,
@@ -12,16 +12,11 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
 
     private GameObject holdSlot;
     private GameObject heldObject;
-    private Renderer meshRenderer;
-    public Shader outlineShader;
-    private Shader originalShader;
 
     // Use this for initialization
     void Start () {
         currentState = State.Empty;
         holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
-        meshRenderer = gameObject.transform.Find("Mesh").GetComponent<Renderer>();
-        originalShader = meshRenderer.material.shader;
         heldObject = null;
     }
 	
@@ -29,10 +24,10 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
 	void Update () {
 	}
 
-    public void Interact () {
+    override public void Interact () {
     }
 
-    public void Interact (GameObject otherActor) {
+    override public void Interact (GameObject otherActor) {
         if (otherActor.tag == "Player")
         {
             if (currentState == State.Empty)
@@ -73,6 +68,10 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
         }
     }
 
+    override public void ToggleHighlight(bool toggle = true)
+    {
+    }
+
     public GameObject removeHeldObject ()
     {
         GameObject objectToReturn = heldObject;
@@ -96,20 +95,5 @@ public class ContainerStationController : MonoBehaviour, IInteractable {
             return true;
         }
         return false;
-    }
-
-    public void ToggleHighlight(bool toggle = true)
-    {
-        if (toggle)
-        {
-            if (outlineShader != null)
-            {
-                meshRenderer.material.shader = outlineShader;
-            }
-        }
-        else
-        {
-            meshRenderer.material.shader = originalShader;
-        }
     }
 }

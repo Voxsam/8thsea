@@ -2,10 +2,10 @@
 using System.Collections;
 
 //Interface for 
-public interface IInteractable
+public abstract class IInteractable : MonoBehaviour
 {
-    void Interact();
-    void Interact(GameObject otherActor);
+    public abstract void Interact();
+    public abstract void Interact(GameObject otherActor);
 
-    void ToggleHighlight(bool toggle = true);
+    public abstract void ToggleHighlight(bool toggle = true);
 }

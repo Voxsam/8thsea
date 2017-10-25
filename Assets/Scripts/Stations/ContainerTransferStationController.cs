@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerTransferStationController : MonoBehaviour, IInteractable
+public class ContainerTransferStationController : IInteractable
 {
     enum State
     {
@@ -11,8 +11,6 @@ public class ContainerTransferStationController : MonoBehaviour, IInteractable
 
     //Public editor variables
     [SerializeField]
-    public Shader outlineShader;
-    [SerializeField]
     public GameObject[] containersSource;
     [SerializeField]
     public GameObject[] containersDestination;
@@ -20,15 +18,10 @@ public class ContainerTransferStationController : MonoBehaviour, IInteractable
     //Private variables
     private State currentState;
 
-    private Renderer meshRenderer;
-    private Shader originalShader;
-
     // Use this for initialization
     void Start()
     {
         currentState = State.Idle;
-        meshRenderer = gameObject.transform.Find("Mesh").GetComponent<Renderer>();
-        originalShader = meshRenderer.material.shader;
     }
 
     // Update is called once per frame
@@ -36,11 +29,11 @@ public class ContainerTransferStationController : MonoBehaviour, IInteractable
     {
     }
 
-    public void Interact()
+    override public void Interact()
     {
     }
 
-    public void Interact(GameObject otherActor)
+    override public void Interact(GameObject otherActor)
     {
         if (otherActor.tag == "Player")
         {
@@ -74,18 +67,7 @@ public class ContainerTransferStationController : MonoBehaviour, IInteractable
         }
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
-        if (toggle)
-        {
-            if (outlineShader != null)
-            {
-                meshRenderer.material.shader = outlineShader;
-            }
-        }
-        else
-        {
-            meshRenderer.material.shader = originalShader;
-        }
     }
 }

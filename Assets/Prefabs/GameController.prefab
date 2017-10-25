@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4925263530030136}
   - component: {fileID: 114624562645073898}
+  - component: {fileID: 114649654506604526}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -558,6 +559,21 @@ MonoBehaviour:
   moneyText: {fileID: 0}
   currentMoney: 0
   timeTillNextPayment: 0
+--- !u!114 &114649654506604526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071301308367164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2d6c38439e39141928b652b68874a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultEmptyFishPrefab: {fileID: 4409954727748116, guid: 8840ed2b16169be4ab61017d28cae322,
+    type: 2}
+  OrangeFishPrefab: {fileID: 4165615010495826, guid: 02e5d8ec60315364e844a6a26c9cd69a,
+    type: 2}
 --- !u!114 &114649669361501224
 MonoBehaviour:
   m_ObjectHideFlags: 1

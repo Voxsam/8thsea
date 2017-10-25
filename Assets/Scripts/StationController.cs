@@ -2,46 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StationController : MonoBehaviour
+public class StationController : IInteractable
 {
-    public StationControllerInterface controller;
+    [SerializeField]
+    public IInteractable controller;
+    [SerializeField]
+    public Shader outlineShader;
+
+    //Used for highlighting the object the player may interact with.
+    private Shader originalShader;
+    private Renderer meshRenderer;
 
     // Use this for initialization
     void Start()
     {
-        gameObject.tag = "lab";
+        gameObject.tag = "StationObject";
+        meshRenderer = gameObject.transform.GetComponent<Renderer>();
+        originalShader = meshRenderer.material.shader;
     }
 
-    void OnTriggerStay(Collider other)
+    override public void Interact ()
     {
-        //if (other.gameObject.tag.Equals ("Player")) { // Old code
+    }
 
-        // Should try to change this, since OnTriggerStay will be called every loop and might become expensive.
-        if (controller.playerInStation == null)
+    override public void Interact ( GameObject other )
+    {
+        controller.Interact ( other );
+    }
+
+    override public void ToggleHighlight (bool toggle)
+    {
+        if (toggle)
         {
-            PlayerController player = GameController.Obj.GetPlayerFromCollider(other);
-            if (player != null)
+            if (outlineShader != null)
             {
-                // If the player is in Character control mode
-                if (player.ControlMode == GameData.ControlType.CHARACTER &&
-                    GameController.Obj.ButtonA_Down)
-                {
-                    controller.SetPlayerToStation(player);
-                    controller.IsActivated = true;
-                    controller.WhenActivated();
-                }
+                meshRenderer.material.shader = outlineShader;
             }
         }
         else
         {
-            // Free the character from the station if the conditions are met
-            if (controller.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
-                controller.SwitchCondition() && GameController.Obj.ButtonB_Down)
-            {
-                controller.IsActivated = false;
-                controller.WhenDeactivated();
-                controller.ReleasePlayerFromStation();
-            }
+            meshRenderer.material.shader = originalShader;
         }
+        controller.ToggleHighlight(toggle);
     }
 }

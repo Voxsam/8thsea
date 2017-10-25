@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 95131838590172728}
   m_Layer: 0
   m_Name: LabMesh
-  m_TagString: Untagged
+  m_TagString: lab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishController : MonoBehaviour, IInteractable {
+public class FishController : IInteractable {
     private struct ResearchProtocol
     {
         public GameData.StationType researchStation;
@@ -48,6 +48,8 @@ public class FishController : MonoBehaviour, IInteractable {
     private float panicBarWidth;
     private int currentResearchProtocol;
     private Color originalColor;
+    private Vector3 caughtPosition;
+    private FishSchoolController fishSchoolController;
 
     // GameObjects used by this class
     public Rigidbody rb;
@@ -64,7 +66,8 @@ public class FishController : MonoBehaviour, IInteractable {
     public GameObject researchProtocolTemplate;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         currentState = State.Idle;
         currentSecondaryState = SecondaryState.Idle;
         currentResearchProtocol = 0;
@@ -88,6 +91,23 @@ public class FishController : MonoBehaviour, IInteractable {
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);
 
+        if (fishType != GameData.FishType.None)
+        {
+            fishRenderer = GetComponentInChildren<MeshRenderer>();
+            Setup();
+        }
+
+        SetEnabled(false);
+    }
+
+    public void Setup(GameData.FishType type, MeshRenderer mesh) {
+        fishType = type;
+        fishRenderer = mesh;
+
+        Setup();
+    }
+
+    private void Setup() {
         originalColor = fishRenderer.material.color;
 
         researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
@@ -101,6 +121,8 @@ public class FishController : MonoBehaviour, IInteractable {
             researchProtocolUIObject.SetActive(false);
             researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
         }
+
+        SetEnabled(false);
         // Use the FishParameters for this
         //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
         //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
@@ -219,7 +241,7 @@ public class FishController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void Interact ()
+    override public void Interact ()
     {
         switch (currentState)
         {
@@ -235,11 +257,11 @@ public class FishController : MonoBehaviour, IInteractable {
         }
     }
 
-    public void Interact (GameObject otherActor)
+    override public void Interact (GameObject otherActor)
     {
     }
 
-    public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(bool toggle = true)
     {
         if (toggle)
         {
@@ -290,4 +312,38 @@ public class FishController : MonoBehaviour, IInteractable {
     {
 
     }
+
+    #region Getters/Settrs
+    public Vector3 CaughtPosition
+    {
+        get
+        {
+            return caughtPosition;
+        }
+        set
+        {
+            caughtPosition = value;
+        }
+    }
+
+    public FishSchoolController FishSchoolController
+    {
+        get
+        {
+            return fishSchoolController;
+        }
+        set
+        {
+            fishSchoolController = value;
+        }
+    }
+
+    public SecondaryState CurrentSecondaryState
+    {
+        get
+        {
+            return currentSecondaryState;
+        }
+    }
+    #endregion
 }

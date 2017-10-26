@@ -11,10 +11,12 @@ public class PlayerList : MonoBehaviour {
 	void Awake ()
 	{
 		// Passes list on to next scene.
-		if (Obj == null) {
+		if (Obj == null ) {
+			
 			Obj = this;
 			playerList = new List<Player> ();
 			numPlayers = 0;
+
 		} else {
 			Destroy (this.gameObject);
 		}

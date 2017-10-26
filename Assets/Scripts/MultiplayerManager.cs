@@ -6,6 +6,10 @@ public class MultiplayerManager : MonoBehaviour {
 
 	public static MultiplayerManager Obj;
 
+	[Tooltip("Set to false if coming from the character select screen.")]
+	public bool isDebug = false;
+	public GameObject playerListPrefab;
+
 	// The list of players, which SHOULDN'T change at any point during the game.
 	public List<PlayerController> playerControllerList;
 
@@ -30,13 +34,20 @@ public class MultiplayerManager : MonoBehaviour {
 		{
 			Destroy(this.gameObject);
 		}
-	
+			
 		DontDestroyOnLoad(this.gameObject);
 
 	}
 
 
 	public void Setup () {
+
+		if (isDebug) {
+			PlayerList pList = Instantiate (playerListPrefab).GetComponent<PlayerList>();
+			pList.AddPlayer (new Player (new ControlScheme (0, true, KeyCode.W), 1));
+			pList.AddPlayer (new Player (new ControlScheme (0, true, KeyCode.UpArrow), 2));
+			pList.numPlayers = 2;
+		}
 
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 

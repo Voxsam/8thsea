@@ -21,7 +21,6 @@ public class ZoneController : MonoBehaviour {
     [SerializeField] public Transform SpawnPoint;
 
     [SerializeField] public GameObject fishSchoolTemplate;
-    [SerializeField] public GameObject fishTemplate;
 
     private GameObject zoneBoundaryXPos;
     private GameObject zoneBoundaryXNeg;
@@ -88,8 +87,7 @@ public class ZoneController : MonoBehaviour {
                                            fishParameters.maxSchoolSize);
             for (int j = 0; j < schoolSize; j++)
             {
-                GameObject newFish = (GameObject)Instantiate(fishTemplate, newFishSchool.transform);
-                newFish.transform.position = transform.position;
+                FishController newFish = GameData.CreateNewFish(fishTypes[fishTypeIndex], newFishSchool.transform);
                 FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
                 fishMovementController.Initialise
                 (
@@ -100,12 +98,9 @@ public class ZoneController : MonoBehaviour {
                     fishParameters.minNeighbourDistance
                 );
                 fishMovementController.SetEnabled(true);
-                FishController fishController = newFish.GetComponent<FishController>();
-                fishController.fishType = fishTypes[fishTypeIndex];
-                fishController.SetRigidbody(false);
-                fishSchoolController.AddFishToSchool(newFish);
+                newFish.SetRigidbody(false);
+                fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
-
 
             fishSchools[fishTypes[fishTypeIndex]].Add(newFishSchool);
 

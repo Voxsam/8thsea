@@ -122,10 +122,11 @@ public class GameData : MonoBehaviour
     };
 
     public const float PAYMENT_INTERVAL = 60f;
-    public const int PAYMENT_AMOUNT = 100;
+    public const int STARTING_MONEY = 500;
     
     [SerializeField] private Transform DefaultEmptyFishPrefab;
-    [SerializeField] private Transform OrangeFishPrefab;
+    [SerializeField] private Transform ClownFishPrefab;
+    [SerializeField] private Transform PufferFishPrefab;
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -166,12 +167,15 @@ public class GameData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates a new Fish with that FishType at location
+    /// </summary>
     public static FishController CreateNewFish(FishType type, Vector3 locationToSpawn)
     {
         FishController fish = null;
         try
         {
-            fish = Instantiate(Obj.DefaultEmptyFishPrefab).GetComponent<FishController>();
+            fish = Instantiate(Obj.DefaultEmptyFishPrefab, locationToSpawn, Quaternion.identity).GetComponent<FishController>();
         }
         catch
         {
@@ -181,9 +185,22 @@ public class GameData : MonoBehaviour
 
         if (fish != null)
         {
+            Transform prefab;
+
+            switch(type)
+            {
+                case FishType.ClownFish:
+                    prefab = Obj.ClownFishPrefab;
+                    break;
+                case FishType.PufferFish:
+                default:
+                    prefab = Obj.PufferFishPrefab;
+                    break;
+            }
+
             try
             {
-                Transform model = Instantiate(Obj.OrangeFishPrefab, fish.transform);
+                Transform model = Instantiate(prefab, fish.transform);
                 fish.Setup(type, model.GetComponentInChildren<MeshRenderer>());
             }
             catch
@@ -192,6 +209,19 @@ public class GameData : MonoBehaviour
             }
         }
 
+        return fish;
+    }
+
+    /// <summary>
+    /// Creates a new Fish at the transform location with the transform as parent
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="locationToSpawn"></param>
+    /// <returns></returns>
+    public static FishController CreateNewFish(FishType type, Transform parent)
+    {
+        FishController fish = CreateNewFish(type, parent.position);
+        fish.transform.SetParent(parent);
         return fish;
     }
     #endregion

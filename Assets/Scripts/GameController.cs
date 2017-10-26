@@ -45,11 +45,12 @@ public class GameController : MonoBehaviour {
     // Randomisation
     public static System.Random RNG;
 
-    public Text timeLeftText;
-	public Text moneyText;
+    public Text GameOverText;
 
-	public int currentMoney;
-	public float timeTillNextPayment;
+    // Money
+	public Text moneyText;
+	public float currentMoney;
+    
 
 	void Awake() {
         if (Obj == null)
@@ -264,7 +265,6 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
-        timeTillNextPayment = GameData.PAYMENT_INTERVAL;
         gameCamera = GetComponentInChildren<CameraController>();
 
 		players = multiplayerManager.playerControllerList;
@@ -280,6 +280,8 @@ public class GameController : MonoBehaviour {
         Sea.transform.SetParent(this.transform);
         Lab.transform.SetParent(this.transform);
 
+        currentMoney = GameData.STARTING_MONEY;
+        GameOverText.enabled = false;
 
         RNG = new System.Random();
     }
@@ -291,28 +293,30 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        if (timeTillNextPayment <= 0)
-        {
-            RemoveMoney(GameData.PAYMENT_AMOUNT);
-            timeTillNextPayment = GameData.PAYMENT_INTERVAL;
-        }
+        currentMoney -= Time.deltaTime;
 
-        timeTillNextPayment -= Time.deltaTime;
-
-        moneyText.text = "$" + currentMoney.ToString();
-        timeLeftText.text = "Time Left: " + (int)timeTillNextPayment + "s";
+        moneyText.text = "$" + ( (int)currentMoney).ToString();
     }
 
     void Update()
     {
+        if (currentMoney > 0)
+        {
+            // Handle the update loops for the others too
+            foreach (PlayerController player in players)
+            {
+                player.GameUpdate();
+            }
 
-        // Handle the update loops for the others too
-		foreach (PlayerController player in players) {
-			player.GameUpdate ();
-		}
-
-
-
+            GameUpdate();
+        }
+        else
+        {
+            if (!GameOverText.isActiveAndEnabled)
+            {
+                GameOverText.enabled = true;
+            }
+        }
     }
     #endregion
 

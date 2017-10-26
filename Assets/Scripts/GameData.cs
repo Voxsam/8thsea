@@ -122,7 +122,7 @@ public class GameData : MonoBehaviour
     };
 
     public const float PAYMENT_INTERVAL = 60f;
-    public const int PAYMENT_AMOUNT = 100;
+    public const int STARTING_MONEY = 500;
     
     [SerializeField] private Transform DefaultEmptyFishPrefab;
     [SerializeField] private Transform ClownFishPrefab;

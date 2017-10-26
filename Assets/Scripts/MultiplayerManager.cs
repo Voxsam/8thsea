@@ -53,6 +53,11 @@ public class MultiplayerManager : MonoBehaviour {
 
 			GameObject player = Instantiate (playerPrefab);
 			GameObject camera = Instantiate (playerCameraPrefab);
+            if (i > 0)
+            {
+                Destroy(camera.GetComponent<AudioListener>());
+            }
+
 			player.transform.position = spawnPoints [i].transform.position;
 			PlayerController pCtrl = player.GetComponent<PlayerController> ();
 			pCtrl.player = PlayerList.Obj.playerList [i];

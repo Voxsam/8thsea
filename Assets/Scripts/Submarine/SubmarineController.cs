@@ -28,6 +28,27 @@ public class SubmarineController : StationControllerInterface {
     private Animator anim;
     private bool facingLeft; //false = facingRight
 
+    public enum State
+    {
+        Idle,
+        Docking
+    }
+    private State currentState;
+
+    private bool withinDock;
+    public bool WithinDock
+    {
+        get
+        {
+            return withinDock;
+        }
+        set
+        {
+            withinDock = value;
+        }
+    }
+
+
     public override GameData.ControlType ControlMode
     {
         get { return GameData.ControlType.SUBMARINE; }
@@ -55,7 +76,7 @@ public class SubmarineController : StationControllerInterface {
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
         stationCamera.initialOffset = cameraOriginalDistance;
     }
-
+    
     public bool IsDocked()
     {
         return transform.position == dockingPosition.position;
@@ -88,68 +109,92 @@ public class SubmarineController : StationControllerInterface {
         // find animator
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("docked", true);
+
+        currentState = State.Idle;
     }
 
     // Update is called once per frame
     private void Update () {
-        //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
-        if (IsActivated && playerInStation != null)
+        switch (currentState)
         {
-            float horizontalControl = playerInStation.controls.GetHorizontalAxis();
-            float verticalControl = playerInStation.controls.GetVerticalAxis();
-
-            // ANIMATION STUFF 
-            if (horizontalControl > 0) //going right 
-            {
-                anim.SetBool("moveRight", true);
-                if (facingLeft)
+            case State.Idle:
+                //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
+                if (IsActivated && playerInStation != null)
                 {
+                    float horizontalControl = playerInStation.controls.GetHorizontalAxis();
+                    float verticalControl = playerInStation.controls.GetVerticalAxis();
+
+                    // ANIMATION STUFF 
+                    if (horizontalControl > 0) //going right 
+                    {
+                        anim.SetBool("moveRight", true);
+                        if (facingLeft)
+                        {
+                            anim.SetBool("moveLeft", false);
+                            anim.SetTrigger("turnRight");
+                            facingLeft = false;
+                        }
+                    }
+                    else if (horizontalControl < 0) //going left
+                    {
+                        anim.SetBool("moveLeft", true);
+                        if (!facingLeft)
+                        {
+                            anim.SetBool("moveRight", false);
+                            anim.SetTrigger("turnLeft");
+                            facingLeft = true;
+                        }
+                    } // end of animation stuff
+
+                    transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
+
+                    currentSpeed += acceleration;
+                    if (currentSpeed > maximumSpeed)
+                    {
+                        currentSpeed = maximumSpeed;
+                    }
+                    if (horizontalControl == 0 && verticalControl == 0)
+                    {
+                        currentSpeed = 0.2f;
+                    }
+
+                    // docking 
+                    if (playerInStation.controls.GetActionKeyDown() && IsActivated && WithinDock)
+                    {
+                        currentState = State.Docking;
+                    }
+
+                    // Free the character from the station if the conditions are met
+                    if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
+                        this.SwitchCondition() && playerInStation.controls.GetCancelKeyDown())
+                    {
+                        this.IsActivated = false;
+                        this.WhenDeactivated();
+                        this.ReleasePlayerFromStation();
+                    }
+                }
+                break;
+
+            case State.Docking:
+                Vector3 dockingDirection = (dockingPosition.position - transform.position).normalized;
+                transform.Translate(currentSpeed * Time.deltaTime * dockingDirection.x, currentSpeed * Time.deltaTime * dockingDirection.y, 0);
+                currentSpeed += acceleration;
+                if (currentSpeed > maximumSpeed)
+                {
+                    currentSpeed = maximumSpeed;
+                }
+                if (Vector3.Distance(transform.position, dockingPosition.position) < 0.1)
+                {
+                    currentState = State.Idle;
+                    currentSpeed = 0.2f;
+                    transform.position = dockingPosition.position;
+                    anim.SetBool("docked", true);
                     anim.SetBool("moveLeft", false);
-                    anim.SetTrigger("turnRight");
-                    facingLeft = false;
-                }
-            }
-            else if (horizontalControl < 0) //going left
-            {
-                anim.SetBool("moveLeft", true);
-                if (!facingLeft)
-                {
                     anim.SetBool("moveRight", false);
-                    anim.SetTrigger("turnLeft");
-                    facingLeft = true;
                 }
-            } // end of animation stuff
-
-            transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
-            
-            currentSpeed += acceleration;
-            if (currentSpeed > maximumSpeed)
-            {
-                currentSpeed = maximumSpeed;
-            }
-            if (horizontalControl == 0 && verticalControl == 0)
-            {
-                currentSpeed = 0.2f;
-            }
-            
-            // docking 
-            if (playerInStation.controls.GetActionKeyDown() && IsActivated)
-            {
-                transform.position = dockingPosition.position;
-                anim.SetBool("docked", true);
-                anim.SetBool("moveLeft", false);
-                anim.SetBool("moveRight", false);
-            }
-            
-            // Free the character from the station if the conditions are met
-            if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
-                this.SwitchCondition() && playerInStation.controls.GetCancelKeyDown())
-            {
-                this.IsActivated = false;
-                this.WhenDeactivated();
-                this.ReleasePlayerFromStation();
-            }
+                break;
         }
+        
     }
     public override bool SwitchCondition()
     {

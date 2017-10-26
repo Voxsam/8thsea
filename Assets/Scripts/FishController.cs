@@ -86,6 +86,8 @@ public class FishController : IInteractable {
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
+
+        //FIX THIS WHEN CANVAS IS FIXED.
         //fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
         fishDetails.name = gameObject.ToString();
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
@@ -116,7 +118,7 @@ public class FishController : IInteractable {
             GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
             GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
             researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
-            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 550);
+            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 1400);
             researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
             researchProtocolUIObject.SetActive(false);
             researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
@@ -153,6 +155,11 @@ public class FishController : IInteractable {
                     panicTimer = 0f;
                     DeadText.text = "d e d";
                     DeadText.enabled = true;
+
+                    foreach (ResearchProtocol researchProtocol in researchProtocols)
+                    {
+                        researchProtocol.researchProtocolObject.SetActive(false);
+                    }
                 }
 
                 PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameters(fishType).panicTimerLength, PanicBarRect.rect.height);
@@ -198,10 +205,10 @@ public class FishController : IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             PanicBarRect.gameObject.SetActive(true);
-            foreach (ResearchProtocol researchProtocol in researchProtocols)
-            {
-                researchProtocol.researchProtocolObject.SetActive(true);
-            }
+        }
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(true);
         }
     }
 
@@ -213,6 +220,11 @@ public class FishController : IInteractable {
             rb.detectCollisions = true;
         }
         currentState = State.Idle;
+
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(false);
+        }
     }
 
     public void PutIn ()
@@ -224,6 +236,11 @@ public class FishController : IInteractable {
         }
 
         currentState = State.Placed;
+
+        foreach (ResearchProtocol researchProtocol in researchProtocols)
+        {
+            researchProtocol.researchProtocolObject.SetActive(true);
+        }
     }
     public void SetEnabled(bool enabled)
 {

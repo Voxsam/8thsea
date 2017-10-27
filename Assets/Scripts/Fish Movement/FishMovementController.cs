@@ -54,9 +54,9 @@ public class FishMovementController : MonoBehaviour {
                 if (Mathf.Abs(Quaternion.Angle (this.transform.rotation, Quaternion.LookRotation(finalDirection))) < 0.2f)
                 {
                     turning = false;
+                    speed = Random.Range(minSpeed, maxSpeed);
                 }
             }
-            speed = Random.Range(minSpeed, maxSpeed);
         }
         else
         {
@@ -78,6 +78,23 @@ public class FishMovementController : MonoBehaviour {
                 //avoidanceGoalLocation = this.transform.position - other.gameObject.transform.position;
                 avoidanceGoalLocation = -this.transform.forward;
             }
+            turning = true;
+
+            if (other.tag == "Submarine")
+            {
+                speed = maxSpeed * 5;
+            }
+            else
+                speed = Random.Range(minSpeed, maxSpeed);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Submarine")
+        {
+            avoidanceGoalLocation = transform.position - other.transform.position;
+            speed = maxSpeed * 5;
             turning = true;
         }
     }

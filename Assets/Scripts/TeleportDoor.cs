@@ -63,9 +63,12 @@ public class TeleportDoor : IInteractable
             case State.TeleportTransit:
                 if (currentTime < teleportDuration)
                 {
-
-                    player.gameObject.transform.position = transform.position +
-                                                (speedCurve.Evaluate(currentTime) * teleportDistance) * teleportDirection;
+                    player.gameObject.transform.position = Vector3.Lerp
+                    (
+                        player.gameObject.transform.position,
+                        transform.position + (speedCurve.Evaluate(currentTime) * teleportDistance) * teleportDirection,
+                        currentTime
+                    );
                     currentTime += Time.deltaTime;
                 }
                 else

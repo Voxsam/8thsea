@@ -146,6 +146,22 @@ public class GameData : MonoBehaviour
         new ResearchStationParameters(StationType.Clean)
     };
 
+    //Easing functions.
+    public static float QuadEaseInOut (float currentTime, float initialValue, float changeValue, float duration)
+    {
+        if ((currentTime /= duration / 2) < 1)
+        {
+            return changeValue / 2 * currentTime * currentTime + initialValue;
+        }
+	    return -changeValue / 2 * ((--currentTime) *(currentTime - 2) - 1) + initialValue;
+    }
+
+    public static float QuadEaseOut (float currentTime, float initialValue, float changeValue, float duration)
+    {
+        currentTime /= duration;
+        return -changeValue * currentTime * (currentTime - 2) + initialValue;
+    }
+
     #region Getter and setters
 
     public static FishParameters GetFishParameters(FishType fish)

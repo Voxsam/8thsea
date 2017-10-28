@@ -217,7 +217,7 @@ public class GameData : MonoBehaviour
             try
             {
                 Transform model = Instantiate(prefab, fish.transform);
-                fish.Setup(type, model.GetComponentInChildren<MeshRenderer>());
+                fish.Setup(type, model.GetComponentInChildren<MeshRenderer>(), model.GetComponentInChildren<Animator>());
             }
             catch
             {

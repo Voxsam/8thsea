@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23707217208270792}
   - component: {fileID: 135568482238945620}
   - component: {fileID: 135898135818118974}
+  - component: {fileID: 95029397456438002}
   m_Layer: 0
   m_Name: PufferFishMesh
   m_TagString: Untagged
@@ -82,6 +83,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653289155495068}
   m_Mesh: {fileID: 4300000, guid: 88cc9e8028ba56945bbeec4f3ab56502, type: 3}
+--- !u!95 &95029397456438002
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653289155495068}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e4aaace7ea3b3af4ab2452a7a1de0ed8, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5c02eadb6d3d8d04486b659d6e0fdf7a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!135 &135568482238945620
 SphereCollider:
   m_ObjectHideFlags: 1

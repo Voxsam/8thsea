@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65594542622702932}
   - component: {fileID: 135077856046092128}
   - component: {fileID: 135833208897050616}
+  - component: {fileID: 95937472976100068}
   m_Layer: 0
   m_Name: ClownFishMesh
   m_TagString: Untagged
@@ -95,6 +96,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6725135, y: 0.60796547, z: 0.73858875}
   m_Center: {x: 0, y: 0.05039096, z: 0.005497858}
+--- !u!95 &95937472976100068
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991667100443962}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 3040eccb0e3742b4f838f95bd91f415c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 5610ea1b2932960419c69edce8b03231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!135 &135077856046092128
 SphereCollider:
   m_ObjectHideFlags: 1

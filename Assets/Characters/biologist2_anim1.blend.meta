@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: d70719ade986ce643b3e0f9a0971b57f
+timeCreated: 1509212995
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: arm_l
+    100002: arm_r
+    100004: Biologist
+    100006: //RootNode
+    100008: Bone
+    100010: Bone_001
+    100012: Bone_002
+    100014: Bone_003
+    100016: Bone_004
+    100018: Bone_005
+    100020: Bone_006
+    100022: Bone_007
+    100024: Bone_008
+    100026: foot_l
+    100028: foot_r
+    100030: foot_transform_l
+    100032: foot_transform_r
+    100034: forearm_l
+    100036: forearm_r
+    100038: Mesh
+    100040: Mesh_001
+    100042: shin_l
+    100044: shin_r
+    100046: thigh_l
+    100048: thigh_r
+    400000: arm_l
+    400002: arm_r
+    400004: Biologist
+    400006: //RootNode
+    400008: Bone
+    400010: Bone_001
+    400012: Bone_002
+    400014: Bone_003
+    400016: Bone_004
+    400018: Bone_005
+    400020: Bone_006
+    400022: Bone_007
+    400024: Bone_008
+    400026: foot_l
+    400028: foot_r
+    400030: foot_transform_l
+    400032: foot_transform_r
+    400034: forearm_l
+    400036: forearm_r
+    400038: Mesh
+    400040: Mesh_001
+    400042: shin_l
+    400044: shin_r
+    400046: thigh_l
+    400048: thigh_r
+    4300000: Mesh_001
+    4300002: Mesh
+    7400000: Default Take
+    7400002: idle_anim
+    7400004: pick_up
+    7400006: walk_blocking
+    7400008: drop_001
+    7400010: holding_idle
+    7400012: holding_walk
+    7400014: drop
+    7400016: pick_up_hair
+    7400018: walk_blocking_001
+    9500000: //RootNode
+    13700000: Mesh
+    13700002: Mesh_001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: holding_idle
+      takeName: holding_idle
+      firstFrame: 0
+      lastFrame: 61
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: holding_walk
+      takeName: holding_walk
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle_anim
+      takeName: idle_anim
+      firstFrame: 0
+      lastFrame: 64
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: drop
+      takeName: drop
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: pick_up_hair
+      takeName: pick_up_hair
+      firstFrame: 0
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: walk_blocking
+      takeName: walk_blocking
+      firstFrame: 0
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Biologist
+        weight: 1
+      - path: Biologist/Bone
+        weight: 1
+      - path: Biologist/Bone/Bone_001
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_l/forearm_l
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/arm_r/forearm_r
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_003/Bone_007
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_004
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_002/Bone_005
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006
+        weight: 1
+      - path: Biologist/Bone/Bone_001/Bone_006/Bone_008
+        weight: 1
+      - path: Biologist/Bone/thigh_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l
+        weight: 1
+      - path: Biologist/Bone/thigh_l/shin_l/foot_l
+        weight: 1
+      - path: Biologist/Bone/thigh_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r
+        weight: 1
+      - path: Biologist/Bone/thigh_r/shin_r/foot_r
+        weight: 1
+      - path: Biologist/foot_transform_l
+        weight: 1
+      - path: Biologist/foot_transform_r
+        weight: 1
+      - path: Mesh
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

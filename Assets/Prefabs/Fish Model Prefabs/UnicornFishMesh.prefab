@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 65276166637678652}
   - component: {fileID: 135886711926754232}
   m_Layer: 0
-  m_Name: Unicornfish
+  m_Name: UnicornFishMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -58,7 +58,7 @@ public class FishController : IInteractable {
     // GameObjects used by this class
     public Rigidbody rb;
 
-    [SerializeField] private MeshRenderer fishRenderer;
+    [SerializeField] private SkinnedMeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
     [SerializeField] private Text DeadText;
     [SerializeField] private RectTransform PanicBarRect;
@@ -99,14 +99,14 @@ public class FishController : IInteractable {
 
         if (fishType != GameData.FishType.None)
         {
-            fishRenderer = GetComponentInChildren<MeshRenderer>();
+            fishRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             Setup();
         }
 
         SetEnabled(false);
     }
 
-    public void Setup(GameData.FishType type, MeshRenderer mesh, Animator animator) {
+    public void Setup(GameData.FishType type, SkinnedMeshRenderer mesh, Animator animator) {
         fishType = type;
         fishRenderer = mesh;
         fishAnimator = animator;

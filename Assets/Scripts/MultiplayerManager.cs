@@ -19,6 +19,11 @@ public class MultiplayerManager : MonoBehaviour {
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
 
+	public GameObject playerPanelPrefab;
+	public GameObject mainCanvas;
+
+	public GameObject textTestPrefab;
+
 	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;
 
@@ -30,11 +35,12 @@ public class MultiplayerManager : MonoBehaviour {
 			Obj = this;
 			playerControllerList = new List<PlayerController> ();
 		}
+
 		else
 		{
 			Destroy(this.gameObject);
 		}
-			
+				
 		DontDestroyOnLoad(this.gameObject);
 
 	}
@@ -49,17 +55,28 @@ public class MultiplayerManager : MonoBehaviour {
 			pList.numPlayers = 2;
 		}
 
+		// For each player in the player list
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
+			// Instantiate a new player, camera and panel
 			GameObject player = Instantiate (playerPrefab);
 			GameObject camera = Instantiate (playerCameraPrefab);
-			player.transform.position = spawnPoints [i].transform.position;
+			GameObject panel = Instantiate (playerPanelPrefab);
+
+			panel.transform.SetParent (mainCanvas.transform); // Set panel parent to main panel.
+
+			player.transform.position = spawnPoints [i].transform.position; // Move them to a spawn point
 			PlayerController pCtrl = player.GetComponent<PlayerController> ();
-			pCtrl.player = PlayerList.Obj.playerList [i];
-			pCtrl.pCameraController = camera.GetComponent<PlayerCameraController> ();
-			pCtrl.pCameraController.player = pCtrl;
-			pCtrl.controls = PlayerList.Obj.playerList [i].controls;
+
+			pCtrl.Setup (PlayerList.Obj.playerList [i],
+				camera.GetComponent<PlayerCameraController> (),
+				PlayerList.Obj.playerList [i].controls,
+				panel.GetComponent<PlayerPanelController> ());
 			playerControllerList.Add (pCtrl);
+
+			panel.GetComponent<PlayerPanelController> ().Setup (PlayerList.Obj.playerList [i]);
+
+			pCtrl.panel.ShowInPanel (Instantiate (textTestPrefab));
 
 		}
 

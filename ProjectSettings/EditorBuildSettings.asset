@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/characterSelect.unity
     guid: 13cd6eed8eb525b4784c8157451b817b
   - enabled: 0
-    path: Assets/Scenes/merged_multiplayer.unity
+    path: 
     guid: 57286b4d4de7a904f8a556d21f9d7254
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/main_merged.unity
     guid: a703e6214f9c18248ba98448d1d905cd
+  - enabled: 1
+    path: Assets/Scenes/main_merged_canvas.unity
+    guid: f7d7bbecebc39cb4d9705b23d7e2fd69

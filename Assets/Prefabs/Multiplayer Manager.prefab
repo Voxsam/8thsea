@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5916f327cb87b4d8e356a93e26e078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
+  isDebug: 1
   playerListPrefab: {fileID: 1953973834099180, guid: bf271c194338f2f42b0071385c42bf66,
     type: 2}
   playerControllerList: []
@@ -59,6 +59,9 @@ MonoBehaviour:
     type: 2}
   playerCameraPrefab: {fileID: 1924205488253524, guid: dcf092702cab29842b1beef3abf77e6a,
     type: 2}
+  playerPanelPrefab: {fileID: 1843861115275928, guid: f90a4fc304ceaa544b3f51019c29c9a9,
+    type: 2}
+  mainCanvas: {fileID: 0}
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}

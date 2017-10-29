@@ -151,7 +151,7 @@ public class PlayerInteractionController : MonoBehaviour
         IInteractable heldObjectInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (heldObjectInteractableScript != null)
         {
-            heldObjectInteractableScript.Interact();
+			heldObjectInteractableScript.Interact(player.gameObject);
             heldObjectInteractableScript.ToggleHighlight(player, false);
         }
 

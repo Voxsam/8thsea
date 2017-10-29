@@ -225,8 +225,9 @@ public class FishController : IInteractable {
 
         currentState = State.Placed;
     }
+
     public void SetEnabled(bool enabled)
-{
+	{
         SetRigidbody(enabled);
         WorldspaceCanvas.SetActive(enabled);
         this.enabled = enabled;
@@ -241,7 +242,7 @@ public class FishController : IInteractable {
         }
     }
 
-	override public void Interact (PlayerController player)
+	override public void Interact ()
     {
         switch (currentState)
         {
@@ -259,6 +260,19 @@ public class FishController : IInteractable {
 
     override public void Interact (GameObject otherActor)
     {
+		switch (currentState) {
+		case State.Idle:
+		case State.Placed:
+			PickUp ();
+			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel ();
+			break;
+		case State.Held:
+			PutDown ();
+			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel ();
+			break;
+		default:
+			break;
+		}
     }
 
     override public void ToggleHighlight(PlayerController player, bool toggle = true)

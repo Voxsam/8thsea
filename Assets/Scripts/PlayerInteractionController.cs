@@ -142,7 +142,7 @@ public class PlayerInteractionController : MonoBehaviour
         IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (otherInteractableScript != null)
         {
-            otherInteractableScript.ToggleHighlight(highlight);
+            otherInteractableScript.ToggleHighlight(player, highlight);
         }
     }
 
@@ -152,7 +152,7 @@ public class PlayerInteractionController : MonoBehaviour
         if (heldObjectInteractableScript != null)
         {
             heldObjectInteractableScript.Interact();
-            heldObjectInteractableScript.ToggleHighlight(false);
+            heldObjectInteractableScript.ToggleHighlight(player, false);
         }
 
         if (attach)

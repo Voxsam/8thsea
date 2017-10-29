@@ -153,7 +153,7 @@ public class TeleportDoor : IInteractable
     }
     */
 
-    public override void ToggleHighlight (bool toggle)
+    public override void ToggleHighlight (PlayerController otherPlayerController, bool toggle)
     {
 
     }

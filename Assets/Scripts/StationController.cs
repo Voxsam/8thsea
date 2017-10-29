@@ -30,7 +30,7 @@ public class StationController : IInteractable
         controller.Interact ( other );
     }
 
-    override public void ToggleHighlight (bool toggle)
+    override public void ToggleHighlight (PlayerController otherPlayerController, bool toggle)
     {
         if (toggle)
         {
@@ -43,6 +43,6 @@ public class StationController : IInteractable
         {
             meshRenderer.material.shader = originalShader;
         }
-        controller.ToggleHighlight(toggle);
+        controller.ToggleHighlight(otherPlayerController, toggle);
     }
 }

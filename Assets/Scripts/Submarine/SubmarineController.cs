@@ -20,10 +20,9 @@ public class SubmarineController : StationControllerInterface {
 
     public Transform UIPrefab;
     public Transform dockingPosition;
-    public Text FishCounter;
     private SphereCollider interiorCollider;
 
-    public OxygenCountdown oxygenCountdownScript;
+    public OxygenCountdown oxygenCountdownController;
 
     private Animator anim;
     private bool facingLeft; //false = facingRight
@@ -31,7 +30,8 @@ public class SubmarineController : StationControllerInterface {
     public enum State
     {
         Idle,
-        Docking
+        Docking,
+        Docked
     }
     private State currentState;
 
@@ -73,13 +73,18 @@ public class SubmarineController : StationControllerInterface {
 
     public override void WhenDeactivated()
     {
+        if (currentState == State.Docked)
+        {
+            oxygenCountdownController.StartRefilling();
+        }
+
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
         stationCamera.initialOffset = cameraOriginalDistance;
     }
     
     public bool IsDocked()
     {
-        return transform.position == dockingPosition.position;
+        return currentState == State.Docked;
     }
 
     void Awake()
@@ -110,13 +115,31 @@ public class SubmarineController : StationControllerInterface {
         anim = GetComponentInChildren<Animator>();
         anim.SetBool("docked", true);
 
-        currentState = State.Idle;
+        currentState = State.Docked;
     }
 
     // Update is called once per frame
     private void Update () {
         switch (currentState)
         {
+            case State.Docked:
+                if (IsActivated && playerInStation != null)
+                {
+                    if (oxygenCountdownController.IsReady())
+                    {
+                        currentState = State.Idle;
+                        oxygenCountdownController.StartRunning();
+                    }
+                    // Free the character from the station if the conditions are met
+                    if (this.playerInStation.ControlMode != GameData.ControlType.CHARACTER &&
+                        this.SwitchCondition() && playerInStation.controls.GetCancelKeyDown())
+                    {
+                        this.IsActivated = false;
+                        this.WhenDeactivated();
+                        this.ReleasePlayerFromStation();
+                    }
+                }
+                break;
             case State.Idle:
                 //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
                 if (IsActivated && playerInStation != null)
@@ -146,6 +169,12 @@ public class SubmarineController : StationControllerInterface {
                         }
                     } // end of animation stuff
 
+                    /*transform.position = Vector3.Lerp
+                    (
+                        transform.position,
+                        transform.position + new Vector3(currentSpeed * horizontalControl, currentSpeed * verticalControl, 0),
+                        Time.deltaTime
+                    );*/
                     transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
 
                     currentSpeed += acceleration;
@@ -185,12 +214,16 @@ public class SubmarineController : StationControllerInterface {
                 }
                 if (Vector3.Distance(transform.position, dockingPosition.position) < 0.1)
                 {
-                    currentState = State.Idle;
+                    currentState = State.Docked;
                     currentSpeed = 0.2f;
                     transform.position = dockingPosition.position;
                     anim.SetBool("docked", true);
                     anim.SetBool("moveLeft", false);
                     anim.SetBool("moveRight", false);
+
+                    this.IsActivated = false;
+                    this.WhenDeactivated();
+                    this.ReleasePlayerFromStation();
                 }
                 break;
         }
@@ -208,23 +241,29 @@ public class SubmarineController : StationControllerInterface {
 
     override public void Interact(GameObject otherActor)
     {
+        
         if (this.playerInStation == null)
         {
-            PlayerController player = otherActor.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                // If the player is in Character control mode
-                if (player.ControlMode == GameData.ControlType.CHARACTER)
+            //Make sure the submarine is ready to set off if it is docked before allowing players to drive.
+            //If the submarine is not docked proceed as normal.
+            if (currentState != State.Docked || (currentState == State.Docked && oxygenCountdownController.IsReady()))
+            { 
+                PlayerController player = otherActor.GetComponent<PlayerController>();
+                if (player != null)
                 {
-                    this.SetPlayerToStation(player);
-                    this.IsActivated = true;
-                    this.WhenActivated();
+                    // If the player is in Character control mode
+                    if (player.ControlMode == GameData.ControlType.CHARACTER)
+                    {
+                        this.SetPlayerToStation(player);
+                        this.IsActivated = true;
+                        this.WhenActivated();
+                    }
                 }
             }
         }
     }
 
-    override public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(PlayerController otherPlayerController, bool toggle = true)
     {
     }
 

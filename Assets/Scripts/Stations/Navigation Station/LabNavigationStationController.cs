@@ -73,7 +73,7 @@ public class LabNavigationStationController : IInteractable {
         }
     }
 
-    override public void ToggleHighlight(bool toggle = true)
+    override public void ToggleHighlight(PlayerController otherPlayerController, bool toggle = true)
     {
     }
 }

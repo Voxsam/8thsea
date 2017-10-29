@@ -112,7 +112,8 @@ public class GameData : MonoBehaviour
         None = -1, // Default value
         ClownFish = 0,
         PufferFish,
-        UnicornFish
+        UnicornFish,
+        Whale,
     };
 
     public enum StationType
@@ -130,6 +131,7 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform ClownFishPrefab;
     [SerializeField] private Transform PufferFishPrefab;
     [SerializeField] private Transform UnicornFishPrefab;
+    [SerializeField] private Transform WhalePrefab;
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -142,7 +144,10 @@ public class GameData : MonoBehaviour
         }),
         new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
             StationType.Research, StationType.Dissect
-        }),
+        }, 1, 3, 1, 4, 5, 10, 30),
+        new FishParameters(FishType.Whale, 60, 1, new StationType[] {
+            StationType.Research, StationType.Dissect, StationType.Research
+        }, 1, 4, 1, 4, 1, 3, 50),
     };
 
     // Research Station management
@@ -217,6 +222,9 @@ public class GameData : MonoBehaviour
                     break;
                 case FishType.UnicornFish:
                     prefab = Obj.UnicornFishPrefab;
+                    break;
+                case FishType.Whale:
+                    prefab = Obj.WhalePrefab;
                     break;
                 case FishType.PufferFish:
                 default:

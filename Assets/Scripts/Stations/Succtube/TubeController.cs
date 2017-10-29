@@ -141,9 +141,12 @@ public class TubeController : StationControllerInterface {
                 {
                     currentState = State.Idle;
 
-                    this.IsActivated = false;
-                    this.WhenDeactivated();
-                    this.ReleasePlayerFromStation();
+                    if (this.IsActivated)
+                    {
+                        this.IsActivated = false;
+                        this.WhenDeactivated();
+                        this.ReleasePlayerFromStation();
+                    }
                 }
                 break;
         }

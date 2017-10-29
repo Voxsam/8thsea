@@ -9,9 +9,10 @@ TagManager:
   - lab
   - SubCamera
   - LabCamera
-  - Obstacle
   - Zone
-  - Main Canvas
+  - Obstacle
+  - SuccHead
+  - Submarine
   layers:
   - Default
   - TransparentFX

@@ -5,11 +5,29 @@ using UnityEngine.UI;
 using System.Linq;
 
 public class OxygenCountdown : MonoBehaviour {
-    public float timeLeft;
-    public float rate;
+    public enum State
+    {
+        Running,
+        Refilling,
+        Ready,
+        Emergency
+    }
+    private State currentState;
+    public State CurrentState
+    {
+        get
+        {
+            return currentState;
+        }
+    }
+
+    private float timeLeft;
+    public float drainRate;
+    public float refillRate;
+
     public bool isActivated;
+
     public Slider OxygenBar;
-    public Text DebugText;
     public Image Fill;
 
 
@@ -20,37 +38,100 @@ public class OxygenCountdown : MonoBehaviour {
         //OxygenBar = GameObject.Find("OxygenBar").GetComponent<Slider>();
         //Fill = OxygenBar.GetComponentsInChildren<UnityEngine.UI.Image>().FirstOrDefault(t => t.name == "Fill");
         timeLeft = OxygenBar.maxValue;
+        currentState = State.Ready;
+
         //isActivated = true; // Handled by the SubmarineController
-        rate = 1f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (isActivated)
+        switch (currentState)
         {
-            timeLeft -= rate * Time.deltaTime;
-            OxygenBar.value = timeLeft;
-            if (timeLeft < 5)
-            {
-                if (Fill != null)
+            case State.Running:
+                if (isActivated)
                 {
-                    Fill.color = Color.red;
-                }
-            }
+                    timeLeft -= drainRate * Time.deltaTime;
+                    OxygenBar.value = timeLeft;
+                    if (timeLeft < OxygenBar.maxValue * 0.5)
+                    {
+                        if (Fill != null)
+                        {
+                            Fill.color = Color.red;
+                        }
+                    }
 
-            if (timeLeft < 0)
-            {
-                if (Fill != null)
-                {
-                    Fill.color = Color.black;
+                    if (timeLeft < 0)
+                    {
+                        if (Fill != null)
+                        {
+                            Fill.color = Color.black;
+                        }
+                        timeLeft = 0f;
+                        currentState = State.Emergency;
+                    }
                 }
-                DebugText.text = "Game Over";
-            }
+                break;
+            case State.Refilling:
+                if (isActivated)
+                {
+                    timeLeft += refillRate * Time.deltaTime;
+                    if (timeLeft < OxygenBar.maxValue * 0.5)
+                    {
+                        if (Fill != null)
+                        {
+                            Fill.color = Color.red;
+                        }
+                    }
+                    else if (timeLeft < 0)
+                    {
+                        if (Fill != null)
+                        {
+                            Fill.color = Color.black;
+                        }
+                    }
+                    else
+                    {
+                        if (Fill != null)
+                        {
+                            Fill.color = Color.blue;
+                        }
+                    }
+
+                    if (timeLeft > OxygenBar.maxValue)
+                    {
+                        timeLeft = OxygenBar.maxValue;
+                        currentState = State.Ready;
+                    }
+
+                    OxygenBar.value = timeLeft;
+                }
+                break;
+            case State.Ready:
+                break;
+            case State.Emergency:
+                //TODO: Make this spend cash to "power" the submarine.
+                break;
         }
-        else {
-            timeLeft = OxygenBar.maxValue;
-            OxygenBar.value = timeLeft;
-        }
+        
 	}
 
+    public void StartRunning ()
+    {
+        currentState = State.Running;
+    }
+
+    public void StartRefilling ()
+    {
+        currentState = State.Refilling;
+    }
+
+    public bool IsReady()
+    {
+        return currentState == State.Ready;
+    }
+
+    public bool IsEmergency()
+    {
+        return currentState == State.Emergency;
+    }
 }

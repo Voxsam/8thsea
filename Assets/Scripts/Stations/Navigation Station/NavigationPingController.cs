@@ -54,7 +54,7 @@ public class NavigationPingController : MonoBehaviour {
                 if (currentLifespan <= lifespan)
                 {
                     //currentSize = (initialSpeed * currentLifespan) + (acceleration * currentLifespan * currentLifespan);
-                    currentSize = QuadEaseOut(currentLifespan, 0, finalSize, lifespan);
+                    currentSize = GameData.QuadEaseOut(currentLifespan, 0, finalSize, lifespan);
                     imageRectTransform.sizeDelta = new Vector2(currentSize, currentSize);
 
                     Color c = navigationPingImage.color;
@@ -95,22 +95,6 @@ public class NavigationPingController : MonoBehaviour {
         ((viewportPosition.y * canvasRectTransform.sizeDelta.y) - (canvasRectTransform.sizeDelta.y * 0.5f)));
         imageRectTransform.anchoredPosition = worldObjectScreenPosition;
     }
-
-    private float QuadEaseInOut (float currentTime, float initialValue, float changeValue, float duration)
-    {
-        if ((currentTime /= duration / 2) < 1)
-        {
-            return changeValue / 2 * currentTime * currentTime + initialValue;
-        }
-	    return -changeValue / 2 * ((--currentTime) *(currentTime - 2) - 1) + initialValue;
-    }
-
-    private float QuadEaseOut (float currentTime, float initialValue, float changeValue, float duration)
-    {
-        currentTime /= duration;
-        return -changeValue * currentTime * (currentTime - 2) + initialValue;
-    }
-
 #region Getters/Setters
 public Vector3 TargetLocation
     {

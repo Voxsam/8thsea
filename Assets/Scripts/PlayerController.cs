@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
     private GameData.ControlType controlMode;
     private PlayerInteractionController interactionController;
     private PlayerAnimationController animationController;
-    public CameraController cameraController;
+    public CameraController cameraController; //Deprecated, please remove as soon as everything has been ported over to PlayerCameraController.
 	public PlayerCameraController pCameraController;
 
 	public Player player;
@@ -76,15 +76,15 @@ public class PlayerController : MonoBehaviour {
         ControlMode = GameData.ControlType.CHARACTER;
     }
 		
-    public void AssignCameraToPlayer(CameraController cc)
+    public void AssignCameraToPlayer(PlayerCameraController cc)
     {
-        cameraController = cc;
+        pCameraController = cc;
         ReattachCameraToPlayer();
     }
 
     public void ReattachCameraToPlayer()
     {
-        cameraController.SetCameraToObject(this.gameObject);
+        pCameraController.SetCameraToObject(this.gameObject);
     }
     #endregion
 

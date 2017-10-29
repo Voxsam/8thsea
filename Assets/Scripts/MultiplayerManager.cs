@@ -14,13 +14,11 @@ public class MultiplayerManager : MonoBehaviour {
 	public List<PlayerController> playerControllerList;
 
 	// The player prefab that should have a PlayerController component attached to it.
-	public GameObject playerPrefab;
+	public GameObject player1Prefab;
+    public GameObject player2Prefab;
 
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
-
-	public GameObject playerPanelPrefab;
-	public GameObject mainCanvas;
 
 	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;
@@ -33,12 +31,11 @@ public class MultiplayerManager : MonoBehaviour {
 			Obj = this;
 			playerControllerList = new List<PlayerController> ();
 		}
-
 		else
 		{
 			Destroy(this.gameObject);
 		}
-				
+			
 		DontDestroyOnLoad(this.gameObject);
 
 	}
@@ -53,26 +50,23 @@ public class MultiplayerManager : MonoBehaviour {
 			pList.numPlayers = 2;
 		}
 
-		// For each player in the player list
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
-			// Instantiate a new player, camera and panel
-			GameObject player = Instantiate (playerPrefab);
+          
+			GameObject player = (i % 2 == 0) ?  Instantiate (player1Prefab) : Instantiate(player2Prefab);
 			GameObject camera = Instantiate (playerCameraPrefab);
-			GameObject panel = Instantiate (playerPanelPrefab);
+            if (i > 0)
+            {
+                Destroy(camera.GetComponent<AudioListener>());
+            }
 
-			panel.transform.SetParent (mainCanvas.transform); // Set panel parent to main panel.
-
-			player.transform.position = spawnPoints [i].transform.position; // Move them to a spawn point
+			player.transform.position = spawnPoints [i].transform.position;
 			PlayerController pCtrl = player.GetComponent<PlayerController> ();
-
-			pCtrl.Setup (PlayerList.Obj.playerList [i],
-				camera.GetComponent<PlayerCameraController> (),
-				PlayerList.Obj.playerList [i].controls,
-				panel.GetComponent<PlayerPanelController> ());
+			pCtrl.player = PlayerList.Obj.playerList [i];
+			pCtrl.pCameraController = camera.GetComponent<PlayerCameraController> ();
+			pCtrl.pCameraController.player = pCtrl;
+			pCtrl.controls = PlayerList.Obj.playerList [i].controls;
 			playerControllerList.Add (pCtrl);
-
-			panel.GetComponent<PlayerPanelController> ().Setup (PlayerList.Obj.playerList [i]);
 
 		}
 

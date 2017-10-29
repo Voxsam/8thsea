@@ -91,7 +91,7 @@ public class PlayerInteractionController : MonoBehaviour
         {
             case State.Hold:
                 // Discard
-                if (GameController.Obj.ButtonB_Down)
+                if (player.controls.GetCancelKeyDown())
                 {
                     if (heldObject != null && currentSecondaryState == SecondaryState.Idle)
                     {
@@ -109,7 +109,7 @@ public class PlayerInteractionController : MonoBehaviour
         switch (currentSecondaryState)
         {
             case SecondaryState.View:
-                if (GameController.Obj.ButtonA_Down)
+                if (player.controls.GetActionKeyDown())
                 {
                     if (atObject != null)
                     {
@@ -142,7 +142,7 @@ public class PlayerInteractionController : MonoBehaviour
         IInteractable otherInteractableScript = (IInteractable)other.GetComponent(typeof(IInteractable));
         if (otherInteractableScript != null)
         {
-            otherInteractableScript.ToggleHighlight(highlight);
+            otherInteractableScript.ToggleHighlight(player, highlight);
         }
     }
 
@@ -152,7 +152,7 @@ public class PlayerInteractionController : MonoBehaviour
         if (heldObjectInteractableScript != null)
         {
             heldObjectInteractableScript.Interact();
-            heldObjectInteractableScript.ToggleHighlight(false);
+            heldObjectInteractableScript.ToggleHighlight(player, false);
         }
 
         if (attach)

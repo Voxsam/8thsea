@@ -106,12 +106,13 @@ public class GameData : MonoBehaviour
         STATION,
     };
 
-    public const int TOTAL_NUMBER_OF_FISHTYPES = 2;
+    public const int TOTAL_NUMBER_OF_FISHTYPES = 3;
     public enum FishType
     {
         None = -1, // Default value
         ClownFish = 0,
-        PufferFish
+        PufferFish,
+        UnicornFish
     };
 
     public enum StationType
@@ -122,10 +123,12 @@ public class GameData : MonoBehaviour
     };
 
     public const float PAYMENT_INTERVAL = 60f;
-    public const int PAYMENT_AMOUNT = 100;
+    public const int STARTING_MONEY = 500;
     
     [SerializeField] private Transform DefaultEmptyFishPrefab;
-    [SerializeField] private Transform OrangeFishPrefab;
+    [SerializeField] private Transform ClownFishPrefab;
+    [SerializeField] private Transform PufferFishPrefab;
+    [SerializeField] private Transform UnicornFishPrefab;
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -136,6 +139,9 @@ public class GameData : MonoBehaviour
         new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
             StationType.Massage, StationType.Clean
         }),
+        new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
+            StationType.Massage, StationType.Clean
+        }),
     };
 
     // Research Station management
@@ -144,6 +150,22 @@ public class GameData : MonoBehaviour
         new ResearchStationParameters(StationType.Massage),
         new ResearchStationParameters(StationType.Clean)
     };
+
+    //Easing functions.
+    public static float QuadEaseInOut (float currentTime, float initialValue, float changeValue, float duration)
+    {
+        if ((currentTime /= duration / 2) < 1)
+        {
+            return changeValue / 2 * currentTime * currentTime + initialValue;
+        }
+	    return -changeValue / 2 * ((--currentTime) *(currentTime - 2) - 1) + initialValue;
+    }
+
+    public static float QuadEaseOut (float currentTime, float initialValue, float changeValue, float duration)
+    {
+        currentTime /= duration;
+        return -changeValue * currentTime * (currentTime - 2) + initialValue;
+    }
 
     #region Getter and setters
 
@@ -166,12 +188,15 @@ public class GameData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Creates a new Fish with that FishType at location
+    /// </summary>
     public static FishController CreateNewFish(FishType type, Vector3 locationToSpawn)
     {
         FishController fish = null;
         try
         {
-            fish = Instantiate(Obj.DefaultEmptyFishPrefab).GetComponent<FishController>();
+            fish = Instantiate(Obj.DefaultEmptyFishPrefab, locationToSpawn, Quaternion.identity).GetComponent<FishController>();
         }
         catch
         {
@@ -181,10 +206,26 @@ public class GameData : MonoBehaviour
 
         if (fish != null)
         {
+            Transform prefab;
+
+            switch(type)
+            {
+                case FishType.ClownFish:
+                    prefab = Obj.ClownFishPrefab;
+                    break;
+                case FishType.UnicornFish:
+                    prefab = Obj.UnicornFishPrefab;
+                    break;
+                case FishType.PufferFish:
+                default:
+                    prefab = Obj.PufferFishPrefab;
+                    break;
+            }
+
             try
             {
-                Transform model = Instantiate(Obj.OrangeFishPrefab, fish.transform);
-                fish.Setup(type, model.GetComponentInChildren<MeshRenderer>());
+                Transform model = Instantiate(prefab, fish.transform);
+                fish.Setup(type, model.GetComponentInChildren<SkinnedMeshRenderer>(), model.GetComponentInChildren<Animator>());
             }
             catch
             {
@@ -192,6 +233,19 @@ public class GameData : MonoBehaviour
             }
         }
 
+        return fish;
+    }
+
+    /// <summary>
+    /// Creates a new Fish at the transform location with the transform as parent
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="locationToSpawn"></param>
+    /// <returns></returns>
+    public static FishController CreateNewFish(FishType type, Transform parent)
+    {
+        FishController fish = CreateNewFish(type, parent.position);
+        fish.transform.SetParent(parent);
         return fish;
     }
     #endregion

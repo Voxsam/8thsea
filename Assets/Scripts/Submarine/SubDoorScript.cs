@@ -23,11 +23,14 @@ public class SubDoorScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController player = GameController.Obj.GetPlayerFromCollider(other);
-        if (player != null)
-        {
-            subCtrl.OpenDoorAnim();
-            doorCollider.enabled = false;
+        if (!subCtrl.IsActivated)
+        { 
+            PlayerController player = GameController.Obj.GetPlayerFromCollider(other);
+            if (player != null)
+            {
+                subCtrl.OpenDoorAnim();
+                doorCollider.enabled = false;
+            }
         }
     }
    

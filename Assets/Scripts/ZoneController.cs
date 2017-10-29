@@ -71,8 +71,13 @@ public class ZoneController : MonoBehaviour {
 	
     protected IEnumerator SpawnSchools()
     {
-        if (fishSchools.Count < numSchools)
-        { 
+        int rand = Random.Range(3, 5);
+        for (int i = 0; i < rand; i++)
+        {
+            if (fishSchools.Count >= numSchools)
+            {
+                yield return null;
+            }
             int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
             GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
 
@@ -101,9 +106,10 @@ public class ZoneController : MonoBehaviour {
                 newFish.SetRigidbody(false);
                 fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
-
             fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
-
+        }
+        if (fishSchools.Count < numSchools)
+        {
             yield return new WaitForSeconds(fishSchoolSpawnDelay);
         }
         yield return null;

@@ -12,13 +12,21 @@ public class AquariumStationController : StationControllerInterface
 
     [SerializeField]
     public GameObject fishSchool;
+    [System.Serializable]
+    public struct ResearchRequirements
+    {
+        public GameData.FishType fishType;
+        public GameObject templateObject;
+    }
     [SerializeField]
-    public GameObject fishResearchRequirementsTemplate;
+    public ResearchRequirements[] researchRequirementTemplates;
 
-    private GameObject holdSlot;
-    private GameObject worldspaceCanvas;
-    private GameObject warningText;
+    [SerializeField] private GameObject holdSlot;
+    [SerializeField] private GameObject worldspaceCanvas;
+    [SerializeField] private GameObject warningText;
+    [SerializeField] private GameObject researchReqAnchor;
     private float warningTextLifespan = 0;
+    private float selectInterval = 0;
 
     private Dictionary<GameData.FishType, GameObject> fishSchools;
     private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
@@ -27,15 +35,12 @@ public class AquariumStationController : StationControllerInterface
     // Use this for initialization
     void Start()
     {
-        holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
-        worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
-        warningText = worldspaceCanvas.transform.Find("Feedback").gameObject;
         warningText.SetActive(false);
 
         fishSchools = new Dictionary<GameData.FishType, GameObject>();
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
 
-        for (GameData.FishType fishType = GameData.FishType.ClownFish; (int)fishType < GameData.TOTAL_NUMBER_OF_FISHTYPES; fishType++)
+        for (int i = 0; i < researchRequirementTemplates.Length; i++)
         {
             GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
             newFishSchool.transform.position = holdSlot.transform.position;
@@ -43,13 +48,13 @@ public class AquariumStationController : StationControllerInterface
             fishSchoolController.zoneWidth = 10;
             fishSchoolController.zoneLength = 5;
             fishSchoolController.zoneHeight = 10;
-            fishSchools.Add(fishType, newFishSchool);
+            fishSchools.Add(researchRequirementTemplates[i].fishType, newFishSchool);
 
-            GameObject newFishResearchRequirements = (GameObject)Instantiate(fishResearchRequirementsTemplate);
-            newFishResearchRequirements.transform.SetParent(worldspaceCanvas.transform, false);
-            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init(fishType);
-            newFishResearchRequirements.GetComponent<RectTransform>().anchoredPosition = new Vector2(((int)fishType * 500), 500);
-            fishResearchRequirements.Add(fishType, newFishResearchRequirements);
+            GameObject newFishResearchRequirements = (GameObject)Instantiate(researchRequirementTemplates[i].templateObject);
+            newFishResearchRequirements.transform.SetParent(researchReqAnchor.transform, false);
+            newFishResearchRequirements.transform.Translate(0 + (i * 5), 0, 0);
+            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init(researchRequirementTemplates[i].fishType);
+            fishResearchRequirements.Add(researchRequirementTemplates[i].fishType, newFishResearchRequirements);
         }
     }
 
@@ -71,23 +76,32 @@ public class AquariumStationController : StationControllerInterface
 
         if (this.IsActivated)
         {
-            if (playerInStation.controls.GetHorizontalAxis() > 0.2)
+            if (selectInterval > 0.2f)
             {
-                if ((int)selectedResearchRequirementIndex < (GameData.TOTAL_NUMBER_OF_FISHTYPES - 1))
+                if (playerInStation.controls.GetHorizontalAxis() > 0)
                 {
-                    fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
-                    selectedResearchRequirementIndex++;
-                    fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
+                    selectInterval = 0;
+                    if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+                    {
+                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Deselect();
+                        selectedResearchRequirementIndex++;
+                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                }
+                else if (playerInStation.controls.GetHorizontalAxis() < 0)
+                {
+                    selectInterval = 0;
+                    if ((int)selectedResearchRequirementIndex > 0)
+                    {
+                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Deselect();
+                        selectedResearchRequirementIndex--;
+                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
+                    }
                 }
             }
-            else if (playerInStation.controls.GetHorizontalAxis() < -0.2)
+            else
             {
-                if ((int)selectedResearchRequirementIndex > 0)
-                {
-                    fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
-                    selectedResearchRequirementIndex--;
-                    fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
-                }
+                selectInterval += Time.deltaTime;
             }
 
             if (playerInStation.controls.GetCancelKeyDown())
@@ -181,14 +195,14 @@ public class AquariumStationController : StationControllerInterface
     public override void WhenActivated()
     {
         selectedResearchRequirementIndex = GameData.FishType.ClownFish;
-        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
+        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
     }
 
     public override void WhenDeactivated()
     {
         foreach (KeyValuePair<GameData.FishType, GameObject> researchRequirement in fishResearchRequirements)
         {
-            researchRequirement.Value.GetComponent<ResearchRequirementsController>().ToggleFishDetails(false);
+            researchRequirement.Value.GetComponent<ResearchRequirementsController>().Deselect();
         }
     }
 

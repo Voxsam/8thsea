@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +13,20 @@ public class GameController : MonoBehaviour {
     KeyCode BUTTON_A_JOYSTICK = KeyCode.JoystickButton0;
     KeyCode BUTTON_B_JOYSTICK = KeyCode.JoystickButton1;
     
+	private DateTime gameDate;
+	private int money;
+
     // Submarine Management
     public static SubmarineController SubmarineRef
     {
         get { return SubmarineController.Obj; }
     }
+
+	void Start() {
+		gameDate = new DateTime( 2017, 1, 1 );
+
+		InvokeRepeating ("AddDay", 1.0f, 0.1f);	
+	}
 
     // Player management
     protected List<PlayerController> players;
@@ -49,8 +59,7 @@ public class GameController : MonoBehaviour {
 
     // Money
 	public Text moneyText;
-	public float currentMoney;
-    
+	public Text dateText;
 
 	void Awake() {
         if (Obj == null)
@@ -211,11 +220,23 @@ public class GameController : MonoBehaviour {
     #endregion
 
     public void AddMoney(int amount) {
-		currentMoney += amount;
+		money += amount;
 	}
 
 	public void RemoveMoney(int amount) {
-		currentMoney -= amount;
+		money -= amount;
+	}
+
+	public void AddDay() {
+		gameDate = gameDate.AddDays( 1 );
+
+		if (gameDate.Day == 1) {
+			AddMoney (10);
+		}
+
+		if (money > 1) {
+			RemoveMoney (1);
+		}
 	}
 
     /// <summary>
@@ -280,7 +301,7 @@ public class GameController : MonoBehaviour {
         Sea.transform.SetParent(this.transform);
         Lab.transform.SetParent(this.transform);
 
-        currentMoney = GameData.STARTING_MONEY;
+		money = GameData.STARTING_MONEY;
         GameOverText.enabled = false;
 
         RNG = new System.Random();
@@ -293,14 +314,13 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        currentMoney -= Time.deltaTime;
-
-        moneyText.text = "$" + ( (int)currentMoney).ToString();
+        moneyText.text = "$" + ((int)money).ToString();
+		dateText.text = gameDate.ToString ("dd.MM.yyyy");
     }
 
     void Update()
     {
-        if (currentMoney > 0)
+		if (money > 0)
         {
             // Handle the update loops for the others too
             foreach (PlayerController player in players)

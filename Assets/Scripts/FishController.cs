@@ -271,8 +271,6 @@ public class FishController : IInteractable {
 
     override public void Interact (GameObject otherActor)
     {
-		print (currentState);
-
 		switch (currentState) {
 		case State.Idle:
 		case State.Placed:
@@ -281,7 +279,7 @@ public class FishController : IInteractable {
 			break;
 		case State.Held:
 			PutDown ();
-			otherActor.GetComponent<PlayerController> ().panel.HideFishDetailsPanel ();
+			otherActor.GetComponent<PlayerController> ().panel.HideBottomLeftPanel ();
 			break;
 		default:
 			break;

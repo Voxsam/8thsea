@@ -10,7 +10,7 @@ public class PlayerPanelController : MonoBehaviour {
 	private float mainCanvasWidth;
 	private float mainCanvasHeight;
 
-	public GameObject fishDetailsPanel;
+	public GameObject bottomLeftPanel;
 
 	void Awake () {
 		mainCanvas = GameObject.FindGameObjectWithTag ("Main Canvas").GetComponent<Canvas> ();
@@ -37,6 +37,7 @@ public class PlayerPanelController : MonoBehaviour {
 		case 2:
 
 			if (p.playerNumber == 1) {
+				rectTrans.anchorMin = new Vector2 (0, 0);
 				rectTrans.anchorMax = new Vector2 (0.5f, 1f);
 			} else {
 				rectTrans.anchorMin = new Vector2 (0.5f, 0);
@@ -78,7 +79,7 @@ public class PlayerPanelController : MonoBehaviour {
 
 	public void ShowFishDetailsPanel (string fishName, FishController.ResearchProtocol[] protocols)
 	{
-		fishDetailsPanel.SetActive (true);
+		bottomLeftPanel.SetActive (true);
 
 		string formatted = "<color=blue><b>" + fishName + "</b></color> \n";
 
@@ -90,14 +91,24 @@ public class PlayerPanelController : MonoBehaviour {
 			}
 		}
 
-		fishDetailsPanel.GetComponentInChildren<Text> ().text = formatted;
+		bottomLeftPanel.GetComponentInChildren<Text> ().text = formatted;
 	}
 
-	public void HideFishDetailsPanel ()
+	public void ShowInBottomLeftPanel (string content)
 	{
-		fishDetailsPanel.SetActive (false);
+		bottomLeftPanel.SetActive (true);
+		bottomLeftPanel.GetComponentInChildren<Text> ().text = content;
 	}
 
+	public void HideBottomLeftPanel ()
+	{
+		bottomLeftPanel.SetActive (false);
+	}
+
+
+	public RectTransform GetRectTransform {
+		get { return GetComponent<RectTransform> (); }
+	}
 
 		
 }

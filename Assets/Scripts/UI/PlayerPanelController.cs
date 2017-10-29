@@ -84,7 +84,9 @@ public class PlayerPanelController : MonoBehaviour {
 		string formatted = "<color=blue><b>" + fishName + "</b></color> \n";
 
 		for (int i = 0; i < protocols.Length; i++) {
+			print (protocols [i].researchStation + " " + protocols [i].complete);
 			if (protocols[i].complete) { 
+				
 				formatted += "<color=green>" + (i + 1) + ". " + protocols [i].researchStation + "</color> \n"; 
 			} else {
 				formatted += "<color=red>" + (i + 1) + ". " + protocols [i].researchStation + "</color> \n"; 

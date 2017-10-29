@@ -90,7 +90,7 @@ public class FishController : IInteractable {
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
-        fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
+        // fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
         fishDetails.name = gameObject.ToString();
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);
@@ -321,6 +321,7 @@ public class FishController : IInteractable {
     {
         //Eventually move this color change thing to a ResearchProtocolController.
         researchProtocols[currentResearchProtocol].researchProtocolObject.GetComponent<Image>().color = Color.green;
+		researchProtocols [currentResearchProtocol].complete = true;
         currentResearchProtocol++;
         if ( currentResearchProtocol >= researchProtocols.Length )
         {

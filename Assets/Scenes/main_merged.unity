@@ -344,7 +344,7 @@ Prefab:
         type: 2}
       propertyPath: oxygenCountdownController
       value: 
-      objectReference: {fileID: 773701667}
+      objectReference: {fileID: 0}
     - target: {fileID: 4076742661870792, guid: d2267debe64660c4897da9141773fef0, type: 2}
       propertyPath: m_RootOrder
       value: 2
@@ -674,12 +674,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 72.775, y: 2.903, z: 11.734}
---- !u!114 &773701667 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114319171684259354, guid: 88e4b4de75c2d4740846a554e9aeb778,
-    type: 2}
-  m_PrefabInternal: {fileID: 964179534}
-  m_Script: {fileID: 11500000, guid: 5283febfbb871dc4184520eac499b6a0, type: 3}
 --- !u!1 &849147867
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,12 +894,12 @@ Prefab:
       propertyPath: Lab
       value: 
       objectReference: {fileID: 1609925036}
-    - target: {fileID: 224119247653198238, guid: 88e4b4de75c2d4740846a554e9aeb778,
+    - target: {fileID: 224335737052578340, guid: 88e4b4de75c2d4740846a554e9aeb778,
         type: 2}
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224119247653198238, guid: 88e4b4de75c2d4740846a554e9aeb778,
+    - target: {fileID: 224335737052578340, guid: 88e4b4de75c2d4740846a554e9aeb778,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1672,8 +1666,8 @@ GameObject:
   - component: {fileID: 1789996810}
   - component: {fileID: 1789996809}
   m_Layer: 5
-  m_Name: Canvas
-  m_TagString: Untagged
+  m_Name: Main Canvas
+  m_TagString: Main Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

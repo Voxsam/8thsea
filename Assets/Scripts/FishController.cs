@@ -35,6 +35,9 @@ public class FishController : IInteractable {
         Researched
     };
 
+	// Const
+	public const string ANIMATOR_SWIM = "Swim";
+
     State currentState;
     SecondaryState currentSecondaryState;
     
@@ -50,11 +53,12 @@ public class FishController : IInteractable {
     private Color originalColor;
     private Vector3 caughtPosition;
     private FishSchoolController fishSchoolController;
+	private Animator fishAnimator = null;
 
     // GameObjects used by this class
     public Rigidbody rb;
 
-    [SerializeField] private MeshRenderer fishRenderer;
+	[SerializeField] private SkinnedMeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
     [SerializeField] private Text DeadText;
     [SerializeField] private RectTransform PanicBarRect;
@@ -93,43 +97,50 @@ public class FishController : IInteractable {
 
         if (fishType != GameData.FishType.None)
         {
-            fishRenderer = GetComponentInChildren<MeshRenderer>();
+			fishRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             Setup();
         }
 
         SetEnabled(false);
     }
 
-    public void Setup(GameData.FishType type, MeshRenderer mesh) {
-        fishType = type;
-        fishRenderer = mesh;
+	public void Setup(GameData.FishType type, SkinnedMeshRenderer mesh, Animator animator) {
+		fishType = type;
+		fishRenderer = mesh;
+		fishAnimator = animator;
 
-        Setup();
-    }
+		Setup();
+	}
 
-    private void Setup() {
-        originalColor = fishRenderer.material.color;
+	private void Setup() {
+		originalColor = fishRenderer.material.color;
 
-        researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
-        for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
-        {
-            GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
-            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
-            researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
-            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 550);
-            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
-            researchProtocolUIObject.SetActive(false);
-            researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
-        }
+		researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
+		for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
+		{
+			GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
+			GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
+			researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
+			researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 1400);
+			researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
+			researchProtocolUIObject.SetActive(false);
+			researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
+		}
 
-        SetEnabled(false);
-        // Use the FishParameters for this
-        //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
-        //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
-        //{
-        //    researchProtocols[i] = GameData.GetFishParameter(fishType).researchProtocols[i];
-        //}
-    }
+		// Enable the fish to swim
+		if (fishAnimator != null)
+		{
+			fishAnimator.SetTrigger(ANIMATOR_SWIM);
+		}
+
+		SetEnabled(false);
+		// Use the FishParameters for this
+		//researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
+		//for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
+		//{
+		//    researchProtocols[i] = GameData.GetFishParameter(fishType).researchProtocols[i];
+		//}
+	}
 	
 	// Update is called once per frame
 	void Update () {

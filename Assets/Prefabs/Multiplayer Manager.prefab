@@ -61,6 +61,8 @@ MonoBehaviour:
     type: 2}
   playerCameraPrefab: {fileID: 1924205488253524, guid: dcf092702cab29842b1beef3abf77e6a,
     type: 2}
+  playerPanelPrefab: {fileID: 1843861115275928, guid: f90a4fc304ceaa544b3f51019c29c9a9,
+    type: 2}
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}

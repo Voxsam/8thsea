@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FishController : IInteractable {
-    private struct ResearchProtocol
+    public struct ResearchProtocol
     {
         public GameData.StationType researchStation;
         public bool complete;
@@ -35,8 +35,8 @@ public class FishController : IInteractable {
         Researched
     };
 
-    // Const
-    public const string ANIMATOR_SWIM = "Swim";
+	// Const
+	public const string ANIMATOR_SWIM = "Swim";
 
     State currentState;
     SecondaryState currentSecondaryState;
@@ -53,12 +53,12 @@ public class FishController : IInteractable {
     private Color originalColor;
     private Vector3 caughtPosition;
     private FishSchoolController fishSchoolController;
-    private Animator fishAnimator = null;
+	private Animator fishAnimator = null;
 
     // GameObjects used by this class
     public Rigidbody rb;
 
-    [SerializeField] private SkinnedMeshRenderer fishRenderer;
+	[SerializeField] private SkinnedMeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
     [SerializeField] private Text DeadText;
     [SerializeField] private RectTransform PanicBarRect;
@@ -90,59 +90,57 @@ public class FishController : IInteractable {
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
-
-        //FIX THIS WHEN CANVAS IS FIXED.
-        //fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
+        fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
         fishDetails.name = gameObject.ToString();
         fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
         fishDetails.SetActive(false);
 
         if (fishType != GameData.FishType.None)
         {
-            fishRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+			fishRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             Setup();
         }
 
         SetEnabled(false);
     }
 
-    public void Setup(GameData.FishType type, SkinnedMeshRenderer mesh, Animator animator) {
-        fishType = type;
-        fishRenderer = mesh;
-        fishAnimator = animator;
+	public void Setup(GameData.FishType type, SkinnedMeshRenderer mesh, Animator animator) {
+		fishType = type;
+		fishRenderer = mesh;
+		fishAnimator = animator;
 
-        Setup();
-    }
+		Setup();
+	}
 
-    private void Setup() {
-        originalColor = fishRenderer.material.color;
+	private void Setup() {
+		originalColor = fishRenderer.material.color;
 
-        researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
-        for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
-        {
-            GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
-            GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
-            researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
-            researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 1400);
-            researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
-            researchProtocolUIObject.SetActive(false);
-            researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
-        }
+		researchProtocols = new ResearchProtocol[GameData.GetFishParameters(fishType).ResearchProtocols.Length];
+		for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
+		{
+			GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
+			GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
+			researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
+			researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 1400);
+			researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
+			researchProtocolUIObject.SetActive(false);
+			researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
+		}
 
-        // Enable the fish to swim
-        if (fishAnimator != null)
-        {
-            fishAnimator.SetTrigger(ANIMATOR_SWIM);
-        }
+		// Enable the fish to swim
+		if (fishAnimator != null)
+		{
+			fishAnimator.SetTrigger(ANIMATOR_SWIM);
+		}
 
-        SetEnabled(false);
-        // Use the FishParameters for this
-        //researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
-        //for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
-        //{
-        //    researchProtocols[i] = GameData.GetFishParameter(fishType).researchProtocols[i];
-        //}
-    }
+		SetEnabled(false);
+		// Use the FishParameters for this
+		//researchProtocols = new GameData.StationType[GameData.GetFishParameter(fishType).researchProtocols.Length];
+		//for (int i = 0; i < GameData.GetFishParameter(fishType).researchProtocols.Length; i++)
+		//{
+		//    researchProtocols[i] = GameData.GetFishParameter(fishType).researchProtocols[i];
+		//}
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -166,11 +164,6 @@ public class FishController : IInteractable {
                     panicTimer = 0f;
                     DeadText.text = "d e d";
                     DeadText.enabled = true;
-
-                    foreach (ResearchProtocol researchProtocol in researchProtocols)
-                    {
-                        researchProtocol.researchProtocolObject.SetActive(false);
-                    }
                 }
 
                 PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameters(fishType).panicTimerLength, PanicBarRect.rect.height);
@@ -216,10 +209,10 @@ public class FishController : IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             PanicBarRect.gameObject.SetActive(true);
-        }
-        foreach (ResearchProtocol researchProtocol in researchProtocols)
-        {
-            researchProtocol.researchProtocolObject.SetActive(true);
+            foreach (ResearchProtocol researchProtocol in researchProtocols)
+            {
+                researchProtocol.researchProtocolObject.SetActive(true);
+            }
         }
     }
 
@@ -231,11 +224,6 @@ public class FishController : IInteractable {
             rb.detectCollisions = true;
         }
         currentState = State.Idle;
-
-        foreach (ResearchProtocol researchProtocol in researchProtocols)
-        {
-            researchProtocol.researchProtocolObject.SetActive(false);
-        }
     }
 
     public void PutIn ()
@@ -247,18 +235,14 @@ public class FishController : IInteractable {
         }
 
         currentState = State.Placed;
-
-        foreach (ResearchProtocol researchProtocol in researchProtocols)
-        {
-            researchProtocol.researchProtocolObject.SetActive(true);
-        }
     }
+
     public void SetEnabled(bool enabled)
-{
+	{
         SetRigidbody(enabled);
         WorldspaceCanvas.SetActive(enabled);
         this.enabled = enabled;
-    }
+    } 
 
     public void SetRigidbody(bool enabled)
     {
@@ -269,7 +253,7 @@ public class FishController : IInteractable {
         }
     }
 
-    override public void Interact ()
+	override public void Interact ()
     {
         switch (currentState)
         {
@@ -287,9 +271,22 @@ public class FishController : IInteractable {
 
     override public void Interact (GameObject otherActor)
     {
+		switch (currentState) {
+		case State.Idle:
+		case State.Placed:
+			PickUp ();
+			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel (fishType.ToString (), researchProtocols);
+			break;
+		case State.Held:
+			PutDown ();
+			otherActor.GetComponent<PlayerController> ().panel.HideBottomLeftPanel ();
+			break;
+		default:
+			break;
+		}
     }
 
-    override public void ToggleHighlight(PlayerController otherPlayerController, bool toggle = true)
+    override public void ToggleHighlight(PlayerController player, bool toggle = true)
     {
         if (toggle)
         {
@@ -379,4 +376,9 @@ public class FishController : IInteractable {
         }
     }
     #endregion
+
+	public State GetCurrentState {
+		get { return currentState; }
+	}
+
 }

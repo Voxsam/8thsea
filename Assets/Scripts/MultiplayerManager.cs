@@ -20,6 +20,8 @@ public class MultiplayerManager : MonoBehaviour {
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
 
+	public GameObject playerPanelPrefab;
+
 	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;
 
@@ -66,18 +68,19 @@ public class MultiplayerManager : MonoBehaviour {
 			pCtrl.pCameraController = camera.GetComponent<PlayerCameraController> ();
 			pCtrl.pCameraController.player = pCtrl;
 			pCtrl.controls = PlayerList.Obj.playerList [i].controls;
+
+			GameObject panel = Instantiate (playerPanelPrefab);
+			pCtrl.panel = panel.GetComponent <PlayerPanelController> ();
+			pCtrl.panel.Setup (pCtrl.player);
+
 			playerControllerList.Add (pCtrl);
 
 		}
 
 		GameController.Obj.SetPlayers (playerControllerList);
-
 		SetCameras ();
 
 	}
-
-
-
 
 	private void SetCameras() {
 

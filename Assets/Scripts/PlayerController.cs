@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Player player;
 	public ControlScheme controls;
+	public PlayerPanelController panel;
 
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;
@@ -120,6 +121,18 @@ public class PlayerController : MonoBehaviour {
 	public ControlScheme GetPlayerControls
 	{
 		get { return player.controls; }
+	}
+
+
+	// For use with MultiplayerManager
+	public void Setup (Player p, PlayerCameraController camCtrl, ControlScheme cs, PlayerPanelController pp) {
+
+		player = p;
+		pCameraController = camCtrl;
+		pCameraController.player = this;
+		controls = cs;
+		panel = pp;
+
 	}
 
 }

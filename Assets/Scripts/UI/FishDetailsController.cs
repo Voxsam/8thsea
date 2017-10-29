@@ -35,4 +35,6 @@ public class FishDetailsController : MonoBehaviour {
             rectTransform.anchoredPosition = ViewportPosition;
         }
     }
+
+
 }

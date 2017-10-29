@@ -1243,6 +1243,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114361089138597254, guid: bd08089bdefd3d14897b9340339305b4,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: ba20292deaf524549a755f362cffdd09,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd08089bdefd3d14897b9340339305b4, type: 2}
   m_IsPrefabParent: 0

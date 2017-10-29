@@ -3,8 +3,8 @@
 
 Shader "FX/Hologram Effect" {
 	Properties{
-		_TintColor("Tint Color", Color) = (0,0.5,1,1)
-		_RimColor("Rim Color", Color) = (0,1,1,1)
+		_TintColor("Tint Color", Color) = (0,0.5,1,0.5)
+		_RimColor("Rim Color", Color) = (0,1,1,0.5)
 		_MainTex("Main Texture", 2D) = "white" {}
 	_GlitchTime("Glitches Over Time", Range(0.01,3.0)) = 1.0
 		_WorldScale("Line Amount", Range(1,200)) = 20

@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 65999509030931998}
   - component: {fileID: 65001960048006234}
   m_Layer: 0
-  m_Name: WhaleFishMesh
+  m_Name: WhaleMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

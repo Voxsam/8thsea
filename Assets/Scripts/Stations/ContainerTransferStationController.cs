@@ -17,11 +17,13 @@ public class ContainerTransferStationController : IInteractable
 
     //Private variables
     private State currentState;
+    private Animator anim;
 
     // Use this for initialization
     void Start()
     {
         currentState = State.Idle;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -39,6 +41,7 @@ public class ContainerTransferStationController : IInteractable
         {
             if (currentState == State.Idle)
             {
+                anim.SetTrigger("useLever");
                 for (int sourceContainerIterator = 0; sourceContainerIterator < containersSource.Length; sourceContainerIterator++)
                 {
                     ContainerStationController sourceContainerControllerScript = (ContainerStationController)containersSource[sourceContainerIterator].GetComponent(typeof(ContainerStationController));

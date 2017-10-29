@@ -76,10 +76,21 @@ public class PlayerPanelController : MonoBehaviour {
 
 	}
 
-	public void ShowFishDetailsPanel ()
+	public void ShowFishDetailsPanel (string fishName, FishController.ResearchProtocol[] protocols)
 	{
 		fishDetailsPanel.SetActive (true);
-		//fishDetailsPanel.GetComponentInChildren<Text> ().text = details;
+
+		string formatted = "<color=blue><b>" + fishName + "</b></color> \n";
+
+		for (int i = 0; i < protocols.Length; i++) {
+			if (protocols[i].complete) { 
+				formatted += "<color=green>" + (i + 1) + ". " + protocols [i].researchStation + "</color> \n"; 
+			} else {
+				formatted += "<color=red>" + (i + 1) + ". " + protocols [i].researchStation + "</color> \n"; 
+			}
+		}
+
+		fishDetailsPanel.GetComponentInChildren<Text> ().text = formatted;
 	}
 
 	public void HideFishDetailsPanel ()

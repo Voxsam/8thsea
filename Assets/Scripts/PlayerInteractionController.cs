@@ -198,6 +198,7 @@ public class PlayerInteractionController : MonoBehaviour
                     player.IsPlayerAllowedToMove = true;
                 }));
             }));
+
         }
     }
 

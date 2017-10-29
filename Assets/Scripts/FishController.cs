@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FishController : IInteractable {
-    private struct ResearchProtocol
+    public struct ResearchProtocol
     {
         public GameData.StationType researchStation;
         public bool complete;
@@ -271,15 +271,17 @@ public class FishController : IInteractable {
 
     override public void Interact (GameObject otherActor)
     {
+		print (currentState);
+
 		switch (currentState) {
 		case State.Idle:
 		case State.Placed:
 			PickUp ();
-			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel ();
+			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel (fishType.ToString (), researchProtocols);
 			break;
 		case State.Held:
 			PutDown ();
-			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel ();
+			otherActor.GetComponent<PlayerController> ().panel.HideFishDetailsPanel ();
 			break;
 		default:
 			break;
@@ -376,5 +378,9 @@ public class FishController : IInteractable {
         }
     }
     #endregion
+
+	public State GetCurrentState {
+		get { return currentState; }
+	}
 
 }

@@ -13,6 +13,8 @@ public class PlayerPanelController : MonoBehaviour {
 	public GameObject bottomLeftPanel;
 	public GameObject centerPanel;
 
+
+
 	void Awake () {
 		mainCanvas = GameObject.FindGameObjectWithTag ("Main Canvas").GetComponent<Canvas> ();
 		mainCanvasWidth = mainCanvas.GetComponent<RectTransform> ().rect.width;

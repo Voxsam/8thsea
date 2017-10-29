@@ -22,8 +22,6 @@ public class MultiplayerManager : MonoBehaviour {
 	public GameObject playerPanelPrefab;
 	public GameObject mainCanvas;
 
-	public GameObject textTestPrefab;
-
 	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;
 
@@ -75,8 +73,6 @@ public class MultiplayerManager : MonoBehaviour {
 			playerControllerList.Add (pCtrl);
 
 			panel.GetComponent<PlayerPanelController> ().Setup (PlayerList.Obj.playerList [i]);
-
-			pCtrl.panel.ShowInPanel (Instantiate (textTestPrefab));
 
 		}
 

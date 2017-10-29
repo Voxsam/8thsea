@@ -346,4 +346,7 @@ public class FishController : IInteractable {
         }
     }
     #endregion
+
+	void ShowFishDetailsOnPlayerPanel (PlayerController p) {
+	}
 }

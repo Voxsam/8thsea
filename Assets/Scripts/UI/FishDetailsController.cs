@@ -36,7 +36,5 @@ public class FishDetailsController : MonoBehaviour {
         }
     }
 
-	public void ShowFishDetailsToPlayer(PlayerController p)
-	{
-	}
+
 }

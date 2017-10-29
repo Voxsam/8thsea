@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoneController : MonoBehaviour {
+public class ZoneController : MonoBehaviour
+{
     //X
     [SerializeField] public int zoneWidth;
     //Y
@@ -32,7 +33,8 @@ public class ZoneController : MonoBehaviour {
     private Dictionary<GameData.FishType, List<GameObject>> fishSchools;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         zoneBoundaryXPos = gameObject.transform.Find("ZoneColliderXPos").gameObject;
         zoneBoundaryXNeg = gameObject.transform.Find("ZoneColliderXNeg").gameObject;
         zoneBoundaryYPos = gameObject.transform.Find("ZoneColliderYPos").gameObject;
@@ -40,7 +42,7 @@ public class ZoneController : MonoBehaviour {
         zoneBoundaryZPos = gameObject.transform.Find("ZoneColliderZPos").gameObject;
         zoneBoundaryZNeg = gameObject.transform.Find("ZoneColliderZNeg").gameObject;
 
-        zoneBoundaryXPos.transform.localScale = new Vector3 (1, zoneHeight * 2, zoneLength * 2);
+        zoneBoundaryXPos.transform.localScale = new Vector3(1, zoneHeight * 2, zoneLength * 2);
         zoneBoundaryXNeg.transform.localScale = new Vector3(1, zoneHeight * 2, zoneLength * 2);
         zoneBoundaryYPos.transform.localScale = new Vector3(zoneWidth * 2, 1, zoneLength * 2);
         zoneBoundaryYNeg.transform.localScale = new Vector3(zoneWidth * 2, 1, zoneLength * 2);
@@ -68,11 +70,16 @@ public class ZoneController : MonoBehaviour {
 
         StartCoroutine(SpawnSchools());
     }
-	
+
     protected IEnumerator SpawnSchools()
     {
-        if (fishSchools.Count < numSchools)
-        { 
+        int rand = Random.Range(3, 5);
+        for (int i = 0; i < rand; i++)
+        {
+            if (fishSchools.Count >= numSchools)
+            {
+                yield return null;
+            }
             int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
             GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
 
@@ -101,9 +108,10 @@ public class ZoneController : MonoBehaviour {
                 newFish.SetRigidbody(false);
                 fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
-
             fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
-
+        }
+        if (fishSchools.Count < numSchools)
+        {
             yield return new WaitForSeconds(fishSchoolSpawnDelay);
         }
         yield return null;
@@ -146,8 +154,9 @@ public class ZoneController : MonoBehaviour {
         }
     }*/
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

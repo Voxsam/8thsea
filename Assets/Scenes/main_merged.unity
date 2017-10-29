@@ -199,26 +199,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114566751742485498, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: oxygenCountdownController
-      value: 
-      objectReference: {fileID: 773701667}
-    - target: {fileID: 114474480890829876, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: PlayerLocationRef
-      value: 
-      objectReference: {fileID: 964179539}
-    - target: {fileID: 114189538110975524, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: playerHolder
-      value: 
-      objectReference: {fileID: 964179539}
     - target: {fileID: 114368342395075048, guid: d2267debe64660c4897da9141773fef0,
         type: 2}
       propertyPath: screenSpaceCanvas
       value: 
       objectReference: {fileID: 964179536}
+    - target: {fileID: 114189538110975524, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: playerHolder
+      value: 
+      objectReference: {fileID: 964179539}
+    - target: {fileID: 114474480890829876, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: PlayerLocationRef
+      value: 
+      objectReference: {fileID: 964179539}
+    - target: {fileID: 114566751742485498, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: oxygenCountdownController
+      value: 
+      objectReference: {fileID: 773701667}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2267debe64660c4897da9141773fef0, type: 2}
   m_IsPrefabParent: 0
@@ -492,26 +492,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4159467625623214, guid: 293476a9e3a4e4d478ed3f29849a97b2,
     type: 2}
   m_PrefabInternal: {fileID: 1208275579}
---- !u!1 &1296344154 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1788775148093954, guid: d2267debe64660c4897da9141773fef0,
-    type: 2}
-  m_PrefabInternal: {fileID: 252110059}
---- !u!54 &1296344155
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1296344154}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &1609925036 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4206167394418686, guid: d2267debe64660c4897da9141773fef0,

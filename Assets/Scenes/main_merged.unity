@@ -199,30 +199,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114368342395075048, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: screenSpaceCanvas
-      value: 
-      objectReference: {fileID: 964179536}
-    - target: {fileID: 114189538110975524, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: playerHolder
-      value: 
-      objectReference: {fileID: 964179539}
-    - target: {fileID: 114474480890829876, guid: d2267debe64660c4897da9141773fef0,
-        type: 2}
-      propertyPath: PlayerLocationRef
-      value: 
-      objectReference: {fileID: 964179539}
     - target: {fileID: 114566751742485498, guid: d2267debe64660c4897da9141773fef0,
         type: 2}
       propertyPath: oxygenCountdownController
       value: 
       objectReference: {fileID: 773701667}
-    - target: {fileID: 1619781424657586, guid: d2267debe64660c4897da9141773fef0, type: 2}
-      propertyPath: m_Name
-      value: LabMesh
-      objectReference: {fileID: 0}
+    - target: {fileID: 114474480890829876, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: PlayerLocationRef
+      value: 
+      objectReference: {fileID: 964179539}
+    - target: {fileID: 114189538110975524, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: playerHolder
+      value: 
+      objectReference: {fileID: 964179539}
+    - target: {fileID: 114368342395075048, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: screenSpaceCanvas
+      value: 
+      objectReference: {fileID: 964179536}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2267debe64660c4897da9141773fef0, type: 2}
   m_IsPrefabParent: 0

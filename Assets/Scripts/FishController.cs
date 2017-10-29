@@ -327,6 +327,11 @@ public class FishController : IInteractable {
 
     }
 
+    public bool IsDead()
+    {
+        return currentSecondaryState == SecondaryState.Dead;
+    }
+
     #region Getters/Settrs
     public Vector3 CaughtPosition
     {

@@ -21,44 +21,26 @@ public class ResearchStationController : IInteractable
     private float maxProgress = 20f;
     private float progressMade = 0f;
     private float progressPerInteraction = 1f;
-    private GameObject mainCamera;
-    private GameObject gameCanvas;
-
-    //Static so only one instance is used.
-    private GameObject uiObject;
+    private float progressBarWidth;
 
     //Prefab to instantiate progress ui
-    public GameObject progressUI;
-    [SerializeField]
-    private GameObject holdSlot;
+    [SerializeField] private GameObject holdSlot;
+    [SerializeField] private RectTransform progressBarRect;
 
     // Use this for initialization
     void Start()
     {
         currentState = State.Empty;
-        //holdSlot = gameObject.transform.Find("HoldSlot").gameObject;
         heldObject = null;
-        uiObject = null;
-
-        mainCamera = GameController.Obj.gameCamera.GetCamera.gameObject;
-        gameCanvas = GameController.Obj.gameCamera.GetCanvas.gameObject;
+        progressBarWidth = progressBarRect.rect.width;
+        progressBarRect.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (uiObject != null)
-        {
-            GameObject words = uiObject.transform.GetChild(0).gameObject;
-            words.GetComponent<Text>().text = progressMade.ToString() + "/" + maxProgress.ToString();
-
-            if (uiObject.name == gameObject.ToString())
-            {
-                Vector2 ViewportPosition = GameController.Obj.gameCamera.GetCamera.WorldToScreenPoint(gameObject.transform.position);
-                uiObject.GetComponent<RectTransform>().anchoredPosition = ViewportPosition;
-
-            }
-        }
+        if (progressBarRect.gameObject.activeSelf)
+            progressBarRect.sizeDelta = new Vector2(progressBarWidth * progressMade / maxProgress, progressBarRect.rect.height);
     }
 
     override public void Interact()
@@ -111,6 +93,10 @@ public class ResearchStationController : IInteractable
                 PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
                 if (playerControllerScript != null)
                 {
+                    if (progressBarRect.gameObject.activeSelf)
+                    {
+                        progressBarRect.gameObject.SetActive(true);
+                    }
                     if (progressMade < maxProgress)
                     {
                         progressMade += progressPerInteraction;
@@ -128,6 +114,7 @@ public class ResearchStationController : IInteractable
                             playerControllerScript.PickUpObject(heldObject);
                             heldObject = null;
                             currentState = State.Empty;
+                            progressBarRect.gameObject.SetActive(false);
                         }
                     }
                 }
@@ -137,30 +124,5 @@ public class ResearchStationController : IInteractable
 
     override public void ToggleHighlight(PlayerController otherPlayerController, bool toggle = true)
     {
-        if (toggle)
-        {
-            //meshRenderer.material.color = Color.blue;
-            if (uiObject == null)
-            {
-                uiObject = (GameObject)Instantiate(progressUI);
-                GameObject words = uiObject.transform.GetChild(0).gameObject;
-                words.GetComponent<Text>().text = progressMade.ToString() + "/" + maxProgress.ToString();
-                uiObject.transform.SetParent(gameCanvas.transform, false);
-                uiObject.name = gameObject.ToString();
-            }
-        }
-        else
-        {
-            //meshRenderer.material.color = originalColor;
-            if (uiObject != null)
-            {
-                if (uiObject.name == gameObject.ToString())
-                {
-                    Destroy(uiObject);
-                    uiObject = null;
-                    progressMade = 0;
-                }
-            }
-        }
     }
 }

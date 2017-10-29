@@ -118,8 +118,9 @@ public class GameData : MonoBehaviour
     public enum StationType
     {
         None = -1,
-        Massage,
-        Clean
+        Research,
+        Clean,
+        Massage
     };
 
     public const float PAYMENT_INTERVAL = 60f;
@@ -134,21 +135,22 @@ public class GameData : MonoBehaviour
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
     {
         new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
-            StationType.Clean, StationType.Massage
+            StationType.Clean, StationType.Research
         }),
         new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
-            StationType.Massage, StationType.Clean
+            StationType.Research, StationType.Clean
         }),
         new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
-            StationType.Massage, StationType.Clean
+            StationType.Research, StationType.Clean
         }),
     };
 
     // Research Station management
     private static ResearchStationParameters[] AllResearchStationParameters = // Contains details on all variants of research stations
     {
-        new ResearchStationParameters(StationType.Massage),
-        new ResearchStationParameters(StationType.Clean)
+        new ResearchStationParameters(StationType.Research),
+        new ResearchStationParameters(StationType.Clean),
+        new ResearchStationParameters(StationType.Massage)
     };
 
     //Easing functions.

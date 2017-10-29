@@ -139,15 +139,22 @@ public class AquariumStationController : StationControllerInterface
                         FishController heldObjectControllerScript = objectToHold.GetComponent<FishController>();
                         if (heldObjectControllerScript != null)
                         {
-                            //Only allow the player to put a fish into the aquarium if they have researched the required amount for the species.
-                            if (GameData.GetFishParameters(heldObjectControllerScript.fishType).totalResearched == GameData.GetFishParameters(heldObjectControllerScript.fishType).totalToResearch)
+                            if (heldObjectControllerScript.IsDead())
                             {
-                                playerInteractionControllerScript.DropObject();
-                                StoreFish(objectToHold, heldObjectControllerScript.fishType);
+                                ShowWarningText("This fish is dead!");
                             }
                             else
-                            {
-                                ShowWarningText("Please complete the required number of researches for this species first!");
+                            { 
+                                //Only allow the player to put a fish into the aquarium if they have researched the required amount for the species.
+                                if (GameData.GetFishParameters(heldObjectControllerScript.fishType).totalResearched == GameData.GetFishParameters(heldObjectControllerScript.fishType).totalToResearch)
+                                {
+                                    playerInteractionControllerScript.DropObject();
+                                    StoreFish(objectToHold, heldObjectControllerScript.fishType);
+                                }
+                                else
+                                {
+                                    ShowWarningText("Please complete the required number of researches for this species first!");
+                                }
                             }
                         }
                     }

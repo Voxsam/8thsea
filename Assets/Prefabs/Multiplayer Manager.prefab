@@ -51,11 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5916f327cb87b4d8e356a93e26e078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
+  isDebug: 1
   playerListPrefab: {fileID: 1953973834099180, guid: bf271c194338f2f42b0071385c42bf66,
     type: 2}
   playerControllerList: []
-  playerPrefab: {fileID: 1830913044983308, guid: ea44f4b8dee71bf45878ced6d46ab807,
+  player1Prefab: {fileID: 1830913044983308, guid: ea44f4b8dee71bf45878ced6d46ab807,
+    type: 2}
+  player2Prefab: {fileID: 1906653873590590, guid: a504213e1351b404592e74de1b9aa491,
     type: 2}
   playerCameraPrefab: {fileID: 1924205488253524, guid: dcf092702cab29842b1beef3abf77e6a,
     type: 2}

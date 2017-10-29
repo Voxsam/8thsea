@@ -35,6 +35,9 @@ public class FishController : IInteractable {
         Researched
     };
 
+    // Const
+    public const string ANIMATOR_SWIM = "Swim";
+
     State currentState;
     SecondaryState currentSecondaryState;
     
@@ -50,11 +53,12 @@ public class FishController : IInteractable {
     private Color originalColor;
     private Vector3 caughtPosition;
     private FishSchoolController fishSchoolController;
+    private Animator fishAnimator = null;
 
     // GameObjects used by this class
     public Rigidbody rb;
 
-    [SerializeField] private MeshRenderer fishRenderer;
+    [SerializeField] private SkinnedMeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
     [SerializeField] private Text DeadText;
     [SerializeField] private RectTransform PanicBarRect;
@@ -95,16 +99,17 @@ public class FishController : IInteractable {
 
         if (fishType != GameData.FishType.None)
         {
-            fishRenderer = GetComponentInChildren<MeshRenderer>();
+            fishRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             Setup();
         }
 
         SetEnabled(false);
     }
 
-    public void Setup(GameData.FishType type, MeshRenderer mesh) {
+    public void Setup(GameData.FishType type, SkinnedMeshRenderer mesh, Animator animator) {
         fishType = type;
         fishRenderer = mesh;
+        fishAnimator = animator;
 
         Setup();
     }
@@ -122,6 +127,12 @@ public class FishController : IInteractable {
             researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
             researchProtocolUIObject.SetActive(false);
             researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
+        }
+
+        // Enable the fish to swim
+        if (fishAnimator != null)
+        {
+            fishAnimator.SetTrigger(ANIMATOR_SWIM);
         }
 
         SetEnabled(false);

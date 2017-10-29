@@ -14,7 +14,8 @@ public class MultiplayerManager : MonoBehaviour {
 	public List<PlayerController> playerControllerList;
 
 	// The player prefab that should have a PlayerController component attached to it.
-	public GameObject playerPrefab;
+	public GameObject player1Prefab;
+    public GameObject player2Prefab;
 
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
@@ -51,7 +52,8 @@ public class MultiplayerManager : MonoBehaviour {
 
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
 
-			GameObject player = Instantiate (playerPrefab);
+          
+			GameObject player = (i % 2 == 0) ?  Instantiate (player1Prefab) : Instantiate(player2Prefab);
 			GameObject camera = Instantiate (playerCameraPrefab);
             if (i > 0)
             {

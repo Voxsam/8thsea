@@ -10,8 +10,6 @@ public class ZoneController : MonoBehaviour {
     //Z
     [SerializeField] public int zoneLength;
 
-    [SerializeField] public GameData.FishType[] fishTypes;
-
     [SerializeField] public Transform Sea;
 
     [SerializeField] public int maxSchools = 10;
@@ -60,8 +58,9 @@ public class ZoneController : MonoBehaviour {
         this.transform.SetParent(Sea);
 
         fishSchools = new Dictionary<GameData.FishType, List<GameObject>>();
-        foreach (GameData.FishType fishType in fishTypes)
+        for (int i = 0; i < GameData.TOTAL_NUMBER_OF_FISHTYPES; i++)
         {
+            GameData.FishType fishType = (GameData.FishType)i;
             fishSchools.Add(fishType, new List<GameObject>());
         }
 
@@ -73,8 +72,8 @@ public class ZoneController : MonoBehaviour {
     {
         for (int i = 0; i < numSchools; i++)
         {
-            int fishTypeIndex = Random.Range(0, fishTypes.Length);
-            GameData.FishParameters fishParameters = GameData.GetFishParameters(fishTypes[fishTypeIndex]);
+            int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+            GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
 
             GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);
             newFishSchool.transform.position = transform.position;
@@ -87,7 +86,7 @@ public class ZoneController : MonoBehaviour {
                                            fishParameters.maxSchoolSize);
             for (int j = 0; j < schoolSize; j++)
             {
-                FishController newFish = GameData.CreateNewFish(fishTypes[fishTypeIndex], newFishSchool.transform);
+                FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeIndex, newFishSchool.transform);
                 FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
                 fishMovementController.Initialise
                 (
@@ -102,7 +101,7 @@ public class ZoneController : MonoBehaviour {
                 fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
 
-            fishSchools[fishTypes[fishTypeIndex]].Add(newFishSchool);
+            fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
 
             yield return new WaitForSeconds(fishSchoolSpawnDelay);
         }

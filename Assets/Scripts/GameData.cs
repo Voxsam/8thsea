@@ -111,8 +111,10 @@ public class GameData : MonoBehaviour
     {
         None = -1, // Default value
         ClownFish = 0,
-        PufferFish
+        PufferFish,
+        UnicornFish
     };
+    public const int TOTAL_NUM_OF_FISHTYPES = 3;
 
     public enum StationType
     {
@@ -127,6 +129,7 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform DefaultEmptyFishPrefab;
     [SerializeField] private Transform ClownFishPrefab;
     [SerializeField] private Transform PufferFishPrefab;
+    [SerializeField] private Transform UnicornFishPrefab;
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -135,6 +138,9 @@ public class GameData : MonoBehaviour
             StationType.Clean, StationType.Massage
         }),
         new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
+            StationType.Massage, StationType.Clean
+        }),
+        new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
             StationType.Massage, StationType.Clean
         }),
     };
@@ -208,6 +214,9 @@ public class GameData : MonoBehaviour
                 case FishType.ClownFish:
                     prefab = Obj.ClownFishPrefab;
                     break;
+                case FishType.UnicornFish:
+                    prefab = Obj.UnicornFishPrefab;
+                    break;
                 case FishType.PufferFish:
                 default:
                     prefab = Obj.PufferFishPrefab;
@@ -217,7 +226,7 @@ public class GameData : MonoBehaviour
             try
             {
                 Transform model = Instantiate(prefab, fish.transform);
-                fish.Setup(type, model.GetComponentInChildren<MeshRenderer>());
+                fish.Setup(type, model.GetComponentInChildren<SkinnedMeshRenderer>(), model.GetComponentInChildren<Animator>());
             }
             catch
             {

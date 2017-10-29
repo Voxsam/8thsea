@@ -10,10 +10,7 @@ public class PlayerPanelController : MonoBehaviour {
 	private float mainCanvasWidth;
 	private float mainCanvasHeight;
 
-	public GameObject bottomLeftPanel;
-	public GameObject centerPanel;
-
-
+	public GameObject fishDetailsPanel;
 
 	void Awake () {
 		mainCanvas = GameObject.FindGameObjectWithTag ("Main Canvas").GetComponent<Canvas> ();
@@ -25,6 +22,8 @@ public class PlayerPanelController : MonoBehaviour {
 	{
 
 		RectTransform rectTrans = GetComponent<RectTransform> ();
+
+		rectTrans.SetParent (mainCanvas.GetComponent<RectTransform> ());
 
 		// Set pivot to bottom left corner
 		rectTrans.pivot = new Vector2 (0, 0);
@@ -77,8 +76,17 @@ public class PlayerPanelController : MonoBehaviour {
 
 	}
 
-	public void ShowInPanel (GameObject obj)
+	public void ShowFishDetailsPanel ()
 	{
-		obj.GetComponent<RectTransform> ().SetParent (GetComponent<RectTransform> (), false);
+		fishDetailsPanel.SetActive (true);
+		//fishDetailsPanel.GetComponentInChildren<Text> ().text = details;
 	}
+
+	public void HideFishDetailsPanel ()
+	{
+		fishDetailsPanel.SetActive (false);
+	}
+
+
+		
 }

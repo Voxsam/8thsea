@@ -63,7 +63,6 @@ MonoBehaviour:
     type: 2}
   playerPanelPrefab: {fileID: 1843861115275928, guid: f90a4fc304ceaa544b3f51019c29c9a9,
     type: 2}
-  mainCanvas: {fileID: 0}
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}

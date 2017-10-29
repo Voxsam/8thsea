@@ -45,7 +45,8 @@ public class ResearchRequirementsController : MonoBehaviour {
         numToResearch.text = GameData.GetFishParameters(fishTypeIndex).totalToResearch.ToString();
 
         fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
-        fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
+        //TODO: CHANGE THIS.
+        //fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
         fishDetails.name = gameObject.ToString();
         fishDetails.GetComponent<FishDetailsController>().Init(fishTypeIndex, gameObject);
         fishDetails.SetActive(false);

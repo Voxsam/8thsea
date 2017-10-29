@@ -246,6 +246,15 @@ public class TubeController : StationControllerInterface {
         other.transform.Translate((dir) * attractionForce * Time.deltaTime);
     }
 
+    public void EjectPlayer ()
+    {
+        //Only eject the player if they are in the idle state, otherwise they are already in the process of ejecting.
+        if (currentState == State.Idle)
+        {
+            currentState = State.Withdrawing;
+        }
+    }
+
     //Functions from Interface IInteractables
     override public void Interact()
     {

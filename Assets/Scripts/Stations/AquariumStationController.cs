@@ -17,7 +17,6 @@ public class AquariumStationController : StationControllerInterface
 
     private GameObject holdSlot;
     private GameObject worldspaceCanvas;
-    private Transform playerAnchor;
     private GameObject warningText;
     private float warningTextLifespan = 0;
 
@@ -32,7 +31,6 @@ public class AquariumStationController : StationControllerInterface
         worldspaceCanvas = GetComponentInChildren<Canvas>().gameObject;
         warningText = worldspaceCanvas.transform.Find("Feedback").gameObject;
         warningText.SetActive(false);
-        playerAnchor = gameObject.transform.Find("PlayerAnchor").transform;
 
         fishSchools = new Dictionary<GameData.FishType, GameObject>();
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
@@ -73,7 +71,7 @@ public class AquariumStationController : StationControllerInterface
 
         if (this.IsActivated)
         {
-            if (Input.GetAxis("Horizontal") > 0.2)
+            if (playerInStation.controls.GetHorizontalAxis() > 0.2)
             {
                 if ((int)selectedResearchRequirementIndex < (GameData.TOTAL_NUMBER_OF_FISHTYPES - 1))
                 {
@@ -82,7 +80,7 @@ public class AquariumStationController : StationControllerInterface
                     fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().ToggleFishDetails(true);
                 }
             }
-            else if (Input.GetAxis("Horizontal") < -0.2)
+            else if (playerInStation.controls.GetHorizontalAxis() < -0.2)
             {
                 if ((int)selectedResearchRequirementIndex > 0)
                 {
@@ -92,7 +90,7 @@ public class AquariumStationController : StationControllerInterface
                 }
             }
 
-            if (GameController.Obj.ButtonB_Down)
+            if (playerInStation.controls.GetCancelKeyDown())
             {
                 PlayerController playerControllerScript = this.playerInStation.GetComponent<PlayerController>();
                 if (playerControllerScript != null)
@@ -100,7 +98,7 @@ public class AquariumStationController : StationControllerInterface
                     DisengagePlayer();
                 }
             }
-            else if (GameController.Obj.ButtonA_Down)
+            else if (playerInStation.controls.GetActionKeyDown())
             {
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)

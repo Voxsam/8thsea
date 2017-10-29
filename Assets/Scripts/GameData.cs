@@ -106,7 +106,7 @@ public class GameData : MonoBehaviour
         STATION,
     };
 
-    public const int TOTAL_NUMBER_OF_FISHTYPES = 2;
+    public const int TOTAL_NUMBER_OF_FISHTYPES = 3;
     public enum FishType
     {
         None = -1, // Default value
@@ -114,7 +114,6 @@ public class GameData : MonoBehaviour
         PufferFish,
         UnicornFish
     };
-    public const int TOTAL_NUM_OF_FISHTYPES = 3;
 
     public enum StationType
     {

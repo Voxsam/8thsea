@@ -129,4 +129,9 @@ public class OxygenCountdown : MonoBehaviour {
     {
         return currentState == State.Ready;
     }
+
+    public bool IsEmergency()
+    {
+        return currentState == State.Emergency;
+    }
 }

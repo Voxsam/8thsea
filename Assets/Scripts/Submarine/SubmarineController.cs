@@ -24,6 +24,10 @@ public class SubmarineController : StationControllerInterface {
 
     public OxygenCountdown oxygenCountdownController;
 
+    //Used to turn on/off the interactable-ness of the stations (for emergency mode)
+    public StationController [] submarineStationControllers;
+    public TubeController tubeController;
+
     private Animator anim;
     private bool facingLeft; //false = facingRight
 
@@ -34,6 +38,8 @@ public class SubmarineController : StationControllerInterface {
         Docked
     }
     private State currentState;
+
+    private bool emergencyMode;
 
     private bool withinDock;
     public bool WithinDock
@@ -116,11 +122,27 @@ public class SubmarineController : StationControllerInterface {
         anim.SetBool("docked", true);
 
         currentState = State.Docked;
+
+        emergencyMode = false;
+        withinDock = true;
     }
 
     // Update is called once per frame
     private void Update () {
-        switch (currentState)
+        //If the sub is out of oxygen, enter emergency mode.
+        if (oxygenCountdownController.IsEmergency() && !emergencyMode)
+        {
+            emergencyMode = true;
+            StartEmergencyMode();
+        }
+        //Oxygen is being refilled, leave emergency mode.
+        else if (!oxygenCountdownController.IsEmergency() && emergencyMode)
+        {
+            emergencyMode = false;
+            EndEmergencyMode();
+        }
+
+            switch (currentState)
         {
             case State.Docked:
                 if (IsActivated && playerInStation != null)
@@ -282,5 +304,22 @@ public class SubmarineController : StationControllerInterface {
     public void MoveInDirection (Vector3 direction)
     {
         transform.Translate(currentSpeed * Time.deltaTime * direction.x, currentSpeed * Time.deltaTime * direction.y, 0);
+    }
+
+    private void StartEmergencyMode ()
+    {
+        for (int i = 0; i < submarineStationControllers.Length; i++)
+        {
+            submarineStationControllers[i].IsActivated = false;
+        }
+        tubeController.EjectPlayer();
+    }
+
+    private void EndEmergencyMode ()
+    {
+        for (int i = 0; i < submarineStationControllers.Length; i++)
+        {
+            submarineStationControllers[i].IsActivated = true;
+        }
     }
 }

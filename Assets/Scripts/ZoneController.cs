@@ -65,10 +65,51 @@ public class ZoneController : MonoBehaviour {
         }
 
         numSchools = Random.Range(minSchools, maxSchools);
+
         StartCoroutine(SpawnSchools());
     }
 	
     protected IEnumerator SpawnSchools()
+    {
+        if (fishSchools.Count < numSchools)
+        { 
+            int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+            GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
+
+            GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);
+            newFishSchool.transform.position = transform.position;
+            FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
+            fishSchoolController.zoneWidth = zoneWidth;
+            fishSchoolController.zoneHeight = zoneHeight;
+            fishSchoolController.zoneLength = zoneLength;
+
+            int schoolSize = Random.Range(fishParameters.minSchoolSize,
+                                            fishParameters.maxSchoolSize);
+            for (int j = 0; j < schoolSize; j++)
+            {
+                FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeIndex, newFishSchool.transform);
+                FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
+                fishMovementController.Initialise
+                (
+                    fishParameters.minSpeed,
+                    fishParameters.maxSpeed,
+                    fishParameters.minRotationSpeed,
+                    fishParameters.maxRotationSpeed,
+                    fishParameters.minNeighbourDistance
+                );
+                fishMovementController.SetEnabled(true);
+                newFish.SetRigidbody(false);
+                fishSchoolController.AddFishToSchool(newFish.gameObject);
+            }
+
+            fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
+
+            yield return new WaitForSeconds(fishSchoolSpawnDelay);
+        }
+        yield return null;
+    }
+
+    /*private void SpawnSchools()
     {
         for (int i = 0; i < numSchools; i++)
         {
@@ -102,12 +143,8 @@ public class ZoneController : MonoBehaviour {
             }
 
             fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
-
-            yield return new WaitForSeconds(fishSchoolSpawnDelay);
         }
-
-        yield return null;
-    }
+    }*/
 
 	// Update is called once per frame
 	void Update () {

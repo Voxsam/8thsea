@@ -11,7 +11,7 @@ public class PlayerAnimationController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         anim = GetComponentInChildren<Animator>();
-        controller = gameObject.GetComponent<PlayerController>();
+        controller = gameObject.GetComponentInParent<PlayerController>();
         interactionController = controller.interactionController;
 	}
 	

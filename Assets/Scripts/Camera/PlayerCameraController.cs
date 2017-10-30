@@ -35,18 +35,11 @@ public class PlayerCameraController : MonoBehaviour
 
     void Update()
     {
-        /*
         if (objectToFocusCameraOn != null)
         {
-            transform.position = objectToFocusCameraOn.transform.position + initialOffset;
+            transform.position = objectToFocusCameraOn.transform.position + cameraOffset;
             transform.LookAt(objectToFocusCameraOn.transform);
         }
-        else
-        {
-            this.transform.position = player.transform.position + initialOffset;
-            transform.LookAt(player.gameObject.transform);
-        }
-        //*/
     }
 
     public Camera GetCamera
@@ -68,8 +61,6 @@ public class PlayerCameraController : MonoBehaviour
         objectToFocusCameraOn = _gameObject;
         transform.SetParent(objectToFocusCameraOn.transform, true);
         cam.fieldOfView = _fieldOfView;
-        transform.position = objectToFocusCameraOn.transform.position + _offset;
-        transform.LookAt(objectToFocusCameraOn.transform);
     }
 
     public void RemoveCameraFromObject(GameObject _gameObject)

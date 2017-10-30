@@ -891,6 +891,7 @@ MonoBehaviour:
   cameraController: {fileID: 0}
   pCameraController: {fileID: 0}
   panel: {fileID: 0}
+  playerHolder: {fileID: 0}
   rb: {fileID: 54098507397287770}
 --- !u!114 &114397182721433398
 MonoBehaviour:
@@ -1031,8 +1032,8 @@ MonoBehaviour:
     m_Alignment: 7
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: $$$$
 --- !u!114 &114624562645073898

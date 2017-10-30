@@ -86,10 +86,10 @@ public class ContainerStationController : IInteractable {
         if (currentState == State.Empty)
         {
             heldObject = objectToHold;
-            Vector3 originalScale = heldObject.transform.localScale;
-            heldObject.transform.SetParent(holdSlot.transform);
+            //Vector3 originalScale = heldObject.transform.localScale;
+            heldObject.transform.SetParent(holdSlot.transform, true);
             heldObject.transform.localPosition = Vector3.zero;
-            heldObject.transform.localScale = originalScale;
+            //heldObject.transform.localScale = originalScale;
 
             currentState = State.Holding;
             return true;

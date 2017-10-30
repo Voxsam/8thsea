@@ -48,8 +48,8 @@ public class TeleportDoor : IInteractable
             case State.TeleportStart:
                 if (currentTime < preTeleportDuration)
                 {
-                    player.transform.Rotate(Vector3.up * Time.deltaTime * 540);
-                    player.transform.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
+                    player.playerHolder.Rotate(Vector3.up * Time.deltaTime * 540);
+                    player.playerHolder.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration));
                     currentTime += Time.deltaTime;
@@ -89,8 +89,8 @@ public class TeleportDoor : IInteractable
             case State.TeleportEnd:
                 if (currentTime < preTeleportDuration)
                 {
-                    player.transform.Rotate(Vector3.up * Time.deltaTime * 540);
-                    player.transform.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
+                    player.playerHolder.Rotate(Vector3.up * Time.deltaTime * 540);
+                    player.playerHolder.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration));
                     currentTime += Time.deltaTime;

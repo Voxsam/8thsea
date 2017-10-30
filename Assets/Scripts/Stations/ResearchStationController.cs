@@ -86,7 +86,7 @@ public class ResearchStationController : IInteractable
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
                         }
-                        heldObject.transform.SetParent(holdSlot.transform);
+                        heldObject.transform.SetParent(holdSlot.transform, true);
                         heldObject.transform.localPosition = Vector3.zero;
 
                         currentState = State.Holding;

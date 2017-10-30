@@ -8,7 +8,7 @@ public class TubeHeadController : MonoBehaviour
     public TubeController tubeController;
     public GameObject tubeHeadGameObject;
     public float minDistance;
-    private FishController currentTarget;
+    public FishController currentTarget;
     
     // Use this for initialization
     void Start()

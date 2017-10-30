@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour {
     private GameData.ControlType controlMode;
     public PlayerInteractionController interactionController;
     private PlayerAnimationController animationController;
-    public CameraController cameraController; //Deprecated, please remove as soon as everything has been ported over to PlayerCameraController.
 	public PlayerCameraController pCameraController;
 
 	public Player player;

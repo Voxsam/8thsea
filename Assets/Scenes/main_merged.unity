@@ -477,6 +477,48 @@ Prefab:
       propertyPath: labDoorCollider
       value: 
       objectReference: {fileID: 1209322353}
+    - target: {fileID: 114032072251899890, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: ba20292deaf524549a755f362cffdd09,
+        type: 3}
+    - target: {fileID: 114653738458508438, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: ba20292deaf524549a755f362cffdd09,
+        type: 3}
+    - target: {fileID: 114653738458508438, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.32352942
+      objectReference: {fileID: 0}
+    - target: {fileID: 114653738458508438, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.9440162
+      objectReference: {fileID: 0}
+    - target: {fileID: 114653738458508438, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114032072251899890, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.41911763
+      objectReference: {fileID: 0}
+    - target: {fileID: 114032072251899890, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.95192695
+      objectReference: {fileID: 0}
+    - target: {fileID: 114032072251899890, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2267debe64660c4897da9141773fef0, type: 2}
   m_IsPrefabParent: 0

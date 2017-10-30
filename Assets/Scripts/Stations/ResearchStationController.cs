@@ -93,7 +93,7 @@ public class ResearchStationController : IInteractable
                 PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
                 if (playerControllerScript != null)
                 {
-                    if (progressBarRect.gameObject.activeSelf)
+                    if (!progressBarRect.gameObject.activeSelf)
                     {
                         progressBarRect.gameObject.SetActive(true);
                     }

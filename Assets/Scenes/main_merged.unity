@@ -457,6 +457,26 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: -0.88
       objectReference: {fileID: 0}
+    - target: {fileID: 23856791576091286, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ca0930c012d82e140927d50fb1e0f923, type: 2}
+    - target: {fileID: 65932338366037768, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65932338366037768, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114566751742485498, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: labDoorCollider
+      value: 
+      objectReference: {fileID: 1209322353}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2267debe64660c4897da9141773fef0, type: 2}
   m_IsPrefabParent: 0
@@ -1095,6 +1115,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4159467625623214, guid: 293476a9e3a4e4d478ed3f29849a97b2,
     type: 2}
   m_PrefabInternal: {fileID: 1208275579}
+--- !u!64 &1209322353 stripped
+MeshCollider:
+  m_PrefabParentObject: {fileID: 64041410420581122, guid: d2267debe64660c4897da9141773fef0,
+    type: 2}
+  m_PrefabInternal: {fileID: 252110059}
 --- !u!1001 &1264490476
 Prefab:
   m_ObjectHideFlags: 0

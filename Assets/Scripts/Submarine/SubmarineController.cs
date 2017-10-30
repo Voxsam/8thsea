@@ -22,6 +22,8 @@ public class SubmarineController : StationControllerInterface {
     public Transform dockingPosition;
     private SphereCollider interiorCollider;
 
+	public MeshCollider labDoorCollider;
+
     public OxygenCountdown oxygenCountdownController;
 
     //Used to turn on/off the interactable-ness of the stations (for emergency mode)
@@ -129,6 +131,13 @@ public class SubmarineController : StationControllerInterface {
 
     // Update is called once per frame
     private void Update () {
+		// activate and deactivate lab door
+		if (currentState == State.Docked) {
+			labDoorCollider.enabled = false;
+		} else {
+			labDoorCollider.enabled = true;
+		}
+
         //If the sub is out of oxygen, enter emergency mode.
         if (oxygenCountdownController.IsEmergency() && !emergencyMode)
         {

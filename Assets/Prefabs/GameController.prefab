@@ -996,7 +996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5283febfbb871dc4184520eac499b6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drainRate: 1
+  drainRate: 0.5
   refillRate: 1
   isActivated: 1
   OxygenBar: {fileID: 114147659321556404}
@@ -1075,7 +1075,8 @@ MonoBehaviour:
     type: 2}
   UnicornFishPrefab: {fileID: 4803721160436608, guid: 4d2476bc0b29a5843a5bc1628054d5ef,
     type: 2}
-  WhalePrefab: {fileID: 0}
+  WhalePrefab: {fileID: 4260069583272638, guid: b6b5b1648883d364c8da51039a51bd85,
+    type: 2}
 --- !u!114 &114649669361501224
 MonoBehaviour:
   m_ObjectHideFlags: 1

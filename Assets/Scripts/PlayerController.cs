@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
 	public float turnSpeed = 7;
 
     private GameData.ControlType controlMode;
-    private PlayerInteractionController interactionController;
+    public PlayerInteractionController interactionController;
     private PlayerAnimationController animationController;
     public CameraController cameraController; //Deprecated, please remove as soon as everything has been ported over to PlayerCameraController.
 	public PlayerCameraController pCameraController;

@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class SubmarineController : StationControllerInterface {
     public static SubmarineController Obj;
 
-    public float acceleration;
+    public const float ACCELERATION = 0.05f;
+    public const float STARTING_SPEED = 0.2f;
+    public const float MAXIMUM_SPEED = 10f;
+
     public float currentSpeed;
-    public float maximumSpeed;
 
     // Camera things
     public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 60f;
@@ -107,9 +109,8 @@ public class SubmarineController : StationControllerInterface {
 
     // Use this for initialization
     private void Start () {
-        acceleration = 0.05f;
-        currentSpeed = 0.2f;
-        maximumSpeed = 10f;
+        currentSpeed = STARTING_SPEED;
+
         //oxygenCountdownScript.isActivated = false;
 
         interiorCollider = GetComponent<SphereCollider>();
@@ -199,14 +200,14 @@ public class SubmarineController : StationControllerInterface {
                     );*/
                     transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
 
-                    currentSpeed += acceleration;
-                    if (currentSpeed > maximumSpeed)
+                    currentSpeed += ACCELERATION;
+                    if (currentSpeed > MAXIMUM_SPEED)
                     {
-                        currentSpeed = maximumSpeed;
+                        currentSpeed = MAXIMUM_SPEED;
                     }
                     if (horizontalControl == 0 && verticalControl == 0)
                     {
-                        currentSpeed = 0.2f;
+                        currentSpeed = STARTING_SPEED;
                     }
 
                     // docking 
@@ -228,16 +229,16 @@ public class SubmarineController : StationControllerInterface {
 
             case State.Docking:
                 Vector3 dockingDirection = (dockingPosition.position - transform.position).normalized;
-                transform.Translate(currentSpeed * Time.deltaTime * dockingDirection.x, currentSpeed * Time.deltaTime * dockingDirection.y, 0);
-                currentSpeed += acceleration;
-                if (currentSpeed > maximumSpeed)
+                MoveInDirection(dockingDirection);
+                currentSpeed += ACCELERATION;
+                if (currentSpeed > MAXIMUM_SPEED)
                 {
-                    currentSpeed = maximumSpeed;
+                    currentSpeed = MAXIMUM_SPEED;
                 }
                 if (Vector3.Distance(transform.position, dockingPosition.position) < 0.1)
                 {
                     currentState = State.Docked;
-                    currentSpeed = 0.2f;
+                    currentSpeed = STARTING_SPEED;
                     transform.position = dockingPosition.position;
                     anim.SetBool("docked", true);
                     anim.SetBool("moveLeft", false);
@@ -246,6 +247,11 @@ public class SubmarineController : StationControllerInterface {
                     this.IsActivated = false;
                     this.WhenDeactivated();
                     this.ReleasePlayerFromStation();
+                }
+
+                if (playerInStation.controls.GetCancelKeyDown() && IsActivated && WithinDock)
+                {
+                    currentState = State.Idle;
                 }
                 break;
         }
@@ -303,7 +309,25 @@ public class SubmarineController : StationControllerInterface {
 
     public void MoveInDirection (Vector3 direction)
     {
-        transform.Translate(currentSpeed * Time.deltaTime * direction.x, currentSpeed * Time.deltaTime * direction.y, 0);
+        /*
+        transform.Translate(
+            currentSpeed * Time.deltaTime * direction.x, 
+            currentSpeed * Time.deltaTime * direction.y, 
+            0
+        );
+        //*/
+
+        Vector3 locationOneSecondLater = transform.position + 
+            new Vector3(
+                currentSpeed * direction.x,
+                currentSpeed * direction.y, 
+                0
+            );
+        transform.position = Vector3.Lerp(
+            transform.position,
+            locationOneSecondLater,
+            Time.deltaTime
+        );
     }
 
     private void StartEmergencyMode ()

@@ -18,10 +18,12 @@ public class ResearchStationController : IInteractable
     public GameData.StationType researchStationType;
 
     private GameObject heldObject;
-    private float maxProgress = 20f;
+    private const float MAX_PROGRESS = 20f;
+    private const float PROGRESS_BAR_PER_INTERACTION = 1f;
+    private const float PROGRESS_BAR_PER_FRAME = 0.3f;
     private float progressMade = 0f;
-    private float progressPerInteraction = 1f;
     private float progressBarWidth;
+    private PlayerController playerControllerInStation;
 
     //Prefab to instantiate progress ui
     [SerializeField] private GameObject holdSlot;
@@ -34,13 +36,30 @@ public class ResearchStationController : IInteractable
         heldObject = null;
         progressBarWidth = progressBarRect.rect.width;
         progressBarRect.gameObject.SetActive(false);
+        playerControllerInStation = null;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (progressBarRect.gameObject.activeSelf)
-            progressBarRect.sizeDelta = new Vector2(progressBarWidth * progressMade / maxProgress, progressBarRect.rect.height);
+        {
+            progressBarRect.sizeDelta = new Vector2(progressBarWidth * progressMade / MAX_PROGRESS, progressBarRect.rect.height);
+        }
+
+        // If it is in the working state (the player is in the station)
+        // And the A button is being held
+        if (currentState == State.Working && playerControllerInStation != null)
+        {
+            if (progressMade < MAX_PROGRESS)
+            {
+                progressMade += PROGRESS_BAR_PER_FRAME;
+            }
+            else
+            {
+                Interact(playerControllerInStation.gameObject);
+            }
+        }
     }
 
     override public void Interact()
@@ -51,9 +70,10 @@ public class ResearchStationController : IInteractable
     {
         if (otherActor.tag == "Player")
         {
+            PlayerInteractionController playerControllerScript = null;
             if (currentState == State.Empty)
             {
-                PlayerInteractionController playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
+                playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
                     //Get the object held by the player.
@@ -75,7 +95,7 @@ public class ResearchStationController : IInteractable
             }
             else if (currentState == State.Holding)
             {
-                PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
+                playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
                     //Check that the player is not already holding on to something.
@@ -90,18 +110,21 @@ public class ResearchStationController : IInteractable
             }
             else if (currentState == State.Working)
             {
-                PlayerInteractionController playerControllerScript = (PlayerInteractionController)otherActor.GetComponent(typeof(PlayerInteractionController));
+                playerControllerInStation = otherActor.GetComponent<PlayerController>();
+                playerControllerScript = playerControllerInStation.interactionController;
                 if (playerControllerScript != null)
                 {
                     if (!progressBarRect.gameObject.activeSelf)
                     {
                         progressBarRect.gameObject.SetActive(true);
                     }
-                    if (progressMade < maxProgress)
+
+                    if (progressMade < MAX_PROGRESS)
                     {
-                        progressMade += progressPerInteraction;
+                        progressMade += PROGRESS_BAR_PER_INTERACTION;
                     }
-                    //Check that the player is not already holding on to something.
+                    // If progress made is maxed and
+                    // the the player is not already holding on to something.
                     else if (playerControllerScript.GetHeldObject() == null)
                     {
                         if (heldObject != null)
@@ -112,7 +135,9 @@ public class ResearchStationController : IInteractable
                                 heldObjectControllerScript.ResearchFish();
                             }
                             playerControllerScript.PickUpObject(heldObject);
+                            playerControllerInStation = null;
                             heldObject = null;
+                            progressMade = 0f;
                             currentState = State.Empty;
                             progressBarRect.gameObject.SetActive(false);
                         }

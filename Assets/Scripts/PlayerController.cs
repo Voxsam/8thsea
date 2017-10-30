@@ -30,10 +30,9 @@ public class PlayerController : MonoBehaviour {
         get { return isPlayerAllowedToMove; }
         set { isPlayerAllowedToMove = value; }
     }
-
+    
+    [SerializeField] public Transform playerHolder;
     [SerializeField] public Rigidbody rb;
-
-
 
 	void Start () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
@@ -57,7 +56,8 @@ public class PlayerController : MonoBehaviour {
     public Transform LocationRef
     {
         // Since the player will always be a child of its location, return the parent of the player as its location
-        get { return this.transform.parent; }
+        get { return transform.parent; }
+        set { transform.SetParent(value); }
     }
 
     #region Control handlers
@@ -95,18 +95,17 @@ public class PlayerController : MonoBehaviour {
 
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
-			
 			Vector3 direction = new Vector3 (player.controls.GetHorizontalAxis(), 0.0f, player.controls.GetVerticalAxis());
             
 			if (direction != Vector3.zero) {
 				isMoving = true;
-				transform.rotation = Quaternion.Slerp (
-					transform.rotation,
+			    playerHolder.rotation = Quaternion.Slerp (
+					playerHolder.rotation,
 					Quaternion.LookRotation (direction),
 					Time.deltaTime * turnSpeed
 				);
 
-				transform.Translate (new Vector3 (0, 0, movementSpeed / 100f));
+				transform.Translate(new Vector3 (0, 0, movementSpeed / 100f), playerHolder);
 
 			} else {
 

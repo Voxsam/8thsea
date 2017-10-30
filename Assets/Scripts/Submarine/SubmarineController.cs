@@ -77,8 +77,8 @@ public class SubmarineController : StationControllerInterface {
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = SUBMARINE_CAMERA_FIELD_OF_VIEW;
 
-        cameraOriginalDistance = stationCamera.initialOffset;
-        stationCamera.initialOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
+        cameraOriginalDistance = stationCamera.CameraOffset;
+        stationCamera.CameraOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
     }
 
     public override void WhenDeactivated()
@@ -89,7 +89,7 @@ public class SubmarineController : StationControllerInterface {
         }
 
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
-        stationCamera.initialOffset = cameraOriginalDistance;
+        stationCamera.CameraOffset = cameraOriginalDistance;
     }
     
     public bool IsDocked()
@@ -207,13 +207,19 @@ public class SubmarineController : StationControllerInterface {
                         transform.position + new Vector3(currentSpeed * horizontalControl, currentSpeed * verticalControl, 0),
                         Time.deltaTime
                     );*/
-                    transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
+                    //transform.Translate(currentSpeed * Time.deltaTime * horizontalControl, currentSpeed * Time.deltaTime * verticalControl, 0);
+                    MoveInDirection(new Vector3(
+                        horizontalControl,
+                        verticalControl,
+                        0
+                    ));
 
                     currentSpeed += ACCELERATION;
                     if (currentSpeed > MAXIMUM_SPEED)
                     {
                         currentSpeed = MAXIMUM_SPEED;
                     }
+
                     if (horizontalControl == 0 && verticalControl == 0)
                     {
                         currentSpeed = STARTING_SPEED;
@@ -258,13 +264,12 @@ public class SubmarineController : StationControllerInterface {
                     this.ReleasePlayerFromStation();
                 }
 
-                if (playerInStation.controls.GetCancelKeyDown() && IsActivated && WithinDock)
+                if (playerInStation != null && playerInStation.controls.GetCancelKeyDown() && IsActivated && WithinDock)
                 {
                     currentState = State.Idle;
                 }
                 break;
         }
-        
     }
     public override bool SwitchCondition()
     {
@@ -326,10 +331,10 @@ public class SubmarineController : StationControllerInterface {
         );
         //*/
 
-        Vector3 locationOneSecondLater = transform.position + 
+        Vector3 locationOneSecondLater = transform.position +
             new Vector3(
                 currentSpeed * direction.x,
-                currentSpeed * direction.y, 
+                currentSpeed * direction.y,
                 0
             );
         transform.position = Vector3.Lerp(

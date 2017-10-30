@@ -862,7 +862,7 @@ MonoBehaviour:
   cameraController: {fileID: 0}
   pCameraController: {fileID: 0}
   panel: {fileID: 0}
-  playerHolder: {fileID: 0}
+  playerHolder: {fileID: 4914964502235728}
   rb: {fileID: 54763311769556274}
 --- !u!114 &114296640770315040
 MonoBehaviour:

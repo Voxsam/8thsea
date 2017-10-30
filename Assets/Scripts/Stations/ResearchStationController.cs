@@ -93,7 +93,8 @@ public class ResearchStationController : IInteractable
                     }
                 }
             }
-            else if (currentState == State.Holding)
+
+            if (currentState == State.Holding)
             {
                 playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
@@ -108,7 +109,8 @@ public class ResearchStationController : IInteractable
                     }
                 }
             }
-            else if (currentState == State.Working)
+
+            if (currentState == State.Working)
             {
                 playerControllerInStation = otherActor.GetComponent<PlayerController>();
                 playerControllerScript = playerControllerInStation.interactionController;

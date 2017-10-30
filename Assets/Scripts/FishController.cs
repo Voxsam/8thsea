@@ -156,7 +156,7 @@ public class FishController : IInteractable {
             case SecondaryState.Researched:
 
             case SecondaryState.Panic:
-                panicTimer -= Time.deltaTime;
+                panicTimer -= Time.deltaTime/5;
 
                 if (panicTimer <= 0)
                 {

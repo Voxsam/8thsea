@@ -344,7 +344,7 @@ Prefab:
         type: 2}
       propertyPath: oxygenCountdownController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 609393890}
     - target: {fileID: 4076742661870792, guid: d2267debe64660c4897da9141773fef0, type: 2}
       propertyPath: m_RootOrder
       value: 2
@@ -609,6 +609,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1117890112919158, guid: 55aff636068f8a5469a90c2ce88e6e2e,
     type: 2}
   m_PrefabInternal: {fileID: 339721557}
+--- !u!114 &609393890 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114553652167402970, guid: 88e4b4de75c2d4740846a554e9aeb778,
+    type: 2}
+  m_PrefabInternal: {fileID: 964179534}
+  m_Script: {fileID: 11500000, guid: 5283febfbb871dc4184520eac499b6a0, type: 3}
 --- !u!1 &750199723
 GameObject:
   m_ObjectHideFlags: 0

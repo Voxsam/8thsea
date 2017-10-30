@@ -36,15 +36,13 @@ public class NavigationPingController : MonoBehaviour {
 		pCtrl = _pCtrl;
     }
 
-    // Use this for initialization
     void Start () {
         currentLifespan = currentSize = 0;
         navigationPingImage = gameObject.GetComponent<Image>();
         imageRectTransform = navigationPingImage.GetComponent<RectTransform>();
         currentState = State.Active;
 	}
-	
-	// Update is called once per frame
+		
 	void Update ()
 	{
 		switch (currentState) {
@@ -101,8 +99,9 @@ public class NavigationPingController : MonoBehaviour {
         ((viewportPosition.y * canvasRectTransform.sizeDelta.y) - (canvasRectTransform.sizeDelta.y * 0.5f)));
         imageRectTransform.anchoredPosition = worldObjectScreenPosition;
     }
-#region Getters/Setters
-public Vector3 TargetLocation
+
+	#region Getters/Setters
+	public Vector3 TargetLocation
     {
         get
         {

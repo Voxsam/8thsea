@@ -97,7 +97,9 @@ public class TubeController : StationControllerInterface {
                                     (submarineSurfaceCollider.transform.position - tubeHeadController.tubeHeadGameObject.transform.position).normalized);
                     RaycastHit hit;
                     if (submarineSurfaceCollider.Raycast(ray, out hit, 100.0F))
+                    {
                         anchorPoint.transform.position = hit.point;
+                    }   
 
                     float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
 			        if (distance > radius) {
@@ -243,10 +245,10 @@ public class TubeController : StationControllerInterface {
         fishToExtractObject = null;
     }
 
-    public void MoveFish (Vector3 dir, GameObject other)
+    public void MoveFish (Vector3 dir, Transform other)
     {
         dir = dir.normalized;
-        other.transform.Translate((dir) * attractionForce * Time.deltaTime, Space.World);
+        other.Translate((dir) * attractionForce * Time.deltaTime, Space.World);
     }
 
     public void EjectPlayer ()

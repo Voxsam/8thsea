@@ -11,8 +11,8 @@ public class PlayerAnimationController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         anim = GetComponentInChildren<Animator>();
-        interactionController = gameObject.GetComponent<PlayerInteractionController>();
-        controller = gameObject.GetComponent<PlayerController>();
+        controller = gameObject.GetComponentInParent<PlayerController>();
+        interactionController = controller.interactionController;
 	}
 	
 	// Update is called once per frame
@@ -24,35 +24,5 @@ public class PlayerAnimationController : MonoBehaviour {
         anim.SetBool("isHoldingIdle", !isMoving && isHolding);
         anim.SetBool("isWalking", isMoving && !isHolding);
         anim.SetBool("isIdle", !isMoving && !isHolding);
-        /*
-        if (isMoving && isHolding)
-        {
-            anim.SetBool("isHoldingWalk", true);
-            anim.SetBool("isHoldingIdle", false);
-        }
-        else if (isMoving && !isHolding)
-        {
-            anim.SetBool("isWalking", true);
-            anim.SetBool("isIdle", false);
-        }
-        else if (!isMoving && isHolding)
-        {
-            anim.SetBool("isHoldingIdle", true);
-            anim.SetBool("isHoldingWalk", false);
-        }
-        else
-        {
-            anim.SetBool("isIdle", true);
-            anim.SetBool("isWalking", false);
-        }//*/
     }
-}/*
-f (interactionController.getCurrentState() == PlayerInteractionController.State.Hold)
-                {
-                    anim.Play("Holding Walk");
-                } else
-                {
-                    anim.Play("Walking");
-                }
-                
-*/
+}

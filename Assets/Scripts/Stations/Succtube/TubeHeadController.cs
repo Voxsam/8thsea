@@ -8,11 +8,13 @@ public class TubeHeadController : MonoBehaviour
     public TubeController tubeController;
     public GameObject tubeHeadGameObject;
     public float minDistance;
+    public FishController currentTarget;
     
     // Use this for initialization
     void Start()
     {
         tubeHeadGameObject.tag = "SuccHead";
+        currentTarget = null;
     }
 
     /*
@@ -28,25 +30,39 @@ public class TubeHeadController : MonoBehaviour
         }
     }*/
 
+    void Update()
+    {
+        if (currentTarget != null)
+        {
+            if (tubeController.SystemActivated)
+            {
+                if (Vector3.Distance(tubeHeadGameObject.transform.position, currentTarget.transform.position) < minDistance)
+                {
+                    tubeController.StartExtraction(currentTarget, currentTarget.gameObject);
+                    currentTarget = null;
+                }
+                else
+                {
+                    Vector3 dir = tubeHeadGameObject.transform.position - currentTarget.transform.position;
+                    tubeController.MoveFish(dir, currentTarget.transform);
+                }
+            }
+            else
+            {
+                currentTarget = null;
+            }
+        }
+    }
+
     void OnTriggerStay(Collider other)
     {
-        if (tubeController.SystemActivated)
+        if (tubeController.SystemActivated && currentTarget == null)
         {
             FishController fish = GameController.Obj.GetFishFromCollider(other);
             if (fish != null && other.attachedRigidbody)
             {
-                Vector3 dir = tubeHeadGameObject.transform.position - other.transform.position;
-
-                if (Vector3.Distance(tubeHeadGameObject.transform.position, other.transform.position) < minDistance)
-                {
-                    tubeController.StartExtraction(fish, other.gameObject);
-                }
-                else
-                {
-                    tubeController.MoveFish(dir, other.gameObject);
-                }
+                currentTarget = fish;
             }
-
         }
     }
 }

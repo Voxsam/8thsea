@@ -106,7 +106,6 @@ public class GameData : MonoBehaviour
         STATION,
     };
 
-    public const int TOTAL_NUMBER_OF_FISHTYPES = 3;
     public enum FishType
     {
         None = -1, // Default value
@@ -115,17 +114,19 @@ public class GameData : MonoBehaviour
         UnicornFish,
         Whale,
     };
+    public const int TOTAL_NUMBER_OF_FISHTYPES = 4;
 
     public enum StationType
     {
         None = -1,
         Research,
-        Dissect,
+        Sample,
         Photograph
     };
 
     public const float PAYMENT_INTERVAL = 60f;
-    public const int STARTING_MONEY = 500;
+    public const int STARTING_MONEY = 50000;
+    public const int MONEY_DEPLETE_RATE = 100;
     
     [SerializeField] private Transform DefaultEmptyFishPrefab;
     [SerializeField] private Transform ClownFishPrefab;
@@ -137,16 +138,16 @@ public class GameData : MonoBehaviour
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
     {
         new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
-            StationType.Dissect, StationType.Research
+            StationType.Sample, StationType.Photograph, StationType.Research
         }),
         new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
-            StationType.Research, StationType.Dissect
+            StationType.Research, StationType.Sample
         }),
         new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
-            StationType.Research, StationType.Dissect
+            StationType.Research, StationType.Photograph
         }, 1, 3, 1, 4, 5, 10, 30),
         new FishParameters(FishType.Whale, 60, 1, new StationType[] {
-            StationType.Research, StationType.Dissect, StationType.Research
+            StationType.Research, StationType.Sample, StationType.Research
         }, 1, 4, 1, 4, 1, 3, 50),
     };
 
@@ -154,7 +155,7 @@ public class GameData : MonoBehaviour
     private static ResearchStationParameters[] AllResearchStationParameters = // Contains details on all variants of research stations
     {
         new ResearchStationParameters(StationType.Research),
-        new ResearchStationParameters(StationType.Dissect),
+        new ResearchStationParameters(StationType.Sample),
         new ResearchStationParameters(StationType.Photograph)
     };
 

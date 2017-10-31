@@ -293,7 +293,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        currentMoney -= Time.deltaTime;
+        currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
 
         moneyText.text = "$" + ( (int)currentMoney).ToString();
     }

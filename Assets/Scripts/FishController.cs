@@ -62,10 +62,7 @@ public class FishController : IInteractable {
     [SerializeField] private GameObject WorldspaceCanvas;
     [SerializeField] private Text DeadText;
     [SerializeField] private RectTransform PanicBarRect;
-    private GameObject fishDetails;
 
-    //Prefab to instantiate FishDetails
-    public GameObject fishDetailsTemplate;
     //Prefab to instantiate researchProtocols.
     public GameObject researchProtocolTemplate;
 
@@ -82,18 +79,10 @@ public class FishController : IInteractable {
         // Get own movement controller
         fishMovementController = GetComponent<FishMovementController>();
 
-        fishDetails = null;
-
         DeadText.enabled = false;
         PanicBarRect.gameObject.SetActive(false);
         panicBarWidth = PanicBarRect.rect.width;
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
-
-        fishDetails = (GameObject)Instantiate(fishDetailsTemplate);
-        // fishDetails.transform.SetParent(GameController.Obj.gameCamera.GetCanvas.transform, false);
-        fishDetails.name = gameObject.ToString();
-        fishDetails.GetComponent<FishDetailsController>().Init(fishType, gameObject);
-        fishDetails.SetActive(false);
 
         if (fishType != GameData.FishType.None)
         {
@@ -156,7 +145,7 @@ public class FishController : IInteractable {
             case SecondaryState.Researched:
 
             case SecondaryState.Panic:
-                panicTimer -= Time.deltaTime;
+                panicTimer -= Time.deltaTime/5;
 
                 if (panicTimer <= 0)
                 {
@@ -292,16 +281,11 @@ public class FishController : IInteractable {
         {
             Renderer rend = GetComponentInChildren<Renderer>();
             rend.material.color = Color.red;
-            fishDetails.SetActive (true);
         }
         else
         {
             Renderer rend = GetComponentInChildren<Renderer>();
             rend.material.color = originalColor;
-            if (fishDetails.activeSelf)
-            {
-                fishDetails.SetActive(false);
-            }
         }
     }
 

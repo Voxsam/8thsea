@@ -887,9 +887,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   turnSpeed: 5
+  interactionController: {fileID: 0}
   cameraController: {fileID: 0}
   pCameraController: {fileID: 0}
   panel: {fileID: 0}
+  playerHolder: {fileID: 0}
   rb: {fileID: 54098507397287770}
 --- !u!114 &114397182721433398
 MonoBehaviour:
@@ -996,7 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5283febfbb871dc4184520eac499b6a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drainRate: 1
+  drainRate: 0.5
   refillRate: 1
   isActivated: 1
   OxygenBar: {fileID: 114147659321556404}
@@ -1030,8 +1032,8 @@ MonoBehaviour:
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: $$$$
 --- !u!114 &114624562645073898
@@ -1069,13 +1071,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultEmptyFishPrefab: {fileID: 4409954727748116, guid: 8840ed2b16169be4ab61017d28cae322,
     type: 2}
-  ClownFishPrefab: {fileID: 4803721160436608, guid: 4d2476bc0b29a5843a5bc1628054d5ef,
+  ClownFishPrefab: {fileID: 4649149499175508, guid: 45ccce8acf918a041b65096a4a6e6ec6,
     type: 2}
   PufferFishPrefab: {fileID: 4640516664234822, guid: 9e767f72837165340919fbe9eeb9d715,
     type: 2}
   UnicornFishPrefab: {fileID: 4803721160436608, guid: 4d2476bc0b29a5843a5bc1628054d5ef,
     type: 2}
-  WhalePrefab: {fileID: 0}
+  WhalePrefab: {fileID: 4260069583272638, guid: b6b5b1648883d364c8da51039a51bd85,
+    type: 2}
 --- !u!114 &114649669361501224
 MonoBehaviour:
   m_ObjectHideFlags: 1

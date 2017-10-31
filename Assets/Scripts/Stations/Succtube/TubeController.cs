@@ -61,14 +61,14 @@ public class TubeController : StationControllerInterface {
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = SUBMARINE_CAMERA_FIELD_OF_VIEW;
 
-        cameraOriginalDistance = stationCamera.initialOffset;
-        stationCamera.initialOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
+        cameraOriginalDistance = stationCamera.CameraOffset;
+        stationCamera.CameraOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
     }
 
     public override void WhenDeactivated()
     {
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
-        stationCamera.initialOffset = cameraOriginalDistance;
+        stationCamera.CameraOffset = cameraOriginalDistance;
     }
 
     // Update is called once per frame
@@ -97,7 +97,9 @@ public class TubeController : StationControllerInterface {
                                     (submarineSurfaceCollider.transform.position - tubeHeadController.tubeHeadGameObject.transform.position).normalized);
                     RaycastHit hit;
                     if (submarineSurfaceCollider.Raycast(ray, out hit, 100.0F))
+                    {
                         anchorPoint.transform.position = hit.point;
+                    }   
 
                     float distance = Vector3.Distance(newLocation, anchorPoint.transform.position);
 			        if (distance > radius) {
@@ -243,10 +245,10 @@ public class TubeController : StationControllerInterface {
         fishToExtractObject = null;
     }
 
-    public void MoveFish (Vector3 dir, GameObject other)
+    public void MoveFish (Vector3 dir, Transform other)
     {
         dir = dir.normalized;
-        other.transform.Translate((dir) * attractionForce * Time.deltaTime);
+        other.Translate((dir) * attractionForce * Time.deltaTime, Space.World);
     }
 
     public void EjectPlayer ()

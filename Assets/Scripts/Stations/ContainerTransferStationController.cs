@@ -18,6 +18,8 @@ public class ContainerTransferStationController : IInteractable
     //Private variables
     private State currentState;
     private Animator anim;
+    private const float TIME_TAKEN_FOR_LEVER_TO_GO_DOWN = 0.75f;
+    // This animation takes about this amount of time for the lever to go all the way down
 
     // Use this for initialization
     void Start()
@@ -41,31 +43,34 @@ public class ContainerTransferStationController : IInteractable
         {
             if (currentState == State.Idle)
             {
-                anim.SetTrigger("useLever");
-                for (int sourceContainerIterator = 0; sourceContainerIterator < containersSource.Length; sourceContainerIterator++)
-                {
-                    ContainerStationController sourceContainerControllerScript = (ContainerStationController)containersSource[sourceContainerIterator].GetComponent(typeof(ContainerStationController));
+                anim.SetTrigger("useLever"); 
 
-                    GameObject heldObject = sourceContainerControllerScript.removeHeldObject();
-                    bool successfulTransfer = true;
-                    if (heldObject != null)
+                StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(TIME_TAKEN_FOR_LEVER_TO_GO_DOWN, () => {
+                    for (int sourceContainerIterator = 0; sourceContainerIterator < containersSource.Length; sourceContainerIterator++)
                     {
-                        for (int destinationContainerIterator = 0; destinationContainerIterator < containersDestination.Length; destinationContainerIterator++)
+                        ContainerStationController sourceContainerControllerScript = (ContainerStationController)containersSource[sourceContainerIterator].GetComponent(typeof(ContainerStationController));
+
+                        GameObject heldObject = sourceContainerControllerScript.removeHeldObject();
+                        bool successfulTransfer = true;
+                        if (heldObject != null)
                         {
-                            heldObject.transform.SetParent(null);
-                            ContainerStationController destinationContainerControllerScript = (ContainerStationController)containersDestination[destinationContainerIterator].GetComponent(typeof(ContainerStationController));
-                            successfulTransfer = destinationContainerControllerScript.holdObject(heldObject);
-                            if (successfulTransfer)
+                            for (int destinationContainerIterator = 0; destinationContainerIterator < containersDestination.Length; destinationContainerIterator++)
                             {
-                                break;
+                                heldObject.transform.SetParent(null);
+                                ContainerStationController destinationContainerControllerScript = (ContainerStationController)containersDestination[destinationContainerIterator].GetComponent(typeof(ContainerStationController));
+                                successfulTransfer = destinationContainerControllerScript.holdObject(heldObject);
+                                if (successfulTransfer)
+                                {
+                                    break;
+                                }
+                            }
+                            if (!successfulTransfer)
+                            {
+                                sourceContainerControllerScript.holdObject(heldObject);
                             }
                         }
-                        if (!successfulTransfer)
-                        {
-                            sourceContainerControllerScript.holdObject(heldObject);
-                        }
                     }
-                }
+                }));
             }
         }
     }

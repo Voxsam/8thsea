@@ -501,7 +501,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201154146453932}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.08240008, y: -0.3456, z: 1.125}
+  m_LocalPosition: {x: 0.08240032, y: -0.34560013, z: 1.125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4382429565698890}
@@ -798,7 +798,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 3.6872048, z: 2.4954195}
-  m_Center: {x: -0.20000005, y: -0.29989982, z: -0.24770975}
+  m_Center: {x: 0, y: -0.29989982, z: -0.24770975}
 --- !u!95 &95912768338052734
 Animator:
   serializedVersion: 3
@@ -827,10 +827,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3b5c5fd51d1409bf1b4d1eb3dc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 15
   turnSpeed: 5
+  interactionController: {fileID: 0}
   cameraController: {fileID: 0}
   pCameraController: {fileID: 0}
+  panel: {fileID: 0}
+  playerHolder: {fileID: 4382429565698890}
   rb: {fileID: 54763311769556274}
 --- !u!114 &114296640770315040
 MonoBehaviour:

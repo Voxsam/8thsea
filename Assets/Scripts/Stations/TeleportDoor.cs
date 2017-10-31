@@ -48,8 +48,8 @@ public class TeleportDoor : IInteractable
             case State.TeleportStart:
                 if (currentTime < preTeleportDuration)
                 {
-                    player.transform.Rotate(Vector3.up * Time.deltaTime * 540);
-                    player.transform.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
+                    player.playerHolder.Rotate(Vector3.up * Time.deltaTime * 540);
+                    player.playerHolder.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 1, -1f, preTeleportDuration));
                     currentTime += Time.deltaTime;
@@ -57,6 +57,7 @@ public class TeleportDoor : IInteractable
                 else
                 {
                     currentState = State.TeleportTransit;
+                    player.ReattachCameraToPlayer();
                     currentTime = 0f;
                 }
                 break;
@@ -74,6 +75,7 @@ public class TeleportDoor : IInteractable
                 else
                 {
                     player.gameObject.transform.position = teleportPoint.transform.position;
+                    player.pCameraController.SetCameraToObject(teleportPoint.gameObject, false);
                     if (PlayerLocationRef != null)
                     {
                         player.transform.SetParent(PlayerLocationRef);
@@ -89,8 +91,8 @@ public class TeleportDoor : IInteractable
             case State.TeleportEnd:
                 if (currentTime < preTeleportDuration)
                 {
-                    player.transform.Rotate(Vector3.up * Time.deltaTime * 540);
-                    player.transform.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
+                    player.playerHolder.Rotate(Vector3.up * Time.deltaTime * 540);
+                    player.playerHolder.localScale = new Vector3(GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration),
                                                                 GameData.QuadEaseOut(currentTime, 0, 1f, preTeleportDuration));
                     currentTime += Time.deltaTime;
@@ -102,6 +104,7 @@ public class TeleportDoor : IInteractable
                     player.rb.isKinematic = false;
                     player.rb.detectCollisions = true;
                     player.ReturnControlToCharacter();
+                    player.ReattachCameraToPlayer();
                 }
                 break;
         }
@@ -178,6 +181,7 @@ public class TeleportDoor : IInteractable
                     player.rb.isKinematic = true;
                     player.rb.detectCollisions = false;
                     currentState = State.TeleportStart;
+                    player.pCameraController.SetCameraToObject(this.gameObject, false);
                     currentTime = 0f;
                     teleportDuration = speedCurve.keys[speedCurve.length - 1].time;
                     teleportDirection = (teleportPoint.position - transform.position).normalized;

@@ -74,7 +74,7 @@ public class AquariumStationController : StationControllerInterface
             }
         }
 
-        if (this.IsActivated)
+        if (this.IsActivated && playerInStation != null)
         {
             if (selectInterval > 0.2f)
             {

@@ -99,7 +99,7 @@ public class PlayerPanelController : MonoBehaviour {
 					researchIcons.SwitchSpriteForIcon (researchIcons.researchIcon, i);
 					break;
 
-				case GameData.StationType.Dissect:
+				case GameData.StationType.Sample:
 					researchIcons.SwitchSpriteForIcon (researchIcons.dissectIcon, i);
 					break;
 
@@ -120,7 +120,7 @@ public class PlayerPanelController : MonoBehaviour {
 					researchIcons.SwitchSpriteForIcon (researchIcons.researchDoneIcon, i);
 					break;
 
-				case GameData.StationType.Dissect:
+				case GameData.StationType.Sample:
 					researchIcons.SwitchSpriteForIcon (researchIcons.dissectDoneIcon, i);
 					break;
 

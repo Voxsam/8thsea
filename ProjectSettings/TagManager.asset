@@ -13,6 +13,7 @@ TagManager:
   - Obstacle
   - SuccHead
   - Submarine
+  - Main Canvas
   layers:
   - Default
   - TransparentFX
@@ -22,10 +23,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - P1_UI
+  - P2_UI
+  - P3_UI
+  - P4_UI
   - 
   - 
   - 

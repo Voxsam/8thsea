@@ -19,7 +19,7 @@ public class MultiplayerManager : MonoBehaviour {
 
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
-
+	public GameObject playerCanvasPrefab;
 	public GameObject playerPanelPrefab;
 
 	// Should be in the order of preference of spawning, depending on # of players.
@@ -69,9 +69,10 @@ public class MultiplayerManager : MonoBehaviour {
 			pCtrl.pCameraController.player = pCtrl;
 			pCtrl.controls = PlayerList.Obj.playerList [i].controls;
 
-			GameObject panel = Instantiate (playerPanelPrefab);
-			pCtrl.panel = panel.GetComponent <PlayerPanelController> ();
-			pCtrl.panel.Setup (pCtrl.player);
+			GameObject canvas = Instantiate (playerCanvasPrefab);
+			pCtrl.canvas = canvas.GetComponent<PlayerCanvasController> ();
+			pCtrl.canvas.Setup (camera.GetComponent<Camera> ());
+			canvas.GetComponent<Canvas> ().planeDistance = 0.4f;
 
 			playerControllerList.Add (pCtrl);
 
@@ -87,6 +88,7 @@ public class MultiplayerManager : MonoBehaviour {
 		switch (playerControllerList.Count) {
 
 		case 1:
+			//playerControllerList [0].pCameraController.GetCamera.
 			playerControllerList [0].pCameraController.GetCamera.rect = new Rect (new Vector2 (0f, 0f), new Vector2 (1.0f, 1.0f));
 			break;
 

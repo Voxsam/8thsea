@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	public Player player;
 	public ControlScheme controls;
 	public PlayerPanelController panel;
+	public PlayerCanvasController canvas;
 
     private bool isMoving = false;
     private bool isPlayerAllowedToMove = true;

@@ -264,11 +264,11 @@ public class FishController : IInteractable {
 		case State.Idle:
 		case State.Placed:
 			PickUp ();
-			otherActor.GetComponent<PlayerController> ().panel.ShowFishDetailsPanel (fishType.ToString (), researchProtocols);
+			otherActor.GetComponent<PlayerController> ().canvas.ShowFishDetailsPanel (fishType.ToString (), researchProtocols);
 			break;
 		case State.Held:
 			PutDown ();
-			otherActor.GetComponent<PlayerController> ().panel.HideBottomLeftPanel ();
+			otherActor.GetComponent<PlayerController> ().canvas.HideBottomLeftPanel ();
 			break;
 		default:
 			break;

@@ -20,7 +20,6 @@ public class MultiplayerManager : MonoBehaviour {
 	// The PlayerCamera prefab that should have a PlayerCameraController component attached to it.
 	public GameObject playerCameraPrefab;
 	public GameObject playerCanvasPrefab;
-	public GameObject playerPanelPrefab;
 
 	// Should be in the order of preference of spawning, depending on # of players.
 	public GameObject[] spawnPoints;

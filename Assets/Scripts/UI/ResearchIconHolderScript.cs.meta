@@ -1,10 +1,16 @@
 fileFormatVersion: 2
 guid: 4789cf25226853844bfa75603720e551
-timeCreated: 1509335146
+timeCreated: 1509641794
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cameraIcon: {fileID: 21300000, guid: 061bdb311aec8d14a8b74222193c623b, type: 3}
+  - cameraDoneIcon: {fileID: 21300000, guid: 1bb138c49ec3747459b0c58e5184a9c3, type: 3}
+  - dissectIcon: {fileID: 21300000, guid: 93e2080fb290b714bad6ab074f76acff, type: 3}
+  - dissectDoneIcon: {fileID: 21300000, guid: 8fc60ec2ceb9e11499464ba05ec24f4e, type: 3}
+  - researchIcon: {fileID: 21300000, guid: 8554d027fdf3d07408cd8ab7ffa43c72, type: 3}
+  - researchDoneIcon: {fileID: 21300000, guid: 4f2d6b5b9952be74aa29484fa43ee8ea, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

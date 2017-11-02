@@ -54,11 +54,11 @@ public class LabNavigationStationController : IInteractable {
             if (currentState == State.Idle)
             {
                 GameObject pingObject = (GameObject)Instantiate(pingObjectTemplate);
-				pingObject.transform.SetParent(player.panel.GetRectTransform, false);
+				pingObject.transform.SetParent(player.canvas.GetComponent<RectTransform> (), false);
                 pingObject.name = gameObject.ToString();
                 if (subNavController.CurrentState == SubNavigationStationController.State.Empty)
                 {
-					pingObject.GetComponent<NavigationPingController>().Init(player.panel.GetComponent<RectTransform> (), transform.position, player);
+					pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), transform.position, player);
                 }
                 else if (subNavController.CurrentState == SubNavigationStationController.State.Holding)
                 {
@@ -67,7 +67,7 @@ public class LabNavigationStationController : IInteractable {
                         FishController fishController = subNavController.HeldObject.GetComponent<FishController>();
                         if (fishController != null)
                         {
-							pingObject.GetComponent<NavigationPingController>().Init(player.panel.GetComponent<RectTransform> (), fishController.CaughtPosition, player);
+							pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), fishController.CaughtPosition, player);
                         }
                     }
                 }

@@ -19,7 +19,7 @@ public class PlayerCanvasController : MonoBehaviour {
 
 		playerCamera = cam;
 		GetComponent<Canvas> ().worldCamera = cam;
-
+		GetComponent<Canvas> ().planeDistance = 10.0f;
 		bottomLeftPanel.SetActive (false);
 
 	}

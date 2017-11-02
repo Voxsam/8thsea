@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour {
 
 	public Player player;
 	public ControlScheme controls;
-	public PlayerPanelController panel;
 	public PlayerCanvasController canvas;
 
     private bool isMoving = false;
@@ -124,14 +123,14 @@ public class PlayerController : MonoBehaviour {
 
 
 	// For use with MultiplayerManager
-	public void Setup (Player p, PlayerCameraController camCtrl, ControlScheme cs, PlayerPanelController pp) {
+	public void Setup (Player p, PlayerCameraController camCtrl, PlayerCanvasController pc) {
 
 		player = p;
 		pCameraController = camCtrl;
 		pCameraController.player = this;
-		controls = cs;
-		panel = pp;
-
+		controls = p.controls;
+		canvas = pc;
+		canvas.Setup (camCtrl.cam);
 	}
 
 }

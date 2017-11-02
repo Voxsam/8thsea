@@ -64,15 +64,9 @@ public class MultiplayerManager : MonoBehaviour {
 
 			player.transform.position = spawnPoints [i].transform.position;
 			PlayerController pCtrl = player.GetComponent<PlayerController> ();
-			pCtrl.player = PlayerList.Obj.playerList [i];
-			pCtrl.pCameraController = camera.GetComponent<PlayerCameraController> ();
-			pCtrl.pCameraController.player = pCtrl;
-			pCtrl.controls = PlayerList.Obj.playerList [i].controls;
-
 			GameObject canvas = Instantiate (playerCanvasPrefab);
-			pCtrl.canvas = canvas.GetComponent<PlayerCanvasController> ();
-			pCtrl.canvas.Setup (camera.GetComponent<Camera> ());
-			canvas.GetComponent<Canvas> ().planeDistance = 10.0f;
+
+			pCtrl.Setup (PlayerList.Obj.playerList [i], camera.GetComponent<PlayerCameraController> (), canvas.GetComponent<PlayerCanvasController> ());
 
 			playerControllerList.Add (pCtrl);
 

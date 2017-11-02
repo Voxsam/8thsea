@@ -8,12 +8,9 @@ public class FishController : IInteractable {
     {
         public GameData.StationType researchStation;
         public bool complete;
-        public GameObject researchProtocolObject;
-
-        public ResearchProtocol(GameData.StationType _researchStation, GameObject _researchProtocolObject)
+        public ResearchProtocol(GameData.StationType _researchStation)
         {
             researchStation = _researchStation;
-            researchProtocolObject = _researchProtocolObject;
             complete = false;
         }
     };
@@ -108,12 +105,7 @@ public class FishController : IInteractable {
 		for (int i = 0; i < GameData.GetFishParameters(fishType).ResearchProtocols.Length; i++)
 		{
 			GameData.ResearchStationParameters currentResearchStationParameters = GameData.GetResearchStationParameters(GameData.GetFishParameters(fishType).ResearchProtocols[i]);
-			GameObject researchProtocolUIObject = (GameObject)Instantiate(researchProtocolTemplate);
-			researchProtocolUIObject.transform.SetParent(WorldspaceCanvas.transform, false);
-			researchProtocolUIObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(750 + (i * 300), 1400);
-			researchProtocolUIObject.transform.Find("ProtocolName").gameObject.GetComponent<Text>().text = currentResearchStationParameters.Name;
-			researchProtocolUIObject.SetActive(false);
-			researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation, researchProtocolUIObject);
+			researchProtocols[i] = new ResearchProtocol(currentResearchStationParameters.researchStation);
 		}
 
 		// Enable the fish to swim
@@ -198,10 +190,6 @@ public class FishController : IInteractable {
         {
             currentSecondaryState = SecondaryState.Panic;
             PanicBarRect.gameObject.SetActive(true);
-            foreach (ResearchProtocol researchProtocol in researchProtocols)
-            {
-                researchProtocol.researchProtocolObject.SetActive(true);
-            }
         }
     }
 
@@ -304,7 +292,6 @@ public class FishController : IInteractable {
     public void ResearchFish ()
     {
         //Eventually move this color change thing to a ResearchProtocolController.
-        researchProtocols[currentResearchProtocol].researchProtocolObject.GetComponent<Image>().color = Color.green;
 		researchProtocols [currentResearchProtocol].complete = true;
         currentResearchProtocol++;
         if ( currentResearchProtocol >= researchProtocols.Length )

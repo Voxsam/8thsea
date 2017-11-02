@@ -72,7 +72,7 @@ public class MultiplayerManager : MonoBehaviour {
 			GameObject canvas = Instantiate (playerCanvasPrefab);
 			pCtrl.canvas = canvas.GetComponent<PlayerCanvasController> ();
 			pCtrl.canvas.Setup (camera.GetComponent<Camera> ());
-			canvas.GetComponent<Canvas> ().planeDistance = 0.4f;
+			canvas.GetComponent<Canvas> ().planeDistance = 10.0f;
 
 			playerControllerList.Add (pCtrl);
 

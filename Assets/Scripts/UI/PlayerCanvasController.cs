@@ -26,9 +26,8 @@ public class PlayerCanvasController : MonoBehaviour {
 
 	public void ShowFishDetailsPanel (string fishName, FishController.ResearchProtocol[] protocols)
 	{
-		bottomLeftPanel.SetActive (true);
 
-		SlideInFromLeft (bottomLeftPanel.GetComponent<RectTransform> ());
+		SlideInFromLeft (bottomLeftPanel);
 
 		bottomLeftText.text = fishName;
 
@@ -85,37 +84,44 @@ public class PlayerCanvasController : MonoBehaviour {
 
 	public void HideBottomLeftPanel ()
 	{
-		SlideOutToLeft (bottomLeftPanel.GetComponent<RectTransform> ());
-		bottomLeftPanel.SetActive (false);
+		SlideOutToLeft (bottomLeftPanel);
+	}
+	
+
+	private void SlideInFromLeft (GameObject panel) {
+		Vector3 endPosition = panel.transform.localPosition;
+		Vector3 startPosition = new Vector3 (panel.transform.localPosition.x - panel.GetComponent<RectTransform> ().rect.width, panel.transform.localPosition.y);
+		panel.SetActive (true);
+		panel.transform.localPosition = startPosition;
+		StartCoroutine (LerpPosition (panel, startPosition, endPosition, slideTime));
 	}
 
-
-	private void SlideInFromLeft (RectTransform panelRect) {
-
-		Vector2 endPosition = panelRect.localPosition;
-		panelRect.localPosition = new Vector2 (panelRect.localPosition.x - panelRect.rect.width, panelRect.localPosition.y);
-
-		StartCoroutine (LerpPosition (panelRect, endPosition, 0.2f));
-
+	private void SlideOutToLeft (GameObject panel) {
+		Vector3 startPosition = panel.transform.localPosition;
+		Vector3 endPosition = new Vector3 (panel.transform.localPosition.x - panel.GetComponent<RectTransform> ().rect.width, panel.transform.localPosition.y);
+		StartCoroutine (DeactivateAfterCoroutine(panel, LerpPosition (panel, startPosition, endPosition, slideTime, startPosition)));
 	}
 
-	private void SlideOutToLeft (RectTransform panelRect) {
-		Vector2 endPosition = new Vector2 (panelRect.localPosition.x - panelRect.rect.width, panelRect.localPosition.y);
-		StartCoroutine (LerpPosition (panelRect, endPosition, 0.2f));
-	}
-
-	IEnumerator LerpPosition (RectTransform item, Vector2 endPosition, float time) {
-
-		Vector2 startPosition = item.localPosition;
+	IEnumerator LerpPosition (GameObject _object, Vector3 startPosition, Vector3 endPosition, float time) {
 		float elapsedTime = 0f;
-
 		while (elapsedTime < time) {
-			item.localPosition = Vector2.Lerp (startPosition, endPosition, Mathf.SmoothStep(0, 1, elapsedTime / time));
+			_object.transform.localPosition = Vector3.Lerp (startPosition, endPosition, Mathf.SmoothStep(0, 1, elapsedTime / time));
 			elapsedTime += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
-
+		_object.transform.localPosition = endPosition;
 	}
+
+	IEnumerator LerpPosition (GameObject _object, Vector3 startPosition, Vector3 endPosition, float time, Vector3 realEndPosition) {
+		yield return LerpPosition (_object, startPosition, endPosition, time);
+		_object.transform.localPosition = realEndPosition;
+	}
+
+	IEnumerator DeactivateAfterCoroutine (GameObject _object, IEnumerator _coroutine) {
+		yield return _coroutine;
+		_object.SetActive (false);
+	}
+
 
 	private void AddLayerRecursively (Transform trans, int layerNo) {
 		trans.gameObject.layer = layerNo;

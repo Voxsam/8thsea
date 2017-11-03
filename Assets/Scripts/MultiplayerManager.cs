@@ -47,7 +47,6 @@ public class MultiplayerManager : MonoBehaviour {
 			PlayerList pList = Instantiate (playerListPrefab).GetComponent<PlayerList>();
 			pList.AddPlayer (new Player (new ControlScheme (0, true, KeyCode.W), 1));
 			pList.AddPlayer (new Player (new ControlScheme (0, true, KeyCode.UpArrow), 2));
-			pList.numPlayers = 2;
 		}
 
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {
@@ -69,7 +68,7 @@ public class MultiplayerManager : MonoBehaviour {
 			playerControllerList.Add (pCtrl);
 
 		}
-		GameController.Obj.SetPlayers (playerControllerList);
+		GameController.Obj.SetPlayers (PlayerList.Obj.playerList);
 		SetCameras ();
         MultiplayerManager.Obj = this;
 	}

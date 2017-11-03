@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 114250352071523016}
   - component: {fileID: 114301973835697708}
   - component: {fileID: 65361502792327706}
+  - component: {fileID: 82907501495195444}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -799,6 +800,86 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 3.6872048, z: 2.4954195}
   m_Center: {x: 0, y: -0.29989982, z: -0.24770975}
+--- !u!82 &82907501495195444
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1830913044983308}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95078821836415750
 Animator:
   serializedVersion: 3
@@ -854,9 +935,9 @@ MonoBehaviour:
   movementSpeed: 15
   turnSpeed: 5
   interactionController: {fileID: 0}
-  cameraController: {fileID: 0}
   pCameraController: {fileID: 0}
-  panel: {fileID: 0}
+  audioOutput: {fileID: 82907501495195444}
+  canvas: {fileID: 0}
   playerHolder: {fileID: 4947645046707178}
   rb: {fileID: 54897799338696168}
 --- !u!135 &135282530913537786

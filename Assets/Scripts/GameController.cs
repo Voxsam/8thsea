@@ -11,7 +11,17 @@ public class GameController : MonoBehaviour {
 
     KeyCode BUTTON_A_JOYSTICK = KeyCode.JoystickButton0;
     KeyCode BUTTON_B_JOYSTICK = KeyCode.JoystickButton1;
-    
+
+    // Audio Management
+    public static AudioController Audio
+    {
+        get { return AudioController.Obj; }
+    }
+    public bool allowBGM = true;
+    public bool allowSFX = true;
+    public float bgmMaximumVolume = 0.8f;
+    public float sfxMaximumVolume = 1.0f;
+
     // Submarine Management
     public static SubmarineController SubmarineRef
     {
@@ -19,13 +29,25 @@ public class GameController : MonoBehaviour {
     }
 
     // Player management
-    protected List<PlayerController> players;
+    protected List<PlayerController> playerControllers;
+    protected List<Player> players;
     [SerializeField] protected Transform PlayerHolder;
     [SerializeField] protected PlayerController Player1Ref;
     
-    public Transform Player1Location
+    /// <summary>
+    /// Gets player with the following number. If number is not valid, returns null
+    /// </summary>
+    public Player GetPlayerNumber(int num)
     {
-        get { return Player1Ref.transform.parent; }
+        foreach(Player player in players)
+        {
+            if (player.playerNumber == num)
+            {
+                return player;
+            }
+        }
+
+        return null;
     }
 
     // Fish management
@@ -65,10 +87,13 @@ public class GameController : MonoBehaviour {
 
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
-
-        multiplayerManager.Setup ();
-        Setup();
 	}
+
+    void Start()
+    {
+        multiplayerManager.Setup();
+        Setup();
+    }
 
     #region Getter and setters
 
@@ -226,11 +251,11 @@ public class GameController : MonoBehaviour {
     /// <returns></returns>
     public PlayerController GetPlayerFromCollider(Collider collider)
     {
-        foreach(PlayerController player in players)
+        foreach(Player player in players)
         {
-            if (collider.gameObject == player.gameObject)
+            if (collider.gameObject == player.controller.gameObject)
             {
-                return player;
+                return player.controller;
             }
         }
 
@@ -267,8 +292,8 @@ public class GameController : MonoBehaviour {
     protected void Setup()
     {
         gameCamera = GetComponentInChildren<CameraController>();
-
-        players = MultiplayerManager.Obj.playerControllerList;
+        
+        //playerControllers = MultiplayerManager.Obj.playerControllerList;
         //players = multiplayerManager.playerControllerList;
         fishes = new List<FishController>();
         
@@ -286,6 +311,11 @@ public class GameController : MonoBehaviour {
         GameOverText.enabled = false;
 
         RNG = new System.Random();
+
+        if (Audio.AreClipsLoaded)
+        {
+            Audio.PlayBGM(AudioController.BGM.II);
+        }
     }
     #endregion
 
@@ -305,9 +335,9 @@ public class GameController : MonoBehaviour {
         if (currentMoney > 0)
         {
             // Handle the update loops for the others too
-            foreach (PlayerController player in players)
+            foreach (Player player in players)
             {
-                player.GameUpdate();
+                player.controller.GameUpdate();
             }
 
             GameUpdate();
@@ -323,7 +353,7 @@ public class GameController : MonoBehaviour {
     #endregion
 
 
-	public void SetPlayers (List<PlayerController> pList) {
+	public void SetPlayers (List<Player> pList) {
 		players = pList;
 	}
 }

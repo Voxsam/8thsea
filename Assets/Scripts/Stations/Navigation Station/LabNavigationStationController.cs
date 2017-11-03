@@ -53,12 +53,18 @@ public class LabNavigationStationController : IInteractable {
 
             if (currentState == State.Idle)
             {
-                GameObject pingObject = (GameObject)Instantiate(pingObjectTemplate);
-				pingObject.transform.SetParent(player.canvas.GetComponent<RectTransform> (), false);
-                pingObject.name = gameObject.ToString();
                 if (subNavController.CurrentState == SubNavigationStationController.State.Empty)
                 {
-					pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), transform.position, player);
+                    for ( int i = 0; i < MultiplayerManager.Obj.playerControllerList.Count; i++)
+                    {
+                        PlayerController playerToAttach = MultiplayerManager.Obj.playerControllerList[i];
+                        GameObject pingObject = (GameObject)Instantiate(pingObjectTemplate);
+                        pingObject.transform.SetParent(playerToAttach.canvas.GetComponent<RectTransform>(), false);
+                        pingObject.name = playerToAttach.gameObject.ToString();
+                        pingObject.GetComponent<NavigationPingController>().Init(playerToAttach.canvas.GetComponent<RectTransform>(), transform.position, playerToAttach);
+                    }
+
+                    //pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), transform.position, player);
                 }
                 else if (subNavController.CurrentState == SubNavigationStationController.State.Holding)
                 {
@@ -67,7 +73,15 @@ public class LabNavigationStationController : IInteractable {
                         FishController fishController = subNavController.HeldObject.GetComponent<FishController>();
                         if (fishController != null)
                         {
-							pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), fishController.CaughtPosition, player);
+                            for (int i = 0; i < MultiplayerManager.Obj.playerControllerList.Count; i++)
+                            {
+                                PlayerController playerToAttach = MultiplayerManager.Obj.playerControllerList[i];
+                                GameObject pingObject = (GameObject)Instantiate(pingObjectTemplate);
+                                pingObject.transform.SetParent(playerToAttach.canvas.GetComponent<RectTransform>(), false);
+                                pingObject.name = playerToAttach.gameObject.ToString();
+                                pingObject.GetComponent<NavigationPingController>().Init(playerToAttach.canvas.GetComponent<RectTransform>(), fishController.CaughtPosition, playerToAttach);
+                            }
+                            //pingObject.GetComponent<NavigationPingController>().Init(player.canvas.GetComponent<RectTransform> (), fishController.CaughtPosition, player);
                         }
                     }
                 }

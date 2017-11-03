@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
     // Camera management
     public CameraController gameCamera;
 
+    //This is ONLY t set up the MultiplayerManager singleton. DO NOT REFERENCE AND USE MultiplayerManager.Obj INSTEAD.
 	public MultiplayerManager multiplayerManager;
 
     // GameObjects
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour {
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
 
-		multiplayerManager.Setup ();
+        multiplayerManager.Setup ();
         Setup();
 	}
 
@@ -267,7 +268,8 @@ public class GameController : MonoBehaviour {
     {
         gameCamera = GetComponentInChildren<CameraController>();
 
-		players = multiplayerManager.playerControllerList;
+        players = MultiplayerManager.Obj.playerControllerList;
+        //players = multiplayerManager.playerControllerList;
         fishes = new List<FishController>();
         
 		/*

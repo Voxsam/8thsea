@@ -75,6 +75,8 @@ public class MultiplayerManager : MonoBehaviour {
 		GameController.Obj.SetPlayers (playerControllerList);
 		SetCameras ();
 
+		Obj = this;
+
 	}
 
 	private void SetCameras() {

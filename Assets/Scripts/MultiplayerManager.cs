@@ -38,7 +38,6 @@ public class MultiplayerManager : MonoBehaviour {
 		}
 			
 		DontDestroyOnLoad(this.gameObject);
-
 	}
 
 
@@ -70,10 +69,9 @@ public class MultiplayerManager : MonoBehaviour {
 			playerControllerList.Add (pCtrl);
 
 		}
-
 		GameController.Obj.SetPlayers (playerControllerList);
 		SetCameras ();
-
+        MultiplayerManager.Obj = this;
 	}
 
 	private void SetCameras() {

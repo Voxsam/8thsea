@@ -109,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780913504088970}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.820759, y: 3.61, z: -0.0059423447}
+  m_LocalPosition: {x: -14.015819, y: 10.407515, z: -9.616091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224088055315140762}
@@ -312,8 +312,6 @@ MonoBehaviour:
   WorldspaceCanvas: {fileID: 1557064350480070}
   DeadText: {fileID: 114492728205327948}
   PanicBarRect: {fileID: 224384499388235106}
-  fishDetailsTemplate: {fileID: 1719591974075074, guid: 242f9e2731e4a7e49a9db15999da1f6a,
-    type: 2}
   researchProtocolTemplate: {fileID: 1311639297951886, guid: e3b13ed0c3b4b0b42b125cfaa5e2925c,
     type: 2}
 --- !u!114 &114851763642998746
@@ -365,7 +363,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!222 &222736443054206048
 CanvasRenderer:

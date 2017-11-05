@@ -18,9 +18,10 @@ public class ResearchStationController : IInteractable
     public GameData.StationType researchStationType;
 
     private GameObject heldObject;
-    private const float MAX_PROGRESS = 20f;
-    private const float PROGRESS_BAR_PER_INTERACTION = 1f;
-    private const float PROGRESS_BAR_PER_FRAME = 0.3f;
+    private const float MAX_PROGRESS = 3f;
+    private const float PROGRESS_BAR_PER_INTERACTION = 0.1f;
+    //private const float PROGRESS_BAR_PER_FRAME = 0.1f;
+    private float interactionProgressMade = 0f;
     private float progressMade = 0f;
     private float progressBarWidth;
     private PlayerController playerControllerInStation;
@@ -28,6 +29,10 @@ public class ResearchStationController : IInteractable
     //Prefab to instantiate progress ui
     [SerializeField] private GameObject holdSlot;
     [SerializeField] private RectTransform progressBarRect;
+    [SerializeField] private GameObject worldspaceCanvas;
+    [SerializeField] private ButtonPromptController buttonPromptController;
+    [SerializeField] private ExpandingEmitterController buttonParticleController;
+    [SerializeField] private TextEmitterController textParticleController;
 
     // Use this for initialization
     void Start()
@@ -35,7 +40,7 @@ public class ResearchStationController : IInteractable
         currentState = State.Empty;
         heldObject = null;
         progressBarWidth = progressBarRect.rect.width;
-        progressBarRect.gameObject.SetActive(false);
+        worldspaceCanvas.SetActive(false);
         playerControllerInStation = null;
     }
 
@@ -53,7 +58,7 @@ public class ResearchStationController : IInteractable
         {
             if (progressMade < MAX_PROGRESS)
             {
-                progressMade += PROGRESS_BAR_PER_FRAME;
+                progressMade += Time.deltaTime;
             }
             else
             {
@@ -83,19 +88,25 @@ public class ResearchStationController : IInteractable
                         FishController heldObjectControllerScript = heldObject.GetComponent<FishController>();
                         if (heldObjectControllerScript != null)
                         {
-                            playerControllerScript.DropObject();
-                            heldObjectControllerScript.PutIn();
-                        }
-                        heldObject.transform.SetParent(holdSlot.transform, true);
-                        heldObject.transform.localPosition = Vector3.zero;
+                            if (heldObjectControllerScript.IsCurrentResearchProtocol(researchStationType))
+                            { 
+                                playerControllerScript.DropObject();
+                                heldObjectControllerScript.PutIn();
+                        
+                                heldObject.transform.SetParent(holdSlot.transform, true);
+                                heldObject.transform.localPosition = Vector3.zero;
 
-                        currentState = State.Holding;
+                                currentState = State.Holding;
+                            }
+                        }
                     }
                 }
             }
 
             if (currentState == State.Holding)
             {
+                playerControllerInStation = otherActor.GetComponent<PlayerController>();
+                playerControllerInStation.RequestControlChange(GameData.ControlType.STATION);
                 playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
@@ -104,26 +115,27 @@ public class ResearchStationController : IInteractable
                     {
                         if (heldObject != null)
                         {
+                            if (!worldspaceCanvas.activeSelf)
+                            {
+                                worldspaceCanvas.SetActive(true);
+                            }
                             currentState = State.Working;
                         }
                     }
                 }
             }
-
-            if (currentState == State.Working)
+            else if (currentState == State.Working)
             {
-                playerControllerInStation = otherActor.GetComponent<PlayerController>();
                 playerControllerScript = playerControllerInStation.interactionController;
                 if (playerControllerScript != null)
                 {
-                    if (!progressBarRect.gameObject.activeSelf)
-                    {
-                        progressBarRect.gameObject.SetActive(true);
-                    }
-
                     if (progressMade < MAX_PROGRESS)
                     {
                         progressMade += PROGRESS_BAR_PER_INTERACTION;
+                        interactionProgressMade += PROGRESS_BAR_PER_INTERACTION;
+                        buttonPromptController.Depress();
+                        buttonParticleController.Fire();
+                        textParticleController.SpawnText(interactionProgressMade.ToString("F2"));
                     }
                     // If progress made is maxed and
                     // the the player is not already holding on to something.
@@ -136,12 +148,13 @@ public class ResearchStationController : IInteractable
                             {
                                 heldObjectControllerScript.ResearchFish();
                             }
+                            playerControllerInStation.ReturnControlToCharacter();
                             playerControllerScript.PickUpObject(heldObject);
                             playerControllerInStation = null;
                             heldObject = null;
-                            progressMade = 0f;
+                            progressMade = interactionProgressMade = 0f;
                             currentState = State.Empty;
-                            progressBarRect.gameObject.SetActive(false);
+                            worldspaceCanvas.SetActive(false);
                         }
                     }
                 }

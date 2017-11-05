@@ -22,6 +22,11 @@ public class SubmarineColliderController : MonoBehaviour {
             Vector3 direction = transform.position - other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
             direction = direction.normalized;
             subController.MoveInDirection(direction * reboundForce);
+            Debug.DrawLine(other.transform.position, other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position), Color.red, 3);
+        }
+        if (other.CompareTag("seabed"))
+        {
+            print("lol fuck la");
         }
     }
 }

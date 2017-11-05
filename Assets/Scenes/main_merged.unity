@@ -527,6 +527,21 @@ Prefab:
       propertyPath: screenSpaceCanvas
       value: 
       objectReference: {fileID: 964179536}
+    - target: {fileID: 114924955292867848, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: researchStationSound
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114553664406781618, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: researchStationSound
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114589647031091168, guid: d2267debe64660c4897da9141773fef0,
+        type: 2}
+      propertyPath: researchStationSound
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2267debe64660c4897da9141773fef0, type: 2}
   m_IsPrefabParent: 0
@@ -672,6 +687,21 @@ Prefab:
     - target: {fileID: 224335737052578340, guid: 88e4b4de75c2d4740846a554e9aeb778,
         type: 2}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114497940971470770, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_ReferenceResolution.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114497940971470770, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114497940971470770, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

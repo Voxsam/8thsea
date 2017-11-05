@@ -16,6 +16,7 @@ public class ResearchStationController : IInteractable
     State currentState;
 
     public GameData.StationType researchStationType;
+    public AudioController.SoundEffect researchStationSound;
 
     private GameObject heldObject;
     private const float MAX_PROGRESS = 20f;
@@ -47,19 +48,28 @@ public class ResearchStationController : IInteractable
             progressBarRect.sizeDelta = new Vector2(progressBarWidth * progressMade / MAX_PROGRESS, progressBarRect.rect.height);
         }
 
-        // If it is in the working state (the player is in the station)
-        // And the A button is being held
-        if (currentState == State.Working && playerControllerInStation != null)
+        if (playerControllerInStation != null)
         {
-            if (progressMade < MAX_PROGRESS)
+            // If it is in the working state (the player is in the station)
+            // And the A button is being held
+            if (currentState == State.Working)
             {
-                progressMade += PROGRESS_BAR_PER_FRAME;
+                if (progressMade < MAX_PROGRESS)
+                {
+                    progressMade += PROGRESS_BAR_PER_FRAME;
+                    GameController.Audio.PlaySFXContinuouslyAtPlayer(researchStationSound, playerControllerInStation);
+                }
+                else
+                {
+                    Interact(playerControllerInStation.gameObject);
+                }
             }
-            else
+            else if (GameController.Audio.IsSFXPlayingAtPlayer(playerControllerInStation))
             {
-                Interact(playerControllerInStation.gameObject);
+                GameController.Audio.StopContinousSFXAtPlayer(playerControllerInStation);
             }
         }
+        
     }
 
     override public void Interact()
@@ -129,6 +139,9 @@ public class ResearchStationController : IInteractable
                     // the the player is not already holding on to something.
                     else if (playerControllerScript.GetHeldObject() == null)
                     {
+                        // Stop the audio
+                        GameController.Audio.StopContinousSFXAtPlayer(playerControllerInStation);
+
                         if (heldObject != null)
                         {
                             FishController heldObjectControllerScript = (FishController)heldObject.GetComponent(typeof(FishController));

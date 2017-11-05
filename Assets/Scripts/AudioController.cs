@@ -12,13 +12,15 @@ public class AudioController : MonoBehaviour
 
     public enum BGM
     {
-        I = 0,
+        None = -1,
+        I,
         II,
     }
 
     public enum SoundEffect
     {
-        Bubbles = 0,
+        None = -1,
+        Bubbles,
         Bubbling_Sound,
         DNA_Extraction,
         Large_Bubble,
@@ -98,7 +100,7 @@ public class AudioController : MonoBehaviour
         BGM_clips = new AudioClip[BGM_names.Length];
         for(int i = 0; i < BGM_names.Length; i++)
         {
-            BGM_clips[i] = Resources.Load<AudioClip>(BGM_names[i]);
+            BGM_clips[i] = Resources.Load<AudioClip>(BGM_FOLDER + BGM_names[i]);
         }
 
         SFX_clips = new AudioClip[SFX_names.Length];
@@ -110,16 +112,31 @@ public class AudioController : MonoBehaviour
         areClipsLoaded = true;
     }
 
+    /// <summary>
+    /// Returns the appropriate AudioClip. If None, then returns null
+    /// </summary>
     private AudioClip GetBGM(BGM clip)
     {
+        if (clip == BGM.None)
+        {
+            return null;
+        }
         return BGM_clips[(int)clip];
     }
 
+    /// <summary>
+    /// Returns the appropriate AudioClip. If None, then returns null
+    /// </summary>
     private AudioClip GetSFX(SoundEffect clip)
     {
+        if (clip == SoundEffect.None)
+        {
+            return null;
+        }
         return SFX_clips[(int)clip];
     }
 
+    #region BGM handler
     public void PlayBGM(BGM bgmToPlay)
     {
         if (GameControllerRef.allowBGM)
@@ -147,7 +164,9 @@ public class AudioController : MonoBehaviour
         fadeInBGM = false;
         timeToWaitUntil = Time.time + BGM_FADE_TIME;
     }
+    #endregion
 
+    #region General SFX handler
     public void PlaySFXOnce(SoundEffect sfxToPlay)
     {
         if (GameControllerRef.allowSFX)
@@ -180,6 +199,41 @@ public class AudioController : MonoBehaviour
             SFX_player.Play();
         }
     }
+    
+    public void StopContinousSFX()
+    {
+        if (SFX_player.isPlaying)
+        {
+            SFX_player.Stop();
+            SFX_player.clip = null;
+        }
+    }
+    public bool IsSFXPlaying()
+    {
+        return SFX_player.isPlaying;
+    }
+    #endregion
+
+    #region Player SFX handlers
+    /// <summary>
+    /// Used to loop sound effects continously at a specific player (one can be looped at a time)
+    /// Can be used independently from PlaySFXContinously (meaning, a player can play a different sound effect continously even while one is being played generally)
+    /// </summary>
+    /// <param name="sfxToPlay"></param>
+    public void PlaySFXContinuouslyAtPlayer(SoundEffect sfxToPlay, PlayerController pc)
+    {
+        if (GameControllerRef.allowSFX)
+        {
+            AudioClip newClip = GetSFX(sfxToPlay);
+            if (pc.audioOutput.clip != newClip)
+            {
+                StopContinousSFXAtPlayer(pc);
+                pc.audioOutput.clip = newClip;
+                pc.audioOutput.volume = GameControllerRef.sfxMaximumVolume;
+                pc.audioOutput.Play();
+            }
+        }
+    }
 
     /// <summary>
     /// Used to loop sound effects continously at a specific player (one can be looped at a time)
@@ -188,13 +242,7 @@ public class AudioController : MonoBehaviour
     /// <param name="sfxToPlay"></param>
     public void PlaySFXContinuouslyAtPlayer(SoundEffect sfxToPlay, Player player)
     {
-        if (GameControllerRef.allowSFX)
-        {
-            StopContinousSFXAtPlayer(player);
-            SFX_player.clip = GetSFX(sfxToPlay);
-            SFX_player.volume = GameControllerRef.sfxMaximumVolume;
-            SFX_player.Play();
-        }
+        PlaySFXContinuouslyAtPlayer(sfxToPlay, player.controller);
     }
 
     /// <summary>
@@ -207,26 +255,40 @@ public class AudioController : MonoBehaviour
         PlaySFXContinuouslyAtPlayer(sfxToPlay, GameControllerRef.GetPlayerNumber(playerNum));
     }
 
-    public void StopContinousSFX()
+    public void StopContinousSFXAtPlayer(PlayerController pc)
     {
-        if (SFX_player.isPlaying)
+        if (IsSFXPlayingAtPlayer(pc))
         {
-            SFX_player.Stop();
+            pc.audioOutput.Stop();
+            pc.audioOutput.clip = null;
         }
     }
 
     public void StopContinousSFXAtPlayer(Player player)
     {
-        if (player.controller.audioOutput.isPlaying)
-        {
-            player.controller.audioOutput.Stop();
-        }
+        StopContinousSFXAtPlayer(player.controller);
     }
 
     public void StopContinousSFXAtPlayer(int playerNumber)
     {
         StopContinousSFXAtPlayer(GameControllerRef.GetPlayerNumber(playerNumber));
     }
+
+    public bool IsSFXPlayingAtPlayer(PlayerController pc)
+    {
+        return pc.audioOutput.isPlaying;
+    }
+
+    public bool IsSFXPlayingAtPlayer(Player player)
+    {
+        return IsSFXPlayingAtPlayer(player.controller);
+    }
+
+    public bool IsSFXPlayingAtPlayer(int playerNumber)
+    {
+        return IsSFXPlayingAtPlayer(GameControllerRef.GetPlayerNumber(playerNumber));
+    }
+    #endregion
 
     // Updates once every frame
     void Update()
@@ -244,6 +306,7 @@ public class AudioController : MonoBehaviour
                     fadeOutBGM = false;
                     BGM_player.Stop();
                     BGM_player.clip = nextBGM;
+                    nextBGM = null;
                     fadeInBGM = true;
                 }
             }

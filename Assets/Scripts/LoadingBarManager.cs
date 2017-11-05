@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LoadingBarManager : MonoBehaviour
 {
-	public float loadingTime;
-	public float launchTime = 0.0f;
+	public float timeToLoadFor = 1.5f;
+	private float timeLoaded = 0.0f;
 
 	public Image loadingBar;
-	public Text loadingPercent;
+	public Text LoadingPercent;
 
 	// Use this for initialization
 	void Start () 
@@ -23,19 +23,18 @@ public class LoadingBarManager : MonoBehaviour
 	{
 		if (loadingBar.fillAmount <= 1) 
 		{
-			loadingBar.fillAmount += 1.0f / loadingTime * Time.deltaTime;
+			loadingBar.fillAmount += Time.deltaTime / timeToLoadFor;
 		}
 
-		if (launchTime <= 1.5f) 
+		if (timeLoaded <= timeToLoadFor) 
 		{
-			launchTime += 1.0f / loadingTime * Time.deltaTime;
-		} 
-
+			timeLoaded += Time.deltaTime;
+		}
 		else 
 		{
-			SceneManager.LoadScene (2);
+            SceneManager.LoadScene("main_merged");
 		}
 			
-		loadingPercent.text = (loadingBar.fillAmount * 100).ToString ("f0");
+		LoadingPercent.text = ((int)(loadingBar.fillAmount * 100)).ToString () + "%";
 	}
 }

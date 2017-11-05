@@ -20,7 +20,7 @@ public class SubmarineColliderController : MonoBehaviour {
         if (other.CompareTag("lab"))
         {
             //Position the anchor point as the closest point on the submarine mesh to the position of the succ head.
-            Vector3 pointOnBounding = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+            Vector3 pointOnBounding = other.ClosestPointOnBounds(transform.position);
             Ray ray = new Ray(pointOnBounding, (other.transform.position - pointOnBounding).normalized);
             RaycastHit hit;
             Vector3 direction = Vector3.zero;
@@ -32,7 +32,6 @@ public class SubmarineColliderController : MonoBehaviour {
             
             direction = direction.normalized;
             subController.MoveInDirection(direction * reboundForce);
-            Debug.DrawLine(other.transform.position, other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position), Color.red, 3);
         }
         if (other.CompareTag("seabed"))
         {

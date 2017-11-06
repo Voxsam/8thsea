@@ -111,9 +111,9 @@ public class GameData : MonoBehaviour
         None = -1, // Default value
         ClownFish = 0,
         PufferFish,
-        Flounder,
         UnicornFish,
-        Whale
+        Whale,
+        Flounder,
     };
     public const int TOTAL_NUMBER_OF_FISHTYPES = 5;
 

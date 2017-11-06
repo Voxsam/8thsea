@@ -36,6 +36,12 @@ public class FishSchoolController : MonoBehaviour
         );
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(fishSchoolGoalLocation, 100);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -48,10 +54,18 @@ public class FishSchoolController : MonoBehaviour
                 transform.position.z + Random.Range(-zoneLength, zoneLength)
             );
         }
+        
     }
 
     public void AddFishToSchool(GameObject fish)
     {
+        fishSchoolGoalLocation = new Vector3
+        (
+            transform.position.x + Random.Range(-zoneWidth, zoneWidth),
+            transform.position.y + Random.Range(-zoneHeight, zoneHeight),
+            transform.position.z + Random.Range(-zoneLength, zoneLength)
+        );
+
         FishMovementController fishMovementScript = (FishMovementController)fish.GetComponent(typeof(FishMovementController));
         if (fishMovementScript != null)
         {

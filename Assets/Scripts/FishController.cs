@@ -277,6 +277,13 @@ public class FishController : IInteractable {
         }
     }
 
+    public bool IsCurrentResearchProtocol(GameData.StationType stationType)
+    {
+        if (currentResearchProtocol >= researchProtocols.Length)
+            return false;
+        return (!researchProtocols[currentResearchProtocol].complete && (researchProtocols[currentResearchProtocol].researchStation == stationType));
+    }
+
     /// <summary>
     /// Returns the current ResearchProtocol that needs to be performed. If there are none left (which means the fish is done), None is returned
     /// </summary>
@@ -347,10 +354,11 @@ public class FishController : IInteractable {
             return currentSecondaryState;
         }
     }
-    #endregion
 
-	public State GetCurrentState {
-		get { return currentState; }
-	}
+    public State GetCurrentState
+    {
+        get { return currentState; }
+    }
+    #endregion
 
 }

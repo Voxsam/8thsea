@@ -1,0 +1,283 @@
+fileFormatVersion: 2
+guid: 486536911b89dae439bcdb8b65d96e00
+timeCreated: 1509878840
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bigbluerock
+    100002: bigcoral
+    100004: bigcoral_001
+    100006: bigpurplerock
+    100008: bigseaweed
+    100010: bigseaweed_001
+    100012: bluecoral
+    100014: Bone
+    100016: Bone_0
+    100018: Bone_001
+    100020: Bone_002
+    100022: Bone_003
+    100024: Bone_004
+    100026: Bone_005
+    100028: Bone_1
+    100030: Bone_2
+    100032: Bone_3
+    100034: Bone_4
+    100036: Bone_5
+    100038: Bone_6
+    100040: Bone_7
+    100042: Bone_8
+    100044: Bone_9
+    100046: //RootNode
+    100048: fries1
+    100050: fries2
+    100052: fries3
+    100054: smallbluerock
+    100056: smallcoral
+    100058: smallcoral_001
+    100060: smallpurplerock
+    100062: smallseaweed
+    100064: smallseaweed_001
+    400000: bigbluerock
+    400002: bigcoral
+    400004: bigcoral_001
+    400006: bigpurplerock
+    400008: bigseaweed
+    400010: bigseaweed_001
+    400012: bluecoral
+    400014: Bone
+    400016: Bone_0
+    400018: Bone_001
+    400020: Bone_002
+    400022: Bone_003
+    400024: Bone_004
+    400026: Bone_005
+    400028: Bone_1
+    400030: Bone_2
+    400032: Bone_3
+    400034: Bone_4
+    400036: Bone_5
+    400038: Bone_6
+    400040: Bone_7
+    400042: Bone_8
+    400044: Bone_9
+    400046: //RootNode
+    400048: fries1
+    400050: fries2
+    400052: fries3
+    400054: smallbluerock
+    400056: smallcoral
+    400058: smallcoral_001
+    400060: smallpurplerock
+    400062: smallseaweed
+    400064: smallseaweed_001
+    2300000: bigbluerock
+    2300002: bigpurplerock
+    2300004: bluecoral
+    2300006: fries1
+    2300008: fries2
+    2300010: fries3
+    2300012: smallbluerock
+    2300014: smallpurplerock
+    3300000: bigbluerock
+    3300002: bigpurplerock
+    3300004: bluecoral
+    3300006: fries1
+    3300008: fries2
+    3300010: fries3
+    3300012: smallbluerock
+    3300014: smallpurplerock
+    4300000: bluecoral
+    4300002: fries2
+    4300004: smallbluerock
+    4300006: smallpurplerock
+    4300008: bigbluerock
+    4300010: bigpurplerock
+    4300012: fries1
+    4300014: fries3
+    4300016: smallcoral
+    4300018: bigcoral
+    4300020: bigseaweed
+    4300022: smallseaweed
+    6400000: bigbluerock
+    6400002: bigpurplerock
+    6400004: bluecoral
+    6400006: fries1
+    6400008: fries2
+    6400010: fries3
+    6400012: smallbluerock
+    6400014: smallpurplerock
+    7400000: swaying
+    7400002: bigcoralAction
+    7400004: bigseaweedAction
+    7400006: smallcoralAction
+    7400008: smallseaweedAction_001
+    9500000: //RootNode
+    13700000: bigcoral
+    13700002: bigseaweed
+    13700004: smallcoral
+    13700006: smallseaweed
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: swaying
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 73
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: bigbluerock
+        weight: 1
+      - path: bigcoral
+        weight: 1
+      - path: bigcoral_001
+        weight: 1
+      - path: bigcoral_001/Bone_0
+        weight: 1
+      - path: bigcoral_001/Bone_0/Bone_2
+        weight: 1
+      - path: bigpurplerock
+        weight: 1
+      - path: bigseaweed
+        weight: 1
+      - path: bigseaweed_001
+        weight: 1
+      - path: bigseaweed_001/Bone_1
+        weight: 1
+      - path: bigseaweed_001/Bone_1/Bone_3
+        weight: 1
+      - path: bigseaweed_001/Bone_002
+        weight: 1
+      - path: bigseaweed_001/Bone_002/Bone_003
+        weight: 1
+      - path: bigseaweed_001/Bone_004
+        weight: 1
+      - path: bigseaweed_001/Bone_004/Bone_005
+        weight: 1
+      - path: bluecoral
+        weight: 1
+      - path: fries1
+        weight: 1
+      - path: fries2
+        weight: 1
+      - path: fries3
+        weight: 1
+      - path: smallbluerock
+        weight: 1
+      - path: smallcoral
+        weight: 1
+      - path: smallcoral_001
+        weight: 1
+      - path: smallcoral_001/Bone
+        weight: 1
+      - path: smallcoral_001/Bone/Bone_001
+        weight: 1
+      - path: smallpurplerock
+        weight: 1
+      - path: smallseaweed
+        weight: 1
+      - path: smallseaweed_001
+        weight: 1
+      - path: smallseaweed_001/Bone_4
+        weight: 1
+      - path: smallseaweed_001/Bone_4/Bone_5
+        weight: 1
+      - path: smallseaweed_001/Bone_6
+        weight: 1
+      - path: smallseaweed_001/Bone_6/Bone_7
+        weight: 1
+      - path: smallseaweed_001/Bone_8
+        weight: 1
+      - path: smallseaweed_001/Bone_8/Bone_9
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

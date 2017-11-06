@@ -161,7 +161,7 @@ public class GameData : MonoBehaviour
         }),
         new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph, StationType.Sample
-        })
+        }, 1, 3, 1, 4, 3, 6, 30)
     };
 
     // Research Station management

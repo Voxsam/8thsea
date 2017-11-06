@@ -687,12 +687,6 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114649654506604526, guid: 88e4b4de75c2d4740846a554e9aeb778,
-        type: 2}
-      propertyPath: PenguinPrefab
-      value: 
-      objectReference: {fileID: 4244274111072984, guid: df95af944147ec4458abb6669b94811f,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
   m_IsPrefabParent: 0
@@ -1088,11 +1082,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114421212577820426, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b,
-        type: 2}
-      propertyPath: Zones.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 224577340287344410, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b,
         type: 2}
       propertyPath: m_LocalPosition.x

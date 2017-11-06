@@ -1320,6 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8938b2c48471341a1aa4068b08ffa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disablePlayersUntilLoadingIsDone: 1
   allowBGM: 1
   allowSFX: 1
   bgmMaximumVolume: 0.4
@@ -1357,6 +1358,8 @@ MonoBehaviour:
   WhalePrefab: {fileID: 4260069583272638, guid: b6b5b1648883d364c8da51039a51bd85,
     type: 2}
   FlounderPrefab: {fileID: 4187676757518810, guid: 115ab18c5f5c4884ebc19a2dba784a08,
+    type: 2}
+  PenguinPrefab: {fileID: 4244274111072984, guid: df95af944147ec4458abb6669b94811f,
     type: 2}
 --- !u!114 &114649669361501224
 MonoBehaviour:

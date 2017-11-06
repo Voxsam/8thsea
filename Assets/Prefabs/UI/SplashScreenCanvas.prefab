@@ -210,6 +210,12 @@ MonoBehaviour:
   timeToLoadFor: 1.5
   loadingBar: {fileID: 114460428843623312}
   LoadingPercent: {fileID: 114523306204152462}
+  isTimeBased: 0
+  Zones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114460428843623312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,7 +367,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &224370897347119368
 RectTransform:

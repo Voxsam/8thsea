@@ -61,8 +61,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	{
 		if (numPlayers > 0) {
             // Load the main game scene
-            // Load the splash screen first
-            SceneManager.LoadScene("SplashScreen");
+            SceneManager.LoadScene("main_merged");
 		}
 	}
 

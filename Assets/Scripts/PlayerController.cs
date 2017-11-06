@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] public Transform playerHolder;
     [SerializeField] public Rigidbody rb;
 
-	void Start () {
+	void Awake () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();

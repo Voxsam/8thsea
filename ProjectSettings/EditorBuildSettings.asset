@@ -9,17 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/characterSelect.unity
     guid: 13cd6eed8eb525b4784c8157451b817b
   - enabled: 1
+    path: Assets/Scenes/SplashScreen.unity
+    guid: 048f5402aceca7841aa9e170e3bc61ca
+  - enabled: 1
     path: Assets/Scenes/main_merged.unity
     guid: ae436d47d8a2dad428e0ed961b2c584d
-  - enabled: 0
-    path: 
-    guid: 57286b4d4de7a904f8a556d21f9d7254
-  - enabled: 0
-    path: 
-    guid: a703e6214f9c18248ba98448d1d905cd
-  - enabled: 0
-    path: 
-    guid: f7d7bbecebc39cb4d9705b23d7e2fd69
-  - enabled: 0
-    path: 
-    guid: 35666fc4a7edfeb47b278d90ae2ea8a8

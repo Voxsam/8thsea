@@ -32,6 +32,16 @@ public class ZoneController : MonoBehaviour
 
     private Dictionary<GameData.FishType, List<GameObject>> fishSchools;
 
+    private const int MINIMUM_SCHOOL_SIZE = 3;
+    private const int MAXIMUM_SCHOOL_SIZE = 5;
+
+    private bool finishSpawning = false;
+    private int schoolsDone = 0;
+    public float percentageSpawned
+    {
+        get { return (finishSpawning) ? 1f : schoolsDone / (1f * numSchools * MAXIMUM_SCHOOL_SIZE); }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -73,7 +83,7 @@ public class ZoneController : MonoBehaviour
 
     protected IEnumerator SpawnSchools()
     {
-        int rand = Random.Range(3, 5);
+        int rand = Random.Range(MINIMUM_SCHOOL_SIZE, MAXIMUM_SCHOOL_SIZE);
         for (int i = 0; i < rand; i++)
         {
             if (fishSchools.Count >= numSchools)
@@ -109,11 +119,15 @@ public class ZoneController : MonoBehaviour
                 fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
             fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
+            yield return new WaitForEndOfFrame();
         }
         if (fishSchools.Count < numSchools)
         {
-            yield return new WaitForSeconds(fishSchoolSpawnDelay);
+            //yield return new WaitForSeconds(fishSchoolSpawnDelay);
+            yield return new WaitForEndOfFrame();
         }
+
+        finishSpawning = true;
         yield return null;
     }
 

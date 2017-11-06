@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135852794252795026}
   - component: {fileID: 65818180505150316}
   m_Layer: 0
-  m_Name: flatfish
+  m_Name: FlatFishMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

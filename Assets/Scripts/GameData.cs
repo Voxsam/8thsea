@@ -115,7 +115,9 @@ public class GameData : MonoBehaviour
         Whale,
         Flounder,
     };
-    public const int TOTAL_NUMBER_OF_FISHTYPES = 5;
+    public static int TOTAL_NUMBER_OF_FISHTYPES {
+        get { return AllFishParameters.Length; }
+    }
 
     public enum StationType
     {
@@ -154,7 +156,7 @@ public class GameData : MonoBehaviour
         }, 1, 4, 1, 4, 1, 3, 50),
         new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
-        }, 1, 4, 1, 4, 1, 3, 50)
+        })
     };
 
     // Research Station management

@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 221152129}
   - component: {fileID: 221152133}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: SplashScreenCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

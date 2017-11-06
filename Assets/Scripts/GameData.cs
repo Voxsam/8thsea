@@ -114,6 +114,7 @@ public class GameData : MonoBehaviour
         UnicornFish,
         Whale,
         Flounder,
+        Penguin,
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
         get { return AllFishParameters.Length; }
@@ -137,6 +138,7 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform UnicornFishPrefab;
     [SerializeField] private Transform WhalePrefab;
     [SerializeField] private Transform FlounderPrefab;
+    [SerializeField] private Transform PenguinPrefab;
 
 
     // Fish management
@@ -156,6 +158,9 @@ public class GameData : MonoBehaviour
         }, 1, 4, 1, 4, 1, 3, 50),
         new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
+        }),
+        new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
+            StationType.Research, StationType.Photograph, StationType.Sample
         })
     };
 
@@ -237,6 +242,9 @@ public class GameData : MonoBehaviour
                     break;
                 case FishType.Flounder:
                     prefab = Obj.FlounderPrefab;
+                    break;
+                case FishType.Penguin:
+                    prefab = Obj.PenguinPrefab;
                     break;
                 case FishType.PufferFish:
                 default:

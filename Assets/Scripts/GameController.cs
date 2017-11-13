@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
+
 	public static GameController Obj;
+
+	public TutorialManager tutManager;
+	public bool isTutorial;
 
     KeyCode BUTTON_A_KEYBOARD = KeyCode.Space;
     KeyCode BUTTON_B_KEYBOARD = KeyCode.E;
@@ -279,6 +284,12 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
+
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("main_merged_ui")) { // change later
+			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
+			tutManager.Setup ();
+		}
+
         gameCamera = GetComponentInChildren<CameraController>();
         
         //playerControllers = MultiplayerManager.Obj.playerControllerList;

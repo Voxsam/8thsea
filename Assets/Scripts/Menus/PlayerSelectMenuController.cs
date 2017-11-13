@@ -38,13 +38,24 @@ public class PlayerSelectMenuController : MonoBehaviour {
 		// Iterate through all 4 joysticks
 		foreach (int j in joysticks) {
 			if (!usedJoysticks.Contains(j) && Input.GetKeyDown ("joystick " + j + " button 2")) {
-				pList.AddPlayer (new Player(new ControlScheme(j, false, KeyCode.A), numPlayers + 1));
+				pList.AddPlayer (new Player(new ControlScheme(j, false), numPlayers + 1));
 				usedJoysticks.Add (j);
 				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + j + "."; 
 				numPlayers++;
-			}
-		}
+            }
 
+            KeyCode upKey = ControlScheme.GetKeyCode(j, ControlScheme.Controller.Up);
+            // Iterate through all key configurations
+            if (!usedKeys.Contains(upKey) && Input.GetKeyDown(upKey))
+            {
+                pList.AddPlayer(new Player(new ControlScheme(j, true), numPlayers + 1));
+                usedKeys.Add(upKey);
+                textboxes[numPlayers].text = "Player " + (numPlayers + 1) + " is using " + upKey.ToString() + ".";
+                numPlayers++;
+            }
+        }
+
+        /*
 		// Iterate through all key configurations
 		foreach (KeyCode key in keys) {
 			if (!usedKeys.Contains(key) && Input.GetKeyDown (key)) {
@@ -54,7 +65,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 				numPlayers++;
 			}
 		}
-
+        //*/
 	}
 
 	public void AdvanceToGame ()

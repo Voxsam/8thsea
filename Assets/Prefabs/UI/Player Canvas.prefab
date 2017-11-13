@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
-  slideTime: 0.25
+  slideTime: 0.1
   bottomLeftPanel: {fileID: 1008829828728416}
   bottomLeftText: {fileID: 114327030408464314}
   researchIcons: {fileID: 114164891773999698}

@@ -62,7 +62,19 @@ public class FishMovementController : MonoBehaviour {
         {
 		    if ( Random.Range (0, schoolingRateDenominator) < schoolingRateNumerator)
             {
-                School();
+                if ( fishSchoolController.FishInSchool.Count == 1)
+                {
+                    this.transform.rotation = Quaternion.Slerp
+                    (
+                        this.transform.rotation,
+                        Quaternion.LookRotation((fishSchoolController.GoalLocation - this.transform.position)),
+                        rotationSpeed * Time.deltaTime
+                    );
+                }
+                else
+                {
+                    School();
+                }
             }
         }
 

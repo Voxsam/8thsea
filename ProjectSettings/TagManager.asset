@@ -14,6 +14,7 @@ TagManager:
   - SuccHead
   - Submarine
   - Main Canvas
+  - seabed
   layers:
   - Default
   - TransparentFX

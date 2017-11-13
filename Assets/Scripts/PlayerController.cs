@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour {
     public PlayerInteractionController interactionController;
     private PlayerAnimationController animationController;
 	public PlayerCameraController pCameraController;
+    public AudioSource audioOutput;
 
-	public Player player;
+	public Player playerMasterRef;
 	public ControlScheme controls;
 	public PlayerCanvasController canvas;
 
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] public Transform playerHolder;
     [SerializeField] public Rigidbody rb;
 
-	void Start () {
+	void Awake () {
         //rb = this.GetComponent<Rigidbody> (); // Assigned in editor
         ControlMode = GameData.ControlType.CHARACTER;
         interactionController = GetComponentInChildren<PlayerInteractionController>();
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
-			Vector3 direction = new Vector3 (player.controls.GetHorizontalAxis(), 0.0f, player.controls.GetVerticalAxis());
+			Vector3 direction = new Vector3 (playerMasterRef.controls.GetHorizontalAxis(), 0.0f, playerMasterRef.controls.GetVerticalAxis());
             
 			if (direction != Vector3.zero) {
 				isMoving = true;
@@ -118,14 +119,15 @@ public class PlayerController : MonoBehaviour {
 
 	public ControlScheme GetPlayerControls
 	{
-		get { return player.controls; }
+		get { return playerMasterRef.controls; }
 	}
 
 
 	// For use with MultiplayerManager
 	public void Setup (Player p, PlayerCameraController camCtrl, PlayerCanvasController pc) {
 
-		player = p;
+		playerMasterRef = p;
+        p.controller = this;
 		pCameraController = camCtrl;
 		pCameraController.player = this;
 		controls = p.controls;

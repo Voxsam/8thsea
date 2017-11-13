@@ -60,8 +60,8 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	public void AdvanceToGame ()
 	{
 		if (numPlayers > 0) {
-			// Load the main game scene
-			SceneManager.LoadScene (1);
+            // Load the main game scene
+            SceneManager.LoadScene("main_merged");
 		}
 	}
 

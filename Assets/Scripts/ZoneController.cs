@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ZoneController : MonoBehaviour
 {
+
     //X
     [SerializeField] public int zoneWidth;
     //Y
@@ -16,6 +17,9 @@ public class ZoneController : MonoBehaviour
     [SerializeField] public int maxSchools = 10;
     [SerializeField] public int minSchools = 20;
     [SerializeField] public float fishSchoolSpawnDelay = 5f;
+
+	[Tooltip("Which fish types to spawn, look up numbers in GameData.")]
+	public int[] fishTypesToSpawn; 
 
     [SerializeField] public Transform SpawnPoint;
 
@@ -83,14 +87,21 @@ public class ZoneController : MonoBehaviour
 
     protected IEnumerator SpawnSchools()
     {
-        int rand = Random.Range(MINIMUM_SCHOOL_SIZE, MAXIMUM_SCHOOL_SIZE);
-        for (int i = 0; i < rand; i++)
+		
+		for (int i = 0; i < numSchools; i++)
         {
             if (fishSchools.Count >= numSchools)
             {
                 yield return null;
             }
-            int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+			// Pick a random fish type from the 
+			int fishTypeIndex;
+			if (fishTypesToSpawn.Length > 0) {
+				fishTypeIndex = fishTypesToSpawn [Random.Range (0, fishTypesToSpawn.Length)];
+			} else {
+				fishTypeIndex = Random.Range (0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+			}
+
             GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
 
             GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);

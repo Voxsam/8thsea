@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c885c55307302964ea861fd6afbe5a1f
-timeCreated: 1510589019
+guid: 78180037ce80a99449b61e62343494e8
+timeCreated: 1510594599
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Plane
+    4300000: bluecoral
   materials:
     importMaterials: 1
     materialName: 0

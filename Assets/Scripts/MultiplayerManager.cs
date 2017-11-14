@@ -109,7 +109,4 @@ public class MultiplayerManager : MonoBehaviour {
 
 	}
 
-
-
-
 }

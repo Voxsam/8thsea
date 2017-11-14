@@ -377,8 +377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 1
-  minimumWaitTimeBetweenSFX: 0
-  maximumWaitTimeBetweenSFX: 1
   holdSlot: {fileID: 1501309825958416}
   progressBarRect: {fileID: 224579031458814092}
   worldspaceCanvas: {fileID: 1647866893568568}

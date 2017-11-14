@@ -90,7 +90,7 @@ public class AquariumStationController : StationControllerInterface
                     if (selectedResearchRequirementIndex == -1)
                     {
                         selectedResearchRequirementIndex = 0;
-                        fishResearchRequirements[researchRequirementsForLevel[selectedResearchRequirementIndex]].GetComponent<ResearchRequirementsController>().Select();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                     else if (selectedResearchRequirementIndex < (researchRequirementsForLevel.Length - 1))
                     {
@@ -106,7 +106,7 @@ public class AquariumStationController : StationControllerInterface
                     if (selectedResearchRequirementIndex == -1)
                     {
                         selectedResearchRequirementIndex = 0;
-                        fishResearchRequirements[researchRequirementsForLevel[selectedResearchRequirementIndex]].GetComponent<ResearchRequirementsController>().Select();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                     else if ((int)selectedResearchRequirementIndex > 0)
                     {
@@ -135,9 +135,13 @@ public class AquariumStationController : StationControllerInterface
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
-                    if (selectedResearchRequirementIndex >= 0 && selectedResearchRequirementIndex < (researchRequirementsForLevel.Length - 1))
+<<<<<<< HEAD
+                    if (RemoveFish(playerControllerScript, researchRequirementsForLevel[selectedResearchRequirementIndex]))
+=======
+                    if (selectedResearchRequirementIndex >= 0 && selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+>>>>>>> b78dc215339ff545e506c1c8d928b5e9029d78f2
                     {
-                        if (RemoveFish(playerControllerScript, researchRequirementsForLevel[selectedResearchRequirementIndex]))
+                        if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
                         {
                             DisengagePlayer();
                         }
@@ -219,7 +223,11 @@ public class AquariumStationController : StationControllerInterface
 
     public override void WhenActivated()
     {
+<<<<<<< HEAD
+        selectedResearchRequirementIndex = 0;
+=======
         selectedResearchRequirementIndex = -1;
+>>>>>>> b78dc215339ff545e506c1c8d928b5e9029d78f2
 
         GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
         fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
@@ -280,9 +288,9 @@ public class AquariumStationController : StationControllerInterface
 
     private bool IsFishTypeStoreable (GameData.FishType fishType)
     {
-        for (int i = 0; i < researchRequirementsForLevel.Length; i++)
+        for (int i = 0; i < researchRequirementTemplates.Length; i++)
         {
-            if (fishType == researchRequirementsForLevel[i])
+            if (fishType == researchRequirementTemplates[i].fishType)
             {
                 return true;
             }

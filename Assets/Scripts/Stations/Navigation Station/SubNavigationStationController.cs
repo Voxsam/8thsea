@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SubNavigationStationController : IInteractable {
     public FishReturnStationController returnStationController;
+    public LabNavigationStationController labNavController;
 
     public enum State
     {
@@ -64,8 +65,10 @@ public class SubNavigationStationController : IInteractable {
                         {
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
+                            heldObjectControllerScript.StartSlowPanic();
                             holdObject(objectToHold);
                             returnStationController.Activate(heldObjectControllerScript);
+                            labNavController.SetWireframe(heldObjectControllerScript.fishType);
                         }
                     }
                 }
@@ -83,6 +86,7 @@ public class SubNavigationStationController : IInteractable {
                             playerControllerScript.PickUpObject(heldObject);
                             removeHeldObject();
                             returnStationController.Deactivate();
+                            labNavController.SetWireframe(GameData.FishType.None);
                         }
                     }
                 }

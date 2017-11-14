@@ -38,7 +38,7 @@ public class AquariumStationController : StationControllerInterface
 
     private Dictionary<GameData.FishType, GameObject> fishSchools;
     private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
-    private int selectedResearchRequirementIndex = 0;
+    private int selectedResearchRequirementIndex = -1;
 
     // Use this for initialization
     void Start()
@@ -89,7 +89,12 @@ public class AquariumStationController : StationControllerInterface
                 if (playerInStation.controls.GetHorizontalAxis() > 0)
                 {
                     selectInterval = 0;
-                    if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+                    if (selectedResearchRequirementIndex == -1)
+                    {
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
                     {
                         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex++;
@@ -99,7 +104,12 @@ public class AquariumStationController : StationControllerInterface
                 else if (playerInStation.controls.GetHorizontalAxis() < 0)
                 {
                     selectInterval = 0;
-                    if ((int)selectedResearchRequirementIndex > 0)
+                    if (selectedResearchRequirementIndex == -1)
+                    {
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if ((int)selectedResearchRequirementIndex > 0)
                     {
                         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex--;
@@ -125,13 +135,16 @@ public class AquariumStationController : StationControllerInterface
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
-                    if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
+                    if (selectedResearchRequirementIndex >= 0 && selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
                     {
-                        DisengagePlayer();
-                    }
-                    else
-                    {
-                        ShowWarningText("No fish of this type is in the aquarium!");
+                        if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
+                        {
+                            DisengagePlayer();
+                        }
+                        else
+                        {
+                            ShowWarningText("No fish of this type is in the aquarium!");
+                        }
                     }
                 }
             }
@@ -164,6 +177,10 @@ public class AquariumStationController : StationControllerInterface
                             if (heldObjectControllerScript.IsDead())
                             {
                                 ShowWarningText("This fish is dead!");
+                            }
+                            else if (!IsFishTypeStoreable(heldObjectControllerScript.fishType))
+                            {
+                                ShowWarningText("This fish is not part of the list!");
                             }
                             else
                             {
@@ -202,8 +219,7 @@ public class AquariumStationController : StationControllerInterface
 
     public override void WhenActivated()
     {
-        selectedResearchRequirementIndex = 0;
-        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+        selectedResearchRequirementIndex = -1;
 
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = AQUARIUM_CAMERA_FIELD_OF_VIEW;
@@ -267,6 +283,18 @@ public class AquariumStationController : StationControllerInterface
         return false;
     }
 
+    private bool IsFishTypeStoreable (GameData.FishType fishType)
+    {
+        for (int i = 0; i < researchRequirementTemplates.Length; i++)
+        {
+            if (fishType == researchRequirementTemplates[i].fishType)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void StoreFish(GameObject fishToStore, GameData.FishType fishType)
     {
         if (fishToStore != null)
@@ -277,6 +305,7 @@ public class AquariumStationController : StationControllerInterface
                 FishController fishController = fishToStore.GetComponent<FishController>();
                 if (fishController != null)
                 {
+                    fishController.StartSlowPanic();
                     fishController.SetEnabled(false);
                     FishMovementController fishMovementController = fishToStore.GetComponent<FishMovementController>();
                     if (fishMovementController != null)

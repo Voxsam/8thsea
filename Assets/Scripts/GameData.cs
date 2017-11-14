@@ -113,13 +113,13 @@ public class GameData : MonoBehaviour
     {
         None = -1, // Default value
         ClownFish = 0,
-        PufferFish,
-        UnicornFish,
-        Whale,
-        Flounder,
-        Penguin,
-        Octi,
-        Shark
+        PufferFish = 1,
+        UnicornFish = 2 ,
+        Whale = 3,
+        Flounder = 4,
+        Penguin = 5,
+        Octi = 6,
+        Shark = 7
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
         get { return AllFishParameters.Length; }

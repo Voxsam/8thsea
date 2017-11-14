@@ -174,6 +174,7 @@ public class TeleportDoor : IInteractable
             player = other.GetComponent<PlayerController>();
             if (player != null && AllowTeleport)
             {
+
                 // If the player is in Character control mode
                 if (player.ControlMode == GameData.ControlType.CHARACTER)
                 {
@@ -188,6 +189,12 @@ public class TeleportDoor : IInteractable
                     teleportDistance = Vector3.Distance(teleportPoint.position, transform.position);
 
                     playerParentTransform = player.transform.parent;
+
+					if (GameController.Obj.isTutorial) {
+						TutorialManager.Obj.hasUsedTeleporter = true;
+					}
+
+
                 }
             }
         }

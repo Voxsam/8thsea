@@ -112,6 +112,14 @@ public class ResearchStationController : IInteractable
                 playerControllerInStation = otherActor.GetComponent<PlayerController>();
                 playerControllerInStation.RequestControlChange(GameData.ControlType.STATION);
                 playerControllerScript = otherActor.GetComponent<PlayerInteractionController>();
+
+				if (researchStationType == GameData.StationType.Sample && GameController.Obj.isTutorial) {
+					if (TutorialManager.Obj.currentStep == 8) {
+						TutorialManager.Obj.hasUsedDissectStation = true;
+					}
+				}
+
+
                 if (playerControllerScript != null)
                 {
                     //Check that the player is not already holding on to something.
@@ -130,6 +138,9 @@ public class ResearchStationController : IInteractable
             }
             else if (currentState == State.Working)
             {
+
+
+
                 playerControllerScript = playerControllerInStation.interactionController;
                 if (playerControllerScript != null)
                 {
@@ -159,6 +170,13 @@ public class ResearchStationController : IInteractable
                             progressMade = interactionProgressMade = 0f;
                             currentState = State.Empty;
                             worldspaceCanvas.SetActive(false);
+
+							if (researchStationType == GameData.StationType.Sample && GameController.Obj.isTutorial) {
+								if (TutorialManager.Obj.currentStep == 9) {
+									TutorialManager.Obj.hasFinishedDissectStation = true;
+								}
+							}
+
                         }
                     }
                 }

@@ -125,16 +125,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transforms:
   - {fileID: 4402119121371632}
-  currentStep: 0
+  currentStep: 3
   hasUsedTeleporter: 0
   hasActivatedAquarium: 0
   hasEnteredSubmarine: 0
   hasTriedDriving: 0
+  hasMovedNearFish: 0
+  hasCaughtFish: 0
+  hasTransferredFish: 0
+  hasUsedDissectStation: 0
+  hasCompletedFish: 0
+  hasReleasedFish: 0
   notifiedPlayerOfTutorialAccess: 0
   teleporter: {fileID: 0}
   aquariumConsole: {fileID: 0}
   drivingStation: {fileID: 0}
+  suckStation: {fileID: 0}
   tutorialFishZone: {fileID: 0}
+  dissectionStation: {fileID: 0}
+  photoStation: {fileID: 0}
+  researchStation: {fileID: 0}
+  submarineLever: {fileID: 0}
   floatingArrowPrefab: {fileID: 1714117834672830, guid: 12162d93b6348b24ca3d6ac84aa98ca2,
     type: 2}
 --- !u!114 &114477076429507006

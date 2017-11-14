@@ -14,6 +14,9 @@ public class PlayerCanvasController : MonoBehaviour {
 	public Text bottomLeftText;
 	public ResearchIconHolderScript researchIcons;
 
+	public GameObject stampOverlay;
+	public GameObject deadStamp;
+	public GameObject researchedStamp;
 
 	public void Setup (Camera cam) {
 
@@ -24,7 +27,7 @@ public class PlayerCanvasController : MonoBehaviour {
 
 	}
 
-	public void ShowFishDetailsPanel (string fishName, FishController.ResearchProtocol[] protocols)
+	public void ShowFishDetailsPanel (string fishName, FishController.ResearchProtocol[] protocols, FishController.SecondaryState fishState)
 	{
 
 		SlideInFromLeft (bottomLeftPanel);
@@ -79,6 +82,21 @@ public class PlayerCanvasController : MonoBehaviour {
 
 			}
 
+			if (fishState == FishController.SecondaryState.Dead) {
+				stampOverlay.SetActive (true);
+				deadStamp.SetActive (true);
+				researchedStamp.SetActive (false);
+			} else if (fishState == FishController.SecondaryState.Researched) {
+				stampOverlay.SetActive (true);
+				deadStamp.SetActive (false);
+				researchedStamp.SetActive (true);
+			} else {
+				stampOverlay.SetActive (false);
+				deadStamp.SetActive (false);
+				researchedStamp.SetActive (false);
+			}
+
+
 		}
 	}
 
@@ -121,13 +139,6 @@ public class PlayerCanvasController : MonoBehaviour {
 		yield return _coroutine;
 		_object.SetActive (false);
 	}
-
-
-	private void AddLayerRecursively (Transform trans, int layerNo) {
-		trans.gameObject.layer = layerNo;
-		foreach (Transform t in trans) {
-			AddLayerRecursively (t, layerNo);
-		}
-	}
+	
 
 }

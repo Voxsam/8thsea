@@ -22,15 +22,23 @@ public class AquariumStationController : StationControllerInterface
     public ResearchRequirements[] researchRequirementTemplates;
 
     [SerializeField] private GameObject holdSlot;
+    [SerializeField] private GameObject playerAnchor;
     [SerializeField] private GameObject worldspaceCanvas;
     [SerializeField] private GameObject warningText;
     [SerializeField] private GameObject researchReqAnchor;
     private float warningTextLifespan = 0;
     private float selectInterval = 0;
 
+    // Camera things
+    public const float AQUARIUM_CAMERA_FIELD_OF_VIEW = 60f;
+    protected float cameraOriginalFov;
+
+    public Vector3 AQUARIUM_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, 0f);
+    protected Vector3 cameraOriginalDistance;
+
     private Dictionary<GameData.FishType, GameObject> fishSchools;
     private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
-    private GameData.FishType selectedResearchRequirementIndex = GameData.FishType.ClownFish;
+    private int selectedResearchRequirementIndex = 0;
 
     // Use this for initialization
     void Start()
@@ -83,9 +91,9 @@ public class AquariumStationController : StationControllerInterface
                     selectInterval = 0;
                     if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
                     {
-                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Deselect();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex++;
-                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
                 else if (playerInStation.controls.GetHorizontalAxis() < 0)
@@ -93,9 +101,9 @@ public class AquariumStationController : StationControllerInterface
                     selectInterval = 0;
                     if ((int)selectedResearchRequirementIndex > 0)
                     {
-                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Deselect();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex--;
-                        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
             }
@@ -117,7 +125,7 @@ public class AquariumStationController : StationControllerInterface
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
-                    if (RemoveFish(playerControllerScript, selectedResearchRequirementIndex))
+                    if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
                     {
                         DisengagePlayer();
                     }
@@ -189,13 +197,19 @@ public class AquariumStationController : StationControllerInterface
     public override void SetPlayerToStation(PlayerController player)
     {
         base.SetPlayerToStation(player);
-        stationCamera.SetCameraToObject(holdSlot);
+        stationCamera.SetCameraToObject(playerAnchor);
     }
 
     public override void WhenActivated()
     {
-        selectedResearchRequirementIndex = GameData.FishType.ClownFish;
-        fishResearchRequirements[selectedResearchRequirementIndex].GetComponent<ResearchRequirementsController>().Select();
+        selectedResearchRequirementIndex = 0;
+        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+
+        cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
+        stationCamera.GetCamera.fieldOfView = AQUARIUM_CAMERA_FIELD_OF_VIEW;
+
+        cameraOriginalDistance = stationCamera.CameraOffset;
+        stationCamera.CameraOffset = AQUARIUM_CAMERA_DISTANCE_FROM_TARGET;
     }
 
     public override void WhenDeactivated()
@@ -204,6 +218,8 @@ public class AquariumStationController : StationControllerInterface
         {
             researchRequirement.Value.GetComponent<ResearchRequirementsController>().Deselect();
         }
+        stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
+        stationCamera.CameraOffset = cameraOriginalDistance;
     }
 
     public override bool SwitchCondition()

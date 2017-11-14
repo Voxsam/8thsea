@@ -307,6 +307,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishType: 0
   fishMovementController: {fileID: 114851763642998746}
+  floorPanicRate: 5
+  slowPanicRate: 0.2
+  slowPanicTimer: 30
   rb: {fileID: 0}
   fishRenderer: {fileID: 23576500097082968}
   WorldspaceCanvas: {fileID: 1557064350480070}

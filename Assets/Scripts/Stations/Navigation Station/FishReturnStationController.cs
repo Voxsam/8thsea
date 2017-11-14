@@ -86,7 +86,8 @@ public class FishReturnStationController : IInteractable
             }
             else if (currentState == State.Active)
             {
-                if (fishController.CurrentSecondaryState != FishController.SecondaryState.Dead)
+                //Dead fishes cannot be put back to the sea.
+                if (!fishController.IsDead())
                 {
                     //Housekeeping for changing a fish back into "swim" mode.
                     fishController.PutDown();

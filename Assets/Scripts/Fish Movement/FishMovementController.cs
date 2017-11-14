@@ -95,6 +95,11 @@ public class FishMovementController : MonoBehaviour {
                             Quaternion.LookRotation((fishSchoolController.GoalLocation - this.transform.position)),
                             rotationSpeed * Time.deltaTime
                         );
+
+                        if (Vector3.Distance(this.transform.position, fishSchoolController.gameObject.transform.position) > fishSchoolController.AverageBounds)
+                        {
+                            speed = Random.Range(minSpeed, maxSpeed);
+                        }
                     }
                     else
                     {
@@ -103,7 +108,8 @@ public class FishMovementController : MonoBehaviour {
                 }
             }
         }
-        transform.Translate(0, 0, speed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, transform.position + (transform.forward * speed), Time.deltaTime);
+        //transform.Translate(0, 0, speed * Time.deltaTime);
 	}
 
     private void OnTriggerEnter(Collider other)

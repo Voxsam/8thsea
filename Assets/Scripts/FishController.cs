@@ -44,6 +44,11 @@ public class FishController : IInteractable {
     //ResearchProtocols to display to user and to show research progress for fish.
     private ResearchProtocol[] researchProtocols;
 
+    private float floorPanicRate = 5;
+    private float slowPanicRate = 0.2f;
+
+    private float currentPanicRate;
+    private float previousPanicRate;
     private float panicTimer;
     private float panicBarWidth;
     private int currentResearchProtocol;
@@ -80,6 +85,7 @@ public class FishController : IInteractable {
         PanicBarRect.gameObject.SetActive(false);
         panicBarWidth = PanicBarRect.rect.width;
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
+        currentPanicRate = slowPanicRate;
 
         if (fishType != GameData.FishType.None)
         {
@@ -137,7 +143,7 @@ public class FishController : IInteractable {
             case SecondaryState.Researched:
 
             case SecondaryState.Panic:
-                panicTimer -= Time.deltaTime/5;
+                panicTimer -= Time.deltaTime * currentPanicRate;
 
                 if (panicTimer <= 0)
                 {
@@ -186,6 +192,10 @@ public class FishController : IInteractable {
             rb.detectCollisions = false;
         }
         currentState = State.Held;
+        if (currentPanicRate == floorPanicRate)
+        {
+            currentPanicRate = previousPanicRate;
+        }
         if (currentSecondaryState == SecondaryState.Idle)
         {
             currentSecondaryState = SecondaryState.Panic;
@@ -201,6 +211,8 @@ public class FishController : IInteractable {
             rb.detectCollisions = true;
         }
         currentState = State.Idle;
+        previousPanicRate = currentPanicRate;
+        currentPanicRate = floorPanicRate;
     }
 
     public void PutIn ()
@@ -212,6 +224,11 @@ public class FishController : IInteractable {
         }
 
         currentState = State.Placed;
+    }
+
+    public void StartFastPanic ()
+    {
+        currentPanicRate = GameData.GetFishParameters(fishType).researchPanicRate;
     }
 
     public void SetEnabled(bool enabled)
@@ -303,6 +320,8 @@ public class FishController : IInteractable {
         currentResearchProtocol++;
         if ( currentResearchProtocol >= researchProtocols.Length )
         {
+            panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
+            currentPanicRate = slowPanicRate;
             currentResearchProtocol = researchProtocols.Length;
             currentSecondaryState = SecondaryState.Researched;
             DeadText.text = "Researched";

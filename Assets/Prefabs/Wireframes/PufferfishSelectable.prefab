@@ -168,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 1635165201833352}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 101.85271, y: 101.85289, z: 101.85289}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4580897423977500}
   m_RootOrder: 0
@@ -181,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 1863781111998640}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: -0.74}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4020068529154406}
   - {fileID: 4646257860091412}
@@ -196,7 +196,7 @@ Transform:
   m_GameObject: {fileID: 1304940224175536}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 99.99981, y: 100, z: 100}
+  m_LocalScale: {x: 50, y: 50, z: 50}
   m_Children: []
   m_Father: {fileID: 4580897423977500}
   m_RootOrder: 1
@@ -229,7 +229,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 18e85b78faff6f244bef7709205b9219, type: 2}
+  - {fileID: 2100000, guid: fb68b7c6f891ba34f9aa28253a6e2119, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -261,7 +261,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 10938fc4e7510054ea66b0980c8b867e, type: 2}
+  - {fileID: 2100000, guid: 3e88b7444d58b1349a4158234832e28e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -286,14 +286,14 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1304940224175536}
-  m_Mesh: {fileID: 4300000, guid: 029f4cff9b11f0842bf0d4eb49e4dd5a, type: 3}
+  m_Mesh: {fileID: 4300002, guid: cc236920f4a578048b0a6f94172862ab, type: 3}
 --- !u!33 &33828471013210722
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1635165201833352}
-  m_Mesh: {fileID: 4300002, guid: 029f4cff9b11f0842bf0d4eb49e4dd5a, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e4aaace7ea3b3af4ab2452a7a1de0ed8, type: 3}
 --- !u!114 &114280979391391616
 MonoBehaviour:
   m_ObjectHideFlags: 1

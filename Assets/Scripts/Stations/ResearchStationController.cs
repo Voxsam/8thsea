@@ -88,15 +88,19 @@ public class ResearchStationController : IInteractable
                         FishController heldObjectControllerScript = heldObject.GetComponent<FishController>();
                         if (heldObjectControllerScript != null)
                         {
-                            if (heldObjectControllerScript.IsCurrentResearchProtocol(researchStationType))
-                            { 
-                                playerControllerScript.DropObject();
-                                heldObjectControllerScript.PutIn();
-                        
-                                heldObject.transform.SetParent(holdSlot.transform, true);
-                                heldObject.transform.localPosition = Vector3.zero;
+                            if (!heldObjectControllerScript.IsDead())
+                            {
+                                if (heldObjectControllerScript.IsCurrentResearchProtocol(researchStationType))
+                                {
+                                    playerControllerScript.DropObject();
+                                    heldObjectControllerScript.PutIn();
 
-                                currentState = State.Holding;
+                                    heldObject.transform.SetParent(holdSlot.transform, true);
+                                    heldObject.transform.localPosition = Vector3.zero;
+
+                                    currentState = State.Holding;
+                                    heldObjectControllerScript.StartFastPanic();
+                                }
                             }
                         }
                     }

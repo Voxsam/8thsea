@@ -25,6 +25,7 @@ public class GameData : MonoBehaviour
         }
 
         public float panicTimerLength;
+        public float researchPanicRate;
         public int currentResearchProtocol;
         public int totalResearched;
         public int totalToResearch;
@@ -38,6 +39,7 @@ public class GameData : MonoBehaviour
         public int minSchoolSize;
         public int maxSchoolSize;
         public FishParameters(FishType _type, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
+                                float _researchPanicRate = 2f,
                                 float _minSpeed = 1f, float _maxSpeed = 3f,
                                 float _minRotationSpeed = 1.0f, float _maxRotationSpeed = 4.0f,
                                 int _minSchoolSize = 5, int _maxSchoolSize = 15,
@@ -45,6 +47,7 @@ public class GameData : MonoBehaviour
         {
             type = _type;
             panicTimerLength = _panicTimerLength;
+            researchPanicRate = _researchPanicRate;
 
             ResearchProtocols = _researchProtocol;
             currentResearchProtocol = totalResearched = 0;
@@ -150,28 +153,28 @@ public class GameData : MonoBehaviour
     {
         new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
             StationType.Sample, StationType.Photograph, StationType.Research
-        }),
+        }, 2.5f),
         new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
             StationType.Research, StationType.Sample
-        }),
+        }, 3.5f),
         new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph
-        }, 1, 3, 1, 4, 5, 10, 30),
+        }, 2.5f, 1, 3, 1, 4, 5, 10, 30),
         new FishParameters(FishType.Whale, 60, 1, new StationType[] {
             StationType.Research, StationType.Sample, StationType.Research
-        }, 1, 4, 1, 4, 1, 3, 50),
+        }, 3.5f, 1, 4, 1, 4, 1, 3, 50),
         new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
-        }),
+        }, 2),
         new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph, StationType.Sample
-        }, 1, 3, 1, 4, 3, 6, 30),
+        }, 3, 1, 3, 1, 4, 3, 6, 30),
         new FishParameters(FishType.Octi, 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample
-        }, 1, 3, 1, 4, 3, 2, 30),
+        }, 3, 1, 3, 1, 4, 3, 2, 30),
         new FishParameters(FishType.Shark, 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
-        }, 1, 4, 1, 4, 3, 5, 30),
+        }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
     };
 
     // Research Station management

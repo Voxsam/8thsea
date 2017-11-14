@@ -61,7 +61,6 @@ public class NavigationPingController : MonoBehaviour {
 				Color c = navigationPingImage.color;
 				c.a = 1 - (currentLifespan / lifespan);
 				navigationPingImage.color = c;
-                    Debug.Log(c.a);
 
 			} else {
 				currentState = State.Inactive;

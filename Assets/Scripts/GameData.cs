@@ -124,7 +124,8 @@ public class GameData : MonoBehaviour
         Flounder,
         Penguin,
         Octi,
-        Shark
+        Shark,
+        Seahorse
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
         get { return AllFishParameters.Length; }
@@ -165,7 +166,8 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform PenguinPrefab;
     [SerializeField] private Transform OctiPrefab;
     [SerializeField] private Transform SharkPrefab;
-    
+    [SerializeField] private Transform SeahorsePrefab;
+
     [SerializeField] private Transform ClownFishSelectablePrefab;
     [SerializeField] private Transform PufferFishSelectablePrefab;
     [SerializeField] private Transform UnicornFishSelectablePrefab;
@@ -174,6 +176,7 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform PenguinSelectablePrefab;
     [SerializeField] private Transform OctiSelectablePrefab;
     [SerializeField] private Transform SharkSelectablePrefab;
+    [SerializeField] private Transform SeahorseSelectablePrefab;
     #endregion
 
     // Fish management
@@ -203,6 +206,9 @@ public class GameData : MonoBehaviour
         new FishParameters(FishType.Shark, 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
         }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
+         new FishParameters(FishType.Seahorse, 40, 1, new StationType[] {
+            StationType.Research, StationType.Sample, StationType.Photograph
+        }, 3f, 1, 4, 1, 4, 3, 10, 30),
     };
 
     // Research Station management
@@ -216,9 +222,9 @@ public class GameData : MonoBehaviour
     // Level management
     [SerializeField] private static FishType[][] levels =
     {
-        new FishType[] { FishType.ClownFish, FishType.PufferFish },
+        new FishType[] { FishType.ClownFish, FishType.PufferFish, FishType.Flounder },
         new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
-        new FishType[] { FishType.Penguin, FishType.UnicornFish, },
+        new FishType[] { FishType.Penguin, FishType.UnicornFish, FishType.Seahorse},
     };
     public static int TOTAL_NUMBER_OF_LEVELS
     {
@@ -317,6 +323,9 @@ public class GameData : MonoBehaviour
                     break;
                 case FishType.Shark:
                     prefab = Obj.SharkPrefab;
+                    break;
+                case FishType.Seahorse:
+                    prefab = Obj.SeahorsePrefab;
                     break;
                 case FishType.PufferFish:
                 default:

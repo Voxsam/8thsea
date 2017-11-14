@@ -36,7 +36,7 @@ public class TutorialManager : MonoBehaviour
 	private GameObject arrow;
 	private GameObject pinkArrow;
 
-	private Vector3 heightOffset = heightOffset;
+	private Vector3 heightOffset = new Vector3 (0, 6f, 0);
 
 	public void Setup ()
 	{

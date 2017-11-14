@@ -1063,42 +1063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979a7cfc42809ba449f84f986a9055e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-=======
---- !u!114 &114045069796488822
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1186110348817882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: a432fbb8357db064c982e0754a69de40, type: 3}
-    m_FontSize: 35
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 49
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: $$$$$$
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 --- !u!114 &114046979307439414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1412,25 +1376,6 @@ MonoBehaviour:
   OctiPrefab: {fileID: 4263520294266442, guid: b7b0bb5d82510f24c95d2dd83b71db1f, type: 2}
   SharkPrefab: {fileID: 4432518828010388, guid: eb26c16880e4c564b8a8ff31384e82a7,
     type: 2}
-<<<<<<< HEAD
-=======
-  ClownFishSelectablePrefab: {fileID: 4502322541700448, guid: d658b28e8703bb643b2ec3ed9716554f,
-    type: 2}
-  PufferFishSelectablePrefab: {fileID: 4798910895143118, guid: 6f2223d7e16f26540afa3ddabd926adc,
-    type: 2}
-  UnicornFishSelectablePrefab: {fileID: 4502322541700448, guid: d658b28e8703bb643b2ec3ed9716554f,
-    type: 2}
-  WhaleSelectablePrefab: {fileID: 4550349060272926, guid: 8250bd21018018841a35c6e2ebcc5757,
-    type: 2}
-  FlounderSelectablePrefab: {fileID: 4502322541700448, guid: d658b28e8703bb643b2ec3ed9716554f,
-    type: 2}
-  PenguinSelectablePrefab: {fileID: 4695436960047456, guid: 606e09152264ab34e98fa39422bf70fe,
-    type: 2}
-  OctiSelectablePrefab: {fileID: 4823435886275306, guid: 44d5af2749af5404b80f7a78467260b0,
-    type: 2}
-  SharkSelectablePrefab: {fileID: 4983138485005104, guid: e48701eadfbeac94b8b843079e379d4f,
-    type: 2}
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 --- !u!114 &114649669361501224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1631,27 +1576,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
-<<<<<<< HEAD
-=======
---- !u!224 &224003113823819624
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1186110348817882}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 224735913133626006}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 235, y: 0}
-  m_SizeDelta: {x: 100, y: 80}
-  m_Pivot: {x: 1, y: 1}
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 --- !u!224 &224037371381154062
 RectTransform:
   m_ObjectHideFlags: 1
@@ -1691,27 +1615,6 @@ RectTransform:
   m_AnchoredPosition: {x: 30, y: -10}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 1}
-<<<<<<< HEAD
-=======
---- !u!224 &224127949664475862
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1679021095859358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 224432243796889080}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25, y: 5}
-  m_SizeDelta: {x: 100, y: 80}
-  m_Pivot: {x: 1, y: 1}
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 --- !u!224 &224335737052578340
 RectTransform:
   m_ObjectHideFlags: 1
@@ -1740,12 +1643,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-<<<<<<< HEAD
-=======
-  - {fileID: 224127949664475862}
-  - {fileID: 224963950769750076}
-  - {fileID: 224096257393798412}
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
   - {fileID: 224735913133626006}
   - {fileID: 224963950769750076}
   - {fileID: 224096257393798412}
@@ -1791,11 +1688,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-<<<<<<< HEAD
   m_AnchoredPosition: {x: -25, y: 5}
-=======
-  m_AnchoredPosition: {x: -949.9998, y: -539.9954}
->>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
   m_SizeDelta: {x: 100, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224855148685524054

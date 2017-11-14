@@ -66,6 +66,10 @@ public class MainCanvasController : MonoBehaviour
 		bottomPanel.gameObject.SetActive (true);
 	}
 
+	public void ShowBoxOutline (float seconds) {
+		boxOutline.SetActive (true);
+		StartCoroutine (DeactivateInTime (boxOutline, seconds));
+	}
 
 	IEnumerator BlinkText(Text textToBlink, float interval) {
 		Color init = textToBlink.color;

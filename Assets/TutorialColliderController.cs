@@ -11,6 +11,7 @@ public class TutorialColliderController : MonoBehaviour {
 
 	public Location colliderLocation;
 
+
 	void OnTriggerEnter (Collider other) {
 		if (other.gameObject.CompareTag ("Player")) {
 			switch (colliderLocation) {
@@ -31,8 +32,19 @@ public class TutorialColliderController : MonoBehaviour {
 			default:
 				break;
 			}
+		}
 
-
+		if (other.gameObject.CompareTag ("Submarine")) {
+			switch (colliderLocation) {
+			case Location.Fish_Zone:
+				if (TutorialManager.Obj.currentStep == 5) {
+					TutorialManager.Obj.hasMovedNearFish = true;
+					gameObject.SetActive (false);
+				}
+				break;
+			default:
+				break;
+			}
 		}
 
 	}

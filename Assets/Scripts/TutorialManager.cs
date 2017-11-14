@@ -17,6 +17,9 @@ public class TutorialManager : MonoBehaviour
 	public bool hasTriedDriving = false;
 	public bool hasMovedNearFish = false;
 	public bool hasCaughtFish = false;
+	public bool hasUsedDissectStation = false;
+	public bool hasCompletedFish = false;
+	public bool hasReleasedFish = false;
 	public bool notifiedPlayerOfTutorialAccess = false;
 
 	public GameObject teleporter;
@@ -24,10 +27,16 @@ public class TutorialManager : MonoBehaviour
 	public GameObject drivingStation;
 	public GameObject suckStation;
 	public GameObject tutorialFishZone;
+	public GameObject dissectionStation;
+	public GameObject photoStation;
+	public GameObject researchStation;
+	public GameObject submarineLever;
 
 	public GameObject floatingArrowPrefab;
 	private GameObject arrow;
 	private GameObject pinkArrow;
+
+	private Vector3 heightOffset = heightOffset;
 
 	public void Setup ()
 	{
@@ -47,7 +56,7 @@ public class TutorialManager : MonoBehaviour
 
 		case 0:
 			print ("Instantiating arrow over teleporter");
-			arrow = Instantiate (floatingArrowPrefab, teleporter.transform.position + new Vector3 (0, 6f, 0), Quaternion.identity);
+			arrow = Instantiate (floatingArrowPrefab, teleporter.transform.position + heightOffset, Quaternion.identity);
 			currentStep++;
 			MainCanvasController.Obj.SetCenterPanelText ("Welcome to the tutorial!",
 				"The goal of this game is to research all the fish required to pass the level.\n\n" +
@@ -65,7 +74,7 @@ public class TutorialManager : MonoBehaviour
 					"Let's see what fish we need to complete this level. Press the \n\n <color=red>A button</color> " +
 					"next to the aquarium console for a better view.");
 				MainCanvasController.Obj.ShowCenterPanel ();
-				RepositionArrow (aquariumConsole.transform.position + new Vector3 (0, 6f, 0));
+				RepositionArrow (aquariumConsole.transform.position + heightOffset);
 			}
 			break;
 
@@ -88,10 +97,11 @@ public class TutorialManager : MonoBehaviour
 			if (hasEnteredSubmarine) {
 				currentStep++;
 				MainCanvasController.Obj.SetCenterPanelText ("The Submarine",
-					"We need to drive the submarine around the ocean to find the fish we need. Press the " +
-					"<color=red>A button</color> at the steering wheel to drive the submarine.");
+					"We need to drive the submarine around the ocean to find the fish we need. Press the \n" +
+					"<color=red>A button</color> at the steering wheel to drive the submarine. \n\n" +
+					"(If you're in multiplayer, <b>leave one person behind in the lab!</b> You'll need their help later!)");
 				MainCanvasController.Obj.ShowCenterPanel ();
-				RepositionArrow (drivingStation.transform.position + new Vector3 (0, 6f, 0));
+				RepositionArrow (drivingStation.transform.position + heightOffset);
 			} 
 			break;
 
@@ -106,6 +116,7 @@ public class TutorialManager : MonoBehaviour
 					"Normally, you'll have to search for the fish you need on your own -- or get your friend to do it for you -- " +
 					"but I have some insider info about where the fish we want is. Follow the <color=#ff6699ff>pink</color> arrow!");
 				MainCanvasController.Obj.ShowCenterPanel ();
+				MainCanvasController.Obj.ShowBoxOutline (5.0f);
 				arrow.SetActive (false);
 				pinkArrow = Instantiate (floatingArrowPrefab);
 				pinkArrow.SetActive (false);
@@ -135,19 +146,54 @@ public class TutorialManager : MonoBehaviour
 			break;
 
 		case 6:
-		print ("Waiting for player to catch a fish");
-		if (hasCaughtFish) {
-			currentStep++;
-			pinkArrow.SetActive (false);
-			arrow.transform.SetParent (suckStation.transform);
-			arrow.transform.localPosition = new Vector3 (0, 3f, 0);
-			arrow.SetActive (true);
-			MainCanvasController.Obj.SetCenterPanelText ("Catching Fish",
-				"Activate the vacuum tube station. Manipulate the vacuum tube with the left stick. When a fish is in the center " +
-				"of the tube, press the <color=red>A button</color> to attempt to catch it.");
-			MainCanvasController.Obj.ShowCenterPanel ();
-		}
-		break;
+			print ("Waiting for player to use first research station");
+			if (hasCaughtFish) {
+				currentStep++;
+				pinkArrow.SetActive (false);
+				arrow.transform.SetParent (suckStation.transform);
+				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
+				arrow.SetActive (true);
+				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
+					"");
+				MainCanvasController.Obj.ShowCenterPanel ();
+			}
+			break;
+
+		case 7:
+			print ("Waiting for player to transfer fish");
+			if (hasCaughtFish) {
+				currentStep++;
+				pinkArrow.SetActive (false);
+				RepositionArrow (submarineLever.transform.position + heightOffset);
+				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
+					"The bar over a caught fish is its <color=red>Panic Timer</color> from being out of its natural habitat. " +
+					"Once a fish's Panic Timer reaches zero, it dies of stress and must be thrown away in the lab's bin. \n\n" +
+					"The icons below the fish's name are the steps needed to research the fish. We need to bring this fish to the " +
+					"<color=blue>Dissection Station</color> first. \n\n" +
+					"This fish seems pretty chill, but you won't usually have time to drive the submarine back to the lab before it kicks the bucket. " +
+					"Luckily, the submarine and lab have technology that let you teleport fish between the two places. Neat, huh? \n\n" +
+					"Put the fish in one of the tanks in the lower floor of the submarine and pull the lever with the <color=red>A button</color>.");
+				MainCanvasController.Obj.ShowCenterPanel ();
+			}
+			break;
+
+		case 8:
+			print ("Waiting for player to use first research station");
+			if (hasUsedDissectStation) {
+				currentStep++;
+				pinkArrow.SetActive (false);
+				RepositionArrow (submarineLever.transform.position);
+				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
+					"The bar over a caught fish is its <color=red>Panic Timer</color> from being out of its natural habitat. " +
+					"Once a fish's Panic Timer reaches zero, it dies of stress and must be thrown away in the lab's bin. \n\n" +
+					"The icons below the fish's name are the steps needed to research the fish. We need to bring this fish to the " +
+					"<color=blue>Dissection Station</color> first. \n\n" +
+					"This fish seems pretty chill, but you won't usually have time to drive the submarine back to the lab before it kicks the bucket. " +
+					"Luckily, the submarine and lab have technology that let you teleport fish between the two places. Neat, huh? \n\n" +
+					"Put the fish in one of the tanks in the lower floor of the submarine and pull the lever with the <color=red>A button</color>.");
+				MainCanvasController.Obj.ShowCenterPanel ();
+			}
+			break;
 	}
 
 

@@ -176,9 +176,9 @@ public class GameData : MonoBehaviour
         new FishParameters(FishType.Shark, 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
         }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
-		new FishParameters(FishType.TutorialClownFish, 40, 1, new StationType[] {
+		new FishParameters(FishType.TutorialClownFish, 100, 1, new StationType[] {
 			StationType.Sample, StationType.Photograph, StationType.Research
-		}, 2.5f, 1, 2, 1, 2, 10, 20, 30),
+		}, 2f, 1, 2, 1, 2, 10, 20, 30),
     };
 
     // Research Station management

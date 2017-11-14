@@ -20,6 +20,8 @@ public class TubeController : StationControllerInterface {
     public Transform SpawnPoint; // Put the fishes here after they have been sucked up
     //The head of the suction tube.
     public TubeHeadController tubeHeadController;
+    public GameObject succHeadBox;
+    public float rotSpd = 40.0f;
 
     public enum State
     {
@@ -82,10 +84,14 @@ public class TubeController : StationControllerInterface {
                     if (playerInStation.controls.GetActionKey())
                     {
                         systemActivated = true;
+                        rotSpd += 3f;
+                        succHeadBox.transform.Rotate(new Vector3(1, 1, 0), rotSpd * Time.deltaTime);
+                        succHeadBox.transform.Rotate(new Vector3(1, 0, 1), rotSpd * Time.deltaTime);
                     }
                     else
                     {
                         systemActivated = false;
+                        rotSpd = 400f;
                     }
 
                     float x = playerInStation.controls.GetHorizontalAxis() * Time.deltaTime * forwardSpeed;

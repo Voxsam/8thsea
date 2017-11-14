@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c885c55307302964ea861fd6afbe5a1f
-timeCreated: 1510589019
+guid: 3bd011394f8a881428a28e611dfd7f85
+timeCreated: 1510595186
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Plane
+    4300000: bigpurplerock
   materials:
     importMaterials: 1
     materialName: 0

@@ -8,15 +8,52 @@ public class ControlScheme {
 	public int playerNumber;
 	public int joystickNumber;
 
-	public ControlScheme(int joystickNumber, bool isKeyboard, KeyCode upKey) {
+    public static int MAXIMUM_JOYSTICKS = 4;
+    public static int MAXIMUM_KEYBOARD = 2;
+
+    /// <summary>
+    /// The valid controls that the player can use
+    /// </summary>
+    public enum Controller
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        Action,
+        Cancel,
+    }
+
+    private static KeyCode[][] Controls = {
+        // Follows ControlOrder
+        new KeyCode[]{ KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.E, KeyCode.R },
+        new KeyCode[]{ KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Return, KeyCode.RightShift },
+    };
+
+    /// <summary>
+    /// JoystickNum corresponds to the Player number, aka Player/Joysticks 1-4
+    /// Action is the action that the player has taken
+    /// </summary>
+    /// <returns></returns>
+    public static KeyCode GetKeyCode(int joystickNum, Controller action)
+    {
+        if (joystickNum <= 0 || joystickNum > MAXIMUM_KEYBOARD)
+        {
+            return KeyCode.None;
+        }
+        return Controls[joystickNum - 1][(int)action];
+    }
+
+	public ControlScheme(int playerNumber, bool isKeyboard) {
 
 		this.isKeyboard = isKeyboard;
+        
+        this.joystickNumber = playerNumber;
+        /*
+        if (!isKeyboard) {
 
-		if (!isKeyboard) {
-			
-			this.joystickNumber = joystickNumber;
-		
-		} else {
+            this.joystickNumber = playerNumber;
+        } else {
 			
 			switch (upKey) {
 				
@@ -34,7 +71,7 @@ public class ControlScheme {
 
 			}
 		}
-
+        //*/
 	}
 
 	public float GetHorizontalAxis() {
@@ -61,14 +98,7 @@ public class ControlScheme {
 		if (!isKeyboard) {
 			return Input.GetKeyDown ("joystick " + joystickNumber + " button 0");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKeyDown (KeyCode.E);
-			case 2:
-				return Input.GetKeyDown (KeyCode.Return);
-			default:
-				return Input.GetKeyDown (KeyCode.E);
-			}
+            return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Action));
 		}
 	}
 
@@ -76,30 +106,16 @@ public class ControlScheme {
 		if (!isKeyboard) {
 			return Input.GetKey ("joystick " + joystickNumber + " button 0");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKey (KeyCode.E);
-			case 2:
-				return Input.GetKey (KeyCode.Return);
-			default:
-				return Input.GetKey (KeyCode.E);
-			}
-		}
+            return Input.GetKey(GetKeyCode(joystickNumber, Controller.Action));
+        }
 	}
 
 	public bool GetActionKeyUp () {
 		if (!isKeyboard) {
 			return Input.GetKeyUp ("joystick " + joystickNumber + " button 0");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKeyUp (KeyCode.E);
-			case 2:
-				return Input.GetKeyUp (KeyCode.Return);
-			default:
-				return Input.GetKeyUp (KeyCode.E);
-			}
-		}
+            return Input.GetKeyUp(GetKeyCode(joystickNumber, Controller.Action));
+        }
 	}
 
 	// Cancel = B button
@@ -109,44 +125,23 @@ public class ControlScheme {
 		if (!isKeyboard) {
 			return Input.GetKeyDown ("joystick " + joystickNumber + " button 1");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKeyDown (KeyCode.R);
-			case 2:
-				return Input.GetKeyDown (KeyCode.RightShift);
-			default:
-				return Input.GetKeyDown (KeyCode.R);
-			}
-		}
+            return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Cancel));
+        }
 	}
 
 	public bool GetCancelKey () {
 		if (!isKeyboard) {
 			return Input.GetKey ("joystick " + joystickNumber + " button 1");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKey (KeyCode.R);
-			case 2:
-				return Input.GetKey (KeyCode.RightShift);
-			default:
-				return Input.GetKey (KeyCode.R);
-			}
-		}
+            return Input.GetKey(GetKeyCode(joystickNumber, Controller.Cancel));
+        }
 	}
 
 	public bool GetCancelKeyUp () {
 		if (!isKeyboard) {
 			return Input.GetKeyUp ("joystick " + joystickNumber + " button 1");
 		} else {
-			switch (joystickNumber) {
-			case 1:
-				return Input.GetKeyUp (KeyCode.R);
-			case 2:
-				return Input.GetKeyUp (KeyCode.RightShift);
-			default:
-				return Input.GetKeyUp (KeyCode.R);
-			}
-		}
+            return Input.GetKeyUp(GetKeyCode(joystickNumber, Controller.Cancel));
+        }
 	}
 }

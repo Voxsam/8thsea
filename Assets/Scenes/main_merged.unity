@@ -2585,11 +2585,21 @@ Prefab:
       objectReference: {fileID: 1012682645}
     - target: {fileID: 4246935016215616, guid: 1b988250b60fcc8438c113d38031b3a5, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4144610351926658, guid: 1b988250b60fcc8438c113d38031b3a5, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114154406907892562, guid: 1b988250b60fcc8438c113d38031b3a5,
+        type: 2}
+      propertyPath: succHeadBox
+      value: 
+      objectReference: {fileID: 1113495955}
+    - target: {fileID: 114154406907892562, guid: 1b988250b60fcc8438c113d38031b3a5,
+        type: 2}
+      propertyPath: rotSpd
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b988250b60fcc8438c113d38031b3a5, type: 2}
@@ -4919,6 +4929,10 @@ Transform:
   m_Father: {fileID: 802578538}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
+--- !u!1 &1113495955 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: 5a6d60904b9cc3045be3534a777ef384, type: 3}
+  m_PrefabInternal: {fileID: 1672597064}
 --- !u!1 &1115847208
 GameObject:
   m_ObjectHideFlags: 0

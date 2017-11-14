@@ -32,7 +32,7 @@ public class ResearchStationController : IInteractable
     [SerializeField] private GameObject worldspaceCanvas;
     [SerializeField] private ButtonPromptController buttonPromptController;
     [SerializeField] private ExpandingEmitterController buttonParticleController;
-    [SerializeField] private TextEmitterController textParticleController;
+    [SerializeField] private ProgressBarController progressBarController;
 
     // Use this for initialization
     void Start()
@@ -135,7 +135,7 @@ public class ResearchStationController : IInteractable
                         interactionProgressMade += PROGRESS_BAR_PER_INTERACTION;
                         buttonPromptController.Depress();
                         buttonParticleController.Fire();
-                        textParticleController.SpawnText(interactionProgressMade.ToString("F2"));
+                        progressBarController.Explode();
                     }
                     // If progress made is maxed and
                     // the the player is not already holding on to something.

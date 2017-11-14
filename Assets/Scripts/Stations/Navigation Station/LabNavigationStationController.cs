@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LabNavigationStationController : IInteractable {
     public GameObject pingObjectTemplate;
@@ -48,8 +49,7 @@ public class LabNavigationStationController : IInteractable {
     {
         if (otherActor.tag == "Player")
         {
-
-			PlayerController player = otherActor.GetComponent<PlayerController> ();
+            PlayerController player = otherActor.GetComponent<PlayerController> ();
 
             if (currentState == State.Idle)
             {

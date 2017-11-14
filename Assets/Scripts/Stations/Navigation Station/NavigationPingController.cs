@@ -27,7 +27,7 @@ public class NavigationPingController : MonoBehaviour {
     private float currentSize;
 	private PlayerController pCtrl;
 
-	public void Init (RectTransform rect, Vector3 _targetLocation, PlayerController _pCtrl, float _lifespan = 3, float _finalSize = 300)
+	public void Init (RectTransform rect, Vector3 _targetLocation, PlayerController _pCtrl, float _lifespan = 1.0f, float _finalSize = 500)
     {
         lifespan = _lifespan;
         finalSize = _finalSize;
@@ -61,6 +61,7 @@ public class NavigationPingController : MonoBehaviour {
 				Color c = navigationPingImage.color;
 				c.a = 1 - (currentLifespan / lifespan);
 				navigationPingImage.color = c;
+                    Debug.Log(c.a);
 
 			} else {
 				currentState = State.Inactive;

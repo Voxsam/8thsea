@@ -2398,6 +2398,111 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 37, y: 10, z: 0.99999976}
   m_Center: {x: 10, y: 3.73, z: 5.39999}
+<<<<<<< HEAD
+=======
+--- !u!1001 &750159315
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925263530030136, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114624562645073898, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: multiplayerManager
+      value: 
+      objectReference: {fileID: 441782547}
+    - target: {fileID: 114624562645073898, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: Sea
+      value: 
+      objectReference: {fileID: 1208275580}
+    - target: {fileID: 114624562645073898, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: Lab
+      value: 
+      objectReference: {fileID: 1609925036}
+    - target: {fileID: 224335737052578340, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224335737052578340, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224735913133626006, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224003113823819624, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224003113823819624, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -40.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224127949664475862, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224963950769750076, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224096257393798412, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224127949664475862, guid: 88e4b4de75c2d4740846a554e9aeb778,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 88e4b4de75c2d4740846a554e9aeb778, type: 2}
+  m_IsPrefabParent: 0
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 --- !u!1 &750199723
 GameObject:
   m_ObjectHideFlags: 0
@@ -5524,7 +5629,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1841829032728976, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}

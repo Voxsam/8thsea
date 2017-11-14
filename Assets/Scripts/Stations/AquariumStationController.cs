@@ -89,7 +89,17 @@ public class AquariumStationController : StationControllerInterface
                 if (playerInStation.controls.GetHorizontalAxis() > 0)
                 {
                     selectInterval = 0;
+<<<<<<< HEAD
                     if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+=======
+					
+                    if (selectedResearchRequirementIndex == -1)
+                    {
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if (selectedResearchRequirementIndex < (researchRequirementsForLevel.Length - 1))
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
                     {
                         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex++;
@@ -101,7 +111,17 @@ public class AquariumStationController : StationControllerInterface
                     selectInterval = 0;
                     if ((int)selectedResearchRequirementIndex > 0)
                     {
+<<<<<<< HEAD
                         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
+=======
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if ((int)selectedResearchRequirementIndex > 0)
+                    {
+                        GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
+                        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Deselect();
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
                         selectedResearchRequirementIndex--;
                         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
@@ -125,6 +145,7 @@ public class AquariumStationController : StationControllerInterface
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
+<<<<<<< HEAD
                     if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
                     {
                         DisengagePlayer();
@@ -132,6 +153,22 @@ public class AquariumStationController : StationControllerInterface
                     else
                     {
                         ShowWarningText("No fish of this type is in the aquarium!");
+=======
+<<<<<<< HEAD
+                    if (RemoveFish(playerControllerScript, researchRequirementsForLevel[selectedResearchRequirementIndex]))
+=======
+                    if (selectedResearchRequirementIndex >= 0 && selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+>>>>>>> b78dc215339ff545e506c1c8d928b5e9029d78f2
+                    {
+                        if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
+                        {
+                            DisengagePlayer();
+                        }
+                        else
+                        {
+                            ShowWarningText("No fish of this type is in the aquarium!");
+                        }
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
                     }
                 }
             }
@@ -202,11 +239,19 @@ public class AquariumStationController : StationControllerInterface
 
     public override void WhenActivated()
     {
+<<<<<<< HEAD
         selectedResearchRequirementIndex = 0;
         fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
 
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = AQUARIUM_CAMERA_FIELD_OF_VIEW;
+=======
+<<<<<<< HEAD
+        selectedResearchRequirementIndex = 0;
+=======
+        selectedResearchRequirementIndex = -1;
+>>>>>>> b78dc215339ff545e506c1c8d928b5e9029d78f2
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
 
         cameraOriginalDistance = stationCamera.CameraOffset;
         stationCamera.CameraOffset = AQUARIUM_CAMERA_DISTANCE_FROM_TARGET;
@@ -267,6 +312,21 @@ public class AquariumStationController : StationControllerInterface
         return false;
     }
 
+<<<<<<< HEAD
+=======
+    private bool IsFishTypeStoreable (GameData.FishType fishType)
+    {
+        for (int i = 0; i < researchRequirementTemplates.Length; i++)
+        {
+            if (fishType == researchRequirementTemplates[i].fishType)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+>>>>>>> parent of 209797d... Fixed some bugs with Aquarium and reactivated the SplashScreen canvas (STOP DEACTIVATING IT)
     public void StoreFish(GameObject fishToStore, GameData.FishType fishType)
     {
         if (fishToStore != null)

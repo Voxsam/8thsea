@@ -10,7 +10,7 @@ public class LoadingBarManager : MonoBehaviour
 	private float timeLoaded = 0.0f;
 
 	public Image loadingBar;
-	public Text LoadingPercent;
+	public Text LoadingTextPercentage;
     public bool isTimeBased = false;
 
     public ZoneController[] Zones;
@@ -63,6 +63,6 @@ public class LoadingBarManager : MonoBehaviour
             }
         }
 			
-		LoadingPercent.text = ((int)(loadingBar.fillAmount * 100)).ToString () + "%";
+		LoadingTextPercentage.text = ((int)(loadingBar.fillAmount * 100)).ToString () + "%";
 	}
 }

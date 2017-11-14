@@ -14,13 +14,18 @@ public class GameData : MonoBehaviour
             Obj = this;
         }
     }
+    
+    public const float PAYMENT_INTERVAL = 60f;
+    public const int STARTING_MONEY = 30000;
+    public const int MONEY_DEPLETE_RATE = 100;
 
     #region Structures
     //Fish details.
     public class FishParameters
     {
         private FishType type;
-        public StationType[] ResearchProtocols {// The order of Stations to follow
+        public StationType[] ResearchProtocols
+        {// The order of Stations to follow
             get; private set;
         }
 
@@ -125,6 +130,21 @@ public class GameData : MonoBehaviour
         get { return AllFishParameters.Length; }
     }
 
+    public static string GetFishName(FishType fish)
+    {
+        switch(fish)
+        {
+            case FishType.ClownFish:
+                return "Clown Fish";
+            case FishType.PufferFish:
+                return "Puffer Fish";
+            case FishType.UnicornFish:
+                return "Unicorn Fish";
+            default:
+                return fish.ToString();
+        }
+    }
+
     public enum StationType
     {
         None = -1,
@@ -133,11 +153,10 @@ public class GameData : MonoBehaviour
         Photograph
     };
 
-    public const float PAYMENT_INTERVAL = 60f;
-    public const int STARTING_MONEY = 50000;
-    public const int MONEY_DEPLETE_RATE = 100;
-    
+    #region Unity objects
     [SerializeField] private Transform DefaultEmptyFishPrefab;
+
+    // Specific meshes
     [SerializeField] private Transform ClownFishPrefab;
     [SerializeField] private Transform PufferFishPrefab;
     [SerializeField] private Transform UnicornFishPrefab;
@@ -146,7 +165,16 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform PenguinPrefab;
     [SerializeField] private Transform OctiPrefab;
     [SerializeField] private Transform SharkPrefab;
-
+    
+    [SerializeField] private Transform ClownFishSelectablePrefab;
+    [SerializeField] private Transform PufferFishSelectablePrefab;
+    [SerializeField] private Transform UnicornFishSelectablePrefab;
+    [SerializeField] private Transform WhaleSelectablePrefab;
+    [SerializeField] private Transform FlounderSelectablePrefab;
+    [SerializeField] private Transform PenguinSelectablePrefab;
+    [SerializeField] private Transform OctiSelectablePrefab;
+    [SerializeField] private Transform SharkSelectablePrefab;
+    #endregion
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
@@ -184,6 +212,31 @@ public class GameData : MonoBehaviour
         new ResearchStationParameters(StationType.Sample),
         new ResearchStationParameters(StationType.Photograph)
     };
+
+    // Level management
+    [SerializeField] private static FishType[][] levels =
+    {
+        new FishType[] { FishType.ClownFish, FishType.PufferFish },
+        new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
+        new FishType[] { FishType.Penguin, FishType.UnicornFish, },
+    };
+    public static int TOTAL_NUMBER_OF_LEVELS
+    {
+        get { return levels.Length; }
+    }
+
+    /// <summary>
+    /// Gets the fish types required for the level in ResearchRequirement type. Level is expected to start from 1, not 0.
+    /// </summary>
+    public static FishType[] GetResearchRequirementsForLevel(int level)
+    {
+        if (level <= 0 || level > TOTAL_NUMBER_OF_LEVELS)
+        {
+            return null;
+        }
+
+        return levels[level - 1];
+    }
 
     //Easing functions.
     public static float QuadEaseInOut (float currentTime, float initialValue, float changeValue, float duration)
@@ -296,6 +349,41 @@ public class GameData : MonoBehaviour
         FishController fish = CreateNewFish(type, parent.position);
         fish.transform.SetParent(parent);
         return fish;
+    }
+
+    public static Transform GetSelectableFish(FishType fish)
+    {
+        Transform prefab;
+        switch (fish)
+        {
+            case FishType.ClownFish:
+                prefab = Obj.ClownFishSelectablePrefab;
+                break;
+            case FishType.UnicornFish:
+                prefab = Obj.UnicornFishSelectablePrefab;
+                break;
+            case FishType.Whale:
+                prefab = Obj.WhaleSelectablePrefab;
+                break;
+            case FishType.Flounder:
+                prefab = Obj.FlounderSelectablePrefab;
+                break;
+            case FishType.Penguin:
+                prefab = Obj.PenguinSelectablePrefab;
+                break;
+            case FishType.Octi:
+                prefab = Obj.OctiSelectablePrefab;
+                break;
+            case FishType.Shark:
+                prefab = Obj.SharkSelectablePrefab;
+                break;
+            case FishType.PufferFish:
+            default:
+                prefab = Obj.PufferFishSelectablePrefab;
+                break;
+        }
+
+        return prefab;
     }
     #endregion
 }

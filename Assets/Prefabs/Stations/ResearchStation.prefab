@@ -169,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1393912489553076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.2499976, y: 1.25, z: -2.5600007}
+  m_LocalPosition: {x: -7.6400023, y: 1.22, z: -1.8300009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4529093250341212}
@@ -416,6 +416,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 0
+  minimumWaitTimeBetweenSFX: 0
+  maximumWaitTimeBetweenSFX: 1
   holdSlot: {fileID: 1043089858346354}
   progressBarRect: {fileID: 224496408013769886}
   worldspaceCanvas: {fileID: 1456862770352342}

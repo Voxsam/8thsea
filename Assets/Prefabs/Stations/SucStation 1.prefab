@@ -2351,6 +2351,8 @@ MonoBehaviour:
   submarineSurfaceCollider: {fileID: 0}
   SpawnPoint: {fileID: 4213216445360256}
   tubeHeadController: {fileID: 114073432254272548}
+  succHeadBox: {fileID: 1243870131292316}
+  rotSpd: 40
 --- !u!114 &114448044078715620
 MonoBehaviour:
   m_ObjectHideFlags: 1

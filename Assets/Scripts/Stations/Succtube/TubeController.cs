@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TubeController : StationControllerInterface {
     //public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
-    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 30f;
+    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 50f;
     protected float cameraOriginalFov;
 
     public Vector3 SUBMARINE_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, -30f);
@@ -22,6 +22,7 @@ public class TubeController : StationControllerInterface {
     public TubeHeadController tubeHeadController;
     public GameObject succHeadBox;
     public float rotSpd = 40.0f;
+
 
     public enum State
     {
@@ -87,6 +88,7 @@ public class TubeController : StationControllerInterface {
                         rotSpd += 3f;
                         succHeadBox.transform.Rotate(new Vector3(1, 1, 0), rotSpd * Time.deltaTime);
                         succHeadBox.transform.Rotate(new Vector3(1, 0, 1), rotSpd * Time.deltaTime);
+
                     }
                     else
                     {

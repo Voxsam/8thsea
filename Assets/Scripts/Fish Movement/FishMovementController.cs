@@ -25,6 +25,7 @@ public class FishMovementController : MonoBehaviour {
     private float minNeighbourDistance;
 
     //Variables to prevent fish from swimming into colliders.
+    private bool outOfBounds = false;
     private bool turning = false;
     private Vector3 avoidanceGoalLocation;
 
@@ -39,7 +40,15 @@ public class FishMovementController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if ( turning )
+        if (fishSchoolController.zoneName.Length > 0)
+        {
+            if (Vector3.Distance(this.transform.position, fishSchoolController.gameObject.transform.position) > fishSchoolController.AverageBounds)
+            {
+                outOfBounds = true;
+            }
+        }
+        
+        if (turning)
         {
             Vector3 finalDirection = avoidanceGoalLocation.normalized;
             if (finalDirection != Vector3.zero)
@@ -51,7 +60,7 @@ public class FishMovementController : MonoBehaviour {
                     rotationSpeed * 5 * Time.deltaTime
                 );
 
-                if (Mathf.Abs(Quaternion.Angle (this.transform.rotation, Quaternion.LookRotation(finalDirection))) < 0.2f)
+                if (Mathf.Abs(Quaternion.Angle(this.transform.rotation, Quaternion.LookRotation(finalDirection))) < 0.2f)
                 {
                     turning = false;
                     speed = Random.Range(minSpeed, maxSpeed);
@@ -60,30 +69,46 @@ public class FishMovementController : MonoBehaviour {
         }
         else
         {
-		    if ( Random.Range (0, schoolingRateDenominator) < schoolingRateNumerator)
+            if (outOfBounds)
             {
-                if ( fishSchoolController.FishInSchool.Count == 1)
+                this.transform.rotation = Quaternion.Slerp
+                (
+                    this.transform.rotation,
+                    Quaternion.LookRotation((fishSchoolController.GoalLocation - this.transform.position)),
+                    rotationSpeed * Time.deltaTime
+                );
+
+                if (Vector3.Distance(fishSchoolController.GoalLocation, this.transform.position) <= minNeighbourDistance)
                 {
-                    this.transform.rotation = Quaternion.Slerp
-                    (
-                        this.transform.rotation,
-                        Quaternion.LookRotation((fishSchoolController.GoalLocation - this.transform.position)),
-                        rotationSpeed * Time.deltaTime
-                    );
+                    outOfBounds = false;
                 }
-                else
+            }
+            else
+            {
+                if (Random.Range(0, schoolingRateDenominator) < schoolingRateNumerator)
                 {
-                    School();
+                    if (fishSchoolController.FishInSchool.Count == 1)
+                    {
+                        this.transform.rotation = Quaternion.Slerp
+                        (
+                            this.transform.rotation,
+                            Quaternion.LookRotation((fishSchoolController.GoalLocation - this.transform.position)),
+                            rotationSpeed * Time.deltaTime
+                        );
+                    }
+                    else
+                    {
+                        School();
+                    }
                 }
             }
         }
-
         transform.Translate(0, 0, speed * Time.deltaTime);
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "FishObject")
+        if (other.tag != "FishObject" && other.tag != "Zone")
         {
             if (!turning)
             {
@@ -109,13 +134,29 @@ public class FishMovementController : MonoBehaviour {
             speed = maxSpeed * 5;
             turning = true;
         }
+        if (other.tag == "lab")
+        {
+            //Make sure that the fish belong to a school that is in a zone and not the schools in the aquarium.
+            if (fishSchoolController.zoneName.Length > 0)
+            {
+                avoidanceGoalLocation = transform.position - other.transform.position;
+                speed = maxSpeed * 5;
+                turning = true;
+            }
+        }
     }
 
+    /*
     private void OnTriggerExit(Collider other)
     {
+        if (other.tag == "Zone" && other.gameObject.name == fishSchoolController.zoneName)
+        {
+            outOfBounds = true;
+        }
         //if (other.tag != "FishObject")
             //turning = false;
     }
+    */
 
     private void School ()
     {

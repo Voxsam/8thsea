@@ -45,8 +45,8 @@ public class MultiplayerManager : MonoBehaviour {
 
 		if (isDebug) {
 			PlayerList pList = Instantiate (playerListPrefab).GetComponent<PlayerList>();
-			pList.AddPlayer (new Player (new ControlScheme (0, true), 1));
-			pList.AddPlayer (new Player (new ControlScheme (0, true), 2));
+			pList.AddPlayer (new Player (new ControlScheme (1, true), 1));
+			pList.AddPlayer (new Player (new ControlScheme (2, true), 2));
 		}
 
 		for (int i = 0; i < PlayerList.Obj.numPlayers; i++) {

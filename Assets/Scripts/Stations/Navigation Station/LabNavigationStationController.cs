@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class LabNavigationStationController : IInteractable {
     public GameObject pingObjectTemplate;
     public SubNavigationStationController subNavController;
-    public GameObject screenSpaceCanvas;
 
     private GameObject worldSpaceCanvas;
 

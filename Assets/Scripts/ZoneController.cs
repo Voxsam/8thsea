@@ -5,17 +5,19 @@ using UnityEngine;
 public class ZoneController : MonoBehaviour
 {
     //X
-    [SerializeField] public int zoneWidth;
+    [SerializeField] public int zoneX;
     //Y
-    [SerializeField] public int zoneHeight;
+    [SerializeField] public int zoneY;
     //Z
-    [SerializeField] public int zoneLength;
+    [SerializeField] public int zoneZ;
 
     [SerializeField] public Transform Sea;
 
     [SerializeField] public int maxSchools = 10;
     [SerializeField] public int minSchools = 20;
     [SerializeField] public float fishSchoolSpawnDelay = 5f;
+
+    [SerializeField] public GameObject zoneCollider;
 
     [SerializeField] public Transform SpawnPoint;
 
@@ -45,6 +47,7 @@ public class ZoneController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        /*
         zoneBoundaryXPos = gameObject.transform.Find("ZoneColliderXPos").gameObject;
         zoneBoundaryXNeg = gameObject.transform.Find("ZoneColliderXNeg").gameObject;
         zoneBoundaryYPos = gameObject.transform.Find("ZoneColliderYPos").gameObject;
@@ -65,6 +68,9 @@ public class ZoneController : MonoBehaviour
         zoneBoundaryYNeg.transform.localPosition = new Vector3(0, -zoneHeight, 0);
         zoneBoundaryZPos.transform.localPosition = new Vector3(0, 0, zoneLength);
         zoneBoundaryZNeg.transform.localPosition = new Vector3(0, 0, -zoneLength);
+        */
+        zoneCollider.transform.localScale = new Vector3(zoneX * 2, zoneY * 2, zoneZ * 2);
+        zoneCollider.name = gameObject.ToString();
 
         // Set Zone as a child of Sea
         this.transform.SetParent(Sea);
@@ -77,53 +83,60 @@ public class ZoneController : MonoBehaviour
         }
 
         numSchools = Random.Range(minSchools, maxSchools);
-
         StartCoroutine(SpawnSchools());
     }
 
     protected IEnumerator SpawnSchools()
     {
-        int rand = Random.Range(MINIMUM_SCHOOL_SIZE, MAXIMUM_SCHOOL_SIZE);
-        for (int i = 0; i < rand; i++)
+        while (schoolsDone < numSchools)
         {
-            if (fishSchools.Count >= numSchools)
+            int rand = Random.Range(MINIMUM_SCHOOL_SIZE, MAXIMUM_SCHOOL_SIZE);
+            for (int i = 0; i < rand; i++)
             {
-                yield return null;
-            }
-            int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
-            GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
+                if (schoolsDone >= numSchools)
+                {
+                    break;
+                }
+                int fishTypeIndex = Random.Range(0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+                GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
 
-            GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);
-            newFishSchool.transform.position = transform.position;
-            FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
-            fishSchoolController.zoneWidth = zoneWidth;
-            fishSchoolController.zoneHeight = zoneHeight;
-            fishSchoolController.zoneLength = zoneLength;
+                GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);
+                newFishSchool.transform.position = transform.position;
+                FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
+                fishSchoolController.zoneX = zoneX;
+                fishSchoolController.zoneY = zoneY;
+                fishSchoolController.zoneZ = zoneZ;
+                fishSchoolController.zoneName = zoneCollider.name;
 
-            int schoolSize = Random.Range(fishParameters.minSchoolSize,
-                                            fishParameters.maxSchoolSize);
-            for (int j = 0; j < schoolSize; j++)
-            {
-                FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeIndex, newFishSchool.transform);
-                FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
-                fishMovementController.Initialise
-                (
-                    fishParameters.minSpeed,
-                    fishParameters.maxSpeed,
-                    fishParameters.minRotationSpeed,
-                    fishParameters.maxRotationSpeed,
-                    fishParameters.minNeighbourDistance
-                );
-                fishMovementController.SetEnabled(true);
-                newFish.SetRigidbody(false);
-                fishSchoolController.AddFishToSchool(newFish.gameObject);
+                int schoolSize = Random.Range(fishParameters.minSchoolSize,
+                                                fishParameters.maxSchoolSize);
+                Vector3 schoolPos = gameObject.transform.position
+                                    + new Vector3(Random.Range(-zoneX, zoneX),
+                                                    Random.Range(-zoneY, zoneY),
+                                                    Random.Range(-zoneZ, zoneZ));
+                for (int j = 0; j < schoolSize; j++)
+                {
+                    FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeIndex, newFishSchool.transform);
+                    FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
+                    fishMovementController.Initialise
+                    (
+                        fishParameters.minSpeed,
+                        fishParameters.maxSpeed,
+                        fishParameters.minRotationSpeed,
+                        fishParameters.maxRotationSpeed,
+                        fishParameters.minNeighbourDistance
+                    );
+                    fishMovementController.SetEnabled(true);
+                    newFish.SetRigidbody(false);
+                    newFish.gameObject.transform.position = schoolPos
+                                                            + new Vector3(Random.Range(-5, 5),
+                                                                          Random.Range(-5, 5),
+                                                                          Random.Range(-5, 5));
+                    fishSchoolController.AddFishToSchool(newFish.gameObject);
+                }
+                fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
+                schoolsDone++;
             }
-            fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
-            yield return new WaitForEndOfFrame();
-        }
-        if (fishSchools.Count < numSchools)
-        {
-            //yield return new WaitForSeconds(fishSchoolSpawnDelay);
             yield return new WaitForEndOfFrame();
         }
 

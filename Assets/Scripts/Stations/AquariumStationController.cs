@@ -45,9 +45,9 @@ public class AquariumStationController : StationControllerInterface
             GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
             newFishSchool.transform.position = holdSlot.transform.position;
             FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
-            fishSchoolController.zoneWidth = 10;
-            fishSchoolController.zoneLength = 5;
-            fishSchoolController.zoneHeight = 10;
+            fishSchoolController.zoneX = 10;
+            fishSchoolController.zoneY = 5;
+            fishSchoolController.zoneZ = 10;
             fishSchools.Add(researchRequirementTemplates[i].fishType, newFishSchool);
 
             GameObject newFishResearchRequirements = (GameObject)Instantiate(researchRequirementTemplates[i].templateObject);

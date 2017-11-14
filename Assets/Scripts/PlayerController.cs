@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour {
     {
 
         interactionController.GameUpdate();
-
         if (ControlMode == GameData.ControlType.CHARACTER && IsPlayerAllowedToMove)
         {
 			Vector3 direction = new Vector3 (playerMasterRef.controls.GetHorizontalAxis(), 0.0f, playerMasterRef.controls.GetVerticalAxis());

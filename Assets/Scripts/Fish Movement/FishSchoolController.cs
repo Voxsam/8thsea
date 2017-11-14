@@ -9,9 +9,20 @@ public class FishSchoolController : MonoBehaviour
     private Vector3 fishSchoolGoalLocation;
 
     //Note that these diameters should be half the size of the actual zone diameters.
-    public int zoneWidth;
-    public int zoneHeight;
-    public int zoneLength;
+    public int zoneX;
+    public int zoneY;
+    public int zoneZ;
+    private int averageBounds;
+    public int AverageBounds
+    {
+        get
+        {
+            return averageBounds;
+        }
+    }
+
+    //GameObject name for the zone this fish school is in.
+    public string zoneName = "";
 
     //Control how often the goal location of the school changes.
     //E.g. every frame there is a 50/10000 chance the goal location changes.
@@ -30,16 +41,17 @@ public class FishSchoolController : MonoBehaviour
         //testInit();
         fishSchoolGoalLocation = new Vector3
         (
-            transform.position.x + Random.Range(-zoneWidth, zoneWidth),
-            transform.position.y + Random.Range(-zoneHeight, zoneHeight),
-            transform.position.z + Random.Range(-zoneLength, zoneLength)
+            transform.position.x + Random.Range(-zoneX, zoneX),
+            transform.position.y + Random.Range(-zoneY, zoneY),
+            transform.position.z + Random.Range(-zoneZ, zoneZ)
         );
+        averageBounds = (zoneX + zoneY + zoneZ) / 3;
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(fishSchoolGoalLocation, 100);
+        Gizmos.DrawSphere(fishSchoolGoalLocation, 5);
     }
 
     // Update is called once per frame
@@ -49,9 +61,9 @@ public class FishSchoolController : MonoBehaviour
         {
             fishSchoolGoalLocation = new Vector3
             (
-                transform.position.x + Random.Range(-zoneWidth, zoneWidth),
-                transform.position.y + Random.Range(-zoneHeight, zoneHeight),
-                transform.position.z + Random.Range(-zoneLength, zoneLength)
+                transform.position.x + Random.Range(-zoneX, zoneX),
+                transform.position.y + Random.Range(-zoneY, zoneY),
+                transform.position.z + Random.Range(-zoneZ, zoneZ)
             );
         }
         
@@ -61,9 +73,9 @@ public class FishSchoolController : MonoBehaviour
     {
         fishSchoolGoalLocation = new Vector3
         (
-            transform.position.x + Random.Range(-zoneWidth, zoneWidth),
-            transform.position.y + Random.Range(-zoneHeight, zoneHeight),
-            transform.position.z + Random.Range(-zoneLength, zoneLength)
+            transform.position.x + Random.Range(-zoneX, zoneX),
+            transform.position.y + Random.Range(-zoneY, zoneY),
+            transform.position.z + Random.Range(-zoneZ, zoneZ)
         );
 
         FishMovementController fishMovementScript = (FishMovementController)fish.GetComponent(typeof(FishMovementController));

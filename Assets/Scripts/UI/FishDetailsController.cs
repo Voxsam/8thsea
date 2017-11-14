@@ -23,7 +23,7 @@ public class FishDetailsController : MonoBehaviour {
         fishName = transform.Find("FishName").GetComponent<Text>();
         rectTransform = gameObject.GetComponent<RectTransform>();
 
-        fishName.text = GameData.GetFishName(fishTypeIndex).ToString();
+        fishName.text = fishTypeIndex.ToString();
     }
 	
 	// Update is called once per frame

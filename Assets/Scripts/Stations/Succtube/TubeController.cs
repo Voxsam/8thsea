@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TubeController : StationControllerInterface {
     //public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
-    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 50f;
+    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 30f;
     protected float cameraOriginalFov;
 
     public Vector3 SUBMARINE_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, -30f);

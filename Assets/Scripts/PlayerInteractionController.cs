@@ -188,10 +188,7 @@ public class PlayerInteractionController : MonoBehaviour
             StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(Time.deltaTime, () =>
             {
                 anim.SetTrigger(DROP);
-                if (other.transform.parent == holdSlot.transform)
-                {
-                    other.transform.SetParent(player.LocationRef, true);
-                }
+                other.transform.SetParent(player.LocationRef, true);
                 heldObject = null;
                 
                 // Delay again for the animation to finish before letting the player move again

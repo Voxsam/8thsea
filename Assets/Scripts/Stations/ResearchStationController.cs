@@ -26,19 +26,6 @@ public class ResearchStationController : IInteractable
     private float progressBarWidth;
     private PlayerController playerControllerInStation;
 
-
-    public float minimumWaitTimeBetweenSFX = 0f; // seconds
-    public float maximumWaitTimeBetweenSFX = 2f; // seconds
-    private float timeToWaitUntil = 0f;
-    private bool allowToPlaySFX = true;
-    private AudioController.SoundEffect[] stationSounds = null;
-
-    private float GetWaitTimeBetweenSFX()
-    {
-        float multiplier = (float)GameController.RNG.NextDouble();
-        return minimumWaitTimeBetweenSFX + multiplier * (maximumWaitTimeBetweenSFX - minimumWaitTimeBetweenSFX);
-    }
-
     //Prefab to instantiate progress ui
     [SerializeField] private GameObject holdSlot;
     [SerializeField] private RectTransform progressBarRect;
@@ -55,27 +42,11 @@ public class ResearchStationController : IInteractable
         progressBarWidth = progressBarRect.rect.width;
         worldspaceCanvas.SetActive(false);
         playerControllerInStation = null;
-
-        switch(researchStationType) {
-            case GameData.StationType.Photograph:
-                stationSounds = new AudioController.SoundEffect[] { AudioController.SoundEffect.Camera_Shutter_I, AudioController.SoundEffect.Camera_Shutter_II };
-                break;
-            default:
-                break; // Nothing changes
-        };
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!allowToPlaySFX)
-        {
-            if (Time.time > timeToWaitUntil)
-            {
-                allowToPlaySFX = true;
-            }
-        }
-
         if (progressBarRect.gameObject.activeSelf)
         {
             progressBarRect.sizeDelta = new Vector2(progressBarWidth * progressMade / MAX_PROGRESS, progressBarRect.rect.height);
@@ -85,14 +56,6 @@ public class ResearchStationController : IInteractable
         // And the A button is being held
         if (currentState == State.Working && playerControllerInStation != null)
         {
-            // Play sound
-            if (allowToPlaySFX && stationSounds != null)
-            {
-                allowToPlaySFX = false;
-                GameController.Audio.PlaySFXOnce(stationSounds[GameController.RNG.Next(stationSounds.Length)]);
-                timeToWaitUntil = Time.time + GetWaitTimeBetweenSFX();
-            }
-
             if (progressMade < MAX_PROGRESS)
             {
                 progressMade += Time.deltaTime;

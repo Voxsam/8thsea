@@ -22,12 +22,9 @@ public class AudioController : MonoBehaviour
         None = -1,
         Bubbles,
         Bubbling_Sound,
-        Camera_Shutter_I,
-        Camera_Shutter_II,
         DNA_Extraction,
         Large_Bubble,
         Massage_Char,
-        Scrap,
         Scrub,
         Suck_Up,
         Suction,
@@ -43,12 +40,9 @@ public class AudioController : MonoBehaviour
     {
         "Bubbles",
         "Bubbling Sound",
-        "Camera Shutter I",
-        "Camera Shutter II",
         "DNA Extraction",
         "Large Bubble",
         "Massage Chair",
-        "Scrap",
         "Scrub",
         "Suck Up",
         "Suction",
@@ -68,10 +62,8 @@ public class AudioController : MonoBehaviour
 
     private bool areClipsLoaded = false;
 
-    private bool fadeOutBGM = false;
-    private bool fadeInBGM = false;
-    
-    public BGM CurrentBGM = BGM.None;
+    [SerializeField] private bool fadeOutBGM = false;
+    [SerializeField] private bool fadeInBGM = false;
     private AudioClip nextBGM = null;
 
     private List<AudioClip> nextSFX = null;
@@ -147,7 +139,7 @@ public class AudioController : MonoBehaviour
     #region BGM handler
     public void PlayBGM(BGM bgmToPlay)
     {
-        if (GameControllerRef.allowBGM && bgmToPlay != BGM.None)
+        if (GameControllerRef.allowBGM)
         {
             AudioClip newClip = GetBGM(bgmToPlay);
             // if conditions are fulfilled, swap to new BGM by fading into it
@@ -155,13 +147,11 @@ public class AudioController : MonoBehaviour
             {
                 BGM_player.volume = 0f;
                 BGM_player.clip = newClip;
-                CurrentBGM = bgmToPlay;
                 fadeInBGM = true;
             }
             else if (BGM_player.isPlaying && BGM_player.clip != newClip)
             {
                 nextBGM = newClip;
-                CurrentBGM = bgmToPlay;
                 fadeOutBGM = true; // Fade in will come in after
                 timeToWaitUntil = Time.time + BGM_FADE_TIME;
             }
@@ -306,13 +296,6 @@ public class AudioController : MonoBehaviour
         #region BGM Handlers
         if (GameControllerRef.allowBGM)
         {
-            if (CurrentBGM != BGM.None && 
-                GetBGM(CurrentBGM) != nextBGM && 
-                GetBGM(CurrentBGM) != BGM_player.clip)
-            {
-                PlayBGM(CurrentBGM);
-            }
-
             if (fadeOutBGM && BGM_player.isPlaying)
             {
                 float timeLeft = timeToWaitUntil - Time.time;

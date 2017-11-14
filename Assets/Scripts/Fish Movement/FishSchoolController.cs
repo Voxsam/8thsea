@@ -69,11 +69,6 @@ public class FishSchoolController : MonoBehaviour
         
     }
 
-    public int GetNumberOfFishInSchool()
-    {
-        return fishInSchool.Count;
-    }
-
     public void AddFishToSchool(GameObject fish)
     {
         fishSchoolGoalLocation = new Vector3

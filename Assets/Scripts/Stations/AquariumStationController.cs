@@ -150,6 +150,11 @@ public class AquariumStationController : StationControllerInterface
             //Make sure the station is not currently controlled by another player.
             if (!this.IsActivated)
             {
+
+				if (GameController.Obj.isTutorial) {
+					TutorialManager.Obj.hasActivatedAquarium = true;
+				}
+
                 PlayerInteractionController playerInteractionControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerInteractionControllerScript != null)
                 {

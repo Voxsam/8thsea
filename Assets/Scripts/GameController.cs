@@ -92,6 +92,13 @@ public class GameController : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+		if (isTutorial) {
+			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
+			GameObject.FindGameObjectWithTag ("Tutorial Canvas").GetComponent<MainCanvasController> ().Setup ();
+			tutManager.Setup ();
+		}
+
+
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
 	}
@@ -285,10 +292,7 @@ public class GameController : MonoBehaviour {
     protected void Setup()
     {
 
-		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("main_merged_ui")) { // change later
-			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
-			tutManager.Setup ();
-		}
+
 
         gameCamera = GetComponentInChildren<CameraController>();
         

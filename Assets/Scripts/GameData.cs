@@ -119,7 +119,8 @@ public class GameData : MonoBehaviour
         Flounder = 4,
         Penguin = 5,
         Octi = 6,
-        Shark = 7
+        Shark = 7,
+		TutorialClownFish = 8 // Tutorial use only
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
         get { return AllFishParameters.Length; }
@@ -175,6 +176,9 @@ public class GameData : MonoBehaviour
         new FishParameters(FishType.Shark, 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
         }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
+		new FishParameters(FishType.TutorialClownFish, 40, 1, new StationType[] {
+			StationType.Sample, StationType.Photograph, StationType.Research
+		}, 2.5f, 1, 2, 1, 2, 10, 20, 30),
     };
 
     // Research Station management
@@ -265,6 +269,9 @@ public class GameData : MonoBehaviour
                 case FishType.Shark:
                     prefab = Obj.SharkPrefab;
                     break;
+				case FishType.TutorialClownFish:
+					prefab = Obj.ClownFishPrefab;
+					break;
                 case FishType.PufferFish:
                 default:
                     prefab = Obj.PufferFishPrefab;

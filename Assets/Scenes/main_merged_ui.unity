@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.876
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 750199724}
-  m_IndirectSpecularColor: {r: 0.27712813, g: 0.42109284, b: 0.5437308, a: 0.876}
+  m_IndirectSpecularColor: {r: 0.27714777, g: 0.42109323, b: 0.5437463, a: 0.876}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -784,7 +784,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
         type: 2}
@@ -1115,8 +1115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BGM_player: {fileID: 1781408986}
   SFX_player: {fileID: 1511244531}
-  fadeOutBGM: 0
-  fadeInBGM: 0
+  CurrentBGM: -1
 --- !u!1 &109629571
 GameObject:
   m_ObjectHideFlags: 0
@@ -4383,7 +4382,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 72.775, y: 2.903, z: 11.734}
 --- !u!1 &756135501
 GameObject:
@@ -4501,6 +4500,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 756135501}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &767198923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 635233005}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 767198924}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &767198924
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 635233005}
+  m_GameObject: {fileID: 767198923}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802578535
 GameObject:
   m_ObjectHideFlags: 0
@@ -5220,7 +5247,7 @@ Transform:
   - {fileID: 2061356618}
   - {fileID: 849147868}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &919418310
 GameObject:
@@ -6421,7 +6448,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4159467625623214, guid: 293476a9e3a4e4d478ed3f29849a97b2, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4159467625623214, guid: 293476a9e3a4e4d478ed3f29849a97b2, type: 2}
       propertyPath: m_LocalScale.x
@@ -6765,6 +6792,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 2
+  minimumWaitTimeBetweenSFX: 0
+  maximumWaitTimeBetweenSFX: 2
   holdSlot: {fileID: 1343031923}
   progressBarRect: {fileID: 183447256}
   worldspaceCanvas: {fileID: 237268161}
@@ -6851,6 +6880,14 @@ MonoBehaviour:
   OctiPrefab: {fileID: 4263520294266442, guid: b7b0bb5d82510f24c95d2dd83b71db1f, type: 2}
   SharkPrefab: {fileID: 4432518828010388, guid: eb26c16880e4c564b8a8ff31384e82a7,
     type: 2}
+  ClownFishSelectablePrefab: {fileID: 0}
+  PufferFishSelectablePrefab: {fileID: 0}
+  UnicornFishSelectablePrefab: {fileID: 0}
+  WhaleSelectablePrefab: {fileID: 0}
+  FlounderSelectablePrefab: {fileID: 0}
+  PenguinSelectablePrefab: {fileID: 0}
+  OctiSelectablePrefab: {fileID: 0}
+  SharkSelectablePrefab: {fileID: 0}
 --- !u!114 &1301737518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6868,11 +6905,13 @@ MonoBehaviour:
   disablePlayersUntilLoadingIsDone: 1
   allowBGM: 1
   allowSFX: 1
+  bgmToStart: -1
   bgmMaximumVolume: 0.4
   sfxMaximumVolume: 1
   PlayerHolder: {fileID: 1058949358}
   Player1Ref: {fileID: 0}
   FishHolder: {fileID: 82318064}
+  AquariumHolder: {fileID: 0}
   gameCamera: {fileID: 1418712883}
   multiplayerManager: {fileID: 441782547}
   mainCanvas: {fileID: 1975926354}
@@ -6881,6 +6920,8 @@ MonoBehaviour:
   GameOverText: {fileID: 9219536}
   moneyText: {fileID: 2009411082}
   currentMoney: 0
+  CurrentLevel: 1
+  LevelProgressionPercentageText: {fileID: 0}
 --- !u!1 &1305809251 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1541758713308090, guid: 1b988250b60fcc8438c113d38031b3a5,
@@ -7808,6 +7849,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 1
+  minimumWaitTimeBetweenSFX: 0
+  maximumWaitTimeBetweenSFX: 2
   holdSlot: {fileID: 1513171394}
   progressBarRect: {fileID: 477459412}
   worldspaceCanvas: {fileID: 1331187847}
@@ -8148,6 +8191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0785421517c714fa0b8574506c68ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wireframes: []
   pingObjectTemplate: {fileID: 1587086206541846, guid: 52488eab550b8ee43b11f66461032491,
     type: 2}
   subNavController: {fileID: 713969048}
@@ -8620,8 +8664,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 160, y: 0}
-  m_SizeDelta: {x: 300, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1570351904
 MonoBehaviour:
@@ -8738,7 +8782,7 @@ Transform:
   - {fileID: 105778785}
   - {fileID: 587108184}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1613606155
 GameObject:
@@ -9038,12 +9082,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInStation: {fileID: 0}
   fishSchool: {fileID: 1949260165033306, guid: a5ee19f4056b85c4c873e07530215c9f, type: 2}
-  researchRequirementTemplates:
-  - fishType: 0
-    templateObject: {fileID: 1945193747027388, guid: dd611ec9724ffa742bd5da6cba8bc0bb,
-      type: 2}
+  researchRequirementsForLevel: 
   holdSlot: {fileID: 867813110}
-  playerAnchor: {fileID: 0}
   worldspaceCanvas: {fileID: 704659319}
   warningText: {fileID: 160925718}
   researchReqAnchor: {fileID: 966219199}
@@ -9257,7 +9297,7 @@ Prefab:
     - target: {fileID: 224577340287344410, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 224577340287344410, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b,
         type: 2}
@@ -9378,7 +9418,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4623359720306276, guid: 046729ddf58183940a505f8c9ed63644, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114744561028167002, guid: 046729ddf58183940a505f8c9ed63644,
         type: 2}
@@ -9580,7 +9620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1788500326
 GameObject:
@@ -9835,6 +9875,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 0
+  minimumWaitTimeBetweenSFX: 0
+  maximumWaitTimeBetweenSFX: 2
   holdSlot: {fileID: 1487011917}
   progressBarRect: {fileID: 57548633}
   worldspaceCanvas: {fileID: 1878758700}

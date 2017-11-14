@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.637, g: 0.866, b: 0.7205882, a: 1}
+  m_Color: {r: 0.8666667, g: 0.85882354, b: 0.63529414, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -613,8 +613,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 2
-  minimumWaitTimeBetweenSFX: 0
-  maximumWaitTimeBetweenSFX: 1
   holdSlot: {fileID: 1891045322786546}
   progressBarRect: {fileID: 224117358560394374}
   worldspaceCanvas: {fileID: 1297015994966792}
@@ -689,7 +687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0, y: 4.4}
+  m_AnchoredPosition: {x: -0, y: 5}
   m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224858568817157474

@@ -101,6 +101,8 @@ public class FishReturnStationController : IInteractable
                     fishObject.transform.SetParent(null);
                     fishController = null;
 
+                    subNavStationController.labNavController.SetWireframe(GameData.FishType.None);
+
                     Deactivate();
                 }
             }

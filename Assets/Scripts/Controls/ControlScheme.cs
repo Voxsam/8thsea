@@ -22,12 +22,13 @@ public class ControlScheme {
         Right,
         Action,
         Cancel,
+		Menu
     }
 
     private static KeyCode[][] Controls = {
         // Follows ControlOrder
-        new KeyCode[]{ KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.E, KeyCode.R },
-        new KeyCode[]{ KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Return, KeyCode.RightShift },
+        new KeyCode[]{ KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.E, KeyCode.R, KeyCode.Q },
+		new KeyCode[]{ KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Return, KeyCode.RightShift, KeyCode.Backspace },
     };
 
     /// <summary>
@@ -144,4 +145,33 @@ public class ControlScheme {
             return Input.GetKeyUp(GetKeyCode(joystickNumber, Controller.Cancel));
         }
 	}
+
+	// Cancel = X button
+	// For WASD = Q
+	// For arrow keys = Backspace
+	public bool GetMenuKeyDown () {
+		
+		if (!isKeyboard) {
+			return Input.GetKeyDown ("joystick " + joystickNumber + " button 2");
+		} else {
+			return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Menu));
+		}
+	}
+
+	public bool GetMenuKey () {
+		if (!isKeyboard) {
+			return Input.GetKey ("joystick " + joystickNumber + " button 2");
+		} else {
+			return Input.GetKey(GetKeyCode(joystickNumber, Controller.Menu));
+		}
+	}
+
+	public bool GetMenuKeyUp () {
+		if (!isKeyboard) {
+			return Input.GetKeyUp ("joystick " + joystickNumber + " button 2");
+		} else {
+			return Input.GetKeyUp(GetKeyCode(joystickNumber, Controller.Menu));
+		}
+	}
+
 }

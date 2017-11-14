@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LabNavigationStationController : IInteractable {
+    [System.Serializable]
+    public struct Wireframes
+    {
+        public GameData.FishType fishType;
+        public GameObject templateObject;
+    }
+    [SerializeField]
+    public Wireframes[] wireframes;
+
     public GameObject pingObjectTemplate;
     public SubNavigationStationController subNavController;
 
@@ -91,5 +100,18 @@ public class LabNavigationStationController : IInteractable {
 
     override public void ToggleHighlight(PlayerController otherPlayerController, bool toggle = true)
     {
+    }
+
+    public void SetWireframe (GameData.FishType fishType)
+    {
+        for (int i = 0; i < wireframes.Length; i++)
+        {
+            wireframes[i].templateObject.SetActive(false);
+            if (wireframes[i].fishType == fishType)
+            {
+                wireframes[i].templateObject.SetActive(true);
+            }
+        }
+        
     }
 }

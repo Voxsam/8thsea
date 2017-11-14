@@ -44,6 +44,7 @@ public class ContainerStationController : IInteractable {
                         {
                             playerControllerScript.DropObject();
                             heldObjectControllerScript.PutIn();
+                            heldObjectControllerScript.StartSlowPanic();
                         }
                         holdObject(objectToHold);
                     }

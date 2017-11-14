@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 4466297396432244}
   - component: {fileID: 114631855544003658}
   m_Layer: 0
-  m_Name: LabNavigationStation
+  m_Name: LabNavigationStation 1
   m_TagString: StationObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

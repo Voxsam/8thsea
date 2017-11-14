@@ -17,12 +17,15 @@ public class PlayerAnimationController : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void GameUpdate () {
-        bool isMoving = controller.IsPlayerMoving;
-        bool isHolding = (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold || interactionController.GetCurrentState() == PlayerInteractionController.State.PickingUp);
-        
-        anim.SetBool("isHoldingWalk", isMoving && isHolding);
-        anim.SetBool("isHoldingIdle", !isMoving && isHolding);
-        anim.SetBool("isWalking", isMoving && !isHolding);
-        anim.SetBool("isIdle", !isMoving && !isHolding);
+        if (controller != null)
+        {
+            bool isMoving = controller.IsPlayerMoving;
+            bool isHolding = (interactionController.GetCurrentState() == PlayerInteractionController.State.Hold || interactionController.GetCurrentState() == PlayerInteractionController.State.PickingUp);
+
+            anim.SetBool("isHoldingWalk", isMoving && isHolding);
+            anim.SetBool("isHoldingIdle", !isMoving && isHolding);
+            anim.SetBool("isWalking", isMoving && !isHolding);
+            anim.SetBool("isIdle", !isMoving && !isHolding);
+        }
     }
 }

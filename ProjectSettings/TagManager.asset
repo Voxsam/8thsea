@@ -15,6 +15,7 @@ TagManager:
   - Submarine
   - Main Canvas
   - seabed
+  - Tutorial Manager
   layers:
   - Default
   - TransparentFX

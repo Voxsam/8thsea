@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
+
 	public static GameController Obj;
+
+	public TutorialManager tutManager;
+	public bool isTutorial;
 
     KeyCode BUTTON_A_KEYBOARD = KeyCode.Space;
     KeyCode BUTTON_B_KEYBOARD = KeyCode.E;
@@ -17,6 +22,8 @@ public class GameController : MonoBehaviour {
     {
         get { return AudioController.Obj; }
     }
+
+    public bool disablePlayersUntilLoadingIsDone = true;
     public bool allowBGM = true;
     public bool allowSFX = true;
     public float bgmMaximumVolume = 0.8f;
@@ -123,31 +130,17 @@ public class GameController : MonoBehaviour {
     #endregion
     #endregion
 
-	/*
-    public PlayerController Player1
+	
+    /// <summary>
+    /// Sets whether the players can move or not. If true, players are permitted to move, else they are not.
+    /// </summary>
+    private void SetMovementForPlayers(bool active)
     {
-        get
+        foreach (Player player in players)
         {
-            // Only allow it if there is at least one player stored
-            if (players.Count >= 1)
-            {
-                return players[0];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private set
-        {
-            if (players.Count >= 1)
-            {
-                players[0] = value;
-            }
+            player.controller.IsPlayerAllowedToMove = active;
         }
     }
-    */
 
     public void AddFish(FishController fish)
     {
@@ -291,6 +284,12 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
+
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("main_merged_ui")) { // change later
+			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
+			tutManager.Setup ();
+		}
+
         gameCamera = GetComponentInChildren<CameraController>();
         
         //playerControllers = MultiplayerManager.Obj.playerControllerList;
@@ -312,10 +311,23 @@ public class GameController : MonoBehaviour {
 
         RNG = new System.Random();
 
+        if (disablePlayersUntilLoadingIsDone)
+        {
+            SetMovementForPlayers(false);
+        }
+        else
+        {
+            StartGame();
+        }
+    }
+
+    public void StartGame()
+    {
         if (Audio.AreClipsLoaded)
         {
             Audio.PlayBGM(AudioController.BGM.II);
         }
+        SetMovementForPlayers(true);
     }
     #endregion
 

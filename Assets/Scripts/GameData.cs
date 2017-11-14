@@ -111,11 +111,16 @@ public class GameData : MonoBehaviour
         None = -1, // Default value
         ClownFish = 0,
         PufferFish,
-        Flounder,
         UnicornFish,
-        Whale
+        Whale,
+        Flounder,
+        Penguin,
+        Octi,
+        Shark
     };
-    public const int TOTAL_NUMBER_OF_FISHTYPES = 5;
+    public static int TOTAL_NUMBER_OF_FISHTYPES {
+        get { return AllFishParameters.Length; }
+    }
 
     public enum StationType
     {
@@ -135,6 +140,9 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform UnicornFishPrefab;
     [SerializeField] private Transform WhalePrefab;
     [SerializeField] private Transform FlounderPrefab;
+    [SerializeField] private Transform PenguinPrefab;
+    [SerializeField] private Transform OctiPrefab;
+    [SerializeField] private Transform SharkPrefab;
 
 
     // Fish management
@@ -154,7 +162,16 @@ public class GameData : MonoBehaviour
         }, 1, 4, 1, 4, 1, 3, 50),
         new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
-        }, 1, 4, 1, 4, 1, 3, 50)
+        }),
+        new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
+            StationType.Research, StationType.Photograph, StationType.Sample
+        }, 1, 3, 1, 4, 3, 6, 30),
+        new FishParameters(FishType.Octi, 45, 1, new StationType[] {
+            StationType.Photograph, StationType.Sample
+        }, 1, 3, 1, 4, 3, 2, 30),
+        new FishParameters(FishType.Shark, 40, 1, new StationType[] {
+            StationType.Photograph, StationType.Research, StationType.Sample
+        }, 1, 4, 1, 4, 3, 5, 30),
     };
 
     // Research Station management
@@ -235,6 +252,15 @@ public class GameData : MonoBehaviour
                     break;
                 case FishType.Flounder:
                     prefab = Obj.FlounderPrefab;
+                    break;
+                case FishType.Penguin:
+                    prefab = Obj.PenguinPrefab;
+                    break;
+                case FishType.Octi:
+                    prefab = Obj.OctiPrefab;
+                    break;
+                case FishType.Shark:
+                    prefab = Obj.SharkPrefab;
                     break;
                 case FishType.PufferFish:
                 default:

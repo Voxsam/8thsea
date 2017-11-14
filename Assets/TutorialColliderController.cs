@@ -5,7 +5,8 @@ using UnityEngine;
 public class TutorialColliderController : MonoBehaviour {
 
 	public enum Location {
-		Submarine_Entry
+		Submarine_Entry,
+		Fish_Zone
 	}
 
 	public Location colliderLocation;
@@ -19,6 +20,14 @@ public class TutorialColliderController : MonoBehaviour {
 					gameObject.SetActive (false);
 				}
 				break;
+
+			case Location.Fish_Zone:
+				if (TutorialManager.Obj.currentStep == 5) {
+					TutorialManager.Obj.hasMovedNearFish = true;
+					gameObject.SetActive (false);
+				}
+				break;
+			
 			default:
 				break;
 			}

@@ -16,6 +16,7 @@ public class TutorialManager : MonoBehaviour
 	public bool hasEnteredSubmarine = false;
 	public bool hasTriedDriving = false;
 	public bool hasMovedNearFish = false;
+	public bool hasCaughtFish = false;
 	public bool notifiedPlayerOfTutorialAccess = false;
 
 	public GameObject teleporter;
@@ -26,6 +27,7 @@ public class TutorialManager : MonoBehaviour
 
 	public GameObject floatingArrowPrefab;
 	private GameObject arrow;
+	private GameObject pinkArrow;
 
 	public void Setup ()
 	{
@@ -60,7 +62,7 @@ public class TutorialManager : MonoBehaviour
 				print ("Teleporter used");
 				currentStep++;
 				MainCanvasController.Obj.SetCenterPanelText ("The Aquarium",
-					"Let's see what fish we need to complete this level. Press the <color=red>A button</color> " +
+					"Let's see what fish we need to complete this level. Press the \n\n <color=red>A button</color> " +
 					"next to the aquarium console for a better view.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 				RepositionArrow (aquariumConsole.transform.position + new Vector3 (0, 6f, 0));
@@ -97,33 +99,68 @@ public class TutorialManager : MonoBehaviour
 			print ("Waiting for player to drive");
 			if (hasTriedDriving) {
 				currentStep++;
-				MainCanvasController.Obj.SetCenterPanelText ("Explore!",
-					"Drive the submarine using the left stick. \n\n" +
+				MainCanvasController.Obj.SetCenterPanelText ("Exploring the Sea",
+					"Drive the submarine using the left stick. Pay attention to the <color=red>Energy</color> bar at the top. When it " +
+					"reaches zero, you won't be able to activate anything in the submarine until you head back to the " +
+					"lab to refuel. \n\n" +
 					"Normally, you'll have to search for the fish you need on your own -- or get your friend to do it for you -- " +
-					"but I have some insider info about where the fish we want is. Follow the <color=#ff6699ff>pink</color> arrow! \n\n" +
-					"When you see a fish, activate the vacuum tube station to suck it into the submarine!");
+					"but I have some insider info about where the fish we want is. Follow the <color=#ff6699ff>pink</color> arrow!");
 				MainCanvasController.Obj.ShowCenterPanel ();
 				arrow.SetActive (false);
-				arrow.transform.SetParent (suckStation.transform);
-				arrow.transform.localPosition = new Vector3 (0, 6f, 0);
+				pinkArrow = Instantiate (floatingArrowPrefab);
+				pinkArrow.SetActive (false);
+				pinkArrow.GetComponent<SpriteRenderer> ().color = new Color (1f, 0.26f, 0.39f, 1f);
+				pinkArrow.transform.SetParent (drivingStation.transform);
+				pinkArrow.transform.localPosition = new Vector3 (0, 0, 6f);
+				pinkArrow.SetActive (true);
 			} 
 			break;
 
 		case 5:
-			print ("Waiting for player to drive");
+			print ("Waiting for player to reach fish");
+			pinkArrow.transform.rotation = Quaternion.AngleAxis (Mathf.Atan2 (pinkArrow.transform.position.y - tutorialFishZone.transform.position.y,
+				pinkArrow.transform.position.x - tutorialFishZone.transform.position.x) * Mathf.Rad2Deg - 90f,
+				new Vector3 (0, 0, 1f));
 			if (hasMovedNearFish) {
 				currentStep++;
+				pinkArrow.SetActive (false);
+				arrow.transform.SetParent (suckStation.transform);
+				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
+				arrow.SetActive (true);
+				MainCanvasController.Obj.SetCenterPanelText ("Catching Fish",
+					"Activate the vacuum tube station. Manipulate the vacuum tube with the left stick. When a fish is in the center " +
+					"of the tube, press the <color=red>A button</color> to attempt to catch it.");
+				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
+
+		case 6:
+		print ("Waiting for player to catch a fish");
+		if (hasCaughtFish) {
+			currentStep++;
+			pinkArrow.SetActive (false);
+			arrow.transform.SetParent (suckStation.transform);
+			arrow.transform.localPosition = new Vector3 (0, 3f, 0);
+			arrow.SetActive (true);
+			MainCanvasController.Obj.SetCenterPanelText ("Catching Fish",
+				"Activate the vacuum tube station. Manipulate the vacuum tube with the left stick. When a fish is in the center " +
+				"of the tube, press the <color=red>A button</color> to attempt to catch it.");
+			MainCanvasController.Obj.ShowCenterPanel ();
 		}
+		break;
+	}
+
 
 	}
 
 	// Only for static objects
 	private void RepositionArrow (Vector3 position)
 	{
-		if (arrow == null) { arrow = Instantiate (floatingArrowPrefab); }
+		if (arrow == null) {
+			arrow = Instantiate (floatingArrowPrefab);
+		}
 		arrow.SetActive (false);
+		arrow.transform.SetParent (null);
 		arrow.transform.position = position;
 		arrow.transform.rotation = Quaternion.identity;
 		arrow.SetActive (true);
@@ -131,12 +168,14 @@ public class TutorialManager : MonoBehaviour
 
 	private void RepositionArrow (Transform location)
 	{
-		if (arrow == null) { arrow = Instantiate (floatingArrowPrefab); }
+		if (arrow == null) {
+			arrow = Instantiate (floatingArrowPrefab);
+		}
 		arrow.SetActive (false);
+		arrow.transform.SetParent (null);
 		arrow.transform.SetPositionAndRotation (location.position, location.rotation);
 		arrow.SetActive (true);
 	}
-
 		
 }
 

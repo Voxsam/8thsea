@@ -185,8 +185,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318314137572742}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.719326, y: 15.247963, z: -4.529834}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.70710677}
+  m_LocalPosition: {x: -30.09, y: 0.26999998, z: 10.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4989980747394032}
@@ -194,7 +194,7 @@ Transform:
   - {fileID: 224248694199994560}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4641982922061652
 Transform:
   m_ObjectHideFlags: 1
@@ -370,7 +370,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0000005, y: 0.6319171, z: 0.70962495}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: -0.000009536743, y: -0.13562907, z: 0.039134007}
 --- !u!114 &114057329951411492
 MonoBehaviour:
@@ -613,6 +613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   researchStationType: 2
+  minimumWaitTimeBetweenSFX: 0
+  maximumWaitTimeBetweenSFX: 1
   holdSlot: {fileID: 1891045322786546}
   progressBarRect: {fileID: 224117358560394374}
   worldspaceCanvas: {fileID: 1297015994966792}
@@ -675,8 +677,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297015994966792}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.079}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.14}
   m_LocalScale: {x: 0.005000004, y: 0.005, z: 0.005000004}
   m_Children:
   - {fileID: 224858568817157474}
@@ -684,10 +686,10 @@ RectTransform:
   - {fileID: 224117358560394374}
   m_Father: {fileID: 4381904282020708}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.4}
+  m_AnchoredPosition: {x: -0, y: 4.4}
   m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224858568817157474

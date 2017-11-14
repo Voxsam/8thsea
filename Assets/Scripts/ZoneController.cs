@@ -19,7 +19,7 @@ public class ZoneController : MonoBehaviour
     [SerializeField] public float fishSchoolSpawnDelay = 5f;
 
 	[Tooltip("Which fish types to spawn, look up numbers in GameData.")]
-	public int[] fishTypesToSpawn; 
+	public GameData.FishType[] fishTypesToSpawn; 
 
     [SerializeField] public Transform SpawnPoint;
 
@@ -94,15 +94,15 @@ public class ZoneController : MonoBehaviour
             {
                 yield return null;
             }
-			// Pick a random fish type from the 
-			int fishTypeIndex;
+			// Pick a random fish type from the array 
+			GameData.FishType fishTypeToSpawn;
 			if (fishTypesToSpawn.Length > 0) {
-				fishTypeIndex = fishTypesToSpawn [Random.Range (0, fishTypesToSpawn.Length)];
+				fishTypeToSpawn = fishTypesToSpawn [Random.Range (0, fishTypesToSpawn.Length)];
 			} else {
-				fishTypeIndex = Random.Range (0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
+				fishTypeToSpawn = (GameData.FishType) Random.Range (0, GameData.TOTAL_NUMBER_OF_FISHTYPES);
 			}
 
-            GameData.FishParameters fishParameters = GameData.GetFishParameters((GameData.FishType)fishTypeIndex);
+            GameData.FishParameters fishParameters = GameData.GetFishParameters(fishTypeToSpawn);
 
             GameObject newFishSchool = (GameObject)Instantiate(fishSchoolTemplate, SpawnPoint);
             newFishSchool.transform.position = transform.position;
@@ -115,7 +115,7 @@ public class ZoneController : MonoBehaviour
                                             fishParameters.maxSchoolSize);
             for (int j = 0; j < schoolSize; j++)
             {
-                FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeIndex, newFishSchool.transform);
+                FishController newFish = GameData.CreateNewFish((GameData.FishType)fishTypeToSpawn, newFishSchool.transform);
                 FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
                 fishMovementController.Initialise
                 (
@@ -129,7 +129,7 @@ public class ZoneController : MonoBehaviour
                 newFish.SetRigidbody(false);
                 fishSchoolController.AddFishToSchool(newFish.gameObject);
             }
-            fishSchools[(GameData.FishType)fishTypeIndex].Add(newFishSchool);
+            fishSchools[(GameData.FishType)fishTypeToSpawn].Add(newFishSchool);
             yield return new WaitForEndOfFrame();
         }
         if (fishSchools.Count < numSchools)

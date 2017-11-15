@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour 
 {
+
 	public void NewGameButton(string newGameLevel)
 	{
 		SceneManager.LoadScene (newGameLevel);

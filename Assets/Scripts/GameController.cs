@@ -409,6 +409,8 @@ public class GameController : MonoBehaviour {
             {
                 if (player.controls.GetMenuKeyDown())
                 {
+                    GameObject newGameObject = new GameObject();
+                    this.transform.SetParent(newGameObject.transform);
                     SceneManager.LoadScene("characterSelect");
                 }
             }

@@ -53,13 +53,13 @@ public class PlayerSelectMenuController : MonoBehaviour {
 				numPlayers++;
             }
 
-            KeyCode upKey = ControlScheme.GetKeyCode(j, ControlScheme.Controller.Up);
+            KeyCode actionKey = ControlScheme.GetKeyCode(j, ControlScheme.Controller.Action);
             // Iterate through all key configurations
-            if (!usedKeys.Contains(upKey) && Input.GetKeyDown(upKey))
+            if (!usedKeys.Contains(actionKey) && Input.GetKeyDown(actionKey))
             {
                 pList.AddPlayer(new Player(new ControlScheme(j, true), numPlayers + 1));
-                usedKeys.Add(upKey);
-                textboxes[numPlayers].text = "Player " + (numPlayers + 1) + " is using " + upKey.ToString() + ".";
+                usedKeys.Add(actionKey);
+                textboxes[numPlayers].text = "Player " + (numPlayers + 1) + " is using " + actionKey.ToString() + ".";
                 numPlayers++;
             }
         }

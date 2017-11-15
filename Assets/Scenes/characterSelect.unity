@@ -293,7 +293,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Player 2
 
-    Press A or Up Arrow to Join'
+    Press A to Join'
 --- !u!222 &165081484
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Player 1
 
-    Press A or Up Arrow to Join'
+    Press A to Join'
 --- !u!222 &303176751
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -674,7 +674,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Player 4
 
-    Press A or Up Arrow to Join'
+    Press A to Join'
 --- !u!222 &450786609
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Player 3
 
-    Press A or Up Arrow to Join'
+    Press A to Join'
 --- !u!222 &542593246
 CanvasRenderer:
   m_ObjectHideFlags: 0

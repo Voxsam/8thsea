@@ -129,10 +129,11 @@ public class GameData : MonoBehaviour
         Octi,
         Shark,
         Seahorse,
+        // Tutorial fishes should not be included in the normal spawning
 		TutorialClownFish
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
-        get { return AllFishParameters.Length; }
+        get { return AllFishParameters.Length - 1; } // Exclude TutorialClownFish
     }
 
     public static string GetFishName(FishType fish)

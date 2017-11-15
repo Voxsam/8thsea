@@ -28,7 +28,7 @@ public class ControlScheme {
     private static KeyCode[][] Controls = {
         // Follows ControlOrder
         new KeyCode[]{ KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.E, KeyCode.R, KeyCode.Q },
-		new KeyCode[]{ KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Return, KeyCode.RightShift, KeyCode.Backspace },
+		new KeyCode[]{ KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.RightControl, KeyCode.RightShift, KeyCode.Return },
     };
 
     /// <summary>

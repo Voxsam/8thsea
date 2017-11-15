@@ -217,16 +217,17 @@ public class TutorialManager : MonoBehaviour
 				RepositionArrow (arrow, aquariumConsole.transform.position);
 				MainCanvasController.Obj.SetCenterPanelText ("Tutorial Complete!",
 					"Goodbye, fish! By the way, once you've completely researched a fish species, you can also deposit it in the Aquarium for extra points.\n\n" +
-					"That's all for the tutorial! Feel free to keep playing around.");
+                    "That's all for the tutorial! Feel free to keep playing around or tap X again after dismissing this to end the level!");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
 
 		case 12:
+                GameController.Obj.LevelClearPercentage = 100f;
 			break;
-		}
+        }
 
-	}
+    }
 
 	// Only for static objects
 	private void RepositionArrow (GameObject _arrow, Vector3 position)

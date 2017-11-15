@@ -81,8 +81,9 @@ public class GameController : MonoBehaviour {
 
     #region Level management
     public int CurrentLevel = 1; // Start at level 1
-    [SerializeField]
-    private Text LevelProgressionPercentageText;
+    public float LevelClearPercentage = 0f;
+    [SerializeField] private Text LevelProgressionPercentageText;
+    [SerializeField] private Text LevelHasFinishedText;
 
     /// <summary>
     /// Loads the next level in the list. If there is no next level, it reloads the current level.
@@ -145,7 +146,8 @@ public class GameController : MonoBehaviour {
     {
         if (LevelProgressionPercentageText != null)
         {
-            LevelProgressionPercentageText.text = Mathf.RoundToInt(GetLevelClearedPercentage()).ToString() + "%";
+            LevelClearPercentage = GetLevelClearedPercentage();
+            LevelProgressionPercentageText.text = Mathf.RoundToInt(LevelClearPercentage).ToString() + "%";
         }
     }
     #endregion
@@ -331,7 +333,6 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
-
 		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("tutorial")) { // change later
 			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
 			tutManager.Setup ();
@@ -355,10 +356,16 @@ public class GameController : MonoBehaviour {
 
         currentMoney = GameData.STARTING_MONEY;
         GameOverText.enabled = false;
+        LevelHasFinishedText.enabled = false;
         
         UpdateLevelProgression();
         RNG = new System.Random();
         moneyText.text = "";
+
+        if (isTutorial)
+        {
+            LevelProgressionPercentageText.enabled = false;
+        }
 
         if (disablePlayersUntilLoadingIsDone)
         {
@@ -390,6 +397,22 @@ public class GameController : MonoBehaviour {
         
         //currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
         //moneyText.text = "$" + ( (int)currentMoney).ToString();
+
+        if (LevelClearPercentage >= 100f)
+        {
+            if (!LevelHasFinishedText.isActiveAndEnabled)
+            {
+                LevelHasFinishedText.enabled = true;
+            }
+
+            foreach(Player player in players)
+            {
+                if (player.controls.GetMenuKeyDown())
+                {
+                    SceneManager.LoadScene("characterSelect");
+                }
+            }
+        }
     }
 
     void Update()

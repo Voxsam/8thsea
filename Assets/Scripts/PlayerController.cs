@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	public float movementSpeed = 10;
-	public float turnSpeed = 7;
+	public float movementSpeed = 10f;
+	public float turnSpeed = 7f;
 
     private GameData.ControlType controlMode;
     public PlayerInteractionController interactionController;
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour {
 					Time.deltaTime * turnSpeed
 				);
 
-				transform.Translate(new Vector3 (0, 0, movementSpeed / 100f), playerHolder);
+				transform.Translate(new Vector3 (0, 0, movementSpeed * Time.deltaTime), playerHolder);
 
 			} else {
 

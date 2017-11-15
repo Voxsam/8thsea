@@ -58,6 +58,7 @@ public class TubeController : StationControllerInterface {
     // Use this for initialization
     void Start () {
         currentState = State.Idle;
+        tubeHeadController.gameObject.SetActive(false);
     }
     public override void WhenActivated()
     {
@@ -66,12 +67,18 @@ public class TubeController : StationControllerInterface {
 
         cameraOriginalDistance = stationCamera.CameraOffset;
         stationCamera.CameraOffset = SUBMARINE_CAMERA_DISTANCE_FROM_TARGET;
+
+        // Enable the succhead
+        tubeHeadController.gameObject.SetActive(true);
     }
 
     public override void WhenDeactivated()
     {
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
         stationCamera.CameraOffset = cameraOriginalDistance;
+
+        // Disable the succhead
+        tubeHeadController.gameObject.SetActive(false);
     }
 
     // Update is called once per frame

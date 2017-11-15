@@ -5659,6 +5659,10 @@ Prefab:
       propertyPath: Zones.Array.data[2]
       value: 
       objectReference: {fileID: 455739249}
+    - target: {fileID: 1841829032728976, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}
   m_IsPrefabParent: 0
@@ -5878,6 +5882,11 @@ Prefab:
       propertyPath: spawnPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1133803787}
+    - target: {fileID: 114744561028167002, guid: 046729ddf58183940a505f8c9ed63644,
+        type: 2}
+      propertyPath: isDebug
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 046729ddf58183940a505f8c9ed63644, type: 2}
   m_IsPrefabParent: 0

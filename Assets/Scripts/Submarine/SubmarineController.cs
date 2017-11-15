@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class SubmarineController : StationControllerInterface {
     public static SubmarineController Obj;
 
-    public const float ACCELERATION = 0.05f;
+    public const float ACCELERATION = 0.1f;
     public const float STARTING_SPEED = 0.2f;
-    public const float MAXIMUM_SPEED = 10f;
+    public const float MAXIMUM_SPEED = 15f;
 
     public float currentSpeed;
 

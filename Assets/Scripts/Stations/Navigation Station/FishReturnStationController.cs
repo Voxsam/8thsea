@@ -110,6 +110,7 @@ public class FishReturnStationController : IInteractable
                     fishController = null;
 
                     subNavStationController.labNavController.SetWireframe(GameData.FishType.None);
+                    lightMaterial.SetColor("_EmissionColor", Color.red);
 
                     Deactivate();
                 }

@@ -36,6 +36,7 @@ public class TutorialManager : MonoBehaviour
 	public GameObject researchStation;
 	public GameObject submarineLever;
 	public GameObject labPingStation;
+	public GameObject releaseStation;
 
 	public GameObject floatingArrowPrefab;
 	private GameObject arrow;
@@ -74,7 +75,7 @@ public class TutorialManager : MonoBehaviour
 			if (hasUsedTeleporter) {
 				currentStep++;
 				MainCanvasController.Obj.SetCenterPanelText ("The Aquarium",
-					"Let's see what fish we need to complete this level. Press the \n\n <color=red>A button</color> " +
+					"Let's see what fish we need to complete this level. Press the <color=red>A button</color> " +
 					"next to the aquarium console for a better view.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 				RepositionArrow (arrow, aquariumConsole.transform.position + heightOffset);
@@ -133,7 +134,6 @@ public class TutorialManager : MonoBehaviour
 				new Vector3 (0, 0, 1f));
 			if (hasMovedNearFish) {
 				currentStep++;
-				pinkArrow.SetActive (false);
 				arrow.transform.SetParent (suckStation.transform);
 				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
 				arrow.SetActive (true);
@@ -200,24 +200,31 @@ public class TutorialManager : MonoBehaviour
 		case 10:
 			if (hasCompletedFish) {
 				currentStep++;
-				RepositionArrow (arrow, aquariumConsole.transform.position);
+				arrow.SetActive (false);
+				arrow.transform.SetParent (releaseStation.transform);
+				arrow.transform.localPosition = new Vector3 (0, 4f, 0);
 				MainCanvasController.Obj.SetCenterPanelText ("Research Complete!",
-					"Well done! Now bring the fish to the aquarium!");
+					"Well done! \n\nWe need to release this fish back into its natural habitat now. Bring the fish " +
+					"to the Release Station on the submarine. When the square above the Release Lever turns green, " +
+					"the fish is in the spot you found it and can be released. Activate the release lever to release the fish.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
 
 		case 11:
-			if (hasCompletedFish) {
+			if (hasReleasedFish) {
 				currentStep++;
 				RepositionArrow (arrow, aquariumConsole.transform.position);
-				MainCanvasController.Obj.SetCenterPanelText ("Research Complete!",
-					"Well done! Now bring the fish to the aquarium!");
+				MainCanvasController.Obj.SetCenterPanelText ("Tutorial Complete!",
+					"Goodbye, fish! By the way, once you've completely researched a fish species, you can also deposit it in the Aquarium for extra points.\n\n" +
+					"That's all for the tutorial! Feel free to keep playing around.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
-	}
 
+		case 12:
+			break;
+		}
 
 	}
 

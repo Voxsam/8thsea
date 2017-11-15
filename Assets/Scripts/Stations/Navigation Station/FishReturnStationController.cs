@@ -89,6 +89,13 @@ public class FishReturnStationController : IInteractable
                 //Dead fishes cannot be put back to the sea.
                 if (!fishController.IsDead())
                 {
+
+					if (GameController.Obj.isTutorial) {
+						if (TutorialManager.Obj.currentStep == 11) {
+							TutorialManager.Obj.hasReleasedFish = true;
+						}
+					}
+
                     //Housekeeping for changing a fish back into "swim" mode.
                     fishController.PutDown();
                     fishController.SetEnabled(false);

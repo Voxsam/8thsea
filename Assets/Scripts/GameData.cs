@@ -380,6 +380,9 @@ public class GameData : MonoBehaviour
             case FishType.ClownFish:
                 prefab = Obj.ClownFishSelectablePrefab;
                 break;
+			case FishType.TutorialClownFish:
+				prefab = Obj.ClownFishSelectablePrefab;
+				break;
             case FishType.UnicornFish:
                 prefab = Obj.UnicornFishSelectablePrefab;
                 break;

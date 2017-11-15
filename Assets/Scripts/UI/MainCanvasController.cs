@@ -8,7 +8,6 @@ public class MainCanvasController : MonoBehaviour
 
 	public static MainCanvasController Obj;
 
-	public GameObject ss; //get ridda this later
 	public GameObject boxOutline;
 
 	public PanelController centerPanel;
@@ -18,7 +17,6 @@ public class MainCanvasController : MonoBehaviour
 
 	public void Setup () {
 		Obj = this;
-		ss.SetActive (true);
 	}
 
 	void Update ()

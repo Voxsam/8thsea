@@ -219,6 +219,7 @@ public class GameData : MonoBehaviour
     // Level management
     [SerializeField] private static FishType[][] levels =
     {
+        new FishType[] {FishType.TutorialClownFish},
         new FishType[] { FishType.ClownFish, FishType.PufferFish, FishType.Flounder },
         new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
         new FishType[] { FishType.Penguin, FishType.UnicornFish, FishType.Seahorse},
@@ -233,12 +234,12 @@ public class GameData : MonoBehaviour
     /// </summary>
     public static FishType[] GetResearchRequirementsForLevel(int level)
     {
-        if (level <= 0 || level > TOTAL_NUMBER_OF_LEVELS)
+        if (level < 0 || level > TOTAL_NUMBER_OF_LEVELS)
         {
             return null;
         }
 
-        return levels[level - 1];
+        return levels[level];
     }
 
     //Easing functions.

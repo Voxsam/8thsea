@@ -10,6 +10,8 @@ public class AquariumStationController : StationControllerInterface
         get { return GameData.ControlType.STATION; }
     }
 
+    public bool isTutorial = false;
+
     [SerializeField]
     public GameObject fishSchool;
 
@@ -39,7 +41,12 @@ public class AquariumStationController : StationControllerInterface
         warningText.SetActive(false);
 
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
-        researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
+        if (isTutorial)
+        {
+            researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(0);
+        }
+        else
+            researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
 
         for (int i = 0; i < researchRequirementsForLevel.Length; i++)
         {

@@ -220,6 +220,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90b832878abefcf408133e1969a79243, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &57351124 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114920606661042866, guid: 90b832878abefcf408133e1969a79243,
+    type: 2}
+  m_PrefabInternal: {fileID: 57351123}
+  m_Script: {fileID: 11500000, guid: 66008aa7a757f4d43898489b214f5fc0, type: 3}
 --- !u!1 &70246462
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +629,11 @@ Prefab:
     - target: {fileID: 4188646612958086, guid: bd08089bdefd3d14897b9340339305b4, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114815605730129272, guid: bd08089bdefd3d14897b9340339305b4,
+        type: 2}
+      propertyPath: isTutorial
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd08089bdefd3d14897b9340339305b4, type: 2}
@@ -3157,12 +3168,12 @@ MonoBehaviour:
   - {fileID: 1805327681}
   - {fileID: 820132650}
   - {fileID: 1232959216}
-  - {fileID: 0}
   - {fileID: 1257951712}
-  - {fileID: 0}
+  - {fileID: 1257951712}
+  - {fileID: 57351124}
   tubeController: {fileID: 302400365}
-  light1: {fileID: 0}
-  light2: {fileID: 0}
+  light1: {fileID: 2061356619}
+  light2: {fileID: 849147869}
 --- !u!33 &962186722
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5764,7 +5775,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1841829032728976, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35a6b7ab1c0af0143bc2b3383c2ddd2b, type: 2}

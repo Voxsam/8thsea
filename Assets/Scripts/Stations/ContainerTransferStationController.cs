@@ -48,7 +48,7 @@ public class ContainerTransferStationController : IInteractable
                 StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(TIME_TAKEN_FOR_LEVER_TO_GO_DOWN, () => {
                     for (int sourceContainerIterator = 0; sourceContainerIterator < containersSource.Length; sourceContainerIterator++)
                     {
-                        ContainerStationController sourceContainerControllerScript = (ContainerStationController)containersSource[sourceContainerIterator].GetComponent(typeof(ContainerStationController));
+                        ContainerStationController sourceContainerControllerScript = containersSource[sourceContainerIterator].GetComponent<ContainerStationController>();
 
                         GameObject heldObject = sourceContainerControllerScript.removeHeldObject();
                         bool successfulTransfer = true;

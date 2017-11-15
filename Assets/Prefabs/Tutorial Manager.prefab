@@ -26,23 +26,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1474025700059218
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4075120387994592}
-  - component: {fileID: 65884472757200630}
-  - component: {fileID: 114477076429507006}
-  m_Layer: 0
-  m_Name: Sub Entrance Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1950623986703440
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,19 +42,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4075120387994592
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474025700059218}
-  m_LocalRotation: {x: -0, y: 0.25172272, z: -0, w: 0.9677994}
-  m_LocalPosition: {x: 3.44, y: 2.05, z: 6.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4134701272542898}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 29.159002, z: 0}
 --- !u!4 &4134701272542898
 Transform:
   m_ObjectHideFlags: 1
@@ -83,7 +53,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4402119121371632}
-  - {fileID: 4075120387994592}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -100,18 +69,6 @@ Transform:
   m_Father: {fileID: 4134701272542898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
---- !u!65 &65884472757200630
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474025700059218}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4, y: 4, z: 12}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114398090616200578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,7 +93,8 @@ MonoBehaviour:
   hasUsedDissectStation: 0
   hasFinishedDissectStation: 0
   hasCompletedFish: 0
-  hasPutFishInAquarium: 0
+  hasReleasedFish: 0
+  hasAquariumedFish: 0
   notifiedPlayerOfTutorialAccess: 0
   teleporter: {fileID: 0}
   aquariumConsole: {fileID: 0}
@@ -150,15 +108,3 @@ MonoBehaviour:
   labPingStation: {fileID: 0}
   floatingArrowPrefab: {fileID: 1714117834672830, guid: 12162d93b6348b24ca3d6ac84aa98ca2,
     type: 2}
---- !u!114 &114477076429507006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1474025700059218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a9652bfd7932041bb28e754aa3d2b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderLocation: 0

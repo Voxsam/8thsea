@@ -32,6 +32,10 @@ public class SubmarineController : StationControllerInterface {
     public StationController [] submarineStationControllers;
     public TubeController tubeController;
 
+    public Light light1;
+    public Light light2;
+    private Color regularLampClr = new Color(1.0f, 0.9568f, 0.82352f, 1.0f);
+
     private Animator anim;
     private bool facingLeft; //false = facingRight
 
@@ -148,6 +152,8 @@ public class SubmarineController : StationControllerInterface {
         //Oxygen is being refilled, leave emergency mode.
         else if (!oxygenCountdownController.IsEmergency() && emergencyMode)
         {
+            light1.color = Color.Lerp(regularLampClr, Color.blue, Time.deltaTime);
+            light2.color = Color.Lerp(regularLampClr, Color.blue, Time.deltaTime);
             emergencyMode = false;
             EndEmergencyMode();
         }

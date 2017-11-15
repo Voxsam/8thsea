@@ -12,14 +12,8 @@ public class AquariumStationController : StationControllerInterface
 
     [SerializeField]
     public GameObject fishSchool;
-    [System.Serializable]
-    public struct ResearchRequirements
-    {
-        public GameData.FishType fishType;
-        public GameObject templateObject;
-    }
-    [SerializeField]
-    public ResearchRequirements[] researchRequirementTemplates;
+
+    [SerializeField] public GameData.FishType[] researchRequirementsForLevel;
 
     [SerializeField] private GameObject holdSlot;
     [SerializeField] private GameObject playerAnchor;
@@ -36,33 +30,37 @@ public class AquariumStationController : StationControllerInterface
     public Vector3 AQUARIUM_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, 0f);
     protected Vector3 cameraOriginalDistance;
 
-    private Dictionary<GameData.FishType, GameObject> fishSchools;
     private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
-    private int selectedResearchRequirementIndex = 0;
+    private int selectedResearchRequirementIndex = -1;
 
     // Use this for initialization
     void Start()
     {
         warningText.SetActive(false);
 
-        fishSchools = new Dictionary<GameData.FishType, GameObject>();
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
+        researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
 
-        for (int i = 0; i < researchRequirementTemplates.Length; i++)
+        for (int i = 0; i < researchRequirementsForLevel.Length; i++)
         {
-            GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
-            newFishSchool.transform.position = holdSlot.transform.position;
-            FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
-            fishSchoolController.zoneX = 10;
-            fishSchoolController.zoneY = 5;
-            fishSchoolController.zoneZ = 10;
-            fishSchools.Add(researchRequirementTemplates[i].fishType, newFishSchool);
+            // If does not contain a school of this type, instantiate it
+            if (!GameController.Obj.MasterAquarium.ContainsKey(researchRequirementsForLevel[i]))
+            {
+                GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
+                newFishSchool.transform.position = holdSlot.transform.position;
+                newFishSchool.transform.SetParent(GameController.Obj.AquariumHolder);
+                FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
+                fishSchoolController.zoneX = 10;
+                fishSchoolController.zoneY = 5;
+                fishSchoolController.zoneZ = 10;
+                GameController.Obj.MasterAquarium.Add(researchRequirementsForLevel[i], fishSchoolController);
+            }
 
-            GameObject newFishResearchRequirements = (GameObject)Instantiate(researchRequirementTemplates[i].templateObject);
-            newFishResearchRequirements.transform.SetParent(researchReqAnchor.transform, false);
-            newFishResearchRequirements.transform.Translate(0 + (i * 5), 0, 0);
-            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init(researchRequirementTemplates[i].fishType);
-            fishResearchRequirements.Add(researchRequirementTemplates[i].fishType, newFishResearchRequirements);
+            Transform newFishResearchRequirements = Instantiate(GameData.GetSelectableFish(researchRequirementsForLevel[i]));
+            newFishResearchRequirements.SetParent(researchReqAnchor.transform, false);
+            newFishResearchRequirements.Translate(0 + (i * 5), 0, 0);
+            newFishResearchRequirements.GetComponent<ResearchRequirementsController>().Init(researchRequirementsForLevel[i]);
+            fishResearchRequirements.Add(researchRequirementsForLevel[i], newFishResearchRequirements.gameObject);
         }
     }
 
@@ -89,21 +87,36 @@ public class AquariumStationController : StationControllerInterface
                 if (playerInStation.controls.GetHorizontalAxis() > 0)
                 {
                     selectInterval = 0;
-                    if ((int)selectedResearchRequirementIndex < (researchRequirementTemplates.Length - 1))
+					
+                    if (selectedResearchRequirementIndex == -1)
                     {
-                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementsForLevel[selectedResearchRequirementIndex]].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if (selectedResearchRequirementIndex < (researchRequirementsForLevel.Length - 1))
+                    {
+                        GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
+                        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex++;
-                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                        fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
+                        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
                 else if (playerInStation.controls.GetHorizontalAxis() < 0)
                 {
                     selectInterval = 0;
-                    if ((int)selectedResearchRequirementIndex > 0)
+                    if (selectedResearchRequirementIndex == -1)
                     {
-                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Deselect();
+                        selectedResearchRequirementIndex = 0;
+                        fishResearchRequirements[researchRequirementsForLevel[selectedResearchRequirementIndex]].GetComponent<ResearchRequirementsController>().Select();
+                    }
+                    else if (selectedResearchRequirementIndex > 0)
+                    {
+                        GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
+                        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex--;
-                        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+                        fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
+                        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
             }
@@ -125,13 +138,16 @@ public class AquariumStationController : StationControllerInterface
                 PlayerInteractionController playerControllerScript = this.playerInStation.GetComponent<PlayerInteractionController>();
                 if (playerControllerScript != null)
                 {
-                    if (RemoveFish(playerControllerScript, researchRequirementTemplates[selectedResearchRequirementIndex].fishType))
+                    if (selectedResearchRequirementIndex >= 0 && selectedResearchRequirementIndex < (researchRequirementsForLevel.Length - 1))
                     {
-                        DisengagePlayer();
-                    }
-                    else
-                    {
-                        ShowWarningText("No fish of this type is in the aquarium!");
+                        if (RemoveFish(playerControllerScript, researchRequirementsForLevel[selectedResearchRequirementIndex]))
+                        {
+                            DisengagePlayer();
+                        }
+                        else
+                        {
+                            ShowWarningText("No fish of this type is in the aquarium!");
+                        }
                     }
                 }
             }
@@ -170,6 +186,10 @@ public class AquariumStationController : StationControllerInterface
                             {
                                 ShowWarningText("This fish is dead!");
                             }
+                            else if (!IsFishTypeStoreable(heldObjectControllerScript.fishType))
+                            {
+                                ShowWarningText("This fish is not part of the list!");
+                            }
                             else
                             {
                                 //Only allow the player to put a fish into the aquarium if they have researched the required amount for the species.
@@ -207,8 +227,7 @@ public class AquariumStationController : StationControllerInterface
 
     public override void WhenActivated()
     {
-        selectedResearchRequirementIndex = 0;
-        fishResearchRequirements[researchRequirementTemplates[selectedResearchRequirementIndex].fishType].GetComponent<ResearchRequirementsController>().Select();
+        selectedResearchRequirementIndex = -1;
 
         cameraOriginalFov = stationCamera.GetCamera.fieldOfView;
         stationCamera.GetCamera.fieldOfView = AQUARIUM_CAMERA_FIELD_OF_VIEW;
@@ -225,6 +244,7 @@ public class AquariumStationController : StationControllerInterface
         }
         stationCamera.GetCamera.fieldOfView = cameraOriginalFov;
         stationCamera.CameraOffset = cameraOriginalDistance;
+
     }
 
     public override bool SwitchCondition()
@@ -272,16 +292,29 @@ public class AquariumStationController : StationControllerInterface
         return false;
     }
 
+    private bool IsFishTypeStoreable (GameData.FishType fishType)
+    {
+        for (int i = 0; i < researchRequirementsForLevel.Length; i++)
+        {
+            if (fishType == researchRequirementsForLevel[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void StoreFish(GameObject fishToStore, GameData.FishType fishType)
     {
         if (fishToStore != null)
         {
-            FishSchoolController schoolController = fishSchools[fishType].GetComponent<FishSchoolController>();
+            FishSchoolController schoolController = GameController.Obj.MasterAquarium[fishType];
             if (schoolController != null)
             {
                 FishController fishController = fishToStore.GetComponent<FishController>();
                 if (fishController != null)
                 {
+                    fishController.StartSlowPanic();
                     fishController.SetEnabled(false);
                     FishMovementController fishMovementController = fishToStore.GetComponent<FishMovementController>();
                     if (fishMovementController != null)
@@ -289,19 +322,27 @@ public class AquariumStationController : StationControllerInterface
                         fishMovementController.SetEnabled(true);
                         fishMovementController.Initialise();
                         schoolController.AddFishToSchool(fishToStore);
-                        fishToStore.transform.SetParent(null);
                         fishToStore.transform.position = holdSlot.transform.position;
                     }
+
+                    GameController.Obj.UpdateLevelProgression();
+
+                    // I don't know why I must do this, but I must delay setting the parent else it will force set itself to no parent
+                    StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(1f, () =>
+                    {
+                        fishController.transform.SetParent(schoolController.transform);
+                    }));
                 }
+
             }
         }
     }
 
     public bool RemoveFish(PlayerInteractionController playerControllerScript, GameData.FishType fishType)
     {
-        if (fishSchools.ContainsKey(fishType))
+        if (GameController.Obj.MasterAquarium.ContainsKey(fishType))
         {
-            FishSchoolController schoolController = fishSchools[fishType].GetComponent<FishSchoolController>();
+            FishSchoolController schoolController = GameController.Obj.MasterAquarium[fishType];
             if (schoolController != null)
             {
                 if (schoolController.FishInSchool.Count > 0)
@@ -316,6 +357,8 @@ public class AquariumStationController : StationControllerInterface
                         {
                             fishController.SetEnabled(true);
                             playerControllerScript.PickUpObject(fishToRemove);
+
+                            GameController.Obj.UpdateLevelProgression();
                             return true;
                         }
                     }

@@ -429,19 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInStation: {fileID: 0}
   fishSchool: {fileID: 1949260165033306, guid: a5ee19f4056b85c4c873e07530215c9f, type: 2}
-  researchRequirementTemplates:
-  - fishType: 6
-    templateObject: {fileID: 1184885335854716, guid: 44d5af2749af5404b80f7a78467260b0,
-      type: 2}
-  - fishType: 1
-    templateObject: {fileID: 1945193747027388, guid: 6f2223d7e16f26540afa3ddabd926adc,
-      type: 2}
-  - fishType: 2
-    templateObject: {fileID: 1168847047219520, guid: d658b28e8703bb643b2ec3ed9716554f,
-      type: 2}
-  - fishType: 3
-    templateObject: {fileID: 1746532783271162, guid: 8250bd21018018841a35c6e2ebcc5757,
-      type: 2}
+  researchRequirementsForLevel: 
   holdSlot: {fileID: 1746477450227492}
   playerAnchor: {fileID: 1712015905585906}
   worldspaceCanvas: {fileID: 1160353373602876}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TubeController : StationControllerInterface {
     //public const int SPAWN_LOCATION_OFFSET = 0; // Spawn at SpawnPoint with a randomised offset of this float
-    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 30f;
+    public const float SUBMARINE_CAMERA_FIELD_OF_VIEW = 50f;
     protected float cameraOriginalFov;
 
     public Vector3 SUBMARINE_CAMERA_DISTANCE_FROM_TARGET = new Vector3(0, 0, -30f);
@@ -20,6 +20,9 @@ public class TubeController : StationControllerInterface {
     public Transform SpawnPoint; // Put the fishes here after they have been sucked up
     //The head of the suction tube.
     public TubeHeadController tubeHeadController;
+    public GameObject succHeadBox;
+    public float rotSpd = 40.0f;
+
 
     public enum State
     {
@@ -82,10 +85,15 @@ public class TubeController : StationControllerInterface {
                     if (playerInStation.controls.GetActionKey())
                     {
                         systemActivated = true;
+                        rotSpd += 3f;
+                        succHeadBox.transform.Rotate(new Vector3(1, 1, 0), rotSpd * Time.deltaTime);
+                        succHeadBox.transform.Rotate(new Vector3(1, 0, 1), rotSpd * Time.deltaTime);
+
                     }
                     else
                     {
                         systemActivated = false;
+                        rotSpd = 400f;
                     }
 
                     float x = playerInStation.controls.GetHorizontalAxis() * Time.deltaTime * forwardSpeed;

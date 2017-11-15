@@ -230,6 +230,13 @@ public class FishController : IInteractable {
     {
         currentPanicRate = GameData.GetFishParameters(fishType).researchPanicRate;
     }
+    public void StartSlowPanic ()
+    {
+        if (previousPanicRate != GameData.GetFishParameters(fishType).researchPanicRate)
+        {
+            currentPanicRate = slowPanicRate;
+        }
+    }
 
     public void SetEnabled(bool enabled)
 	{

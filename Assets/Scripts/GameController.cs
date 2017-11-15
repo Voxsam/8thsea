@@ -11,12 +11,6 @@ public class GameController : MonoBehaviour {
 	public TutorialManager tutManager;
 	public bool isTutorial;
 
-    KeyCode BUTTON_A_KEYBOARD = KeyCode.Space;
-    KeyCode BUTTON_B_KEYBOARD = KeyCode.E;
-
-    KeyCode BUTTON_A_JOYSTICK = KeyCode.JoystickButton0;
-    KeyCode BUTTON_B_JOYSTICK = KeyCode.JoystickButton1;
-
     // Audio Management
     public static AudioController Audio
     {
@@ -26,6 +20,7 @@ public class GameController : MonoBehaviour {
     public bool disablePlayersUntilLoadingIsDone = true;
     public bool allowBGM = true;
     public bool allowSFX = true;
+    public AudioController.BGM bgmToStart = AudioController.BGM.None;
     public float bgmMaximumVolume = 0.8f;
     public float sfxMaximumVolume = 1.0f;
 
@@ -60,6 +55,8 @@ public class GameController : MonoBehaviour {
     // Fish management
     protected List<FishController> fishes;
     [SerializeField] protected Transform FishHolder;
+    public Dictionary<GameData.FishType, FishSchoolController> MasterAquarium;
+    [SerializeField] public Transform AquariumHolder;
 
     // Camera management
     public CameraController gameCamera;
@@ -80,9 +77,80 @@ public class GameController : MonoBehaviour {
     // Money
 	public Text moneyText;
 	public float currentMoney;
-    
 
-	void Awake() {
+
+    #region Level management
+    public int CurrentLevel = 1; // Start at level 1
+    [SerializeField]
+    private Text LevelProgressionPercentageText;
+
+    /// <summary>
+    /// Loads the next level in the list. If there is no next level, it reloads the current level.
+    /// If levelToLoad is a valid level from 1 to GameData.TOTAL_NUMBER_OF_LEVELS (inclusive), then it will load that level instead
+    /// </summary>
+    public void LoadNextLevel(int levelToLoad = 0)
+    {
+        // Only increment if it is not the last level
+        if (levelToLoad > 0 && levelToLoad < GameData.TOTAL_NUMBER_OF_LEVELS)
+        {
+            CurrentLevel = levelToLoad;
+        }
+        else if (CurrentLevel != GameData.TOTAL_NUMBER_OF_LEVELS)
+        {
+            CurrentLevel++;
+        }
+        
+        // Reload this scene
+        SceneManager.LoadScene("main_merged");
+    }
+
+    /// <summary>
+    /// Cross checks the required number of fish to catch and counts the number of fish current in the aquarium, then returns the percentage
+    /// </summary>
+    /// <returns></returns>
+    private float GetLevelClearedPercentage()
+    {
+        GameData.FishType[] req = GameData.GetResearchRequirementsForLevel(CurrentLevel);
+        int sumCollected = 0;
+        int totalToCollect = 0;
+        foreach(GameData.FishType fish in req)
+        {
+            int cap = GameData.GetFishParameters(fish).totalToResearch;
+            totalToCollect += cap;
+
+            if (MasterAquarium.ContainsKey(fish))
+            {
+                int fishCaught = MasterAquarium[fish].GetNumberOfFishInSchool();
+                if (fishCaught > cap)
+                {
+                    fishCaught = cap;
+                }
+                sumCollected += fishCaught;
+            }
+        }
+
+        // In case some things are not initialised yet
+        if (totalToCollect == 0)
+        {
+            return 0f;
+        }
+
+        return sumCollected / (float)totalToCollect * 100f;
+    }
+
+    /// <summary>
+    /// Update the gamescreen with the progress info
+    /// </summary>
+    public void UpdateLevelProgression()
+    {
+        if (LevelProgressionPercentageText != null)
+        {
+            LevelProgressionPercentageText.text = Mathf.RoundToInt(GetLevelClearedPercentage()).ToString() + "%";
+        }
+    }
+    #endregion
+
+    void Awake() {
         if (Obj == null)
         {
             Obj = this;
@@ -110,34 +178,6 @@ public class GameController : MonoBehaviour {
     }
 
     #region Getter and setters
-
-    #region Button handlers
-    #region Button A handler
-    public bool ButtonA_Down
-    {
-        get { return Input.GetKeyDown(BUTTON_A_KEYBOARD) || Input.GetKeyDown(BUTTON_A_JOYSTICK); }
-    }
-
-    public bool ButtonA_Hold
-    {
-        get { return Input.GetKey(BUTTON_A_KEYBOARD) || Input.GetKey(BUTTON_A_JOYSTICK); }
-    }
-    #endregion
-
-    #region Button B handler
-    public bool ButtonB_Down
-    {
-        get { return Input.GetKeyDown(BUTTON_B_KEYBOARD) || Input.GetKeyDown(BUTTON_B_JOYSTICK); }
-    }
-
-    public bool ButtonB_Hold
-    {
-        get { return Input.GetKey(BUTTON_B_KEYBOARD) || Input.GetKey(BUTTON_B_JOYSTICK); }
-    }
-    #endregion
-    #endregion
-
-	
     /// <summary>
     /// Sets whether the players can move or not. If true, players are permitted to move, else they are not.
     /// </summary>
@@ -292,15 +332,18 @@ public class GameController : MonoBehaviour {
     protected void Setup()
     {
 
-
-
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("tutorial")) { // change later
+			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
+			tutManager.Setup ();
+		}
         gameCamera = GetComponentInChildren<CameraController>();
         
         //playerControllers = MultiplayerManager.Obj.playerControllerList;
         //players = multiplayerManager.playerControllerList;
         fishes = new List<FishController>();
-        
-		/*
+        MasterAquarium = new Dictionary<GameData.FishType, FishSchoolController>();
+
+        /*
         players.Add(Player1Ref);
         Player1Ref.AssignCameraToPlayer(gameCamera);
         Player1Ref.transform.SetParent(PlayerHolder);
@@ -312,7 +355,8 @@ public class GameController : MonoBehaviour {
 
         currentMoney = GameData.STARTING_MONEY;
         GameOverText.enabled = false;
-
+        
+        UpdateLevelProgression();
         RNG = new System.Random();
 
         if (disablePlayersUntilLoadingIsDone)
@@ -329,7 +373,7 @@ public class GameController : MonoBehaviour {
     {
         if (Audio.AreClipsLoaded)
         {
-            Audio.PlayBGM(AudioController.BGM.II);
+            Audio.PlayBGM(Audio.CurrentBGM);
         }
         SetMovementForPlayers(true);
     }

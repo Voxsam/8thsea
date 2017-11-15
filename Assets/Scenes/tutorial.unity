@@ -6389,6 +6389,11 @@ Prefab:
       propertyPath: subNavStationController
       value: 
       objectReference: {fileID: 2048242594}
+    - target: {fileID: 114232075354587504, guid: 90b832878abefcf408133e1969a79243,
+        type: 2}
+      propertyPath: minReturnDistance
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 90b832878abefcf408133e1969a79243, type: 2}
   m_IsPrefabParent: 0

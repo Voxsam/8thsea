@@ -46,7 +46,9 @@ public class AquariumStationController : StationControllerInterface
             researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(0);
         }
         else
+        {
             researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
+        }
 
         for (int i = 0; i < researchRequirementsForLevel.Length; i++)
         {

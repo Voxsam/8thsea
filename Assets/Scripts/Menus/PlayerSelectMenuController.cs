@@ -24,6 +24,11 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
     void Start ()
 	{
+        if (GameController.Obj != null)
+        {
+            Destroy(GameController.Obj.gameObject);
+        }
+
 		int i = 1;
 		print (Input.GetJoystickNames ().Length + " joysticks connected: ");
 		foreach (string joystick in Input.GetJoystickNames()) {

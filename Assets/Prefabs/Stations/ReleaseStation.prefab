@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subNavStationController: {fileID: 0}
-  minReturnDistance: 100
+  minReturnDistance: 20
   releaseSlot: {fileID: 1741517346394490}
   meshRenderer: {fileID: 23278986827121666}
   buttonObject: {fileID: 1549274843425038}

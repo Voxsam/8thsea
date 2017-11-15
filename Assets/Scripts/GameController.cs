@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
     public void LoadNextLevel(int levelToLoad = 0)
     {
         // Only increment if it is not the last level
-        if (levelToLoad > 0 && levelToLoad < GameData.TOTAL_NUMBER_OF_LEVELS)
+        if (levelToLoad >= 0 && levelToLoad < GameData.TOTAL_NUMBER_OF_LEVELS)
         {
             CurrentLevel = levelToLoad;
         }

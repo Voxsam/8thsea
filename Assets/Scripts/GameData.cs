@@ -233,17 +233,18 @@ public class GameData : MonoBehaviour
         new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
         new FishType[] { FishType.Penguin, FishType.UnicornFish, FishType.Seahorse},
     };
-    public static int TOTAL_NUMBER_OF_LEVELS
+    public static int TOTAL_NUMBER_OF_LEVELS // Excludes tutorial level
     {
-        get { return levels.Length; }
+        get { return levels.Length - 1; }
     }
 
     /// <summary>
     /// Gets the fish types required for the level in ResearchRequirement type. Level is expected to start from 1, not 0.
+    /// If 0 is input, it returns the Tutorial level
     /// </summary>
     public static FishType[] GetResearchRequirementsForLevel(int level)
     {
-        if (level < 0 || level > TOTAL_NUMBER_OF_LEVELS)
+        if (level < 0 || level >= TOTAL_NUMBER_OF_LEVELS)
         {
             return null;
         }

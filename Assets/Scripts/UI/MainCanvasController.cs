@@ -8,12 +8,14 @@ public class MainCanvasController : MonoBehaviour
 
 	public static MainCanvasController Obj;
 
+	public GameObject boxOutline;
+
 	public PanelController centerPanel;
 	public PanelController bottomPanel;
 
 	private Color invisible = new Color (0, 0, 0, 0);
 
-	public void Awake () {
+	public void Setup () {
 		Obj = this;
 	}
 
@@ -22,7 +24,6 @@ public class MainCanvasController : MonoBehaviour
 		foreach (PlayerController p in MultiplayerManager.Obj.playerControllerList) {
 			if (p.controls.GetMenuKeyDown ()) {
 				centerPanel.gameObject.SetActive (!centerPanel.gameObject.activeSelf);
-
 				if (GameController.Obj.isTutorial) {
 					if (TutorialManager.Obj.notifiedPlayerOfTutorialAccess == false) {
 						bottomPanel.gameObject.SetActive (true);
@@ -63,6 +64,10 @@ public class MainCanvasController : MonoBehaviour
 		bottomPanel.gameObject.SetActive (true);
 	}
 
+	public void ShowBoxOutline (float seconds) {
+		boxOutline.SetActive (true);
+		StartCoroutine (DeactivateInTime (boxOutline, seconds));
+	}
 
 	IEnumerator BlinkText(Text textToBlink, float interval) {
 		Color init = textToBlink.color;
@@ -85,5 +90,6 @@ public class MainCanvasController : MonoBehaviour
 	IEnumerator Wait (float seconds) {
 		yield return new WaitForSecondsRealtime (seconds);
 	}
+
 
 }

@@ -29,6 +29,8 @@ public class GameData : MonoBehaviour
             get; private set;
         }
 
+		public string printableName;
+
         public float panicTimerLength;
         public float researchPanicRate;
         public int currentResearchProtocol;
@@ -43,7 +45,7 @@ public class GameData : MonoBehaviour
 
         public int minSchoolSize;
         public int maxSchoolSize;
-        public FishParameters(FishType _type, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
+		public FishParameters(FishType _type, string _printableName, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
                                 float _researchPanicRate = 2f,
                                 float _minSpeed = 1f, float _maxSpeed = 3f,
                                 float _minRotationSpeed = 1.0f, float _maxRotationSpeed = 4.0f,
@@ -65,6 +67,7 @@ public class GameData : MonoBehaviour
             minNeighbourDistance = _minNeighbourDistance;
             minSchoolSize = _minSchoolSize;
             maxSchoolSize = _maxSchoolSize;
+			printableName = _printableName;
         }
 
         // Getters
@@ -124,7 +127,9 @@ public class GameData : MonoBehaviour
         Flounder,
         Penguin,
         Octi,
-        Shark
+        Shark,
+        Seahorse,
+		TutorialClownFish
     };
     public static int TOTAL_NUMBER_OF_FISHTYPES {
         get { return AllFishParameters.Length; }
@@ -132,17 +137,7 @@ public class GameData : MonoBehaviour
 
     public static string GetFishName(FishType fish)
     {
-        switch(fish)
-        {
-            case FishType.ClownFish:
-                return "Clown Fish";
-            case FishType.PufferFish:
-                return "Puffer Fish";
-            case FishType.UnicornFish:
-                return "Unicorn Fish";
-            default:
-                return fish.ToString();
-        }
+		return GetFishParameters (fish).printableName;
     }
 
     public enum StationType
@@ -165,7 +160,8 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform PenguinPrefab;
     [SerializeField] private Transform OctiPrefab;
     [SerializeField] private Transform SharkPrefab;
-    
+    [SerializeField] private Transform SeahorsePrefab;
+
     [SerializeField] private Transform ClownFishSelectablePrefab;
     [SerializeField] private Transform PufferFishSelectablePrefab;
     [SerializeField] private Transform UnicornFishSelectablePrefab;
@@ -174,35 +170,42 @@ public class GameData : MonoBehaviour
     [SerializeField] private Transform PenguinSelectablePrefab;
     [SerializeField] private Transform OctiSelectablePrefab;
     [SerializeField] private Transform SharkSelectablePrefab;
+    [SerializeField] private Transform SeahorseSelectablePrefab;
     #endregion
 
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
     {
-        new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
+        new FishParameters(FishType.ClownFish, "Clownfish", 40, 1, new StationType[] {
             StationType.Sample, StationType.Photograph, StationType.Research
         }, 2.5f),
-        new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
+		new FishParameters(FishType.PufferFish, "Pufferfish", 50, 1, new StationType[] {
             StationType.Research, StationType.Sample
         }, 3.5f),
-        new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
+		new FishParameters(FishType.UnicornFish, "Unicorn Fish", 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph
         }, 2.5f, 1, 3, 1, 4, 5, 10, 30),
-        new FishParameters(FishType.Whale, 60, 1, new StationType[] {
+		new FishParameters(FishType.Whale, "Small Whale", 60, 1, new StationType[] {
             StationType.Research, StationType.Sample, StationType.Research
         }, 3.5f, 1, 4, 1, 4, 1, 3, 50),
-        new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
+		new FishParameters(FishType.Flounder, "Flounder", 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
         }, 2),
-        new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
+		new FishParameters(FishType.Penguin, "Angry Penguin", 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph, StationType.Sample
         }, 3, 1, 3, 1, 4, 3, 6, 30),
-        new FishParameters(FishType.Octi, 45, 1, new StationType[] {
+		new FishParameters(FishType.Octi, "Octopus", 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample
         }, 3, 1, 3, 1, 4, 3, 2, 30),
-        new FishParameters(FishType.Shark, 40, 1, new StationType[] {
+		new FishParameters(FishType.Shark, "Shark", 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
-        }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
+		}, 2.5f, 1, 4, 1, 4, 3, 5, 30),
+		new FishParameters(FishType.Seahorse, "Seahorse", 40, 1, new StationType[] {
+            StationType.Research, StationType.Sample, StationType.Photograph
+		}, 3f, 1, 4, 1, 4, 3, 10, 30),
+		new FishParameters(FishType.TutorialClownFish, "Clownfish", 100, 1, new StationType[] {
+			StationType.Sample, StationType.Photograph, StationType.Research
+		}, 2f, 1, 2, 1, 2, 10, 20, 30)
     };
 
     // Research Station management
@@ -216,9 +219,10 @@ public class GameData : MonoBehaviour
     // Level management
     [SerializeField] private static FishType[][] levels =
     {
-        new FishType[] { FishType.ClownFish, FishType.PufferFish },
+        new FishType[] {FishType.TutorialClownFish},
+        new FishType[] { FishType.ClownFish, FishType.PufferFish, FishType.Flounder },
         new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
-        new FishType[] { FishType.Penguin, FishType.UnicornFish, },
+        new FishType[] { FishType.Penguin, FishType.UnicornFish, FishType.Seahorse},
     };
     public static int TOTAL_NUMBER_OF_LEVELS
     {
@@ -230,12 +234,12 @@ public class GameData : MonoBehaviour
     /// </summary>
     public static FishType[] GetResearchRequirementsForLevel(int level)
     {
-        if (level <= 0 || level > TOTAL_NUMBER_OF_LEVELS)
+        if (level < 0 || level > TOTAL_NUMBER_OF_LEVELS)
         {
             return null;
         }
 
-        return levels[level - 1];
+        return levels[level];
     }
 
     //Easing functions.
@@ -268,6 +272,11 @@ public class GameData : MonoBehaviour
 
     public static void AddResearchedFish (FishType fish)
     {
+		if (GameController.Obj.isTutorial && fish == FishType.TutorialClownFish) {
+			if (TutorialManager.Obj.currentStep == 10) {
+				TutorialManager.Obj.hasCompletedFish = true;
+			}
+		}
 
         if (AllFishParameters[(int)fish].totalResearched < AllFishParameters[(int)fish].totalToResearch)
         {
@@ -318,6 +327,12 @@ public class GameData : MonoBehaviour
                 case FishType.Shark:
                     prefab = Obj.SharkPrefab;
                     break;
+				case FishType.TutorialClownFish:
+					prefab = Obj.ClownFishPrefab;
+					break;
+                case FishType.Seahorse:
+                    prefab = Obj.SeahorsePrefab;
+                    break;
                 case FishType.PufferFish:
                 default:
                     prefab = Obj.PufferFishPrefab;
@@ -359,6 +374,9 @@ public class GameData : MonoBehaviour
             case FishType.ClownFish:
                 prefab = Obj.ClownFishSelectablePrefab;
                 break;
+			case FishType.TutorialClownFish:
+				prefab = Obj.ClownFishSelectablePrefab;
+				break;
             case FishType.UnicornFish:
                 prefab = Obj.UnicornFishSelectablePrefab;
                 break;

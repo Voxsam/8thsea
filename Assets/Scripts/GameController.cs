@@ -160,6 +160,13 @@ public class GameController : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+		if (isTutorial) {
+			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
+			GameObject.FindGameObjectWithTag ("Tutorial Canvas").GetComponent<MainCanvasController> ().Setup ();
+			tutManager.Setup ();
+		}
+
+
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
 	}
@@ -324,11 +331,11 @@ public class GameController : MonoBehaviour {
     #region Main functions
     protected void Setup()
     {
-		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("main_merged_ui")) { // change later
+
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("tutorial")) { // change later
 			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
 			tutManager.Setup ();
 		}
-
         gameCamera = GetComponentInChildren<CameraController>();
         
         //playerControllers = MultiplayerManager.Obj.playerControllerList;
@@ -351,6 +358,7 @@ public class GameController : MonoBehaviour {
         
         UpdateLevelProgression();
         RNG = new System.Random();
+        moneyText.text = "";
 
         if (disablePlayersUntilLoadingIsDone)
         {
@@ -378,13 +386,23 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
-
-        moneyText.text = "$" + ( (int)currentMoney).ToString();
+        // Disable the money function
+        
+        //currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
+        //moneyText.text = "$" + ( (int)currentMoney).ToString();
     }
 
     void Update()
     {
+        // Handle the update loops for the others too
+        foreach (Player player in players)
+        {
+            player.controller.GameUpdate();
+        }
+
+        GameUpdate();
+
+        /*
         if (currentMoney > 0)
         {
             // Handle the update loops for the others too
@@ -392,8 +410,6 @@ public class GameController : MonoBehaviour {
             {
                 player.controller.GameUpdate();
             }
-
-            GameUpdate();
         }
         else
         {
@@ -401,7 +417,7 @@ public class GameController : MonoBehaviour {
             {
                 GameOverText.enabled = true;
             }
-        }
+        }//*/
     }
     #endregion
 

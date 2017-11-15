@@ -61,6 +61,13 @@ public class ContainerTransferStationController : IInteractable
                                 successfulTransfer = destinationContainerControllerScript.holdObject(heldObject);
                                 if (successfulTransfer)
                                 {
+
+									if (GameController.Obj.isTutorial) {
+										if (TutorialManager.Obj.currentStep == 7) {
+											TutorialManager.Obj.hasTransferredFish = true;
+										}
+									}
+
                                     break;
                                 }
                             }

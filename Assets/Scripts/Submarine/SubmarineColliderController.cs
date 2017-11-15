@@ -53,15 +53,15 @@ public class SubmarineColliderController : MonoBehaviour {
             if (other.Raycast(ray, out hit, 100.0F))
             {
                 direction = transform.position - hit.point;
-                Debug.DrawLine(transform.position, hit.point, Color.red, 3f);
             }
-            
             direction = direction.normalized;
             subController.MoveInDirection(direction * reboundForce);
         }
-        if (other.CompareTag("seabed"))
+        else if (other.CompareTag("seabed"))
         {
-            print("lol fuck la");
+            Vector3 pointOnBounding = other.ClosestPointOnBounds(transform.position);
+            Vector3 direction = (transform.position - pointOnBounding).normalized;
+            subController.MoveInDirection(direction * reboundForce);
         }
     }
 }

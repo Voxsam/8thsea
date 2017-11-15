@@ -23,18 +23,19 @@ public class FishReturnStationController : IInteractable
         }
     }
 
-    private GameObject releaseSlot;
-    private GameObject worldspaceCanvas;
-    private Image activeIconImage;
+    public GameObject releaseSlot;
+    public Renderer meshRenderer;
+    public GameObject buttonObject;
+    public AnimationCurve buttonDepressCurve;
+
+    private Material lightMaterial;
     private FishController fishController;
 
     // Use this for initialization
     void Start () {
         currentState = State.Empty;
-        releaseSlot = gameObject.transform.Find("ReleaseSlot").gameObject;
-        worldspaceCanvas = gameObject.transform.Find("WorldspaceCanvas").gameObject;
-        activeIconImage = worldspaceCanvas.transform.Find("ActiveIcon").GetComponent<Image>();
-        worldspaceCanvas.SetActive(false);
+        lightMaterial = meshRenderer.materials[1];
+        lightMaterial.SetColor("_EmissionColor", Color.red);
     }
 	
 	// Update is called once per frame
@@ -48,7 +49,7 @@ public class FishReturnStationController : IInteractable
                 {
                     if (Vector3.Distance (transform.position, fishController.CaughtPosition) < minReturnDistance)
                     {
-                        activeIconImage.color = new Color32(0, 255, 0, 255);
+                        lightMaterial.SetColor("_EmissionColor", Color.green);
                         currentState = State.Active;
                     }
                 }
@@ -58,7 +59,7 @@ public class FishReturnStationController : IInteractable
                 {
                     if (Vector3.Distance(transform.position, fishController.CaughtPosition) > minReturnDistance)
                     {
-                        activeIconImage.color = new Color32(255, 0, 0, 255);
+                        lightMaterial.SetColor("_EmissionColor", Color.red);
                         currentState = State.Inactive;
                     }
                 }
@@ -89,6 +90,13 @@ public class FishReturnStationController : IInteractable
                 //Dead fishes cannot be put back to the sea.
                 if (!fishController.IsDead())
                 {
+
+					if (GameController.Obj.isTutorial) {
+						if (TutorialManager.Obj.currentStep == 11) {
+							TutorialManager.Obj.hasReleasedFish = true;
+						}
+					}
+
                     //Housekeeping for changing a fish back into "swim" mode.
                     fishController.PutDown();
                     fishController.SetEnabled(false);
@@ -115,17 +123,15 @@ public class FishReturnStationController : IInteractable
 
     public void Activate ( FishController otherFishController )
     {
-        worldspaceCanvas.SetActive(true);
         fishController = otherFishController;
         currentState = State.Inactive;
-        activeIconImage.color = new Color32(255, 0, 0, 255);
+        lightMaterial.SetColor("_EmissionColor", Color.red);
     }
 
     public void Deactivate ()
     {
-        worldspaceCanvas.SetActive(false);
         fishController = null;
         currentState = State.Empty;
-        activeIconImage.color = new Color32(255, 0, 0, 255);
+        lightMaterial.SetColor("_EmissionColor", Color.red);
     }
 }

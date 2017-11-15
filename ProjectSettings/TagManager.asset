@@ -16,6 +16,7 @@ TagManager:
   - Main Canvas
   - seabed
   - Tutorial Manager
+  - Tutorial Canvas
   layers:
   - Default
   - TransparentFX

@@ -210,6 +210,13 @@ public class TubeController : StationControllerInterface {
                 //Player is not currently holding anything and can pick up the sucked fish.
                 if (player.GetHeldObject() == null)
                 {
+
+					if (GameController.Obj.isTutorial) {
+						if (TutorialManager.Obj.currentStep == 6) {
+							TutorialManager.Obj.hasCaughtFish = true;
+						}
+					}
+
                     /*fish.transform.position = SpawnPoint.position + new Vector3(
                         GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),
                         GameController.RNG.Next(-SPAWN_LOCATION_OFFSET, SPAWN_LOCATION_OFFSET),

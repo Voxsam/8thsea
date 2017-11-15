@@ -10,12 +10,15 @@ public class AquariumStationController : StationControllerInterface
         get { return GameData.ControlType.STATION; }
     }
 
+    public bool isTutorial = false;
+
     [SerializeField]
     public GameObject fishSchool;
 
     [SerializeField] public GameData.FishType[] researchRequirementsForLevel;
 
     [SerializeField] private GameObject holdSlot;
+    [SerializeField] private GameObject playerAnchor;
     [SerializeField] private GameObject worldspaceCanvas;
     [SerializeField] private GameObject warningText;
     [SerializeField] private GameObject researchReqAnchor;
@@ -38,7 +41,12 @@ public class AquariumStationController : StationControllerInterface
         warningText.SetActive(false);
 
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
-        researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
+        if (isTutorial)
+        {
+            researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(0);
+        }
+        else
+            researchRequirementsForLevel = GameData.GetResearchRequirementsForLevel(GameController.Obj.CurrentLevel);
 
         for (int i = 0; i < researchRequirementsForLevel.Length; i++)
         {
@@ -97,6 +105,7 @@ public class AquariumStationController : StationControllerInterface
                         GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
                         fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex++;
+                        fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
                         fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
@@ -108,11 +117,12 @@ public class AquariumStationController : StationControllerInterface
                         selectedResearchRequirementIndex = 0;
                         fishResearchRequirements[researchRequirementsForLevel[selectedResearchRequirementIndex]].GetComponent<ResearchRequirementsController>().Select();
                     }
-                    else if ((int)selectedResearchRequirementIndex > 0)
+                    else if (selectedResearchRequirementIndex > 0)
                     {
                         GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
                         fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Deselect();
                         selectedResearchRequirementIndex--;
+                        fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
                         fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
                     }
                 }
@@ -163,6 +173,11 @@ public class AquariumStationController : StationControllerInterface
             //Make sure the station is not currently controlled by another player.
             if (!this.IsActivated)
             {
+
+				if (GameController.Obj.isTutorial) {
+					TutorialManager.Obj.hasActivatedAquarium = true;
+				}
+
                 PlayerInteractionController playerInteractionControllerScript = otherActor.GetComponent<PlayerInteractionController>();
                 if (playerInteractionControllerScript != null)
                 {
@@ -214,7 +229,7 @@ public class AquariumStationController : StationControllerInterface
     public override void SetPlayerToStation(PlayerController player)
     {
         base.SetPlayerToStation(player);
-        stationCamera.SetCameraToObject(holdSlot);
+        stationCamera.SetCameraToObject(playerAnchor);
     }
 
     public override void WhenActivated()
@@ -226,9 +241,6 @@ public class AquariumStationController : StationControllerInterface
 
         cameraOriginalDistance = stationCamera.CameraOffset;
         stationCamera.CameraOffset = AQUARIUM_CAMERA_DISTANCE_FROM_TARGET;
-
-        GameData.FishType fishType = researchRequirementsForLevel[selectedResearchRequirementIndex];
-        fishResearchRequirements[fishType].GetComponent<ResearchRequirementsController>().Select();
     }
 
     public override void WhenDeactivated()

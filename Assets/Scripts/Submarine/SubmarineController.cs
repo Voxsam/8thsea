@@ -292,6 +292,11 @@ public class SubmarineController : StationControllerInterface {
         
         if (this.playerInStation == null)
         {
+
+			if (GameController.Obj.isTutorial) {
+				TutorialManager.Obj.hasTriedDriving = true;
+			}
+
             //Make sure the submarine is ready to set off if it is docked before allowing players to drive.
             //If the submarine is not docked proceed as normal.
             if (currentState != State.Docked || (currentState == State.Docked && oxygenCountdownController.IsReady()))

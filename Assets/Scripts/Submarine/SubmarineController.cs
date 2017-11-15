@@ -136,6 +136,16 @@ public class SubmarineController : StationControllerInterface {
 
     // Update is called once per frame
     private void Update () {
+		if (currentState == State.Docked) {
+			if (!oxygenCountdownController.IsReady ()) {
+				light1.color = Color.blue;
+				light2.color = Color.blue;
+			} else {
+				light1.color = regularLampClr;
+				light2.color = regularLampClr;
+			}
+		} 
+
 		// activate and deactivate lab door
 		if (currentState == State.Docked) {
 			labDoorCollider.enabled = false;
@@ -299,6 +309,7 @@ public class SubmarineController : StationControllerInterface {
 
             //Make sure the submarine is ready to set off if it is docked before allowing players to drive.
             //If the submarine is not docked proceed as normal.
+
             if (currentState != State.Docked || (currentState == State.Docked && oxygenCountdownController.IsReady()))
             { 
                 PlayerController player = otherActor.GetComponent<PlayerController>();
@@ -362,6 +373,8 @@ public class SubmarineController : StationControllerInterface {
             submarineStationControllers[i].IsActivated = false;
         }
         tubeController.EjectPlayer();
+		light1.color = Color.red;
+		light2.color = Color.red;
     }
 
     private void EndEmergencyMode ()
@@ -370,5 +383,7 @@ public class SubmarineController : StationControllerInterface {
         {
             submarineStationControllers[i].IsActivated = true;
         }
+		light1.color = regularLampClr;
+		light2.color = regularLampClr;
     }
 }

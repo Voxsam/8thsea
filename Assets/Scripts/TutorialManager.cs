@@ -223,7 +223,7 @@ public class TutorialManager : MonoBehaviour
 			break;
 
 		case 12:
-                GameController.Obj.LevelClearPercentage = 100f;
+            GameController.Obj.LevelClearPercentage = 100f;
 			break;
         }
 

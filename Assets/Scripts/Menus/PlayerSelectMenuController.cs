@@ -63,7 +63,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
         {
             StartGameText.enabled = true;
         }
-        else if (numPlayers > 1 && StartGameText.isActiveAndEnabled)
+        else if (numPlayers == 0 && StartGameText.isActiveAndEnabled)
         {
             StartGameText.enabled = false;
         }
@@ -71,6 +71,10 @@ public class PlayerSelectMenuController : MonoBehaviour {
         if (Input.GetKeyDown(START_GAME_BUTTON))
         {
             AdvanceToGame();
+        }
+        else if (Input.GetKeyDown(START_TUTORIAL_BUTTON))
+        {
+            AdvanceToTutorial();
         }
 
         /*
@@ -84,11 +88,17 @@ public class PlayerSelectMenuController : MonoBehaviour {
 			}
 		}
         //*/
-	}
+    }
 
 	public void AdvanceToGame ()
 	{
-		if (numPlayers > 0) {
+		if (numPlayers > 0)
+        {
+            if (GameController.Obj != null)
+            {
+                GameController.Obj.isTutorial = false;
+            }
+
             // Load the main game scene
             SceneManager.LoadScene("main_merged");
 		}
@@ -98,7 +108,11 @@ public class PlayerSelectMenuController : MonoBehaviour {
     {
         if (numPlayers > 0)
         {
-            // Load the main game scene
+            if (GameController.Obj != null)
+            {
+                GameController.Obj.isTutorial = true;
+            }
+            // Load the main tutorial scene
             SceneManager.LoadScene("tutorial");
         }
 

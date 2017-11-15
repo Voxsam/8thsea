@@ -892,7 +892,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -75.2, y: -160.4}
-  m_SizeDelta: {x: 160, y: 60}
+  m_SizeDelta: {x: 178.58, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &726266433
 MonoBehaviour:
@@ -926,7 +926,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.5
-  m_Text: "Press Spacebar to \nstart the game"
+  m_Text: 'Press Spacebar to start game
+
+    Press T to start tutorial'
 --- !u!222 &726266434
 CanvasRenderer:
   m_ObjectHideFlags: 0

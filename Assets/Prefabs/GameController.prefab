@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutManager: {fileID: 0}
-  isTutorial: 1
+  isTutorial: 0
   disablePlayersUntilLoadingIsDone: 1
   allowBGM: 1
   allowSFX: 1
@@ -1486,6 +1486,7 @@ MonoBehaviour:
   moneyText: {fileID: 114725284632208098}
   currentMoney: 0
   CurrentLevel: 1
+  LevelClearPercentage: 0
   LevelProgressionPercentageText: {fileID: 114045069796488822}
   LevelHasFinishedText: {fileID: 114402334426615428}
 --- !u!114 &114649654506604526

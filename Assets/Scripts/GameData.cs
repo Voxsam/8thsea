@@ -132,8 +132,16 @@ public class GameData : MonoBehaviour
         // Tutorial fishes should not be included in the normal spawning
 		TutorialClownFish
     };
+
+    public const int TOTAL_NUMBER_OF_TUTORIAL_FISHTYPES = 1;
+
     public static int TOTAL_NUMBER_OF_FISHTYPES {
-        get { return AllFishParameters.Length - 1; } // Exclude TutorialClownFish
+        get { return AllFishParameters.Length - TOTAL_NUMBER_OF_TUTORIAL_FISHTYPES; } // Exclude TutorialClownFish
+    }
+
+    public static int TOTAL_NUMBER_OF_FISHTYPES_INCLUDING_TUTORIAL
+    {
+        get { return AllFishParameters.Length; }
     }
 
     public static string GetFishName(FishType fish)

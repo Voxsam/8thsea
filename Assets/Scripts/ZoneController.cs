@@ -80,7 +80,7 @@ public class ZoneController : MonoBehaviour
         this.transform.SetParent(Sea);
 
         fishSchools = new Dictionary<GameData.FishType, List<GameObject>>();
-        for (int i = 0; i < GameData.TOTAL_NUMBER_OF_FISHTYPES; i++)
+        for (int i = 0; i < GameData.TOTAL_NUMBER_OF_FISHTYPES_INCLUDING_TUTORIAL; i++)
         {
             GameData.FishType fishType = (GameData.FishType)i;
             fishSchools.Add(fishType, new List<GameObject>());

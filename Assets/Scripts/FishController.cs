@@ -60,9 +60,13 @@ public class FishController : IInteractable {
     // GameObjects used by this class
     public Rigidbody rb;
 
+    //Sprites for status of fish
+    public Sprite deadSprite;
+    public Sprite researchedSprite;
+
 	[SerializeField] private SkinnedMeshRenderer fishRenderer;
     [SerializeField] private GameObject WorldspaceCanvas;
-    [SerializeField] private Text DeadText;
+    [SerializeField] private Image StatusIcon;
     [SerializeField] private RectTransform PanicBarRect;
 
     //Prefab to instantiate researchProtocols.
@@ -81,7 +85,7 @@ public class FishController : IInteractable {
         // Get own movement controller
         fishMovementController = GetComponent<FishMovementController>();
 
-        DeadText.enabled = false;
+        StatusIcon.enabled = false;
         PanicBarRect.gameObject.SetActive(false);
         panicBarWidth = PanicBarRect.rect.width;
         panicTimer = GameData.GetFishParameters(fishType).panicTimerLength;
@@ -149,8 +153,8 @@ public class FishController : IInteractable {
                 {
                     currentSecondaryState = SecondaryState.Dead;
                     panicTimer = 0f;
-                    DeadText.text = "d e d";
-                    DeadText.enabled = true;
+                    StatusIcon.sprite = deadSprite;
+                    StatusIcon.enabled = true;
                 }
 
                 PanicBarRect.sizeDelta = new Vector2(panicBarWidth * panicTimer / GameData.GetFishParameters(fishType).panicTimerLength, PanicBarRect.rect.height);
@@ -331,8 +335,8 @@ public class FishController : IInteractable {
             currentPanicRate = slowPanicRate;
             currentResearchProtocol = researchProtocols.Length;
             currentSecondaryState = SecondaryState.Researched;
-            DeadText.text = "Researched";
-            DeadText.enabled = true;
+            StatusIcon.sprite = researchedSprite;
+            StatusIcon.enabled = true;
             GameData.AddResearchedFish(fishType);
 
         }

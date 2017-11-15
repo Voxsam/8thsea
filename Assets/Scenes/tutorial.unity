@@ -555,6 +555,11 @@ Prefab:
       propertyPath: researchRequirementTemplates.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114815605730129272, guid: bd08089bdefd3d14897b9340339305b4,
+        type: 2}
+      propertyPath: researchRequirementsForLevel.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4188646612958086, guid: bd08089bdefd3d14897b9340339305b4, type: 2}
       propertyPath: m_LocalPosition.x
       value: -22.700008
@@ -624,6 +629,11 @@ Prefab:
         type: 2}
       propertyPath: researchRequirementTemplates.Array.data[0].fishType
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114815605730129272, guid: bd08089bdefd3d14897b9340339305b4,
+        type: 2}
+      propertyPath: researchRequirementsForLevel.Array.data[0]
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bd08089bdefd3d14897b9340339305b4, type: 2}
@@ -3456,7 +3466,7 @@ MonoBehaviour:
   - {fileID: 1232959216}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 1563900710}
+  - {fileID: 0}
   tubeController: {fileID: 302400365}
   light1: {fileID: 0}
   light2: {fileID: 0}
@@ -3629,7 +3639,7 @@ Prefab:
     - target: {fileID: 224735913133626006, guid: 88e4b4de75c2d4740846a554e9aeb778,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 13.04
+      value: 13.039978
       objectReference: {fileID: 0}
     - target: {fileID: 224735913133626006, guid: 88e4b4de75c2d4740846a554e9aeb778,
         type: 2}
@@ -5384,12 +5394,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1545130958}
---- !u!114 &1563900710 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114598855606080158, guid: 3b0f1c7f8e744cd4692282e6b7a62873,
-    type: 2}
-  m_PrefabInternal: {fileID: 1356149445}
-  m_Script: {fileID: 11500000, guid: 66008aa7a757f4d43898489b214f5fc0, type: 3}
 --- !u!1001 &1601982340
 Prefab:
   m_ObjectHideFlags: 0

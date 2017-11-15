@@ -29,6 +29,8 @@ public class GameData : MonoBehaviour
             get; private set;
         }
 
+		public string printableName;
+
         public float panicTimerLength;
         public float researchPanicRate;
         public int currentResearchProtocol;
@@ -43,7 +45,7 @@ public class GameData : MonoBehaviour
 
         public int minSchoolSize;
         public int maxSchoolSize;
-        public FishParameters(FishType _type, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
+		public FishParameters(FishType _type, string _printableName, float _panicTimerLength, int _totalToResearch, StationType[] _researchProtocol,
                                 float _researchPanicRate = 2f,
                                 float _minSpeed = 1f, float _maxSpeed = 3f,
                                 float _minRotationSpeed = 1.0f, float _maxRotationSpeed = 4.0f,
@@ -65,6 +67,7 @@ public class GameData : MonoBehaviour
             minNeighbourDistance = _minNeighbourDistance;
             minSchoolSize = _minSchoolSize;
             maxSchoolSize = _maxSchoolSize;
+			printableName = _printableName;
         }
 
         // Getters
@@ -134,17 +137,7 @@ public class GameData : MonoBehaviour
 
     public static string GetFishName(FishType fish)
     {
-        switch(fish)
-        {
-            case FishType.ClownFish:
-                return "Clown Fish";
-            case FishType.PufferFish:
-                return "Puffer Fish";
-            case FishType.UnicornFish:
-                return "Unicorn Fish";
-            default:
-                return fish.ToString();
-        }
+		return GetFishParameters (fish).printableName;
     }
 
     public enum StationType
@@ -183,34 +176,34 @@ public class GameData : MonoBehaviour
     // Fish management
     private static FishParameters[] AllFishParameters = // Contains details on all variants of fishes
     {
-        new FishParameters(FishType.ClownFish, 40, 1, new StationType[] {
+        new FishParameters(FishType.ClownFish, "Clownfish", 40, 1, new StationType[] {
             StationType.Sample, StationType.Photograph, StationType.Research
         }, 2.5f),
-        new FishParameters(FishType.PufferFish, 50, 1, new StationType[] {
+		new FishParameters(FishType.PufferFish, "Pufferfish", 50, 1, new StationType[] {
             StationType.Research, StationType.Sample
         }, 3.5f),
-        new FishParameters(FishType.UnicornFish, 45, 1, new StationType[] {
+		new FishParameters(FishType.UnicornFish, "Unicorn Fish", 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph
         }, 2.5f, 1, 3, 1, 4, 5, 10, 30),
-        new FishParameters(FishType.Whale, 60, 1, new StationType[] {
+		new FishParameters(FishType.Whale, "Small Whale", 60, 1, new StationType[] {
             StationType.Research, StationType.Sample, StationType.Research
         }, 3.5f, 1, 4, 1, 4, 1, 3, 50),
-        new FishParameters(FishType.Flounder, 45, 1, new StationType[] {
+		new FishParameters(FishType.Flounder, "Flounder", 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample, StationType.Research
         }, 2),
-        new FishParameters(FishType.Penguin, 45, 1, new StationType[] {
+		new FishParameters(FishType.Penguin, "Angry Penguin", 45, 1, new StationType[] {
             StationType.Research, StationType.Photograph, StationType.Sample
         }, 3, 1, 3, 1, 4, 3, 6, 30),
-        new FishParameters(FishType.Octi, 45, 1, new StationType[] {
+		new FishParameters(FishType.Octi, "Octopus", 45, 1, new StationType[] {
             StationType.Photograph, StationType.Sample
         }, 3, 1, 3, 1, 4, 3, 2, 30),
-        new FishParameters(FishType.Shark, 40, 1, new StationType[] {
+		new FishParameters(FishType.Shark, "Shark", 40, 1, new StationType[] {
             StationType.Photograph, StationType.Research, StationType.Sample
-        }, 2.5f, 1, 4, 1, 4, 3, 5, 30),
-         new FishParameters(FishType.Seahorse, 40, 1, new StationType[] {
+		}, 2.5f, 1, 4, 1, 4, 3, 5, 30),
+		new FishParameters(FishType.Seahorse, "Seahorse", 40, 1, new StationType[] {
             StationType.Research, StationType.Sample, StationType.Photograph
-        }, 3f, 1, 4, 1, 4, 3, 10, 30),
-		new FishParameters(FishType.TutorialClownFish, 100, 1, new StationType[] {
+		}, 3f, 1, 4, 1, 4, 3, 10, 30),
+		new FishParameters(FishType.TutorialClownFish, "Clownfish", 100, 1, new StationType[] {
 			StationType.Sample, StationType.Photograph, StationType.Research
 		}, 2f, 1, 2, 1, 2, 10, 20, 30)
     };

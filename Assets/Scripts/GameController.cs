@@ -358,6 +358,7 @@ public class GameController : MonoBehaviour {
         
         UpdateLevelProgression();
         RNG = new System.Random();
+        moneyText.text = "";
 
         if (disablePlayersUntilLoadingIsDone)
         {
@@ -385,13 +386,23 @@ public class GameController : MonoBehaviour {
     /// </summary>
     protected void GameUpdate()
     {
-        currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
-
-        moneyText.text = "$" + ( (int)currentMoney).ToString();
+        // Disable the money function
+        
+        //currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
+        //moneyText.text = "$" + ( (int)currentMoney).ToString();
     }
 
     void Update()
     {
+        // Handle the update loops for the others too
+        foreach (Player player in players)
+        {
+            player.controller.GameUpdate();
+        }
+
+        GameUpdate();
+
+        /*
         if (currentMoney > 0)
         {
             // Handle the update loops for the others too
@@ -399,8 +410,6 @@ public class GameController : MonoBehaviour {
             {
                 player.controller.GameUpdate();
             }
-
-            GameUpdate();
         }
         else
         {
@@ -408,7 +417,7 @@ public class GameController : MonoBehaviour {
             {
                 GameOverText.enabled = true;
             }
-        }
+        }//*/
     }
     #endregion
 

@@ -118,15 +118,31 @@ public class ControlScheme {
             return Input.GetKeyUp(GetKeyCode(joystickNumber, Controller.Action));
         }
 	}
+	
+	public bool GetUpKeyUp() {
+		if (!isKeyboard) {
+			return Input.GetKeyDown ("joystick " + joystickNumber + " button 5");
+		} else {
+            return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Up));
+        }
+	}
+	
+	public bool GetUpKeyDown() {
+		if (!isKeyboard) {
+			return Input.GetKeyDown ("joystick " + joystickNumber + " button 6");
+		} else {
+            return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Down));
+        }
+	}
 
 	// Cancel = B button
 	// For WASD = R
 	// For arrow keys = right shift
 	public bool GetCancelKeyDown () {
 		if (!isKeyboard) {
-			return Input.GetKeyDown ("joystick " + joystickNumber + " button 1");
+			return Input.GetKey ("joystick " + joystickNumber + " button 1");
 		} else {
-            return Input.GetKeyDown(GetKeyCode(joystickNumber, Controller.Cancel));
+            return Input.GetKey(GetKeyCode(joystickNumber, Controller.Cancel));
         }
 	}
 

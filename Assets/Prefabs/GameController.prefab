@@ -271,7 +271,6 @@ GameObject:
   - component: {fileID: 223439965480358960}
   - component: {fileID: 114497940971470770}
   - component: {fileID: 114680198813847740}
-  - component: {fileID: 114040349709565578}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1115,19 +1114,6 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819066923467448}
   m_Enabled: 1
---- !u!114 &114040349709565578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1557489577497962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979a7cfc42809ba449f84f986a9055e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerPanel: {fileID: 0}
-  bottomPanel: {fileID: 0}
 --- !u!114 &114045069796488822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1406,10 +1392,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: a432fbb8357db064c982e0754a69de40, type: 3}
-    m_FontSize: 35
+    m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 0
     m_MaxSize: 49
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -1479,7 +1465,9 @@ MonoBehaviour:
   OctiPrefab: {fileID: 4263520294266442, guid: b7b0bb5d82510f24c95d2dd83b71db1f, type: 2}
   SharkPrefab: {fileID: 4432518828010388, guid: eb26c16880e4c564b8a8ff31384e82a7,
     type: 2}
-  ClownFishSelectablePrefab: {fileID: 4502322541700448, guid: d658b28e8703bb643b2ec3ed9716554f,
+  SeahorsePrefab: {fileID: 4437837455730004, guid: a383807c6d82e254f9aebba7115d6bf2,
+    type: 2}
+  ClownFishSelectablePrefab: {fileID: 4968822828006590, guid: d6b20578729324b4d987aa8e43d5c55d,
     type: 2}
   PufferFishSelectablePrefab: {fileID: 4798910895143118, guid: 6f2223d7e16f26540afa3ddabd926adc,
     type: 2}
@@ -1487,7 +1475,7 @@ MonoBehaviour:
     type: 2}
   WhaleSelectablePrefab: {fileID: 4550349060272926, guid: 8250bd21018018841a35c6e2ebcc5757,
     type: 2}
-  FlounderSelectablePrefab: {fileID: 4502322541700448, guid: d658b28e8703bb643b2ec3ed9716554f,
+  FlounderSelectablePrefab: {fileID: 4159138898084860, guid: 1318dafed26549a459fe093eb18a81de,
     type: 2}
   PenguinSelectablePrefab: {fileID: 4695436960047456, guid: 606e09152264ab34e98fa39422bf70fe,
     type: 2}
@@ -1495,6 +1483,8 @@ MonoBehaviour:
     type: 2}
   SharkSelectablePrefab: {fileID: 4983138485005104, guid: e48701eadfbeac94b8b843079e379d4f,
     type: 2}
+  SeahorseSelectablePrefab: {fileID: 400002, guid: 08496b13912134b479cdad58e2eef511,
+    type: 3}
 --- !u!114 &114649669361501224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1755,7 +1745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: 0, y: -22.37}
   m_SizeDelta: {x: 100, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224037371381154062
@@ -1888,11 +1878,11 @@ RectTransform:
   m_Father: {fileID: 224432243796889080}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -949.9998, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 19.53, y: 0}
   m_SizeDelta: {x: 100, y: 80}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!224 &224855148685524054
 RectTransform:
   m_ObjectHideFlags: 1

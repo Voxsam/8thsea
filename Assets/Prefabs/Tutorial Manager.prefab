@@ -20,6 +20,21 @@ GameObject:
   m_Component:
   - component: {fileID: 4402119121371632}
   m_Layer: 0
+  m_Name: SucTubeArrowPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1469277466675320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4648394222423022}
+  m_Layer: 0
   m_Name: SubDoorArrowPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,6 +67,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4648394222423022}
   - {fileID: 4402119121371632}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -62,6 +78,19 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1116265746594328}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 17.89, y: 0.37, z: 2.79}
+  m_LocalScale: {x: 0.50000024, y: 0.50000024, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4134701272542898}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!4 &4648394222423022
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469277466675320}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -6.5, y: 4, z: 7}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
@@ -81,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transforms:
+  - {fileID: 4648394222423022}
   - {fileID: 4402119121371632}
   currentStep: 0
   hasUsedTeleporter: 0
@@ -106,5 +136,6 @@ MonoBehaviour:
   researchStation: {fileID: 0}
   submarineLever: {fileID: 0}
   labPingStation: {fileID: 0}
+  releaseStation: {fileID: 0}
   floatingArrowPrefab: {fileID: 1714117834672830, guid: 12162d93b6348b24ca3d6ac84aa98ca2,
     type: 2}

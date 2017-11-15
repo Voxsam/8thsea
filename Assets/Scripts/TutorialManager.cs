@@ -135,7 +135,7 @@ public class TutorialManager : MonoBehaviour
 			if (hasMovedNearFish) {
 				currentStep++;
 				arrow.transform.SetParent (suckStation.transform);
-				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
+				arrow.transform.localPosition = new Vector3 (0, 2f, 0);
 				arrow.SetActive (true);
 				arrow2 = Instantiate (floatingArrowPrefab, labPingStation.transform.position + heightOffset, Quaternion.identity);
 				MainCanvasController.Obj.SetCenterPanelText ("Catching Fish",

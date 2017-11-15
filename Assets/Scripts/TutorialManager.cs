@@ -205,8 +205,8 @@ public class TutorialManager : MonoBehaviour
 				arrow.transform.localPosition = new Vector3 (0, 4f, 0);
 				MainCanvasController.Obj.SetCenterPanelText ("Research Complete!",
 					"Well done! \n\nWe need to release this fish back into its natural habitat now. Bring the fish " +
-					"to the Release Station on the submarine. When the square above the Release Lever turns green, " +
-					"the fish is in the spot you found it and can be released. Activate the release lever to release the fish.");
+					"to the Release Station on the submarine. Press the <color=red>A Button</color> while the fish is in the station to ping for the fish's original spot. When the square above the Eject Button turns <color=green>green</color>, " +
+					"the fish can be released. Activate the release lever to release the fish.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;

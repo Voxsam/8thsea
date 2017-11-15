@@ -22,6 +22,8 @@ public class TutorialManager : MonoBehaviour
 	public bool hasFinishedDissectStation = false;
 	public bool hasCompletedFish = false;
 	public bool hasReleasedFish = false;
+	public bool hasAquariumedFish = false;
+
 	public bool notifiedPlayerOfTutorialAccess = false;
 
 	public GameObject teleporter;
@@ -33,9 +35,11 @@ public class TutorialManager : MonoBehaviour
 	public GameObject photoStation;
 	public GameObject researchStation;
 	public GameObject submarineLever;
+	public GameObject labPingStation;
 
 	public GameObject floatingArrowPrefab;
 	private GameObject arrow;
+	private GameObject arrow2;
 	private GameObject pinkArrow;
 
 	private Vector3 heightOffset = new Vector3 (0, 6f, 0);
@@ -73,7 +77,7 @@ public class TutorialManager : MonoBehaviour
 					"Let's see what fish we need to complete this level. Press the \n\n <color=red>A button</color> " +
 					"next to the aquarium console for a better view.");
 				MainCanvasController.Obj.ShowCenterPanel ();
-				RepositionArrow (aquariumConsole.transform.position + heightOffset);
+				RepositionArrow (arrow, aquariumConsole.transform.position + heightOffset);
 			}
 			break;
 
@@ -86,7 +90,7 @@ public class TutorialManager : MonoBehaviour
 					"Let's go catch some fish! Press the <color=blue>B button</color> to leave the aquarium, " +
 					"then head to the <color=#ffe000ff>submarine</color>, which is connected to the bottom floor of the lab.");
 				MainCanvasController.Obj.ShowCenterPanel ();
-				RepositionArrow (transforms [0]);
+				RepositionArrow (arrow, transforms [0]);
 			}
 			break;
 		
@@ -98,7 +102,7 @@ public class TutorialManager : MonoBehaviour
 					"<color=red>A button</color> at the steering wheel to drive the submarine. \n\n" +
 					"(If you're in multiplayer, <b>leave one person behind in the lab!</b> You'll need their help later!)");
 				MainCanvasController.Obj.ShowCenterPanel ();
-				RepositionArrow (drivingStation.transform.position + heightOffset);
+				RepositionArrow (arrow, drivingStation.transform.position + heightOffset);
 			} 
 			break;
 
@@ -133,9 +137,12 @@ public class TutorialManager : MonoBehaviour
 				arrow.transform.SetParent (suckStation.transform);
 				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
 				arrow.SetActive (true);
+				arrow2 = Instantiate (floatingArrowPrefab, labPingStation.transform.position + heightOffset, Quaternion.identity);
 				MainCanvasController.Obj.SetCenterPanelText ("Catching Fish",
 					"Activate the vacuum tube station. Manipulate the vacuum tube with the left stick. When a fish is in the center " +
-					"of the tube, press the <color=red>A button</color> to attempt to catch it.");
+					"of the tube, press the <color=red>A button</color> to attempt to catch it. \n\n" +
+					"By the way, if you're feeling bored in the lab, head to the <color=blue>Navigation Station</color> on the upper floor. Activating " +
+					"it will show where the lab is relative to the submarine, which is handy if your exploring friends get lost.");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
@@ -143,6 +150,7 @@ public class TutorialManager : MonoBehaviour
 		case 6:
 			if (hasCaughtFish) {
 				currentStep++;
+				arrow2.SetActive (false);
 				pinkArrow.SetActive (false);
 				arrow.transform.SetParent (suckStation.transform);
 				arrow.transform.localPosition = new Vector3 (0, 3f, 0);
@@ -162,7 +170,7 @@ public class TutorialManager : MonoBehaviour
 		case 7:
 			if (hasTransferredFish) {
 				currentStep++;
-				RepositionArrow (dissectionStation.transform.position + heightOffset);
+				RepositionArrow (arrow, dissectionStation.transform.position + heightOffset);
 				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
 					"Bring the fish to the <color=blue>Sample Station</color>. Don't worry, we're just shaving off a couple of scales...");
 				MainCanvasController.Obj.ShowCenterPanel ();
@@ -172,8 +180,7 @@ public class TutorialManager : MonoBehaviour
 		case 8:
 			if (hasUsedDissectStation) {
 				currentStep++;
-				pinkArrow.SetActive (false);
-				RepositionArrow (submarineLever.transform.position);
+				RepositionArrow (arrow, submarineLever.transform.position);
 				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
 					"To perform any station's action on the fish faster, mash the <color=red>A button</color>!");
 				MainCanvasController.Obj.ShowCenterPanel ();
@@ -183,8 +190,7 @@ public class TutorialManager : MonoBehaviour
 		case 9:
 			if (hasFinishedDissectStation) {
 				currentStep++;
-				pinkArrow.SetActive (false);
-				RepositionArrow (submarineLever.transform.position);
+				RepositionArrow (arrow, submarineLever.transform.position);
 				MainCanvasController.Obj.SetCenterPanelText ("How to Research",
 					"Now that you know what to do, complete the rest of the fish research on your own!");
 				MainCanvasController.Obj.ShowCenterPanel ();
@@ -194,10 +200,19 @@ public class TutorialManager : MonoBehaviour
 		case 10:
 			if (hasCompletedFish) {
 				currentStep++;
-				pinkArrow.SetActive (false);
-				RepositionArrow (submarineLever.transform.position);
+				RepositionArrow (arrow, aquariumConsole.transform.position);
 				MainCanvasController.Obj.SetCenterPanelText ("Research Complete!",
-					"Now that you know");
+					"Well done! Now bring the fish to the aquarium!");
+				MainCanvasController.Obj.ShowCenterPanel ();
+			}
+			break;
+
+		case 11:
+			if (hasCompletedFish) {
+				currentStep++;
+				RepositionArrow (arrow, aquariumConsole.transform.position);
+				MainCanvasController.Obj.SetCenterPanelText ("Research Complete!",
+					"Well done! Now bring the fish to the aquarium!");
 				MainCanvasController.Obj.ShowCenterPanel ();
 			}
 			break;
@@ -207,27 +222,21 @@ public class TutorialManager : MonoBehaviour
 	}
 
 	// Only for static objects
-	private void RepositionArrow (Vector3 position)
+	private void RepositionArrow (GameObject _arrow, Vector3 position)
 	{
-		if (arrow == null) {
-			arrow = Instantiate (floatingArrowPrefab);
-		}
-		arrow.SetActive (false);
-		arrow.transform.SetParent (null);
-		arrow.transform.position = position;
-		arrow.transform.rotation = Quaternion.identity;
-		arrow.SetActive (true);
+		_arrow.SetActive (false);
+		_arrow.transform.SetParent (null);
+		_arrow.transform.position = position;
+		_arrow.transform.rotation = Quaternion.identity;
+		_arrow.SetActive (true);
 	}
 
-	private void RepositionArrow (Transform location)
+	private void RepositionArrow (GameObject _arrow, Transform location)
 	{
-		if (arrow == null) {
-			arrow = Instantiate (floatingArrowPrefab);
-		}
-		arrow.SetActive (false);
-		arrow.transform.SetParent (null);
-		arrow.transform.SetPositionAndRotation (location.position, location.rotation);
-		arrow.SetActive (true);
+		_arrow.SetActive (false);
+		_arrow.transform.SetParent (null);
+		_arrow.transform.SetPositionAndRotation (location.position, location.rotation);
+		_arrow.SetActive (true);
 	}
 		
 }

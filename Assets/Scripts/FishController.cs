@@ -327,6 +327,7 @@ public class FishController : IInteractable {
             DeadText.text = "Researched";
             DeadText.enabled = true;
             GameData.AddResearchedFish(fishType);
+
         }
     }
 

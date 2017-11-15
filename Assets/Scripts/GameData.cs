@@ -219,6 +219,11 @@ public class GameData : MonoBehaviour
 
     public static void AddResearchedFish (FishType fish)
     {
+		if (GameController.Obj.isTutorial && fish == FishType.TutorialClownFish) {
+			if (TutorialManager.Obj.currentStep == 10) {
+				TutorialManager.Obj.hasCompletedFish = true;
+			}
+		}
 
         if (AllFishParameters[(int)fish].totalResearched < AllFishParameters[(int)fish].totalToResearch)
         {

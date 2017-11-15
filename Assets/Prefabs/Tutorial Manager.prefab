@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transforms:
   - {fileID: 4402119121371632}
-  currentStep: 3
+  currentStep: 0
   hasUsedTeleporter: 0
   hasActivatedAquarium: 0
   hasEnteredSubmarine: 0
@@ -134,8 +134,9 @@ MonoBehaviour:
   hasCaughtFish: 0
   hasTransferredFish: 0
   hasUsedDissectStation: 0
+  hasFinishedDissectStation: 0
   hasCompletedFish: 0
-  hasReleasedFish: 0
+  hasPutFishInAquarium: 0
   notifiedPlayerOfTutorialAccess: 0
   teleporter: {fileID: 0}
   aquariumConsole: {fileID: 0}
@@ -146,6 +147,7 @@ MonoBehaviour:
   photoStation: {fileID: 0}
   researchStation: {fileID: 0}
   submarineLever: {fileID: 0}
+  labPingStation: {fileID: 0}
   floatingArrowPrefab: {fileID: 1714117834672830, guid: 12162d93b6348b24ca3d6ac84aa98ca2,
     type: 2}
 --- !u!114 &114477076429507006

@@ -179,7 +179,7 @@ public class SubmarineController : StationControllerInterface {
                 }
                 break;
             case State.Idle:
-                //anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
+			anim.SetBool("docked", IsDocked()); //this line is causing animation trouble - IsDocked always returns false once the driving station is activated..
                 if (IsActivated && playerInStation != null)
                 {
                     float horizontalControl = playerInStation.controls.GetHorizontalAxis();

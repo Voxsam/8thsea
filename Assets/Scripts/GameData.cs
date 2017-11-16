@@ -286,12 +286,10 @@ public class GameData : MonoBehaviour
 			if (TutorialManager.Obj.currentStep == 10) {
 				TutorialManager.Obj.hasCompletedFish = true;
 			}
-		}
-
-        if (AllFishParameters[(int)fish].totalResearched < AllFishParameters[(int)fish].totalToResearch)
-        {
-            AllFishParameters[(int)fish].totalResearched++;
         }
+
+        AllFishParameters[(int)fish].totalResearched++;
+        GameController.Obj.UpdateLevelProgression();
     }
 
     /// <summary>

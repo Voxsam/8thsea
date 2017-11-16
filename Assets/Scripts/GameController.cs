@@ -117,17 +117,15 @@ public class GameController : MonoBehaviour {
         foreach(GameData.FishType fish in req)
         {
             int cap = GameData.GetFishParameters(fish).totalToResearch;
+
+            int fishCaught = GameData.GetFishParameters(fish).totalResearched;
             totalToCollect += cap;
 
-            if (MasterAquarium.ContainsKey(fish))
+            if (fishCaught > cap)
             {
-                int fishCaught = MasterAquarium[fish].GetNumberOfFishInSchool();
-                if (fishCaught > cap)
-                {
-                    fishCaught = cap;
-                }
-                sumCollected += fishCaught;
+                fishCaught = cap;
             }
+            sumCollected += fishCaught;
         }
 
         // In case some things are not initialised yet
@@ -166,9 +164,13 @@ public class GameController : MonoBehaviour {
 			tutManager = GameObject.FindGameObjectWithTag ("Tutorial Manager").GetComponent<TutorialManager> ();
 			GameObject.FindGameObjectWithTag ("Tutorial Canvas").GetComponent<MainCanvasController> ().Setup ();
 			tutManager.Setup ();
-		}
+        }
 
-
+        if (!isTutorial)
+        {
+            CurrentLevel = Random.Range(0, GameData.TOTAL_NUMBER_OF_LEVELS) + 1;
+        }
+        
         // GameController object should not be destructable
         DontDestroyOnLoad(this.gameObject);
 	}
@@ -409,12 +411,24 @@ public class GameController : MonoBehaviour {
             {
                 if (player.controls.GetMenuKeyDown())
                 {
-                    GameObject newGameObject = new GameObject();
-                    this.transform.SetParent(newGameObject.transform);
-                    SceneManager.LoadScene("characterSelect");
+                    FullGameReset();
                 }
             }
         }
+    }
+
+    public void FullGameReset()
+    {
+        GameObject newGameObject = new GameObject();
+        this.transform.SetParent(newGameObject.transform);
+        foreach(Player player in players)
+        {
+            Destroy(player.controller.gameObject);
+        }
+
+        Destroy(PlayerList.Obj.gameObject);
+        Destroy(multiplayerManager.gameObject);
+        SceneManager.LoadScene("characterSelect");
     }
 
     void Update()

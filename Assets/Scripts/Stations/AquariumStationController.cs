@@ -334,8 +334,6 @@ public class AquariumStationController : StationControllerInterface
                         fishToStore.transform.position = holdSlot.transform.position;
                     }
 
-                    GameController.Obj.UpdateLevelProgression();
-
                     // I don't know why I must do this, but I must delay setting the parent else it will force set itself to no parent
                     StartCoroutine(GameController.ActivateCallbackAfterDelayCoroutine(1f, () =>
                     {
@@ -366,8 +364,7 @@ public class AquariumStationController : StationControllerInterface
                         {
                             fishController.SetEnabled(true);
                             playerControllerScript.PickUpObject(fishToRemove);
-
-                            GameController.Obj.UpdateLevelProgression();
+                            
                             return true;
                         }
                     }

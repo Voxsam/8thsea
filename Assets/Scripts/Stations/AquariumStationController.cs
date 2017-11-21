@@ -14,6 +14,8 @@ public class AquariumStationController : StationControllerInterface
 
     [SerializeField]
     public GameObject fishSchool;
+    private Dictionary<GameData.FishType, FishSchoolController> currentLevelSchools;
+    private List<FishSchoolController> previousSchools;
 
     [SerializeField] public GameData.FishType[] researchRequirementsForLevel;
 
@@ -35,11 +37,60 @@ public class AquariumStationController : StationControllerInterface
     private Dictionary<GameData.FishType, GameObject> fishResearchRequirements;
     private int selectedResearchRequirementIndex = -1;
 
+    private void OnDestroy()
+    {
+        //Save the fish in the aquarium on destroy for persistence.
+        for (int i = 0; i < researchRequirementsForLevel.Length; i++)
+        {
+            if (currentLevelSchools[researchRequirementsForLevel[i]].FishInSchool.Count > 0)
+                PersistentData.Obj.AddSchool(currentLevelSchools[researchRequirementsForLevel[i]]);
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
         warningText.SetActive(false);
 
+        previousSchools = new List<FishSchoolController>();
+        for (int i = 0; i < PersistentData.Obj.savedSchools.Count; i++)
+        {
+            PersistentData.AquariumSchoolData persistentData = PersistentData.Obj.savedSchools[i];
+            GameData.FishType fishTypeToSpawn = persistentData.fishType;
+            GameData.FishParameters fishParameters = GameData.GetFishParameters(fishTypeToSpawn);
+
+            GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
+            newFishSchool.transform.position = holdSlot.transform.position;
+            newFishSchool.transform.SetParent(gameObject.transform);
+            FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
+            fishSchoolController.zoneX = 20;
+            fishSchoolController.zoneY = 10;
+            fishSchoolController.zoneZ = 5;
+
+            for (int j = 0; j < persistentData.numberOfFishes; j++)
+            {
+                FishController newFish = GameData.CreateNewFish(fishTypeToSpawn, newFishSchool.transform);
+                FishMovementController fishMovementController = newFish.GetComponent<FishMovementController>();
+                fishMovementController.Initialise
+                (
+                    fishParameters.minSpeed,
+                    fishParameters.maxSpeed,
+                    fishParameters.minRotationSpeed,
+                    fishParameters.maxRotationSpeed,
+                    fishParameters.minNeighbourDistance
+                );
+                fishMovementController.SetEnabled(true);
+                newFish.SetRigidbody(false);
+                newFish.gameObject.transform.position = holdSlot.transform.position
+                                                        + new Vector3(Random.Range(-2, 2),
+                                                                        Random.Range(-2, 2),
+                                                                        Random.Range(-2, 2));
+                fishSchoolController.AddFishToSchool(newFish.gameObject);
+            }
+            previousSchools.Add(fishSchoolController);
+        }
+
+        currentLevelSchools = new Dictionary<GameData.FishType, FishSchoolController>();
         fishResearchRequirements = new Dictionary<GameData.FishType, GameObject>();
         if (isTutorial)
         {
@@ -52,18 +103,14 @@ public class AquariumStationController : StationControllerInterface
 
         for (int i = 0; i < researchRequirementsForLevel.Length; i++)
         {
-            // If does not contain a school of this type, instantiate it
-            if (!GameController.Obj.MasterAquarium.ContainsKey(researchRequirementsForLevel[i]))
-            {
-                GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
-                newFishSchool.transform.position = holdSlot.transform.position;
-                newFishSchool.transform.SetParent(GameController.Obj.AquariumHolder);
-                FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
-                fishSchoolController.zoneX = 10;
-                fishSchoolController.zoneY = 5;
-                fishSchoolController.zoneZ = 10;
-                GameController.Obj.MasterAquarium.Add(researchRequirementsForLevel[i], fishSchoolController);
-            }
+            GameObject newFishSchool = (GameObject)Instantiate(fishSchool);
+            newFishSchool.transform.position = holdSlot.transform.position;
+            newFishSchool.transform.SetParent(GameController.Obj.AquariumHolder);
+            FishSchoolController fishSchoolController = newFishSchool.GetComponent<FishSchoolController>();
+            fishSchoolController.zoneX = 10;
+            fishSchoolController.zoneY = 5;
+            fishSchoolController.zoneZ = 10;
+            currentLevelSchools.Add(researchRequirementsForLevel[i], fishSchoolController);
 
             Transform newFishResearchRequirements = Instantiate(GameData.GetSelectableFish(researchRequirementsForLevel[i]));
             newFishResearchRequirements.SetParent(researchReqAnchor.transform, false);
@@ -317,7 +364,7 @@ public class AquariumStationController : StationControllerInterface
     {
         if (fishToStore != null)
         {
-            FishSchoolController schoolController = GameController.Obj.MasterAquarium[fishType];
+            FishSchoolController schoolController = currentLevelSchools[fishType];
             if (schoolController != null)
             {
                 FishController fishController = fishToStore.GetComponent<FishController>();
@@ -347,9 +394,9 @@ public class AquariumStationController : StationControllerInterface
 
     public bool RemoveFish(PlayerInteractionController playerControllerScript, GameData.FishType fishType)
     {
-        if (GameController.Obj.MasterAquarium.ContainsKey(fishType))
+        if (currentLevelSchools.ContainsKey(fishType))
         {
-            FishSchoolController schoolController = GameController.Obj.MasterAquarium[fishType];
+            FishSchoolController schoolController = currentLevelSchools[fishType];
             if (schoolController != null)
             {
                 if (schoolController.FishInSchool.Count > 0)

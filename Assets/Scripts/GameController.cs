@@ -55,7 +55,6 @@ public class GameController : MonoBehaviour {
     // Fish management
     protected List<FishController> fishes;
     [SerializeField] protected Transform FishHolder;
-    public Dictionary<GameData.FishType, FishSchoolController> MasterAquarium;
     [SerializeField] public Transform AquariumHolder;
 
     // Camera management
@@ -344,7 +343,6 @@ public class GameController : MonoBehaviour {
         //playerControllers = MultiplayerManager.Obj.playerControllerList;
         //players = multiplayerManager.playerControllerList;
         fishes = new List<FishController>();
-        MasterAquarium = new Dictionary<GameData.FishType, FishSchoolController>();
 
         /*
         players.Add(Player1Ref);

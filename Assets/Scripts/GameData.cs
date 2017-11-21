@@ -244,7 +244,7 @@ public class GameData : MonoBehaviour
     /// </summary>
     public static FishType[] GetResearchRequirementsForLevel(int level)
     {
-        if (level < 0 || level >= TOTAL_NUMBER_OF_LEVELS)
+        if (level < 0 || level >= levels.Length)
         {
             return null;
         }
@@ -288,8 +288,11 @@ public class GameData : MonoBehaviour
 			}
         }
 
-        AllFishParameters[(int)fish].totalResearched++;
-        GameController.Obj.UpdateLevelProgression();
+        if (AllFishParameters[(int)fish].totalResearched < AllFishParameters[(int)fish].totalToResearch)
+        {
+            AllFishParameters[(int)fish].totalResearched++;
+            GameController.Obj.UpdateLevelProgression();
+        }
     }
 
     /// <summary>

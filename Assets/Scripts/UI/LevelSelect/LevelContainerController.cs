@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class LevelContainerController : MonoBehaviour {
 
+	public Text levelName;
+
 	public int currentlySelectedItem = 0;
 
 	public LevelContainerItem[] levels;
@@ -18,8 +20,7 @@ public class LevelContainerController : MonoBehaviour {
 
 	void Start () {
 		initPos = transform.position;
-		levels [currentlySelectedItem].rectTransform.localScale = newScale;
-		levels [currentlySelectedItem].floatController.enabled = true;
+		RefreshSelectedItem ();
 	}
 
 	void Update () {
@@ -29,22 +30,18 @@ public class LevelContainerController : MonoBehaviour {
 			if (IsRightButtonPressed ()) {
 
 				if (currentlySelectedItem < levels.Length - 1) {
-					levels [currentlySelectedItem].rectTransform.localScale = Vector3.one;
-					levels [currentlySelectedItem].floatController.enabled = false;
+					ResetSelectedItem ();
 					currentlySelectedItem++;
-					levels [currentlySelectedItem].rectTransform.localScale = newScale;
-					levels [currentlySelectedItem].floatController.enabled = true;
+					RefreshSelectedItem ();
 					StartCoroutine (SmoothlyMoveContainer (distanceBetweenImages * -1f));
 				}
 
 			} else if (IsLeftButtonPressed ()) {
 
 				if (currentlySelectedItem > 0) {
-					levels [currentlySelectedItem].rectTransform.localScale = Vector3.one;
-					levels [currentlySelectedItem].floatController.enabled = false;
+					ResetSelectedItem ();
 					currentlySelectedItem--;
-					levels [currentlySelectedItem].rectTransform.localScale = newScale;
-					levels [currentlySelectedItem].floatController.enabled = true;
+					RefreshSelectedItem ();
 					StartCoroutine (SmoothlyMoveContainer (distanceBetweenImages));
 				}
 
@@ -52,6 +49,7 @@ public class LevelContainerController : MonoBehaviour {
 		}
 
 	}
+		
 
 
 	private bool IsRightButtonPressed () {
@@ -74,5 +72,15 @@ public class LevelContainerController : MonoBehaviour {
 		canChangeLevel = true;
 	}
 
+	private void ResetSelectedItem () {
+		levels [currentlySelectedItem].rectTransform.localScale = Vector3.one;
+		levels [currentlySelectedItem].floatController.enabled = false;
+	}
+
+	private void RefreshSelectedItem () {
+		levels [currentlySelectedItem].rectTransform.localScale = newScale;
+		levels [currentlySelectedItem].floatController.enabled = true;
+		levelName.text = levels [currentlySelectedItem].levelName;
+	}
 
 }

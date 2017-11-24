@@ -562,7 +562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &263557565
 GameObject:
@@ -605,130 +605,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 131790009}
   m_Script: {fileID: 11500000, guid: 150d1708e01cc1e4baf7756b1a14436c, type: 3}
---- !u!1001 &272820786
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[1]
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[2]
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: Sea
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: maxSchools
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: minSchools
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: zoneX
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[3]
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[4]
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[5]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[6]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[7]
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: fishTypesToSpawn.Array.data[8]
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114052187648853852, guid: 5ce34b26499ded6429d788dfaf6688a1,
-        type: 2}
-      propertyPath: zoneY
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331063259755192, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 5ce34b26499ded6429d788dfaf6688a1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &284297688
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +739,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &299391486
 MonoBehaviour:
@@ -1051,7 +927,7 @@ RectTransform:
   - {fileID: 540045732}
   - {fileID: 985478726}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1400,7 +1276,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711816698
 GameObject:
@@ -3148,7 +3024,7 @@ Transform:
   m_Children:
   - {fileID: 110832927}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1668547166
 GameObject:

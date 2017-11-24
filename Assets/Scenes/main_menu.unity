@@ -317,7 +317,7 @@ Prefab:
     - target: {fileID: 114109635658404072, guid: 4dab21d204cc99a44b6dd3c73b9a54a9,
         type: 2}
       propertyPath: sceneName
-      value: main_merged
+      value: level1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dab21d204cc99a44b6dd3c73b9a54a9, type: 2}
@@ -1802,7 +1802,7 @@ Prefab:
     - target: {fileID: 114109635658404072, guid: 4dab21d204cc99a44b6dd3c73b9a54a9,
         type: 2}
       propertyPath: sceneName
-      value: main_merged
+      value: level2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dab21d204cc99a44b6dd3c73b9a54a9, type: 2}
@@ -2205,7 +2205,7 @@ Prefab:
     - target: {fileID: 114109635658404072, guid: 4dab21d204cc99a44b6dd3c73b9a54a9,
         type: 2}
       propertyPath: sceneName
-      value: main_merged
+      value: level3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4dab21d204cc99a44b6dd3c73b9a54a9, type: 2}

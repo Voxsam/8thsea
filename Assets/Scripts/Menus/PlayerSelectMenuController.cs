@@ -11,6 +11,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	public PlayerList pList;
 
 	public GameObject levelSelectInterface;
+	public GameObject controlsPanel;
 
 	public PlayerSelectElement[] playerSelectElements;
 
@@ -75,6 +76,13 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 			}
 		}
+
+		if (Input.GetKey (KeyCode.Space)) {
+			controlsPanel.SetActive (true);
+		} else {
+			controlsPanel.SetActive (false);
+		}
+
 			
     }
 

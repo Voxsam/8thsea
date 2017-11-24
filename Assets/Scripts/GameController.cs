@@ -426,7 +426,7 @@ public class GameController : MonoBehaviour {
 
         Destroy(PlayerList.Obj.gameObject);
         Destroy(multiplayerManager.gameObject);
-        SceneManager.LoadScene("characterSelect");
+        SceneManager.LoadScene("main_menu");
     }
 
     void Update()

@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSelectMenuController : MonoBehaviour {
 
-	public Text[] textboxes;
-
 	public int numPlayers = 0;
 
 	public PlayerList pList;
 
-    [SerializeField] private Text StartGameText;
+	public GameObject levelSelectInterface;
+
+	public PlayerSelectElement[] playerSelectElements;
 
 	private List<int> joysticks = new List<int> ();
 	private List<KeyCode> keys = new List<KeyCode> ();
@@ -21,6 +21,8 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	private List<KeyCode> usedKeys = new List<KeyCode> ();
     private const KeyCode START_GAME_BUTTON = KeyCode.Space;
     private const KeyCode START_TUTORIAL_BUTTON = KeyCode.T;
+
+	private bool canMoveToLevelSelect = false;
 
     void Start ()
 	{
@@ -38,18 +40,19 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 		joysticks.AddRange(new int[] { 1, 2, 3, 4 });
 		keys.AddRange (new KeyCode[] { KeyCode.W, KeyCode.UpArrow });
-        StartGameText.enabled = false;
 
 	}
 
 	void LateUpdate ()
 	{
+
 		// Iterate through all 4 joysticks
 		foreach (int j in joysticks) {
 			if (!usedJoysticks.Contains(j) && Input.GetKeyDown ("joystick " + j + " button 0")) {
 				pList.AddPlayer (new Player(new ControlScheme(j, false), numPlayers + 1));
 				usedJoysticks.Add (j);
-				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using Joystick " + j + "."; 
+				MainMenuAudioManager.Obj.PlayConfirmNoise ();
+				playerSelectElements [numPlayers].Activate ();
 				numPlayers++;
             }
 
@@ -59,68 +62,28 @@ public class PlayerSelectMenuController : MonoBehaviour {
             {
                 pList.AddPlayer(new Player(new ControlScheme(j, true), numPlayers + 1));
                 usedKeys.Add(actionKey);
-                textboxes[numPlayers].text = "Player " + (numPlayers + 1) + " is using " + actionKey.ToString() + ".";
+				MainMenuAudioManager.Obj.PlayConfirmNoise ();
+				playerSelectElements [numPlayers].Activate ();
                 numPlayers++;
             }
         }
 
-        if (numPlayers > 1 && !StartGameText.isActiveAndEnabled)
-        {
-            StartGameText.enabled = true;
-        }
-        else if (numPlayers == 0 && StartGameText.isActiveAndEnabled)
-        {
-            StartGameText.enabled = false;
-        }
+		if (numPlayers > 0 && numPlayers != 3) {
+			if (pList.IsMenuButtonPressedByAnyPlayer ()) {
+				MainMenuAudioManager.Obj.PlayConfirmNoise2 ();
+				StartCoroutine (ShowLevelSelectAfterDelay (1.2f));
 
-        if (Input.GetKeyDown(START_GAME_BUTTON))
-        {
-            AdvanceToGame();
-        }
-        else if (Input.GetKeyDown(START_TUTORIAL_BUTTON))
-        {
-            AdvanceToTutorial();
-        }
-
-        /*
-		// Iterate through all key configurations
-		foreach (KeyCode key in keys) {
-			if (!usedKeys.Contains(key) && Input.GetKeyDown (key)) {
-				pList.AddPlayer (new Player (new ControlScheme(0, true, key), numPlayers + 1));
-				usedKeys.Add (key);
-				textboxes[numPlayers].text = "Player " + (numPlayers + 1)  + " is using " + key.ToString() + ".";
-				numPlayers++;
 			}
 		}
-        //*/
+			
     }
 
-	public void AdvanceToGame ()
-	{
-		if (numPlayers > 0)
-        {
-            if (GameController.Obj != null)
-            {
-                GameController.Obj.isTutorial = false;
-            }
-
-            // Load the main game scene
-            SceneManager.LoadScene("main_merged");
-		}
+	IEnumerator ShowLevelSelectAfterDelay (float seconds) {
+		yield return new WaitForSecondsRealtime (seconds);
+		levelSelectInterface.SetActive (true);
+		gameObject.SetActive (false);
 	}
 
-    public void AdvanceToTutorial()
-    {
-        if (numPlayers > 0)
-        {
-            if (GameController.Obj != null)
-            {
-                GameController.Obj.isTutorial = true;
-            }
-            // Load the main tutorial scene
-            SceneManager.LoadScene("tutorial");
-        }
 
-    }
 
 }

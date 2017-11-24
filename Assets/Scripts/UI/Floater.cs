@@ -7,7 +7,13 @@ public class Floater : MonoBehaviour {
 	public float amplitude = 0.5f;
 	public float frequency = 1f;
 
-	public void OnEnable ()
+	private Vector3 initPos;
+
+	void Start () {
+		initPos = transform.localPosition;
+	}
+
+	void OnEnable ()
 	{
 		StartCoroutine (FloatObject ());
 	}
@@ -15,6 +21,7 @@ public class Floater : MonoBehaviour {
 	void OnDisable ()
 	{
 		StopAllCoroutines ();
+		transform.localPosition = initPos;
 	}
 
 	IEnumerator FloatObject() {

@@ -19,7 +19,7 @@ public class LevelContainerController : MonoBehaviour {
 	private Vector3 initPos;
 
 	void Start () {
-		initPos = transform.position;
+		initPos = transform.localPosition;
 		RefreshSelectedItem ();
 	}
 
@@ -33,6 +33,7 @@ public class LevelContainerController : MonoBehaviour {
 					ResetSelectedItem ();
 					currentlySelectedItem++;
 					RefreshSelectedItem ();
+					MainMenuAudioManager.Obj.PlayMoveNoise ();
 					StartCoroutine (SmoothlyMoveContainer (distanceBetweenImages * -1f));
 				}
 
@@ -42,6 +43,7 @@ public class LevelContainerController : MonoBehaviour {
 					ResetSelectedItem ();
 					currentlySelectedItem--;
 					RefreshSelectedItem ();
+					MainMenuAudioManager.Obj.PlayMoveNoise ();
 					StartCoroutine (SmoothlyMoveContainer (distanceBetweenImages));
 				}
 
@@ -67,9 +69,9 @@ public class LevelContainerController : MonoBehaviour {
 	IEnumerator SmoothlyMoveContainer (float distance) {
 		canChangeLevel = false;
 		float elapsedTime = 0;
-		Vector3 originalPos = transform.position;
-		while (transform.position.x != originalPos.x + distance) {
-			transform.position = Vector3.Lerp (originalPos, new Vector3 (originalPos.x + distance, originalPos.y, originalPos.z), elapsedTime / slideTime);
+		Vector3 originalPos = transform.localPosition;
+		while (transform.localPosition.x != originalPos.x + distance) {
+			transform.localPosition = Vector3.Lerp (originalPos, new Vector3 (originalPos.x + distance, originalPos.y, originalPos.z), elapsedTime / slideTime);
 			elapsedTime += Time.deltaTime;
 			yield return null;
 		}

@@ -31,6 +31,43 @@ public class PlayerList : MonoBehaviour {
 		playerList.Add (p);
 	}
 
+	public bool IsRightButtonPressedByAnyPlayer () {
+		foreach (Player p in playerList) {
+			if (p.controls.GetHorizontalAxis () > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool IsLeftButtonPressedByAnyPlayer () {
+		foreach (Player p in playerList) {
+			if (p.controls.GetHorizontalAxis () < 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool IsActionButtonPressedByAnyPlayer () {
+		foreach (Player p in playerList) {
+			if (p.controls.GetActionKeyDown ()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool IsMenuButtonPressedByAnyPlayer () {
+		foreach (Player p in playerList) {
+			if (p.controls.GetMenuKeyDown ()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 }
 
 

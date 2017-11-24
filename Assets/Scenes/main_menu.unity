@@ -821,7 +821,7 @@ Prefab:
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 03d38dc65e3bda9469dc3b2425ec200d, type: 2}
+      objectReference: {fileID: 2100000, guid: 50ef801438a4d5549b0faf4f55964f7d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0c8be6c8a9db64e4f95291d738aaef21, type: 2}
   m_IsPrefabParent: 0
@@ -1515,6 +1515,11 @@ Prefab:
       propertyPath: isRotating
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137316376903099374, guid: 0b0ea8d2fab8d3746aa1c9dfa264a238,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bab999e78d5f76145abf58a371130dd3, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b0ea8d2fab8d3746aa1c9dfa264a238, type: 2}
   m_IsPrefabParent: 0

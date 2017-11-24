@@ -60,6 +60,10 @@ public class LevelContainerController : MonoBehaviour {
 		return Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A);
 	}
 
+	private bool IsActionKeyPressed () {
+		return Input.GetKeyDown (KeyCode.E) || Input.GetKeyDown (KeyCode.RightControl);
+	}
+
 	IEnumerator SmoothlyMoveContainer (float distance) {
 		canChangeLevel = false;
 		float elapsedTime = 0;

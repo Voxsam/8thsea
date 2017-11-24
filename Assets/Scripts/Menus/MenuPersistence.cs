@@ -24,6 +24,7 @@ public class MenuPersistence : MonoBehaviour {
 
 		if (hasSeenTitle) {
 			characterSelectInterface.SetActive (true);
+			logo.gameObject.SetActive (false);
 		} else {
 			StartCoroutine (FadeInLogo (3f));
 		}

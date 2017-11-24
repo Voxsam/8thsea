@@ -230,8 +230,8 @@ public class GameData : MonoBehaviour
     {
         new FishType[] {FishType.TutorialClownFish},
         new FishType[] { FishType.ClownFish, FishType.PufferFish, FishType.Flounder },
-        new FishType[] { FishType.Whale, FishType.Shark, FishType.Octi, },
-        new FishType[] { FishType.Penguin, FishType.UnicornFish, FishType.Seahorse},
+        new FishType[] { FishType.UnicornFish, FishType.Shark, FishType.Octi, },
+        new FishType[] { FishType.Penguin, FishType.Whale, FishType.Seahorse},
     };
     public static int TOTAL_NUMBER_OF_LEVELS // Excludes tutorial level
     {

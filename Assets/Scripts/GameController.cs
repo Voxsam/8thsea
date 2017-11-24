@@ -90,18 +90,18 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public void LoadNextLevel(int levelToLoad = 0)
     {
+
         // Only increment if it is not the last level
         if (levelToLoad >= 0 && levelToLoad < GameData.TOTAL_NUMBER_OF_LEVELS)
         {
             CurrentLevel = levelToLoad;
+            SceneManager.LoadScene("level" + CurrentLevel); //TODO
         }
-        else if (CurrentLevel != GameData.TOTAL_NUMBER_OF_LEVELS)
+        else
         {
-            CurrentLevel++;
+            // go to main menu
+            SceneManager.LoadScene("main_menu"); //TODO
         }
-        
-        // Reload this scene
-        SceneManager.LoadScene("main_merged");
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public class GameController : MonoBehaviour {
 
         if (!isTutorial)
         {
-            CurrentLevel = Random.Range(0, GameData.TOTAL_NUMBER_OF_LEVELS) + 1;
+            CurrentLevel = 1;
         }
         
         // GameController object should not be destructable
@@ -409,7 +409,7 @@ public class GameController : MonoBehaviour {
             {
                 if (player.controls.GetMenuKeyDown())
                 {
-                    FullGameReset();
+                    LoadNextLevel(CurrentLevel+1); //TODO
                 }
             }
         }

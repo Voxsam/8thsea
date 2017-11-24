@@ -34,15 +34,20 @@ public class MenuPersistence : MonoBehaviour {
 
 		if (logoIsVisible) {
 			if (Input.anyKeyDown) {
-				logoIsVisible = false;
-				logo.gameObject.SetActive (false);
-				pressAnyKeyText.SetActive (false);
-				hasSeenTitle = true;
-				MainMenuAudioManager.Obj.PlayConfirmNoise2 ();
-				characterSelectInterface.SetActive (true);
+				StartCoroutine (PlaySoundAndShowCharacterSelectAfterDelay (0.8f));
 			}
 		}
 
+	}
+
+	IEnumerator PlaySoundAndShowCharacterSelectAfterDelay (float seconds) {
+		MainMenuAudioManager.Obj.PlayConfirmNoise2 ();
+		yield return new WaitForSecondsRealtime (seconds);
+		logoIsVisible = false;
+		logo.gameObject.SetActive (false);
+		pressAnyKeyText.SetActive (false);
+		hasSeenTitle = true;
+		characterSelectInterface.SetActive (true);
 	}
 
 	IEnumerator FadeInLogo (float seconds) {

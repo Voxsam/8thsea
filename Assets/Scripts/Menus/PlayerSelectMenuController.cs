@@ -72,7 +72,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 		if (numPlayers > 0 && numPlayers != 3) {
 			if (pList.IsMenuButtonPressedByAnyPlayer ()) {
 				MainMenuAudioManager.Obj.PlayConfirmNoise2 ();
-				StartCoroutine (ShowLevelSelectAfterDelay (1.2f));
+				StartCoroutine (ShowLevelSelectAfterDelay (0.8f));
 
 			}
 		}

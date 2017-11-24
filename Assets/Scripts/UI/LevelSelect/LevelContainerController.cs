@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelContainerController : MonoBehaviour {
 
@@ -27,7 +28,7 @@ public class LevelContainerController : MonoBehaviour {
 
 		if (canChangeLevel) {
 
-			if (IsRightButtonPressed ()) {
+			if (PlayerList.Obj.IsRightButtonPressedByAnyPlayer ()) {
 
 				if (currentlySelectedItem < levels.Length - 1) {
 					ResetSelectedItem ();
@@ -37,7 +38,7 @@ public class LevelContainerController : MonoBehaviour {
 					StartCoroutine (SmoothlyMoveContainer (distanceBetweenImages * -1f));
 				}
 
-			} else if (IsLeftButtonPressed ()) {
+			} else if (PlayerList.Obj.IsLeftButtonPressedByAnyPlayer ()) {
 
 				if (currentlySelectedItem > 0) {
 					ResetSelectedItem ();
@@ -50,21 +51,18 @@ public class LevelContainerController : MonoBehaviour {
 			}
 		}
 
+		if (PlayerList.Obj.IsActionButtonPressedByAnyPlayer ()) {
+
+			if (currentlySelectedItem == 0) {
+				AdvanceToTutorial ();
+			} else {
+				AdvanceToLevel (levels [currentlySelectedItem].sceneName);
+			}
+
+		}
+
 	}
 		
-
-
-	private bool IsRightButtonPressed () {
-		return Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D);
-	}
-
-	private bool IsLeftButtonPressed () {
-		return Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A);
-	}
-
-	private bool IsActionKeyPressed () {
-		return Input.GetKeyDown (KeyCode.E) || Input.GetKeyDown (KeyCode.RightControl);
-	}
 
 	IEnumerator SmoothlyMoveContainer (float distance) {
 		canChangeLevel = false;
@@ -87,6 +85,26 @@ public class LevelContainerController : MonoBehaviour {
 		levels [currentlySelectedItem].rectTransform.localScale = newScale;
 		levels [currentlySelectedItem].floatController.enabled = true;
 		levelName.text = levels [currentlySelectedItem].levelName;
+	}
+
+
+	public void AdvanceToLevel (string levelName)
+	{
+			if (GameController.Obj != null)
+			{
+				GameController.Obj.isTutorial = false;
+			}
+
+			// Load the main game scene
+			SceneManager.LoadScene(levelName);
+	}
+
+	public void AdvanceToTutorial()
+	{
+		if (GameController.Obj != null) {
+			GameController.Obj.isTutorial = true;
+		}
+		SceneManager.LoadScene ("tutorial");
 	}
 
 }

@@ -85,32 +85,5 @@ public class PlayerSelectMenuController : MonoBehaviour {
 	}
 
 
-	public void AdvanceToGame ()
-	{
-		if (numPlayers > 0)
-        {
-            if (GameController.Obj != null)
-            {
-                GameController.Obj.isTutorial = false;
-            }
-
-            // Load the main game scene
-            SceneManager.LoadScene("main_merged");
-		}
-	}
-
-    public void AdvanceToTutorial()
-    {
-        if (numPlayers > 0)
-        {
-            if (GameController.Obj != null)
-            {
-                GameController.Obj.isTutorial = true;
-            }
-            // Load the main tutorial scene
-            SceneManager.LoadScene("tutorial");
-        }
-
-    }
 
 }

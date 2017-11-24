@@ -406,6 +406,9 @@ public class GameData : MonoBehaviour
             case FishType.Shark:
                 prefab = Obj.SharkSelectablePrefab;
                 break;
+            case FishType.Seahorse:
+                prefab = Obj.SeahorseSelectablePrefab;
+                break;
             case FishType.PufferFish:
             default:
                 prefab = Obj.PufferFishSelectablePrefab;

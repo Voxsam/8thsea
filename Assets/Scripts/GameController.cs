@@ -90,18 +90,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public void LoadNextLevel(int levelToLoad = 0)
     {
-
-        // Only increment if it is not the last level
-        if (levelToLoad >= 0 && levelToLoad < GameData.TOTAL_NUMBER_OF_LEVELS)
-        {
-            CurrentLevel = levelToLoad;
-            SceneManager.LoadScene("level" + CurrentLevel); //TODO
-        }
-        else
-        {
-            // go to main menu
-            SceneManager.LoadScene("main_menu"); //TODO
-        }
+		SceneManager.LoadScene ("main_menu");
     }
 
     /// <summary>
@@ -171,7 +160,7 @@ public class GameController : MonoBehaviour {
         }
         
         // GameController object should not be destructable
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
 	}
 
     void Start()
@@ -397,6 +386,13 @@ public class GameController : MonoBehaviour {
         
         //currentMoney -= GameData.MONEY_DEPLETE_RATE * Time.deltaTime;
         //moneyText.text = "$" + ( (int)currentMoney).ToString();
+		foreach(Player player in players)
+		{
+			if (player.controls.GetMenuKeyDown())
+			{
+				SceneManager.LoadScene ("main_menu");
+			}
+		}
 
         if (LevelClearPercentage >= 100f)
         {
@@ -409,7 +405,7 @@ public class GameController : MonoBehaviour {
             {
                 if (player.controls.GetMenuKeyDown())
                 {
-                    LoadNextLevel(CurrentLevel+1); //TODO
+					SceneManager.LoadScene ("main_menu");
                 }
             }
         }

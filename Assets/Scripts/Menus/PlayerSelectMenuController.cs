@@ -8,8 +8,6 @@ public class PlayerSelectMenuController : MonoBehaviour {
 
 	public int numPlayers = 0;
 
-	public PlayerList pList;
-
 	public GameObject levelSelectInterface;
 	public GameObject controlsPanel;
 
@@ -50,7 +48,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
 		// Iterate through all 4 joysticks
 		foreach (int j in joysticks) {
 			if (!usedJoysticks.Contains(j) && Input.GetKeyDown ("joystick " + j + " button 0")) {
-				pList.AddPlayer (new Player(new ControlScheme(j, false), numPlayers + 1));
+				PlayerList.Obj.AddPlayer (new Player(new ControlScheme(j, false), numPlayers + 1));
 				usedJoysticks.Add (j);
 				MainMenuAudioManager.Obj.PlayConfirmNoise ();
 				playerSelectElements [numPlayers].Activate ();
@@ -61,7 +59,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
             // Iterate through all key configurations
             if (!usedKeys.Contains(actionKey) && Input.GetKeyDown(actionKey))
             {
-                pList.AddPlayer(new Player(new ControlScheme(j, true), numPlayers + 1));
+                PlayerList.Obj.AddPlayer(new Player(new ControlScheme(j, true), numPlayers + 1));
                 usedKeys.Add(actionKey);
 				MainMenuAudioManager.Obj.PlayConfirmNoise ();
 				playerSelectElements [numPlayers].Activate ();
@@ -70,7 +68,7 @@ public class PlayerSelectMenuController : MonoBehaviour {
         }
 
 		if (numPlayers > 0 && numPlayers != 3) {
-			if (pList.IsMenuButtonPressedByAnyPlayer ()) {
+			if (PlayerList.Obj.IsMenuButtonPressedByAnyPlayer ()) {
 				MainMenuAudioManager.Obj.PlayConfirmNoise2 ();
 				StartCoroutine (ShowLevelSelectAfterDelay (0.8f));
 

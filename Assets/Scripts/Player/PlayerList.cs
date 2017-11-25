@@ -67,6 +67,10 @@ public class PlayerList : MonoBehaviour {
 		return false;
 	}
 
+	public void ResetPlayers () {
+		playerList = new List<Player> ();
+	}
+
 
 }
 

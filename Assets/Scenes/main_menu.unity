@@ -1127,8 +1127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae6a920cb5e319478b1954d876db71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
   amplitude: 0.2
   frequency: 1
+  horzAmplitude: 0.5
+  horzFrequency: 1
 --- !u!224 &630919586 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224304493981105714, guid: 4dab21d204cc99a44b6dd3c73b9a54a9,
@@ -1327,8 +1330,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae6a920cb5e319478b1954d876db71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
   amplitude: 0.2
   frequency: 1
+  horzAmplitude: 0.5
+  horzFrequency: 1
 --- !u!114 &711816701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,6 +1978,7 @@ GameObject:
   - component: {fileID: 1178106433}
   - component: {fileID: 1178106432}
   - component: {fileID: 1178106431}
+  - component: {fileID: 1178106436}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2043,12 +2050,28 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1178106430}
   m_LocalRotation: {x: 0.30427784, y: -0, z: -0, w: 0.9525834}
-  m_LocalPosition: {x: 0, y: 587, z: -550}
+  m_LocalPosition: {x: -304.7, y: 585.5, z: -550}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35.429, y: 0, z: 0}
+--- !u!114 &1178106436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1178106430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae6a920cb5e319478b1954d876db71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal: 1
+  amplitude: 0.05
+  frequency: 0.5
+  horzAmplitude: 0.05
+  horzFrequency: 0.1
 --- !u!1 &1242989676
 GameObject:
   m_ObjectHideFlags: 0
@@ -3104,8 +3127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae6a920cb5e319478b1954d876db71c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  horizontal: 0
   amplitude: 0.5
   frequency: 1
+  horzAmplitude: 0.5
+  horzFrequency: 1
 --- !u!114 &1685845258
 MonoBehaviour:
   m_ObjectHideFlags: 0
